@@ -1,15 +1,17 @@
 package com.ssafy.backend.domain.Post.dto;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Data
 @Getter
-@Setter
+@Builder
 public class PostDto {
     private Long postId;
-    private Long userId;
+    //private UserDto userDto;
     private String title;
     private String content;
     private String category;
