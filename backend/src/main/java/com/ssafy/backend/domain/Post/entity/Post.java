@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Builder
@@ -29,7 +27,7 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Category category;
-    private boolean is_deleted;
+    private boolean isDeleted;
 
     @ColumnDefault("0")
     private int hit;

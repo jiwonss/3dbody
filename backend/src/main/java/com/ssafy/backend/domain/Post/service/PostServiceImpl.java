@@ -21,16 +21,19 @@ public class PostServiceImpl implements PostService{
 
 
 
+    /* create 게시글 작성 */
     @Override
     public void writePost(PostDto postDto) throws Exception {
         Post post = Post.builder().build(); //user 입력 후에 작성
     }
 
+    /* read 게시글 리스트 조회 */
     @Override
     public List<PostDto> getListPost(Map<String, String> map) throws Exception {
         return null;
     }
 
+    /* read 게시글 상세 조회 */
     @Override
     public PostDto getPost(Long postId) throws Exception {
 
@@ -39,16 +42,19 @@ public class PostServiceImpl implements PostService{
         return null;
     }
 
+    /* update 조회수 업데이트 */
     @Override
     public void updateHit(Long postId) throws Exception {
 
     }
 
+    /* update 게시글 수정 */
     @Override
     public void updatePost(PostDto postDto) throws Exception {
 
     }
 
+    /* delete 게시글 삭제 */
     @Override
     public void deletePost(Long postId) throws Exception {
 
