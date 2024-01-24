@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Data
 @Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class PostDto {
     private Long postId;
     private User user;
@@ -27,7 +25,7 @@ public class PostDto {
     public Post toEntity(){
         return Post.builder()
                 .postId(postId)
-                .user(user)
+                //.user(user)
                 .title(title)
                 .content(content)
                 .category(category)
@@ -40,7 +38,7 @@ public class PostDto {
     public static PostDto toDto(Post post){
         return PostDto.builder()
                 .postId(post.getPostId())
-                .user(post.getUser())
+                //.user(post.getUser())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .category(post.getCategory())

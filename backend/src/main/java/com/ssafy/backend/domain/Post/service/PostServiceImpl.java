@@ -41,22 +41,24 @@ public class PostServiceImpl implements PostService{
     }
 
     /* read 게시글 리스트 조회 */
-    @Transactional(readOnly = true)
-    public PostDto findById(Long postId){
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("No found with postId" + postId));
-        return PostDto.toDto(post);
-    }
+
 
 
     /* read 게시글 상세 조회 */
-
+    @Transactional(rollbackFor = Exception.class)
+    public PostDto findById(Long id){
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No found with postId" + id));
+        return PostDto.toDto(post);
+    }
 
 
     /* update 조회수 업데이트 */
 
 
     /* update 게시글 수정 */
-
+    //@Transactional
+    //public void update(PostDto requestDto Long )
 
     /* delete 게시글 삭제 */
 

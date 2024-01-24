@@ -3,14 +3,12 @@ package com.ssafy.backend.domain.Post.entity;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {
 
     @Id
@@ -34,4 +32,14 @@ public class Post extends BaseEntity {
     @ColumnDefault("0")
     private int hit;
 
+    @Builder
+    public Post(Long postId, User user, String title, String content, Category category, boolean isDeleted, int hit) {
+        this.postId = postId;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.isDeleted = isDeleted;
+        this.hit = hit;
+    }
 }
