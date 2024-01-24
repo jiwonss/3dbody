@@ -3,11 +3,17 @@ package com.ssafy.backend.domain.user.entity;
 import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @ToString
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class User extends BaseEntity {
 
     @Id
@@ -48,8 +54,6 @@ public class User extends BaseEntity {
         Gender(String value) {
             this.value = value;
         }
-
-
     }
 
     enum Status {
@@ -62,13 +66,24 @@ public class User extends BaseEntity {
         ROLE_ADMIN
     }
 
-    @Builder
-    public User(String email, String password, String name, Gender gender, String birthDate) {
-        this.email = email;
+    public static User create(String email, String password, String name, Gender gender, String birthDate) {
+        return User.builder()
+                .email(email)
+                .password(password)
+                .name(name)
+                .gender(gender)
+                .birthDate(birthDate)
+                .status(Status.MEMBER)
+                .role(Role.ROLE_USER)
+                .build();
+    }
+
+    public void updatePassword(String password) {
         this.password = password;
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 }
