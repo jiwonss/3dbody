@@ -1,18 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { useState } from "react";
+import InputComponent from "./common/Input";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [value, setValue] = useState("");
+
+  const handleSearch = () => {
+    console.log("검색어:", value);
+  };
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  const onHandleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <>
-      <div>
-        강성권 잔다
-      </div>
+      <div>{value}</div>
+      <InputComponent type="text" value={value} onChange={onChangeInput} onKeyDown={onHandleKeyDown} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
