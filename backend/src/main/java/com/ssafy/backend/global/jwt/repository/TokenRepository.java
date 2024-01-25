@@ -1,6 +1,8 @@
 package com.ssafy.backend.global.jwt.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Repository
 @RequiredArgsConstructor
+@EnableAutoConfiguration(exclude = RedisAutoConfiguration.class)
 public class TokenRepository {
 
     private final RedisTemplate<String, String> redisTemplate;
