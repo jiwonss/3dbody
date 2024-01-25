@@ -32,8 +32,8 @@ public class ChallengeController {
     }
 
     // 참여중 챌린지 목록
-    @GetMapping("/list/{userId}")
-    public ResponseEntity<?> joiningChallengeList(@PathVariable("userId") Long userId) {
+    @GetMapping("/list/{user_id}")
+    public ResponseEntity<?> joiningChallengeList(@PathVariable("user_id") Long userId) {
         List<ChallengeListResponseDto> list = challengeService.getJoiningChallengeList(userId);
         log.info("참여중 챌린지 목록 : {}", list);
         return new ResponseEntity<>(list, HttpStatus.OK);
