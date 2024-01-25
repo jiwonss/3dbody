@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ChallengeDto {
+public class ChallengeDetailResponseDto {
 
     private Long challengeId;
     // private UserDto userDto;
