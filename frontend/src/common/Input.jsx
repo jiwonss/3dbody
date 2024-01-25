@@ -1,20 +1,20 @@
 import PropTypes from "prop-types";
 
-const InputComponent = (props) => {
+const Input = ({ type, value, placeholder, onChange, onKeyDown }) => {
   return (
     <div>
       <input
-        type={props.type}
-        value={props.value}
-        placeholder={props.placeholder}
-        onChange={props.onChange}
-        onKeyDown={props.onKeyDown}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
       />
     </div>
   );
 };
 
-InputComponent.propTypes = {
+Input.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
@@ -22,12 +22,11 @@ InputComponent.propTypes = {
   onKeyDown: PropTypes.func,
 };
 
-InputComponent.defaultProps = {
+Input.defaultProps = {
   placeholder: "입력해 주세요.",
 };
 
-export default InputComponent;
-
+export default Input;
 
 // import { useState } from "react";
 // import InputComponent from "./common/Input";
