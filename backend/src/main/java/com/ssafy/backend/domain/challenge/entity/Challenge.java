@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.challenge.entity;
 
+import com.ssafy.backend.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -20,13 +21,13 @@ public class Challenge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long challengeId; // 챌린지ID, BIGINT, Primary Key
 
-    // @ManyToOne
-    // private User user; // 작성자ID, BIGINT, Foreign Key, NOT NULL
+     @ManyToOne
+     @JoinColumn(name = "user_id")
+     private User user; // 작성자ID, BIGINT, Foreign Key, NOT NULL
 
     @Column(nullable = false)
     private String title; // 챌린지이름, VARCHAR(100), NOT NULL
 
-    @Column(nullable = false)
     private String content; // 내용, TEXT, NOT NULL
 
     private String thumbnail; // 썸네일, VARCHAR(255)
@@ -39,7 +40,6 @@ public class Challenge {
     @ColumnDefault("0")
     private int hit = 0; // 조회수, INT, default(0)
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status; // 상태, ENUM, NOT NULL
 

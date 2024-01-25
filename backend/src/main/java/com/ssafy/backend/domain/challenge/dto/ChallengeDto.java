@@ -9,6 +9,17 @@ public class ChallengeDto {
 
     private Long challengeId;
     // private UserDto userDto;
+
+    // **
+    // UserDto 시작
+    // **
+    private Long userId;
+    private String nickname;
+    private String profileImage;
+    // **
+    // UserDto 끝
+    // **
+
     private String title;
     private String content;
     private String thumbnail;
