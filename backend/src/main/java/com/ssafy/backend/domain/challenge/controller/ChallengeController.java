@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.challenge.controller;
 
+import com.ssafy.backend.domain.challenge.dto.ChallengeDetailResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
 import com.ssafy.backend.domain.challenge.service.ChallengeService;
 import lombok.extern.slf4j.Slf4j;
@@ -47,5 +48,12 @@ public class ChallengeController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 챌린지 상세 조회
+    @GetMapping("/detail/{challenge_id}")
+    public ResponseEntity<?> getChallengeDetail(@PathVariable("challenge_id") Long challengeId) {
+
+        ChallengeDetailResponseDto dto = challengeService.getChallengeDetail(challengeId);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
 }
