@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.user.controller;
 
 import com.ssafy.backend.domain.user.dto.LoginRequestDto;
+import com.ssafy.backend.domain.user.dto.ReissueDto;
 import com.ssafy.backend.domain.user.dto.SignupRequestDto;
 import com.ssafy.backend.domain.user.service.AuthService;
 import com.ssafy.backend.global.dto.Response;
@@ -44,7 +45,23 @@ public class AuthController {
         response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);
 
-        return ResponseEntity.ok(Response.success(tokenDto));
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity reissue(@RequestBody ReissueDto reissueDto, HttpServletResponse response) {
+        TokenDto tokenDto = authService.reissue(reissueDto.getRefreshToken());
+
+        Cookie accessTokenCookie = new Cookie("accessToken", tokenDto.getAccessToken());
+        accessTokenCookie.setMaxAge((int)tokenDto.getAccessTokenExpired());
+        accessTokenCookie.setPath("/");
+        Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
+        refreshTokenCookie.setMaxAge((int)tokenDto.getRefreshTokenExpired());
+        refreshTokenCookie.setPath("/");
+        response.addCookie(accessTokenCookie);
+        response.addCookie(refreshTokenCookie);
+
+        return ResponseEntity.ok(Response.success());
     }
 
 }
