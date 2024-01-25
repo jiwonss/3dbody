@@ -86,4 +86,6 @@ public class User extends BaseEntity {
         this.nickname = nickname;
     }
 
+    public void updateStatus(Status status) { this.status = status; }
+
 }
