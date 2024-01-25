@@ -30,4 +30,11 @@ public class ChallengeController {
         return new ResponseEntity<List<ChallengeListResponseDto>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/list/finished")
+    public ResponseEntity<?> finishedChallengeList() {
+        List<ChallengeListResponseDto> list = challengeService.getFinishedChallengeList();
+        log.info("종료된 챌린지 목록 : {}", list);
+        return new ResponseEntity<List<ChallengeListResponseDto>>(list, HttpStatus.OK);
+    }
+
 }

@@ -10,9 +10,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
+
+    // 진행중인 챌린지 목록
     @Query("select new com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto(c.challengeId, c.title, c.thumbnail, c.entry, c.hit, c.user.userId, c.user.nickname) " +
             "from Challenge c inner join c.user u " +
             "where c.endDate > :now")
+    List<ChallengeListResponseDto> findAllByEndDateIsAfter(@Param("now") LocalDateTime now);
+
+    // 종료된 챌린지 목록
+    @Query("select new com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto(c.challengeId, c.title, c.thumbnail, c.entry, c.hit, c.user.userId, c.user.nickname) " +
+            "from Challenge c inner join c.user u " +
+            "where c.endDate < :now")
     List<ChallengeListResponseDto> findAllByEndDateIsBefore(@Param("now") LocalDateTime now);
 
 }
