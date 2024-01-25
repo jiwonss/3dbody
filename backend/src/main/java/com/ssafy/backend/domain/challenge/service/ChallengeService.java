@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface ChallengeService {
 
-    // 진행중인 챌린지 목록
+    // 참여가능 챌린지 목록
     List<ChallengeListResponseDto> getProceedingChallengeList();
+
+    // 참여중 챌린지 목록
+    List<ChallengeListResponseDto> getJoiningChallengeList(Long userId);
 
     // 종료된 챌린지 목록
     List<ChallengeListResponseDto> getFinishedChallengeList();
+
 }

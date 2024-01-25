@@ -12,18 +12,24 @@ import java.util.List;
 @Slf4j
 public class ChallengeServiceImpl implements ChallengeService {
 
-    private ChallengeRepository challengeRepository;
+    private final ChallengeRepository challengeRepository;
 
     public ChallengeServiceImpl(ChallengeRepository challengeRepository) {
         this.challengeRepository = challengeRepository;
     }
 
-    // 진행중인 챌린지 목록
+    // 참여가능 챌린지 목록
     @Override
     public List<ChallengeListResponseDto> getProceedingChallengeList() {
         LocalDateTime now = LocalDateTime.now();
         log.info("ChallengeService - getProceedingChallengeList 호출, 현재 시간 : {}", now);
         return challengeRepository.findAllByEndDateIsAfter(now);
+    }
+
+    // 참여중 챌린지 목록
+    @Override
+    public List<ChallengeListResponseDto> getJoiningChallengeList(Long userId) {
+        return challengeRepository.findChallengeWithUserChallenge(userId);
     }
 
     // 종료된 챌린지 목록
@@ -33,4 +39,5 @@ public class ChallengeServiceImpl implements ChallengeService {
         log.info("ChallengeService - getFinishedChallengeList 호출, 현재 시간 : {}", now);
         return challengeRepository.findAllByEndDateIsBefore(now);
     }
+
 }

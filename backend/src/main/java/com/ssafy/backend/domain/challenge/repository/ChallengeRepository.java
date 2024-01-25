@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
+public interface ChallengeRepository extends JpaRepository<Challenge, Long>, ChallengeCustomRepository {
 
-    // 진행중인 챌린지 목록
+    // 참여가능 챌린지 목록
     @Query("select new com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto(c.challengeId, c.title, c.thumbnail, c.entry, c.hit, c.user.userId, c.user.nickname) " +
             "from Challenge c inner join c.user u " +
             "where c.endDate > :now")
