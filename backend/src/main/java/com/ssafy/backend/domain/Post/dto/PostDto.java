@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class PostDto {
     private Long postId;
     private User user;
+    private String nickname;
     private String title;
     private String content;
     private Category category;
