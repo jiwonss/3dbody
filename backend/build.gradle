@@ -39,3 +39,17 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.register('copyPrivate', Copy) {
+	copy {
+		from './secure-settings'
+		include "*.yml"
+		include "*.json"
+		include "*.sql"
+		into 'src/main/resources'
+	}
+}
+
+processResources {
+	dependsOn copyPrivate
+}
