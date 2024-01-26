@@ -53,7 +53,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-git 
+git
 tasks.register('copyPrivate', Copy) {
 	copy {
 		from './secure-settings'
