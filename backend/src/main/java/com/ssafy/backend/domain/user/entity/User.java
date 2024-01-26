@@ -56,12 +56,12 @@ public class User extends BaseEntity {
         }
     }
 
-    enum Status {
+    public enum Status {
         MEMBER,
         WITHDRAWAL
     }
 
-    enum Role {
+    public enum Role {
         ROLE_USER,
         ROLE_ADMIN
     }
