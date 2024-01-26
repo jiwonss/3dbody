@@ -84,7 +84,7 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
                         try{
-                        sh "docker run -d --name back -p 8081:8080 ${DOCKER_USER_ID}/back"
+                        sh "docker run -d --name back -p 8082:8080 ${DOCKER_USER_ID}/back"
                         } catch(Exception e){
                             sh "docker restart back"
                         }
