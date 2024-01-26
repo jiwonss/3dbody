@@ -67,6 +67,3 @@ tasks.register('copyPrivate', Copy) {
 processResources {
 	dependsOn copyPrivate
 }
-clean {
-	delete file('src/main/generated')
-}
