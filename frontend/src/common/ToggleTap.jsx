@@ -6,31 +6,31 @@ const ToggleTap = () => {
   const [isRightSelected, SetisRightSelected] = useState(false);
 
   const onClick = () => {
-    SetisLeftSelected(!isLeftSelected)
-    SetisRightSelected(!isRightSelected)
-    console.log(isLeftSelected)
-    console.log(isRightSelected)
-  }
+    SetisLeftSelected(!isLeftSelected);
+    SetisRightSelected(!isRightSelected);
+    console.log(isLeftSelected);
+    console.log(isRightSelected);
+  };
 
-  let leftCheck = 'small'
-  let rightCheck = 'large'
+  let leftCheck = "small";
+  let rightCheck = "large";
 
   if (isLeftSelected) {
-    leftCheck = 'small'
+    leftCheck = "small";
   } else {
-    leftCheck = 'large'
+    leftCheck = "large";
   }
 
   if (isRightSelected) {
-    rightCheck = 'small'
+    rightCheck = "small";
   } else {
-    rightCheck = 'large'
+    rightCheck = "large";
   }
 
   return (
     <div>
-      <Button buttonStyle={leftCheck} buttonName="캘린더" onClick={onClick}/>
-      <Button buttonStyle={rightCheck} buttonName="그래프" onClick={onClick}/>
+      <Button buttonStyle={leftCheck} buttonName="캘린더" onClick={onClick} />
+      <Button buttonStyle={rightCheck} buttonName="그래프" onClick={onClick} />
     </div>
   );
 };
