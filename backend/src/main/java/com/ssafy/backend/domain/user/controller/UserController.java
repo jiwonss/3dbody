@@ -36,4 +36,13 @@ public class UserController {
         return ResponseEntity.ok(Response.success());
     }
 
-}
+
+
+    @GetMapping
+    public ResponseEntity duplicateCheckNickname(@RequestParam String nickname) {
+        if (userService.duplicateCheckNickname(nickname)) {
+            return ResponseEntity.ok(Response.fail("", "중복된 닉네임이 존재합니다."));
+        }
+        return ResponseEntity.ok(Response.success());
+    }
+

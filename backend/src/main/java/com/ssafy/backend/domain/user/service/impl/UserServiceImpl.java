@@ -4,12 +4,12 @@ import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.error.exception.UserException;
-import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_NICKNAME;
 import static com.ssafy.backend.global.error.exception.ExceptionType.INVALID_USER;
 
 @Service
@@ -48,8 +48,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
-
-
     }
 
     @Override
@@ -57,6 +55,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         user.updateStatus(User.Status.WITHDRAWAL);
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean duplicateCheckNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
     }
 
 

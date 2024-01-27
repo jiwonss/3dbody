@@ -10,5 +10,7 @@ public interface UserService {
     User getUserInfo(Long userId);
     void updateUser(Long userId);
     void updateStatus(Long userId);
+    void updateNickname(Long userId, String nickname);
+    boolean duplicateCheckNickname(String nickname);
 
 }
