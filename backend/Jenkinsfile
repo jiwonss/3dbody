@@ -12,11 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scmGit(
-                    branches: [[name: 'backend']],
-                    extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
-                    userRemoteConfigs: [[credentialsId: 'Github-access-token', url: 'https://github.com/taehuun/3dbodysettings']]
-                )
+                checkout scm
             }
         }
         stage('Setup Environment') {
