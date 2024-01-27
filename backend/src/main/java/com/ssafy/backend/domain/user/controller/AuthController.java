@@ -80,4 +80,12 @@ public class AuthController {
         return ResponseEntity.ok(Response.success());
     }
 
+    @GetMapping
+    public ResponseEntity duplicateCheckEmail(@RequestParam String email) {
+        if (authService.duplicateCheckEmail(email)) {
+            return ResponseEntity.ok(Response.fail("", "중복된 이메일이 존재합니다."));
+        }
+        return ResponseEntity.ok(Response.success());
+    }
+
 }
