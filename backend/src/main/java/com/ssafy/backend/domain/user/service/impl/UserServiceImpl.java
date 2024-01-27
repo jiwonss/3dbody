@@ -51,6 +51,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateNickname(Long userId, String nickname) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (userRepository.existsByNickname(nickname)) {
+            throw new UserException(DUPLICATED_NICKNAME);
+        }
+        user.updateNickname(nickname);
+        userRepository.save(user);
+    }
+
+    @Override
     public void updateStatus(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         user.updateStatus(User.Status.WITHDRAWAL);

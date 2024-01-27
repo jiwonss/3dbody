@@ -16,27 +16,27 @@ public class UserController {
 
     private final UserService userService;
 
+    // TODO 인바디 정보 가져와서 조인하기(키)
     @GetMapping("/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity getUserInfo(@PathVariable Long userId) {
         User user = userService.getUserInfo(userId);
         return ResponseEntity.ok(Response.success(UserInfoDto.from(user)));
     }
 
-    @PostMapping("/{userId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    // TODO 인바디 정보 가져와서 조인하기(키)
+    @PatchMapping("/{userId}")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updateUser(@PathVariable Long userId) {
         return ResponseEntity.ok(Response.success());
     }
 
     @DeleteMapping("/{userId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity withdraw(@PathVariable Long userId) {
         userService.updateStatus(userId);
         return ResponseEntity.ok(Response.success());
     }
-
-
 
     @GetMapping
     public ResponseEntity duplicateCheckNickname(@RequestParam String nickname) {
@@ -45,4 +45,12 @@ public class UserController {
         }
         return ResponseEntity.ok(Response.success());
     }
+
+    @PatchMapping("/{userId}/nickname")
+    public ResponseEntity updateNickname(@PathVariable Long userId, @RequestParam String nickname) {
+        userService.updateNickname(userId, nickname);
+        return ResponseEntity.ok(Response.success());
+    }
+
+}
 
