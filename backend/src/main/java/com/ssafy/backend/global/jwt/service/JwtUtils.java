@@ -1,4 +1,4 @@
-package com.ssafy.backend.global.jwt;
+package com.ssafy.backend.global.jwt.service;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

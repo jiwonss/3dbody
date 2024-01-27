@@ -1,12 +1,10 @@
-package com.ssafy.backend.global.jwt.service.impl;
+package com.ssafy.backend.global.jwt.service;
 
 import com.ssafy.backend.domain.user.dto.LoginUserDto;
 import com.ssafy.backend.global.error.exception.TokenException;
-import com.ssafy.backend.global.jwt.JwtUtils;
 import com.ssafy.backend.global.jwt.dto.TokenDto;
 import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import com.ssafy.backend.global.jwt.repository.TokenRepository;
-import com.ssafy.backend.global.jwt.service.JwtService;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
