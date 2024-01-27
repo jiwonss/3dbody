@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updatePassword(Long userId, String password) {
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         user.updatePassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }

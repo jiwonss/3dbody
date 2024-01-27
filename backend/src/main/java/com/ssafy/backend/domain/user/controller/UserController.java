@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.user.controller;
 
+import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.dto.Response;
@@ -28,6 +29,13 @@ public class UserController {
     @PatchMapping("/{userId}")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updateUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(Response.success());
+    }
+
+
+    @PatchMapping("/{userId}/password")
+    public ResponseEntity updatePassword(@PathVariable Long userId, @RequestBody PasswordRequestDto passwordRequestDto) {
+        userService.updatePassword(userId, passwordRequestDto.getPassword());
         return ResponseEntity.ok(Response.success());
     }
 
