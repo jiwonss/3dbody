@@ -22,12 +22,21 @@ import static com.ssafy.backend.global.error.exception.ExceptionType.INVALID_TOK
 import static javax.management.timer.Timer.ONE_MINUTE;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
 
-    @Autowired
+
     private final JwtUtils jwtUtils;
+
+    @Autowired
+    public JwtServiceImpl(JwtUtils jwtUtils, TokenRepository tokenRepository){
+        this.jwtUtils = jwtUtils;
+        this.tokenRepository = tokenRepository;
+    }
+
+    @Autowired
     private final TokenRepository tokenRepository;
+
 
     private static final String CLAIM_EMAIL = "email";
     private static final String CLAIM_NICKNAME = "nickname";
