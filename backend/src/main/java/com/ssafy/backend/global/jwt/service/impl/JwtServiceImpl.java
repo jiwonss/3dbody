@@ -10,6 +10,7 @@ import com.ssafy.backend.global.jwt.service.JwtService;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import static javax.management.timer.Timer.ONE_MINUTE;
 @RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
 
+    @Autowired
     private final JwtUtils jwtUtils;
     private final TokenRepository tokenRepository;
 
