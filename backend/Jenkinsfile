@@ -24,7 +24,7 @@ pipeline {
                 dir("${env.WORKSPACE}/backend"){
                     script {
                         sh "echo 'SUBMODULE CHECK'"
-                        sh "ls submodule -al"
+                        sh "ls secure-settings -al"
                         sh "chmod +x ./gradlew"
                     }
                 }
