@@ -38,7 +38,7 @@ pipeline {
                 script {
                     sh "ls -al"
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        sh "docker build -t ${DOCKER_USER_ID}/back backend"
+                        sh "docker build --no-cache -t ${DOCKER_USER_ID}/back backend"
                     }
                 }
             }
