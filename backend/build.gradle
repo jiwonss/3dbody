@@ -56,10 +56,8 @@ tasks.named('test') {
 
 tasks.register('copyPrivate', Copy) {
 	copy {
-		from './secure-settings'
+		from "./secure-settings"
 		include "*.yml"
-		include "*.json"
-		include "*.sql"
 		into 'src/main/resources'
 	}
 }
@@ -69,8 +67,19 @@ tasks.register('printCurrentPath') {
 	}
 }
 
+
+// 모든 Java 컴파일 태스크가 copyApplicationYml 태스크를 선행하도록 설정
+tasks.named('compileJava') {
+	dependsOn 'copyPrivate'
+}
+
+// processResources 태스크가 시작하기 전에 copyApplicationYml 태스크를 실행하도록 설정
+tasks.named('processResources') {
+	mustRunAfter 'copyPrivate'
+}
+
 processResources {
-	dependsOn "copyPrivate", "printCurrentPath"
+	dependsOn "printCurrentPath"
 }
 
 
