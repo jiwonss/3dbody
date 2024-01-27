@@ -23,6 +23,7 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}/backend"){
                     script {
+                        sh "ls -al"
                         sh "chmod +x ./gradlew"
                     }
                 }
