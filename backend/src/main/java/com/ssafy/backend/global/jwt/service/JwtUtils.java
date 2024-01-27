@@ -27,12 +27,16 @@ public class JwtUtils {
     @Value("${jwt.expired-min.refresh}")
     private int refreshTokenExpiredMin;
 
-    private Key encodedKey;
+    private final Key encodedKey;
 
-    @PostConstruct
-    private void init() {
+    public JwtUtils(@Value("${jwt.secret}") String secretKey,
+                    @Value("${jwt.expired-min.access}") int accessTokenExpiredMin,
+                    @Value("${jwt.expired-min.refresh}") int refreshTokenExpiredMin) {
+        this.secretKey = secretKey;
+        this.accessTokenExpiredMin = accessTokenExpiredMin;
+        this.refreshTokenExpiredMin = refreshTokenExpiredMin;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        encodedKey = Keys.hmacShaKeyFor(keyBytes);
+        this.encodedKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
 }
