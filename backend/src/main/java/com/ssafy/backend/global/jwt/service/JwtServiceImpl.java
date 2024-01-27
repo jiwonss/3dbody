@@ -27,6 +27,7 @@ public class JwtServiceImpl implements JwtService {
 
 
     private final JwtUtils jwtUtils;
+    private final TokenRepository tokenRepository;
 
     @Autowired
     public JwtServiceImpl(JwtUtils jwtUtils, TokenRepository tokenRepository){
@@ -34,8 +35,6 @@ public class JwtServiceImpl implements JwtService {
         this.tokenRepository = tokenRepository;
     }
 
-    @Autowired
-    private final TokenRepository tokenRepository;
 
 
     private static final String CLAIM_EMAIL = "email";
