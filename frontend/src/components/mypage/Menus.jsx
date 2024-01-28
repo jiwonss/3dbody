@@ -24,12 +24,12 @@ const Menus = () => {
         {
           menuicon: <MegaphoneIcon className='w-6 h-6'/>,
           menutitle: "공지사항",
-          menuurl: "/"
+          menuurl: "/notice"
         },
         {
           menuicon: <QuestionMarkCircleIcon className='w-6 h-6'/>,
           menutitle: "자주 묻는 질문",
-          menuurl: "/"
+          menuurl: "/FAQ"
         }
       ]
     },

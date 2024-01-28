@@ -10,7 +10,7 @@ const Profile = () => {
       </div>
       <div className="flex justify-center">
         <p>김싸피 님</p>
-        <Link to="/"><PencilSquareIcon className="w-6 h-6"/></Link>
+        <Link to="/myinfo"><PencilSquareIcon className="w-6 h-6"/></Link>
       </div>
       <div className="flex justify-center">
         <Button buttonStyle={"small"} buttonName={"로그아웃"}/>
