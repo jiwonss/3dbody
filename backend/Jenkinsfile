@@ -103,20 +103,21 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
                         try {
-                            sh "docker stop back"
-                            sh "docker rm back"
+                            sh "docker stop back || true"  // Ignore error if container doesn't exist
+                            sh "docker rm back || true"    // Ignore error if container doesn't exist
                             sh "docker run -d --name back -p 8082:8080 \
                                 -e spring.datasource.username=${USERNAME} \
                                 -e DB_PASSWORD=${DB_PASSWORD} \
                                 -e JWT_SECRET=${JWT_SECRET} \
                                 ${DOCKER_USER_ID}/back"
                         } catch(Exception e) {
-                            sh "docker restart back"
+                            sh "docker restart back || true"  // Ignore error if container doesn't exist
                         }
                     }
                 }
             }
         }
+
 
     }
 //     post {
