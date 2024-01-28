@@ -8,7 +8,7 @@ pipeline {
     agent any
     environment {
         REPO = "s10-webmobile1-sub2/S10P12C204"
-        USERNAME = ${env.DB_USER}
+        USERNAME = "${env.DB_USER}"
     }
     stages {
         stage('Checkout') {
