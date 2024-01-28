@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.user.service.impl;
 
+import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
@@ -20,10 +21,24 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void updatePassword(Long userId, String password) {
+    public boolean checkPassword(Long userId, String password) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    @Override
+    public void updatePassword(User user, String password) {
         user.updatePassword(passwordEncoder.encode(password));
         userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(Long userId, PasswordRequestDto passwordRequestDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (!passwordEncoder.matches(passwordRequestDto.getCurrentPassword(), user.getPassword())) {
+            throw new UserException(INVALID_PASSWORD);
+        }
+        updatePassword(user, passwordRequestDto.getNewPassword());
     }
 
     @Override

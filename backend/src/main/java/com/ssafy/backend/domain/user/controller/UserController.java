@@ -32,10 +32,19 @@ public class UserController {
         return ResponseEntity.ok(Response.success());
     }
 
+    @PostMapping("/{userId}/password/check")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity checkPassword(@PathVariable Long userId, @RequestBody PasswordRequestDto passwordRequestDto) {
+        if (!userService.checkPassword(userId, passwordRequestDto.getCurrentPassword())) {
+            return ResponseEntity.ok(Response.fail("", "비밀번호가 맞지 않습니다."));
+        }
+        return ResponseEntity.ok(Response.success());
+    }
 
     @PatchMapping("/{userId}/password")
-    public ResponseEntity updatePassword(@PathVariable Long userId, @RequestBody PasswordRequestDto passwordRequestDto) {
-        userService.updatePassword(userId, passwordRequestDto.getPassword());
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity changePassword(@PathVariable Long userId, @RequestBody PasswordRequestDto passwordRequestDto) {
+        userService.changePassword(userId, passwordRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
