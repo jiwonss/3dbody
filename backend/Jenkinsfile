@@ -9,7 +9,7 @@ pipeline {
     environment {
         REPO = "s10-webmobile1-sub2/S10P12C204"
         USERNAME = "${env.DB_USER}"
-        DB_PASSWORD = "${env.DB_PW}"
+        DB_PASSWORD = "${env.DB_PASSWORD}"
         JWT_SECRET = "${env.JWT_SECRET}"
     }
     stages {
@@ -83,21 +83,41 @@ pipeline {
                 }
             }
         }
+//         stage('Up') {
+//             steps {
+//                 script {
+//                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
+//                         try{
+//                         sh "docker stop back"
+//                         sh "docker rm back"
+//                         sh "docker run -d --name back -p 8082:8080 -e spring.datasource.username=${USERNAME} ${DB_PASSWORD} ${JWT_SECRET} ${DOCKER_USER_ID}/back"
+//                         } catch(Exception e){
+//                             sh "docker restart back"
+//                         }
+//                     }
+//                 }
+//             }
+//         }
         stage('Up') {
             steps {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        try{
-                        sh "docker stop back"
-                        sh "docker rm back"
-                        sh "docker run -d --name back -p 8082:8080 -e spring.datasource.username=${USERNAME} ${DB_PASSWORD} ${JWT_SECRET} ${DOCKER_USER_ID}/back"
-                        } catch(Exception e){
+                        try {
+                            sh "docker stop back"
+                            sh "docker rm back"
+                            sh "docker run -d --name back -p 8082:8080 \
+                                -e spring.datasource.username=${USERNAME} \
+                                -e DB_PASSWORD=${DB_PASSWORD} \
+                                -e JWT_SECRET=${JWT_SECRET} \
+                                ${DOCKER_USER_ID}/back"
+                        } catch(Exception e) {
                             sh "docker restart back"
                         }
                     }
                 }
             }
         }
+
     }
 //     post {
 //         always {
