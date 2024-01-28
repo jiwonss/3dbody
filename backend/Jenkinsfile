@@ -8,6 +8,7 @@ pipeline {
     agent any
     environment {
         REPO = "s10-webmobile1-sub2/S10P12C204"
+        USERNAME = credentials('DB_USER')
     }
     stages {
         stage('Checkout') {
@@ -87,7 +88,7 @@ pipeline {
                         try{
                         sh "docker stop back"
                         sh "docker rm back"
-                        sh "docker run -d --name back -p 8082:8080 ${DOCKER_USER_ID}/back"
+                        sh "docker run -d --name back -p 8082:8080 -e spring.datasource.username=${USERNAME} ${DOCKER_USER_ID}/back"
                         } catch(Exception e){
                             sh "docker restart back"
                         }
