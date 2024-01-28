@@ -8,7 +8,7 @@ const ChallengeCard = () => {
           <img src="challenge/example.jpg" alt="..." />
         </div>
         <div className="title">챌린지 제목입니다</div>
-        <div class="description">
+        <div className="description">
           챌린지 내용입니다
         </div>
       </div>

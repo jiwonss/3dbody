@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { CalendarDaysIcon, Cog6ToothIcon, HomeIcon, TrophyIcon } from "@heroicons/react/24/solid";
 import { useState } from 'react';
 
 const BottomNavbar = () => {
@@ -11,20 +11,22 @@ const BottomNavbar = () => {
 
   return (
     <>
-      <div className='flex'>
+    <div className="fixed bottom-0 right-0 left-0">
+      <div className='flex justify-between border-2 p-4'>
         <Link to="/" onClick={() => onClickSelected("Home")}>
-          <ChevronLeftIcon className={ `w-6 h-6 ${isSelected === "Home" ? 'text-green-700' : 'text-red-700'}`}/>
+          <HomeIcon className={ `w-6 h-6 ${isSelected === "Home" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
         <Link to="/" onClick={() => onClickSelected("Diary")}>
-          <ChevronLeftIcon className={ `w-6 h-6 ${isSelected === "Diary" ? 'text-green-700' : 'text-red-700'}`}/>
+          <CalendarDaysIcon className={ `w-6 h-6 ${isSelected === "Diary" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
         <Link to="/" onClick={() => onClickSelected("Challenge")}>
-          <ChevronLeftIcon className={ `w-6 h-6 ${isSelected === "Challenge" ? 'text-green-700' : 'text-red-700'}`}/>
+          <TrophyIcon className={ `w-6 h-6 ${isSelected === "Challenge" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
         <Link to="/" onClick={() => onClickSelected("MyPage")}>
-          <ChevronLeftIcon className={ `w-6 h-6 ${isSelected === "MyPage" ? 'text-green-700' : 'text-red-700'}`}/>
+          <Cog6ToothIcon className={ `w-6 h-6 ${isSelected === "MyPage" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
       </div>
+    </div>
       <Outlet />
     </>
   );
