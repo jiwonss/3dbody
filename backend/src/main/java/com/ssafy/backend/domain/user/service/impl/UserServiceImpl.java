@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.user.service.impl;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
+import com.ssafy.backend.domain.user.dto.PinRequestDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
@@ -10,8 +11,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_NICKNAME;
-import static com.ssafy.backend.global.error.exception.ExceptionType.INVALID_USER;
+import static com.ssafy.backend.global.error.exception.ExceptionType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -85,6 +85,39 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean duplicateCheckNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public boolean checkPin(Long userId, String pin) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        return user.getPin().equals(pin);
+    }
+
+    @Override
+    public void updatePin(User user, String pin) {
+        user.updatePin(pin);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void createPin(Long userId, PinRequestDto pinRequestDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        updatePin(user, pinRequestDto.getNewPin());
+    }
+
+    @Override
+    public void changePin(Long userId, PinRequestDto pinRequestDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (!user.getPin().equals(pinRequestDto.getCurrentPin())) {
+            throw new UserException(INVALID_PIN);
+        }
+        updatePin(user, pinRequestDto.getNewPin());
+    }
+
+    @Override
+    public void deletePin(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        updatePin(user, null);
     }
 
 

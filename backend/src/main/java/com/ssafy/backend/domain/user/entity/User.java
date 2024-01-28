@@ -84,4 +84,8 @@ public class User extends BaseEntity {
 
     public void updateStatus(Status status) { this.status = status; }
 
+    public void updatePin(String pin) {
+        this.pin = pin;
+    }
+
 }

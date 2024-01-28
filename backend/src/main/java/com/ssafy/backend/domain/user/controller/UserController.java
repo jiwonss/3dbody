@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.user.controller;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
+import com.ssafy.backend.domain.user.dto.PinRequestDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.dto.Response;
@@ -64,8 +65,39 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}/nickname")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updateNickname(@PathVariable Long userId, @RequestParam String nickname) {
         userService.updateNickname(userId, nickname);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PostMapping("/{userId}/pin/check")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity checkPin(@PathVariable Long userId, @RequestBody PinRequestDto pinRequestDto) {
+        if (!userService.checkPin(userId, pinRequestDto.getCurrentPin())) {
+            return ResponseEntity.ok(Response.fail("", "PIN이 맞지 않습니다."));
+        }
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PostMapping("/{userId}/pin")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity createPin(@PathVariable Long userId, @RequestBody PinRequestDto pinRequestDto) {
+        userService.createPin(userId, pinRequestDto);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/pin")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity updatePin(@PathVariable Long userId, @RequestBody PinRequestDto pinRequestDto) {
+        userService.changePin(userId, pinRequestDto);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @DeleteMapping("/{userId}/pin")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity deletePin(@PathVariable Long userId) {
+        userService.deletePin(userId);
         return ResponseEntity.ok(Response.success());
     }
 
