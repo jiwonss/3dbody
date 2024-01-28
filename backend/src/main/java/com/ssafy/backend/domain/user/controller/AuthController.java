@@ -11,9 +11,11 @@ import com.ssafy.backend.global.jwt.service.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody SignupRequestDto signupRequestDto) {
+        log.info("들어옴");
         authService.signup(signupRequestDto);
         return ResponseEntity.ok(Response.success());
     }
