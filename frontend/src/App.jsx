@@ -1,9 +1,10 @@
 import './App.css'
+import BottomNavbar from './components/common/BottomNavbar';
 
 function App() {
   return (
     <div>
-      hello
+      <BottomNavbar/>
     </div>
   )
 }
