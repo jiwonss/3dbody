@@ -3,10 +3,6 @@ package com.ssafy.backend.domain.user.entity;
 import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
