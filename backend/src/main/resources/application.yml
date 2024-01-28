@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://c204.cjw2k0eykv8p.ap-northeast-2.rds.amazonaws.com:3306/backend?serverTimezone=UTC
-    username: c204
+    username: ${DB_USER}
     password: c204ssafy
   jpa:
     hibernate:
