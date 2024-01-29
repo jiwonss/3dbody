@@ -70,6 +70,20 @@ public class ChallengeController {
         }
     }
 
+    // 챌린지 정보 수정
+    @PutMapping
+    public ResponseEntity<?> updateChallenge(@RequestBody ChallengeRequestDto requestDto) {
+        try {
+            log.info("챌린지 정보 수정 - requestDto : {}", requestDto);
+            Challenge challenge = challengeService.updateChallenge(requestDto);
+
+            return new ResponseEntity<>("챌린지 수정 성공! " + challenge, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     // 에러 핸들링
     private ResponseEntity<String> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
