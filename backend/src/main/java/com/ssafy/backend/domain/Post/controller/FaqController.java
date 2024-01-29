@@ -6,12 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class FaqController {
 
     private final PostService postService;
+
+//    @GetMapping("faq/posts/list")
+//    public ResponseEntity list() {
+//    }
 
     @PostMapping("/faq/posts/{userId}")
     public ResponseEntity save(@RequestBody PostDto requestDto, @PathVariable("userId") Long userId){
