@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class PostController {
+public class FaqController {
 
     private final PostService postService;
 
-    @PostMapping("/notice/posts/{userId}")
+    @PostMapping("/faq/posts" +
+            "/{userId}")
     public ResponseEntity save(@RequestBody PostDto requestDto, @PathVariable("userId") Long userId){
         return ResponseEntity.ok(postService.save(requestDto, userId));
     }
 
-    @GetMapping("/notice/posts/{postId}")
+    @GetMapping("/faq/posts/{postId}")
     public ResponseEntity read(@PathVariable("postId") Long postId){
         return ResponseEntity.ok(postService.findById(postId));
     }
-
 }
