@@ -1,10 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import App from "../App";
 import MyPage from "../pages/mypage/MyPage";
 import MyInfoPage from "../pages/mypage/MyInfoPage";
 import NoticePage from "../pages/mypage/NoticePage";
 import FAQPage from "../pages/mypage/FAQPage";
 import DiaryPage from '../pages/diary/DiaryPage';
+import ChallengePage from "../pages/challenge/ChallengePage"
+import ChallengeDetailPage from './../pages/challenge/ChallengeDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +33,15 @@ const router = createBrowserRouter([
       {
         path: "/diary",
         Component: DiaryPage
-      }
+      },
+      {
+        path: "/challenge",
+        Component: ChallengePage
+      },
+      {
+        path: "challenge/:challengeId",
+        Component: ChallengeDetailPage
+      },
     ]
   },
 ]);

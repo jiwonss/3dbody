@@ -56,8 +56,8 @@ const Menus = () => {
       {categorylist.map((menulist) => {
         return (
           <div key={menulist.category}>
-            <label htmlFor={menulist.category}>{menulist.category}</label>
-            <Menu id={menulist.category} menus={menulist.list} />
+            <div>{menulist.category}</div>
+            <Menu menus={menulist.list} />
           </div>
         );
       })}
