@@ -24,4 +24,6 @@ public interface ChallengeService {
     // 챌린지 정보 등록
     Challenge registerChallenge(ChallengeRequestDto challengeRequestDto);
 
+    // 챌린지 정보 수정
+    Challenge updateChallenge(ChallengeRequestDto requestDto);
 }

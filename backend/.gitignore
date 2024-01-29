@@ -44,3 +44,6 @@ out/
 #application*.yml
 .env
 .DS_Store
+
+### QueryDsl ###
+generated
