@@ -1,22 +1,29 @@
-import "./ChallengeCard.css"
-import { Link } from 'react-router-dom';
+import "./ChallengeCard.css";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const ChallengeCard = () => {
+const ChallengeCard = ({ challengeId, challengeTitle, challengeSummary }) => {
   return (
     <div>
-      <Link to="/challengedetail">
+      <Link to={`/challenge/${challengeId}`}>
         <div className="card">
           <div className="content">
             <div>
               <img className="poster" src="challenge/example.jpg" alt="..." />
             </div>
-            <div className="title">챌린지 제목</div>
-            <div className="description">챌린지 내용입니다</div>
+            <div className="title">{challengeTitle}</div>
+            <div className="description">{challengeSummary}</div>
           </div>
         </div>
       </Link>
     </div>
   );
+};
+
+ChallengeCard.propTypes = {
+  challengeId: PropTypes.number,
+  challengeTitle: PropTypes.string,
+  challengeSummary: PropTypes.string,
 };
 
 export default ChallengeCard;

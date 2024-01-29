@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { CalendarIcon, UsersIcon, FlagIcon } from "@heroicons/react/24/solid";
-import Button from './../../components/common/Button';
+import Button from "./../../components/common/Button";
 
 const ChallengeDetail = () => {
+  const { challengeId } = useParams();
   const [isSelected, setIsSelected] = useState("info");
+  const [challenge, setChallenge] = useState({});
 
   // 정보 선택 함수
   const onClickInfoSelected = () => {
@@ -16,11 +19,26 @@ const ChallengeDetail = () => {
     setIsSelected("comment");
   };
 
+  // challenge 가져오기
+  const getChallenge = async () => {
+    const res = (
+      await axios.get(
+        `http://i10c204.p.ssafy.io:8082/api/challenge/detail/${challengeId}`
+      )
+    ).data;
+    setChallenge(res);
+    console.log(res)
+  };
+
+  useEffect(() => {
+    getChallenge();
+  }, []);
+
   return (
     <div>
       <div>
         <img src="challenge/example.jpg" alt="..." />
-        챌린지 제목
+        {challenge.title}
         <hr />
         <div className="flex">
           <Link onClick={() => onClickInfoSelected()}>
@@ -38,20 +56,19 @@ const ChallengeDetail = () => {
         <div className={`${isSelected === "info" ? null : "hidden"}`}>
           <div className="flex">
             <CalendarIcon className="w-4 h-4" />
-            <p>2024. 02. 16.</p>
+            <p>{challenge.start_date} ~ {challenge.end_date}</p>
           </div>
           <div className="flex">
             <UsersIcon className="w-4 h-4" />
-            <p>10명 참여</p>
+            <p>{challenge.entry}명 참여</p>
           </div>
           <div className="flex">
             <FlagIcon className="h-4 W-4" />
-            <p>플랭크를 오래오래 버텨 보세요!</p>
+            <p>{challenge.summary}</p>
           </div>
           <Button />
           <hr />
-          상세정보
-          
+          {challenge.content}
         </div>
         <div className={`${isSelected === "comment" ? null : "hidden"}`}>
           댓글입니다.
