@@ -54,6 +54,8 @@ public class Comment extends BaseEntity {
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Comment> children = new ArrayList<>();
 
-
+    public void updateParent(Comment comment) {
+        this.parent = comment;
+    }
 
 }
