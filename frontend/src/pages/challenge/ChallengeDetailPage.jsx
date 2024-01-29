@@ -1,8 +1,9 @@
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CalendarIcon, UsersIcon, FlagIcon } from "@heroicons/react/24/solid";
-import Button from "./../../components/common/Button";
+import ChallengeDetailInfo from "./ChallengeDetailInfoPage";
+import ChallengeDetailComment from './ChallengeDetailCommentPage';
+import BackButton from './../../components/common/BackButton';
 
 const ChallengeDetail = () => {
   const { challengeId } = useParams();
@@ -27,7 +28,7 @@ const ChallengeDetail = () => {
       )
     ).data;
     setChallenge(res);
-    console.log(res)
+    console.log(res);
   };
 
   useEffect(() => {
@@ -36,43 +37,30 @@ const ChallengeDetail = () => {
 
   return (
     <div>
-      <div>
-        <img src="challenge/example.jpg" alt="..." />
-        {challenge.title}
-        <hr />
-        <div className="flex">
-          <Link onClick={() => onClickInfoSelected()}>
-            <div className={`${isSelected === "info" ? "font-bold" : null}`}>
-              정보
-            </div>
-          </Link>
-          <Link onClick={() => onClickCommentSelected()}>
-            <div className={`${isSelected === "comment" ? "font-bold" : null}`}>
-              댓글
-            </div>
-          </Link>
+      <BackButton />
+      <img src="challenge/example.jpg" alt="..." />
+      {challenge.title}
+      <hr />
+      <div className="flex">
+        <div
+          className={`${isSelected === "info" ? "font-bold" : null}`}
+          onClick={() => onClickInfoSelected()}
+        >
+          정보
         </div>
-        <hr />
-        <div className={`${isSelected === "info" ? null : "hidden"}`}>
-          <div className="flex">
-            <CalendarIcon className="w-4 h-4" />
-            <p>{challenge.start_date} ~ {challenge.end_date}</p>
-          </div>
-          <div className="flex">
-            <UsersIcon className="w-4 h-4" />
-            <p>{challenge.entry}명 참여</p>
-          </div>
-          <div className="flex">
-            <FlagIcon className="h-4 W-4" />
-            <p>{challenge.summary}</p>
-          </div>
-          <Button />
-          <hr />
-          {challenge.content}
+        <div
+          className={`${isSelected === "comment" ? "font-bold" : null}`}
+          onClick={() => onClickCommentSelected()}
+        >
+          댓글
         </div>
-        <div className={`${isSelected === "comment" ? null : "hidden"}`}>
-          댓글입니다.
-        </div>
+      </div>
+      <hr />
+      <div className={`${isSelected === "info" ? null : "hidden"}`}>
+        <ChallengeDetailInfo />
+      </div>
+      <div className={`${isSelected === "comment" ? null : "hidden"}`}>
+        <ChallengeDetailComment />
       </div>
     </div>
   );
