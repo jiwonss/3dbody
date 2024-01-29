@@ -21,6 +21,7 @@ const Menu = ({ menus }) => {
 };
 
 Menu.propTypes = {
+  id:PropTypes.string,
   menus: PropTypes.array,
 };
 

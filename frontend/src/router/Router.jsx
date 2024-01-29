@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/FAQ",
-        Component: FAQPage
+        Component: FAQPage,
       },
       {
         path: "/challenge",

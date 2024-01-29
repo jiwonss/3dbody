@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const BackButton = () => {
   const navigate = useNavigate();
+  // 전의 페이지로 옮겨주는 함수 
   const onClickBtn = () => {
     navigate(-1);
   };
