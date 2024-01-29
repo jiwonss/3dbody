@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import static com.ssafy.backend.global.error.exception.ExceptionType.Authentication_EXCEPTION;
-import static com.ssafy.backend.global.error.exception.ExceptionType.FORBIDDEN_EXCEPTION;
+import static com.ssafy.backend.global.error.exception.ExceptionType.*;
 
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
@@ -27,7 +26,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity authenticationExceptionHandler(AuthenticationException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Response.fail(HttpStatus.UNAUTHORIZED.name(), Authentication_EXCEPTION.getErrorMessage()));
+                .body(Response.fail(HttpStatus.UNAUTHORIZED.name(), AUTHENTICATION_EXCEPTION.getErrorMessage()));
     }
 
     @ExceptionHandler({ExecutionControl.UserException.class})

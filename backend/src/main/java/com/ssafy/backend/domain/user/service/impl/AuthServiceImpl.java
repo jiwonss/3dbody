@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 import static com.ssafy.backend.global.error.exception.ExceptionType.*;
 
 @Service
@@ -69,6 +67,11 @@ public class AuthServiceImpl implements AuthService {
         tokenRepository.delete(String.valueOf(id));
         TokenDto tokenDto = jwtService.issueToken(userInfo);
         return tokenDto;
+    }
+
+    @Override
+    public boolean duplicateCheckEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }

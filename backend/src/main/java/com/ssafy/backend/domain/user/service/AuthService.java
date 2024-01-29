@@ -12,5 +12,6 @@ public interface AuthService {
     void signup(SignupRequestDto signupRequestDto);
     UserInfoDto login(String email, String password);
     TokenDto reissue(String refreshToken);
+    boolean duplicateCheckEmail(String email);
 
 }
