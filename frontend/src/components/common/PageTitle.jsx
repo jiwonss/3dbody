@@ -5,7 +5,10 @@ const PageTitle = ({ pageTitle }) => {
     // props로 받아와서 홈, 다이어리, 불러오기 등 단어만 바뀌게
     // CSS는 다시 해야함
     <div>
-      {pageTitle}
+      <div className='flex justify-center m-4'>
+        {pageTitle}
+      </div>
+      <hr />
     </div>
   );
 };

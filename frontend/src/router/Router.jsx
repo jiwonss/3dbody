@@ -4,6 +4,7 @@ import MyPage from "../pages/mypage/MyPage";
 import MyInfoPage from "../pages/mypage/MyInfoPage";
 import NoticePage from "../pages/mypage/NoticePage";
 import FAQPage from "../pages/mypage/FAQPage";
+import DiaryPage from '../pages/diary/DiaryPage';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/FAQ",
         Component: FAQPage
+      },
+      {
+        path: "/diary",
+        Component: DiaryPage
       }
     ]
   },
