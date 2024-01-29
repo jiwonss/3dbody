@@ -12,7 +12,7 @@ const BottomNavbar = () => {
   return (
     <>
     <div className="fixed bottom-0 right-0 left-0">
-      <div className='flex justify-between border-2 p-4'>
+      <div className='flex justify-between border-2 p-4 bg-white'>
         <Link to="/" onClick={() => onClickSelected("Home")}>
           <HomeIcon className={ `w-6 h-6 ${isSelected === "Home" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
@@ -22,7 +22,7 @@ const BottomNavbar = () => {
         <Link to="/" onClick={() => onClickSelected("Challenge")}>
           <TrophyIcon className={ `w-6 h-6 ${isSelected === "Challenge" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
-        <Link to="/" onClick={() => onClickSelected("MyPage")}>
+        <Link to="/mypage" onClick={() => onClickSelected("MyPage")}>
           <Cog6ToothIcon className={ `w-6 h-6 ${isSelected === "MyPage" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
       </div>
