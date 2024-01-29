@@ -84,6 +84,20 @@ public class ChallengeController {
         }
     }
 
+    @DeleteMapping("/{challenge_id}")
+    public ResponseEntity<?> deleteChallenge(@PathVariable("challenge_id") Long challengeId) {
+        try {
+            log.info("챌린지 정보 삭제 - 챌린지 ID = {}", challengeId);
+
+            challengeService.deleteChallenge(challengeId);
+
+            return new ResponseEntity<>("챌린지 삭제 성공! 삭제한 챌린지 ID = " + challengeId, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("에러! 챌린지 삭제 실패 " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // 에러 핸들링
     private ResponseEntity<String> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

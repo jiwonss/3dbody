@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface UserChallengeRepository extends JpaRepository<UserChallenge, Long>, UserChallengeCustomRepository {
+
+    void deleteAllByChallenge_ChallengeId(Long challengeId);
 }
