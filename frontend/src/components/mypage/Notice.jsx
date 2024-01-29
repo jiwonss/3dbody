@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 
+// 한 개의 공지에 대한 컴포넌트
 const Notice = ({ notice }) => {
   return (
     <div className="flex">
