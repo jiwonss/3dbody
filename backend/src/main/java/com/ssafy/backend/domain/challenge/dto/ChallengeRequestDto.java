@@ -13,22 +13,23 @@ import java.time.LocalDateTime;
 public class ChallengeRequestDto {
 
     @JsonProperty("challenge_id")
-    private Long challengeId;
+    private Long challengeId; // 챌린지 ID
 
     @JsonProperty("user_id")
     private Long userId; // 회원 ID
 
     private String title; // 챌린지이름
-    private String content; // 내용
+    private String summary; // 한줄설명
+    private String content; // 상세정보
     private String thumbnail; // 썸네일
     private String image; // 이미지
 
     @JsonProperty("start_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDate; // 시작날짜
 
     @JsonProperty("end_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDate; // 종료날짜
 
 }
