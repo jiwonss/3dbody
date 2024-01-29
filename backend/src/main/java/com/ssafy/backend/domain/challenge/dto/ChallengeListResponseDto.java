@@ -40,6 +40,8 @@ public class ChallengeListResponseDto {
                 .hit(challenge.getHit())
                 .userId(challenge.getUser().getUserId())
                 .nickname(challenge.getUser().getNickname())
+                .startDate(challenge.getStartDate())
+                .endDate(challenge.getEndDate())
                 .build();
     }
 }
