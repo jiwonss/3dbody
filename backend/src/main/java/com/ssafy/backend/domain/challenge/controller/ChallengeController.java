@@ -5,6 +5,7 @@ import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeRequestDto;
 import com.ssafy.backend.domain.challenge.entity.Challenge;
 import com.ssafy.backend.domain.challenge.service.ChallengeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/api/challenge")
+@RequiredArgsConstructor
 public class ChallengeController {
 
     private final ChallengeService challengeService;
-
-    public ChallengeController(ChallengeService challengeService) {
-        this.challengeService = challengeService;
-    }
 
     // 참여가능 챌린지 목록
     @GetMapping("/list/proceeding")
