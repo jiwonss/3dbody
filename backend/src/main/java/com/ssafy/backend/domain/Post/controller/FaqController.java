@@ -13,8 +13,7 @@ public class FaqController {
 
     private final PostService postService;
 
-    @PostMapping("/faq/posts" +
-            "/{userId}")
+    @PostMapping("/faq/posts/{userId}")
     public ResponseEntity save(@RequestBody PostDto requestDto, @PathVariable("userId") Long userId){
         return ResponseEntity.ok(postService.save(requestDto, userId));
     }
