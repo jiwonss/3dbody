@@ -5,6 +5,7 @@ import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeRequestDto;
 import com.ssafy.backend.domain.challenge.entity.Challenge;
 import com.ssafy.backend.domain.challenge.repository.ChallengeRepository;
+import com.ssafy.backend.domain.challenge.repository.UserChallengeRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
+    private final UserChallengeRepository userChallengeRepository;
 
     // 참여가능 챌린지 목록
     @Override
@@ -85,6 +87,13 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .endDate(requestDto.getEndDate())
                 .build();
         return challengeRepository.save(challenge);
+    }
+
+    @Override
+    @Transactional
+    public void deleteChallenge(Long challengeId) {
+        userChallengeRepository.deleteAllByChallenge_ChallengeId(challengeId);
+        challengeRepository.deleteById(challengeId);
     }
 
 
