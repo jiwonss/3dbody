@@ -54,7 +54,6 @@ const CalendarMonth = () => {
 
   const onClickDate = (date) => {
     setSelectedDate(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), date));
-    console.log(selectedDate);
   };
 
   return (
