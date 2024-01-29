@@ -4,6 +4,8 @@ import MyPage from "../pages/mypage/MyPage";
 import MyInfoPage from "../pages/mypage/MyInfoPage";
 import NoticePage from "../pages/mypage/NoticePage";
 import FAQPage from "../pages/mypage/FAQPage";
+import ChallengePage from "../pages/challenge/ChallengePage"
+import ChallengeDetailPage from './../pages/challenge/ChallengeDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,15 @@ const router = createBrowserRouter([
       {
         path: "/FAQ",
         Component: FAQPage
-      }
+      },
+      {
+        path: "/challenge",
+        Component: ChallengePage
+      },
+      {
+        path: "challengedetail",
+        Component: ChallengeDetailPage
+      },
     ]
   },
 ]);
