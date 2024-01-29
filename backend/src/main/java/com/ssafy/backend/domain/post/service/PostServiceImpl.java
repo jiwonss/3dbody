@@ -1,18 +1,16 @@
-package com.ssafy.backend.domain.Post.service;
+package com.ssafy.backend.domain.post.service;
 
-import com.ssafy.backend.domain.Post.dto.PostDto;
-import com.ssafy.backend.domain.Post.entity.Post;
-import com.ssafy.backend.domain.Post.repository.PostRepository;
+import com.ssafy.backend.domain.post.dto.PostDto;
+import com.ssafy.backend.domain.post.entity.Post;
+import com.ssafy.backend.domain.post.repository.PostRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +40,8 @@ public class PostServiceImpl implements PostService{
     }
 
     /* read 게시글 리스트 조회 */
+//    @Transactional
+//    public List<PostDto>
 
 
     /* read 게시글 상세 조회 */

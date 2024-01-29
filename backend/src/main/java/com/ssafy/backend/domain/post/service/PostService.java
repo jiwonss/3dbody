@@ -1,6 +1,6 @@
-package com.ssafy.backend.domain.Post.service;
+package com.ssafy.backend.domain.post.service;
 
-import com.ssafy.backend.domain.Post.dto.PostDto;
+import com.ssafy.backend.domain.post.dto.PostDto;
 
 public interface PostService {
 

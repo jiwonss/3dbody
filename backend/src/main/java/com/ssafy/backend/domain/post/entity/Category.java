@@ -1,4 +1,4 @@
-package com.ssafy.backend.domain.Post.entity;
+package com.ssafy.backend.domain.post.entity;
 
 import lombok.Getter;
 

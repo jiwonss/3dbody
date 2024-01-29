@@ -1,4 +1,4 @@
-package com.ssafy.backend.domain.Post.entity;
+package com.ssafy.backend.domain.post.entity;
 
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.global.entity.BaseEntity;

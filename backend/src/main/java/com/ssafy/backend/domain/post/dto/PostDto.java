@@ -1,7 +1,7 @@
-package com.ssafy.backend.domain.Post.dto;
+package com.ssafy.backend.domain.post.dto;
 
-import com.ssafy.backend.domain.Post.entity.Category;
-import com.ssafy.backend.domain.Post.entity.Post;
+import com.ssafy.backend.domain.post.entity.Category;
+import com.ssafy.backend.domain.post.entity.Post;
 import com.ssafy.backend.domain.user.entity.User;
 import lombok.*;
 

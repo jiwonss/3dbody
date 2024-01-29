@@ -1,7 +1,7 @@
-package com.ssafy.backend.domain.Post.controller;
+package com.ssafy.backend.domain.post.controller;
 
-import com.ssafy.backend.domain.Post.dto.PostDto;
-import com.ssafy.backend.domain.Post.service.PostService;
+import com.ssafy.backend.domain.post.dto.PostDto;
+import com.ssafy.backend.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
