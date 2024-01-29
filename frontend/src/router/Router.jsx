@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         Component: ChallengePage
       },
       {
-        path: "challengedetail",
+        path: "challenge/:challengeId",
         Component: ChallengeDetailPage
       },
     ]
