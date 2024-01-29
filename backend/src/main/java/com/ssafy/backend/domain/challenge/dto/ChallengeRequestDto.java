@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @Data
 public class ChallengeRequestDto {
 
+    @JsonProperty("challenge_id")
+    private Long challengeId;
+
     @JsonProperty("user_id")
     private Long userId; // 회원 ID
 

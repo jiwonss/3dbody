@@ -70,5 +70,22 @@ public class ChallengeServiceImpl implements ChallengeService {
         return challengeRepository.save(challenge);
     }
 
+    // 챌린지 정보 수정
+    @Override
+    @Transactional
+    public Challenge updateChallenge(ChallengeRequestDto requestDto) {
+        log.info("챌린지 정보 수정 - serviceImpl");
+        Challenge challenge = Challenge.builder()
+                .challengeId(requestDto.getChallengeId())
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .thumbnail(requestDto.getThumbnail())
+                .image(requestDto.getImage())
+                .startDate(requestDto.getStartDate())
+                .endDate(requestDto.getEndDate())
+                .build();
+        return challengeRepository.save(challenge);
+    }
+
 
 }
