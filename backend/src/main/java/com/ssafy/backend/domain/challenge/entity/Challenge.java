@@ -21,7 +21,7 @@ public class Challenge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long challengeId; // 챌린지ID, BIGINT, Primary Key
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user; // 작성자ID, BIGINT, Foreign Key, NOT NULL
 
