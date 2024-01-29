@@ -2,14 +2,14 @@ package com.ssafy.backend.domain.challenge.controller;
 
 import com.ssafy.backend.domain.challenge.dto.ChallengeDetailResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
+import com.ssafy.backend.domain.challenge.dto.ChallengeRequestDto;
+import com.ssafy.backend.domain.challenge.entity.Challenge;
 import com.ssafy.backend.domain.challenge.service.ChallengeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,5 +55,25 @@ public class ChallengeController {
         ChallengeDetailResponseDto dto = challengeService.getChallengeDetail(challengeId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    // 챌린지 정보 등록
+    @PostMapping
+    public ResponseEntity<?> registerChallenge(@RequestBody ChallengeRequestDto requestDto) {
+        try {
+            log.info("챌린지 정보 등록 - requestDto : {}", requestDto);
+            Challenge challenge = challengeService.registerChallenge(requestDto);
+
+            return new ResponseEntity<>("챌린지 등록 성공! " + challenge, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
+    // 에러 핸들링
+    private ResponseEntity<String> exceptionHandling(Exception e) {
+        return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 }

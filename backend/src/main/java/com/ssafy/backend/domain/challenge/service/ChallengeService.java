@@ -2,6 +2,8 @@ package com.ssafy.backend.domain.challenge.service;
 
 import com.ssafy.backend.domain.challenge.dto.ChallengeDetailResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
+import com.ssafy.backend.domain.challenge.dto.ChallengeRequestDto;
+import com.ssafy.backend.domain.challenge.entity.Challenge;
 
 import java.util.List;
 
@@ -18,4 +20,8 @@ public interface ChallengeService {
 
     // 챌린지 상세 조회
     ChallengeDetailResponseDto getChallengeDetail(Long challengeId);
+
+    // 챌린지 정보 등록
+    Challenge registerChallenge(ChallengeRequestDto challengeRequestDto);
+
 }
