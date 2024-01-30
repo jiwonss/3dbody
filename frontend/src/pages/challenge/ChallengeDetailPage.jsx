@@ -26,12 +26,9 @@ const ChallengeDetail = () => {
   // challenge 가져오기
   const getChallenge = async () => {
     const res = (
-      await axios.get(
-        `${basicUrl}api/challenge/detail/${challengeId}`
-      )
+      await axios.get(`${basicUrl}api/challenge/detail/${challengeId}`)
     ).data;
     setChallenge(res);
-    console.log(res);
   };
 
   useEffect(() => {
@@ -59,12 +56,11 @@ const ChallengeDetail = () => {
         </div>
       </div>
       <hr />
-      <div className={`${isSelected === "info" ? null : "hidden"}`}>
+      {isSelected === "info" ? (
         <ChallengeDetailInfo />
-      </div>
-      <div className={`${isSelected === "comment" ? null : "hidden"}`}>
+      ) : (
         <ChallengeDetailComment />
-      </div>
+      )}
     </div>
   );
 };

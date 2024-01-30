@@ -8,7 +8,7 @@ const ChallengeCanParticipate = () => {
   const [challengeList, setChallengeList] = useState([]);
   const basicUrl = useRecoilValue(BasicUrlState)
 
-  // challenge 목록 가져오기
+  // 참여 가능한 challenge 목록 가져오기
   const getChallengeList = async () => {
     const res = (
       await axios.get(
