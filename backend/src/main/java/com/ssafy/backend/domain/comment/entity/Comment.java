@@ -6,6 +6,7 @@ import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
+@DynamicInsert
 @EqualsAndHashCode(of = {"commentId"}, callSuper = false)
 @NamedEntityGraph
 public class Comment extends BaseEntity {
@@ -55,6 +57,14 @@ public class Comment extends BaseEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Comment> children = new ArrayList<>();
+
+    public void updateUser(User user) {
+        this.user = user;
+    }
+
+    public void updateChallenge(Challenge challenge) {
+        this.challenge = challenge;
+    }
 
     public void updateParent(Comment comment) {
         this.parent = comment;
