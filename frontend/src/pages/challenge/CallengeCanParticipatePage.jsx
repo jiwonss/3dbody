@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ChallengeCard from "../../components/challenge/ChallengeCard";
+import { useRecoilValue } from 'recoil';
+import { BasicUrlState } from '../../recoil/common/BasicUrlState';
 
 const ChallengeCanParticipate = () => {
   const [challengeList, setChallengeList] = useState([]);
+  const basicUrl = useRecoilValue(BasicUrlState)
 
   // challenge 목록 가져오기
   const getChallengeList = async () => {
     const res = (
       await axios.get(
-        "http://i10c204.p.ssafy.io:8082/api/challenge/list/proceeding"
+        `${basicUrl}api/challenge/list/proceeding`
       )
     ).data;
     setChallengeList(res);
