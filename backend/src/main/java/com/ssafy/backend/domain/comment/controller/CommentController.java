@@ -1,16 +1,16 @@
 package com.ssafy.backend.domain.comment.controller;
 
 import com.ssafy.backend.domain.comment.dto.CommentRequestDto;
+import com.ssafy.backend.domain.comment.dto.CommentResponseDto;
 import com.ssafy.backend.domain.comment.entity.Comment;
 import com.ssafy.backend.domain.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,6 +34,22 @@ public class CommentController {
         } catch (Exception e) {
             return exceptionHandling(e);
         }
+    }
+
+    // 챌린지 댓글 목록
+    @GetMapping
+    public ResponseEntity<?> viewComments(@RequestParam("challenge_id") Long challengeId) {
+
+        try {
+
+            List<CommentResponseDto> commentList = commentService.viewComments(challengeId);
+
+            return new ResponseEntity<>(commentList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+
     }
 
     private ResponseEntity<?> exceptionHandling(Exception e) {

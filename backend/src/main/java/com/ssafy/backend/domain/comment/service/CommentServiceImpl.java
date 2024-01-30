@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.comment.service;
 import com.ssafy.backend.domain.challenge.entity.Challenge;
 import com.ssafy.backend.domain.challenge.repository.ChallengeRepository;
 import com.ssafy.backend.domain.comment.dto.CommentRequestDto;
+import com.ssafy.backend.domain.comment.dto.CommentResponseDto;
 import com.ssafy.backend.domain.comment.entity.Comment;
 import com.ssafy.backend.domain.comment.repository.CommentRepository;
 import com.ssafy.backend.domain.user.entity.User;
@@ -11,6 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -50,5 +56,30 @@ public class CommentServiceImpl implements CommentService {
 
         return commentRepository.save(comment);
 
+    }
+
+    // 챌린지 댓글 목록
+    @Override
+    @Transactional
+    public List<CommentResponseDto> viewComments(Long challengeId) {
+
+        List<Comment> comments = commentRepository.findByChallengeId(challengeId);
+
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        Map<Long, CommentResponseDto> commentDtoHashMap = new HashMap<>();
+
+        comments.forEach(c -> {
+            CommentResponseDto commentResponseDto = CommentResponseDto.toDto(c);
+            commentDtoHashMap.put(commentResponseDto.getCommentId(), commentResponseDto);
+
+            if (c.getParent() != null) {
+                commentDtoHashMap.get(c.getParent().getCommentId()).getChildren().add(commentResponseDto);
+            } else {
+                commentResponseDtoList.add(commentResponseDto);
+            }
+        });
+
+
+        return commentResponseDtoList;
     }
 }
