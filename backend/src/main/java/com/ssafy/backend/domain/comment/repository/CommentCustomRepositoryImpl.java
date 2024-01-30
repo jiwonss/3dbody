@@ -3,19 +3,17 @@ package com.ssafy.backend.domain.comment.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.backend.domain.comment.entity.Comment;
 import com.ssafy.backend.domain.comment.entity.QComment;
-import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 public class CommentCustomRepositoryImpl implements CommentCustomRepository {
 
-    JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     QComment qComment = QComment.comment;
-
-    public CommentCustomRepositoryImpl(EntityManager em) {
-        jpaQueryFactory = new JPAQueryFactory(em);
-    }
 
     // 챌린지 댓글 목록
     @Override
@@ -26,5 +24,17 @@ public class CommentCustomRepositoryImpl implements CommentCustomRepository {
                 .orderBy(qComment.parent.commentId.asc().nullsFirst(),
                         qComment.createdAt.asc())
                 .fetch();
+    }
+
+    @Override
+    public Optional<Comment> findCommentByIdWithParent(Long commentId) {
+
+        Comment comment = jpaQueryFactory.select(qComment)
+                .from(qComment)
+                .leftJoin(qComment.parent).fetchJoin()
+                .where(qComment.commentId.eq(commentId))
+                .fetchOne();
+
+        return Optional.ofNullable(comment);
     }
 }

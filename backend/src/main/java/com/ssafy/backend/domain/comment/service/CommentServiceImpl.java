@@ -94,4 +94,29 @@ public class CommentServiceImpl implements CommentService {
         comment.updateContent(requestDto.getContent());
 
     }
+
+    // 챌린지 댓글 삭제
+    @Override
+    @Transactional
+    public void deleteComment(Long commentId) {
+
+        Comment comment = commentRepository.findCommentByIdWithParent(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글 ID " + commentId + "를 찾을 수 없습니다."));
+
+        if (comment.getChildren().isEmpty()) { // 자식이 없으면 삭제 가능한 조상 댓글 찾아서 삭제
+            commentRepository.delete(getDeletableAncestorComment(comment));
+        } else { // 자식이 있으면 상태만 변경
+            comment.changeIsDeleted(true);
+        }
+
+    }
+
+    private Comment getDeletableAncestorComment(Comment comment) {
+        Comment parent = comment.getParent(); // 현재 댓글의 부모
+        if (parent != null && parent.getChildren().size() == 1 && parent.isDeleted()) {
+            // 부모가 있고, 부모의 자식이 1개(지금삭제하는 댓글)이고, 부모의 삭제 상태가 TRUE인 댓글이라면 재귀
+            return getDeletableAncestorComment(parent);
+        }
+        return comment; // 삭제해야하는 댓글 반환
+    }
 }
