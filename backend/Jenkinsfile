@@ -11,6 +11,9 @@ pipeline {
         USERNAME = "${env.DB_USER}"
         DB_PASSWORD = "${env.DB_PASSWORD}"
         JWT_SECRET = "${env.JWT_SECRET}"
+        REDIS_HOST = "${REDIS_HOST}"
+        REDIS_PASSWORD = "${REDIS_PASSWORD}"
+        REDIS_PORT = "${REDIS_PORT}"
     }
     stages {
         stage('Checkout') {
@@ -109,6 +112,9 @@ pipeline {
                                 -e spring.datasource.username=${USERNAME} \
                                 -e DB_PASSWORD=${DB_PASSWORD} \
                                 -e JWT_SECRET=${JWT_SECRET} \
+                                -e REDIS_HOST=${REDIS_HOST} \
+                                -e REDIS_PASSWORD=${REDIS_PASSWORD} \
+                                -e REDIS_PORT=${REDIS_PORT} \
                                 ${DOCKER_USER_ID}/back"
                         } catch(Exception e) {
                             sh "docker restart back || true"  // Ignore error if container doesn't exist
