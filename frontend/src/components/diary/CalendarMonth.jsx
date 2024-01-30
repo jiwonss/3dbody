@@ -3,9 +3,9 @@ import { useRecoilState } from "recoil";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 
 const CalendarMonth = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date()); // 반환 정보 : Mon Jan 29 2024 ...
-  const [calendar, setCalendar] = useState([]);
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState); // 리코일 상태 관리
+  const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2])); // 반환 정보 : Mon Jan 29 2024 ...
+  const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
     generateCalendar();
