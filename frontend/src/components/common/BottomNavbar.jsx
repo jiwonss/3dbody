@@ -1,9 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 import { CalendarDaysIcon, Cog6ToothIcon, HomeIcon, TrophyIcon } from "@heroicons/react/24/solid";
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { bottomNavState } from '../../recoil/common/BottomNavState';
 
 const BottomNavbar = () => {
-  const [isSelected, setIsSelected] = useState("Home")
+  const [isSelected, setIsSelected] = useRecoilState(bottomNavState)
 
   const onClickSelected = (page) => {
     setIsSelected(page)
@@ -13,7 +14,7 @@ const BottomNavbar = () => {
     <>
     <div className="fixed bottom-0 left-0 right-0">
       <div className='flex justify-between p-4 bg-white border-2'>
-        <Link to="/" onClick={() => onClickSelected("Home")}>
+        <Link to="/home" onClick={() => onClickSelected("Home")}>
           <HomeIcon className={ `w-6 h-6 ${isSelected === "Home" ? 'text-green-700' : 'text-red-700'}`}/>
         </Link>
         <Link to="/diary" onClick={() => onClickSelected("Diary")}>

@@ -9,12 +9,18 @@ import DiaryPage from '../pages/diary/DiaryPage';
 import ChallengePage from "../pages/challenge/ChallengePage"
 import ChallengeDetailPage from './../pages/challenge/ChallengeDetailPage';
 import DiaryTrainingPage from '../pages/diary/DiaryTrainingPage';
+import DiaryFoodPage from '../pages/diary/DiaryFoodPage';
+import HomePage from '../pages/home/homePage';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element:<App/>,
-    children:[
+    children: [
+      {
+        path: "/home",
+        Component: HomePage
+      },
       {
         path: "/mypage",
         Component: MyPage
@@ -38,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/diary/training/:year/:month/:day",
         Component: DiaryTrainingPage
+      },
+      {
+        path: "/diary/food/:year/:month/:day",
+        Component: DiaryFoodPage
       },
       {
         path: "/challenge",

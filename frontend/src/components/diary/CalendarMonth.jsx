@@ -60,18 +60,17 @@ const CalendarMonth = () => {
   const onClickDate = (dayInfo) => {
     // 선택 날짜 변경
     if (dayInfo[1] === "cur") {
-      setSelectedDate([currentMonth.getFullYear(), currentMonth.getMonth(), dayInfo[0]]);
+      setSelectedDate([currentMonth.getFullYear(), currentMonth.getMonth() + 1, dayInfo[0]]);
     } else if (dayInfo[1] === "prev") {
       setSelectedDate([
         currentMonth.getMonth() === 0 ? currentMonth.getFullYear() - 1 : currentMonth.getFullYear(),
-        currentMonth.getMonth() === 0 ? 11 : currentMonth.getMonth() - 1,
+        currentMonth.getMonth() === 0 ? 12 : currentMonth.getMonth(),
         dayInfo[0]]);
       handlePrevMonth()
-      console.log(selectedDate)
     } else if (dayInfo[1] === "next") {
       setSelectedDate([
         currentMonth.getMonth() === 11 ? currentMonth.getFullYear() + 1 : currentMonth.getFullYear(),
-        currentMonth.getMonth() === 11 ? 0 : currentMonth.getMonth() + 1,
+        currentMonth.getMonth() === 11 ? 1 : currentMonth.getMonth() + 2,
         dayInfo[0]]);
       handleNextMonth()
     }
@@ -81,7 +80,7 @@ const CalendarMonth = () => {
     // 선택 날짜 표시용 ( bool )
     return (
       currentMonth.getFullYear() === selectedDate[0] &&
-      currentMonth.getMonth() === selectedDate[1] &&
+      currentMonth.getMonth() + 1 === selectedDate[1] &&
       dayInfo[0] === selectedDate[2] &&
       dayInfo[1] === "cur"
     );
