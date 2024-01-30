@@ -109,6 +109,9 @@ pipeline {
                                 -e spring.datasource.username=${USERNAME} \
                                 -e DB_PASSWORD=${DB_PASSWORD} \
                                 -e JWT_SECRET=${JWT_SECRET} \
+                                -e REDIS_HOST=${REDIS_HOST} \
+                                -e REDIS_PASSWORD=${REDIS_PASSWORD} \
+                                -e REDIS_PORT=${REDIS_PORT} \
                                 ${DOCKER_USER_ID}/back"
                         } catch(Exception e) {
                             sh "docker restart back || true"  // Ignore error if container doesn't exist

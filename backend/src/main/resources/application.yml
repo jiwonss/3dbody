@@ -2,23 +2,22 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://c204.cjw2k0eykv8p.ap-northeast-2.rds.amazonaws.com:3306/backend?serverTimezone=UTC
-#    username: ${DB_USER}
-#    password: ${DB_PASSWORD}
-    username: c204
-    password: c204ssafy
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
       repositories:
         enabled: false
 
+
 jwt:
-#  secret: ${JWT_SECRET}
-  secret: 74744906e7fb955f341690a49787fc17fd5bd846e5b11cbc3f562dc1e828d5d104e1ce7472f4e4cafafa93628cc46cc71ed24fd3f2d86359bd9884066c5e3f95
+  secret: ${JWT_SECRET}
   expired-min:
     access: 60   # access token 만료제한시간 60분 (1시간)
     refresh: 10080  # refresh token 만료제한시간 10080분 (7일)
