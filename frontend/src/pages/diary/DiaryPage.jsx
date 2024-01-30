@@ -15,8 +15,7 @@ const DiaryPage = () => {
   return (
     <div>
       <PageTitle pageTitle={"다이어리"} />
-
-      <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} />
+      <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"}/>
       {isSelected === "left" ? <CalendarMonth /> : ""}
       <hr className="my-4" />
       
