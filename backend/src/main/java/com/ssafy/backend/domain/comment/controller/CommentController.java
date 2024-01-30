@@ -52,6 +52,21 @@ public class CommentController {
 
     }
 
+    // 챌린지 댓글 수정
+    @PutMapping
+    public ResponseEntity<?> updateComments(@RequestBody CommentRequestDto requestDto) {
+
+        try {
+
+            commentService.updateComment(requestDto);
+
+            return new ResponseEntity<>("챌린지 댓글 수정 성공!", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
