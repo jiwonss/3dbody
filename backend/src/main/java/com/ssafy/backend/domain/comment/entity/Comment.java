@@ -37,7 +37,7 @@ public class Comment extends BaseEntity {
 
     @ColumnDefault("FALSE")
     @Column(nullable = false)
-    private Boolean isDeleted; // 삭제여부, BOOLEAN, NOTNULL, DEFAULT FALSE
+    private boolean isDeleted; // 삭제여부, BOOLEAN, NOTNULL, DEFAULT FALSE
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
@@ -51,6 +51,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "parent_id")
     private Comment parent;
 
+    @Builder.Default
+    @ToString.Exclude
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Comment> children = new ArrayList<>();
 
