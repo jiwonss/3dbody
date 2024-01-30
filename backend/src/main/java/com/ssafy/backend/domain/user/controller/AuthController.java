@@ -15,6 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_EMAIL;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/auth")
@@ -40,7 +45,11 @@ public class AuthController {
         log.info("로그인 결과(UserInfoDto) : {}", userInfoDto);
         log.info("로그인 결과(TokenDto) : {}", tokenDto);
 
-        return ResponseEntity.ok(Response.success(tokenDto));
+        Map<String,Object> map = new HashMap<>();
+        map.put("userInfo", userInfoDto);
+        map.put("tokenDto", tokenDto);
+
+        return ResponseEntity.ok(Response.success(map));
     }
 
     @PostMapping("/logout")
@@ -77,7 +86,7 @@ public class AuthController {
     @GetMapping
     public ResponseEntity duplicateCheckEmail(@RequestParam String email) {
         if (authService.duplicateCheckEmail(email)) {
-            return ResponseEntity.ok(Response.fail("", "중복된 이메일이 존재합니다."));
+            return ResponseEntity.ok(Response.fail(DUPLICATED_EMAIL.getHttpStatus().toString(), DUPLICATED_EMAIL.getErrorMessage()));
         }
         return ResponseEntity.ok(Response.success());
     }
