@@ -3,16 +3,19 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CalendarIcon, UsersIcon, FlagIcon } from "@heroicons/react/24/solid";
 import Button from "./../../components/common/Button";
+import { useRecoilValue } from "recoil";
+import { BasicUrlState } from "../../recoil/common/BasicUrlState";
 
 const ChallengeDetailInfo = () => {
   const { challengeId } = useParams();
   const [challenge, setChallenge] = useState({});
-
+  const basicUrl = useRecoilValue(BasicUrlState);
+  
   // challenge 가져오기
   const getChallenge = async () => {
     const res = (
       await axios.get(
-        `http://i10c204.p.ssafy.io:8082/api/challenge/detail/${challengeId}`
+        `${basicUrl}api/challenge/detail/${challengeId}`
       )
     ).data;
     setChallenge(res);

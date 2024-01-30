@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Button = ({ buttonStyle, onClick, buttonName }) => {
+const Button = ({ buttonStyle, onClick, buttonName, type }) => {
   let buttonCss = "";
 
   if (buttonStyle === "small") {
@@ -10,7 +10,7 @@ const Button = ({ buttonStyle, onClick, buttonName }) => {
   }
 
   return (
-    <button className={buttonCss} onClick={onClick}>
+    <button className={buttonCss} onClick={onClick} type={type}>
       {buttonName}
     </button>
   );
@@ -20,6 +20,7 @@ Button.propTypes = {
   buttonStyle: PropTypes.string,
   onClick: PropTypes.func,
   buttonName: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default Button;
