@@ -26,30 +26,21 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody SignupRequestDto signupRequestDto) {
-        log.info("들어옴");
+        log.info("회원가입 : {}", signupRequestDto);
         authService.signup(signupRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) {
+        log.info("로그인 : {}", loginRequestDto);
+
         UserInfoDto userInfoDto = authService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         TokenDto tokenDto = jwtService.issueToken(userInfoDto);
+        log.info("로그인 결과(UserInfoDto) : {}", userInfoDto);
+        log.info("로그인 결과(TokenDto) : {}", tokenDto);
 
-        Cookie accessToken = new Cookie("accessToken", tokenDto.getAccessToken());
-        accessToken.setSecure(true);
-        accessToken.setHttpOnly(true);
-        accessToken.setMaxAge((int)tokenDto.getAccessTokenExpired());
-        accessToken.setPath("/");
-        Cookie refreshToken = new Cookie("refreshToken", tokenDto.getRefreshToken());
-        refreshToken.setSecure(true);
-        refreshToken.setHttpOnly(true);
-        refreshToken.setMaxAge((int)tokenDto.getRefreshTokenExpired());
-        refreshToken.setPath("/");
-        response.addCookie(accessToken);
-        response.addCookie(refreshToken);
-
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok(Response.success(tokenDto));
     }
 
     @PostMapping("/logout")
