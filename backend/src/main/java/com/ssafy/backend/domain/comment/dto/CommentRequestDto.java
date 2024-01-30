@@ -6,16 +6,10 @@ import lombok.Data;
 @Data
 public class CommentRequestDto {
 
-    @JsonProperty("comment_id")
-    private Long commentId;
-
     private String content;
 
     @JsonProperty("user_id")
     private Long userId;
-
-    @JsonProperty("challenge_id")
-    private Long challengeId;
 
     @JsonProperty("parent_id")
     private Long parentId;

@@ -21,13 +21,14 @@ public class CommentController {
     private final CommentService commentService;
 
     // 챌린지 댓글 등록
-    @PostMapping
-    public ResponseEntity<?> writeComment(@RequestBody CommentRequestDto requestDto) {
+    @PostMapping("/{challenge_id}")
+    public ResponseEntity<?> writeComment(@PathVariable("challenge_id") Long challengeId,
+                                          @RequestBody CommentRequestDto requestDto) {
         try {
 
             log.info("챌린지 댓글 등록 API 호출 - 요청 데이터 : {}", requestDto);
 
-            Comment comment = commentService.writeComment(requestDto);
+            Comment comment = commentService.writeComment(challengeId, requestDto);
 
             return new ResponseEntity<>("댓글 등록 성공! " + comment, HttpStatus.OK);
 
@@ -37,8 +38,8 @@ public class CommentController {
     }
 
     // 챌린지 댓글 목록
-    @GetMapping
-    public ResponseEntity<?> viewComments(@RequestParam("challenge_id") Long challengeId) {
+    @GetMapping("/{challenge_id}")
+    public ResponseEntity<?> viewComments(@PathVariable("challenge_id") Long challengeId) {
 
         try {
 
@@ -53,12 +54,13 @@ public class CommentController {
     }
 
     // 챌린지 댓글 수정
-    @PutMapping
-    public ResponseEntity<?> updateComments(@RequestBody CommentRequestDto requestDto) {
+    @PutMapping("/{comment_id}")
+    public ResponseEntity<?> updateComments(@PathVariable("comment_id") Long commentId,
+                                            @RequestBody CommentRequestDto requestDto) {
 
         try {
 
-            commentService.updateComment(requestDto);
+            commentService.updateComment(commentId, requestDto);
 
             return new ResponseEntity<>("챌린지 댓글 수정 성공!", HttpStatus.OK);
 

@@ -9,11 +9,11 @@ import java.util.List;
 public interface CommentService {
 
     // 챌린지 댓글 등록
-    Comment writeComment(CommentRequestDto requestDto);
+    Comment writeComment(Long challengeId, CommentRequestDto requestDto);
 
     // 챌린지 댓글 목록
     List<CommentResponseDto> viewComments(Long challengeId);
 
     // 챌린지 댓글 수정
-    void updateComment(CommentRequestDto requestDto);
+    void updateComment(Long commentId, CommentRequestDto requestDto);
 }
