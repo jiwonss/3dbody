@@ -8,7 +8,8 @@ import { RecoilRoot } from 'recoil';
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RecoilRoot>
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} 
+      fallbackElement={"로딩중입니다."}/>
     </React.StrictMode>
   </RecoilRoot>
 );

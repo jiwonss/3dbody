@@ -15,7 +15,7 @@ const Menus = () => {
         {
           menuicon: <LockClosedIcon className="w-6 h-6" />,
           menutitle: "비밀번호 변경",
-          menuurl: "/",
+          menuurl: "/passwordchange",
         },
         {
           menuicon: <Squares2X2Icon className="w-6 h-6" />,

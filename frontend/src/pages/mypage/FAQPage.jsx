@@ -4,11 +4,11 @@ import FAQ from "./../../components/mypage/FAQ";
 import { useEffect, useState } from "react";
 
 const FAQPage = () => {
-  const [questions, setQuestionList] = useState(null);
+  const [questionList, setQuestionList] = useState(null);
 
   const getQuestionList = async () => {
     return await axios
-      .get("http://i10c204.p.ssafy.io:8082/api/notice/posts/1")
+      .get("http://i10c204.p.ssafy.io:8082/api/faq/posts/2")
       .then((response) => {
         const res = [];
         res.push(response.data);
@@ -28,7 +28,7 @@ const FAQPage = () => {
   return (
     <div>
       <BackButton />
-      {questions}
+      {questionList}
     </div>
   );
 };

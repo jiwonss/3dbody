@@ -11,12 +11,17 @@ import ChallengeDetailPage from './../pages/challenge/ChallengeDetailPage';
 import DiaryTrainingPage from '../pages/diary/DiaryTrainingPage';
 import DiaryFoodPage from '../pages/diary/DiaryFoodPage';
 import HomePage from '../pages/home/homePage';
+import PasswordChangePage from "../pages/mypage/PasswordChangePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element:<App/>,
     children: [
+      {
+        path:"/passwordchange",
+        Component: PasswordChangePage
+      },
       {
         path: "/home",
         Component: HomePage
