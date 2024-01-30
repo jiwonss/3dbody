@@ -57,9 +57,24 @@ const CalendarMonth = () => {
     );
   };
 
-  const onClickDate = (date) => {
+  const onClickDate = (dayInfo) => {
     // 선택 날짜 변경
-    setSelectedDate([currentMonth.getFullYear(), currentMonth.getMonth(), date]);
+    if (dayInfo[1] === "cur") {
+      setSelectedDate([currentMonth.getFullYear(), currentMonth.getMonth(), dayInfo[0]]);
+    } else if (dayInfo[1] === "prev") {
+      setSelectedDate([
+        currentMonth.getMonth() === 0 ? currentMonth.getFullYear() - 1 : currentMonth.getFullYear(),
+        currentMonth.getMonth() === 0 ? 11 : currentMonth.getMonth() - 1,
+        dayInfo[0]]);
+      handlePrevMonth()
+      console.log(selectedDate)
+    } else if (dayInfo[1] === "next") {
+      setSelectedDate([
+        currentMonth.getMonth() === 11 ? currentMonth.getFullYear() + 1 : currentMonth.getFullYear(),
+        currentMonth.getMonth() === 11 ? 0 : currentMonth.getMonth() + 1,
+        dayInfo[0]]);
+      handleNextMonth()
+    }
   };
 
   const isSelectedDate = (dayInfo) => {
@@ -118,7 +133,7 @@ const CalendarMonth = () => {
                 {row.map((dayInfo, cellIndex) => (
                   <td
                     key={cellIndex}
-                    onClick={() => onClickDate(dayInfo[0])}
+                    onClick={() => onClickDate(dayInfo)}
                     className={`
                       text-center
                       ${dayInfo[1] !== "cur" ? "text-gray-300" : ""}
@@ -127,9 +142,10 @@ const CalendarMonth = () => {
                   >
                     <div
                       className={`
-                        grid place-items-center
-                        ${isSelectedDate(dayInfo) ? "bg-green-500 rounded-full" : ""}
-                        h-8 w-8
+                        flex justify-center items-center
+                        ${isSelectedDate(dayInfo) ? "bg-green-500 rounded-full text-white" : ""}
+                        w-8 h-8
+                        mx-auto
                       `}
                     >
                       {dayInfo[0]}

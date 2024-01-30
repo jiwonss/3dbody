@@ -8,6 +8,7 @@ import FAQPage from "../pages/mypage/FAQPage";
 import DiaryPage from '../pages/diary/DiaryPage';
 import ChallengePage from "../pages/challenge/ChallengePage"
 import ChallengeDetailPage from './../pages/challenge/ChallengeDetailPage';
+import DiaryTrainingPage from '../pages/diary/DiaryTrainingPage';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/diary",
         Component: DiaryPage
+      },
+      {
+        path: "/diary/training/:year/:month/:day",
+        Component: DiaryTrainingPage
       },
       {
         path: "/challenge",
