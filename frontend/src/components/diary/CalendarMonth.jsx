@@ -19,8 +19,8 @@ const CalendarMonth = () => {
 
     const prevMonthDays =
       startDay > 0
-        ? new Array(startDay) // 첫째주 첫째날 이전의 빈칸 채울 리스트 생성
-            .fill(null) // 우선 null 값 채우고, 지난달 마지막 주 숫자로 변경
+        ? new Array(startDay) // 첫째주 첫째날 이전의 빈칸 채울 리스트 생성 !
+            .fill(null) // 우선 null 값 채우고, 지난달 마지막 주 숫자로 변경 !
             .map((_, index) => [
               new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 0).getDate() -
                 startDay +
