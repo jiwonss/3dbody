@@ -1,9 +1,12 @@
-import Button from "./Button";
-import { useState } from "react";
+// import Button from "./Button";
+import PropTypes from "prop-types";
+// import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { toggleState } from "../../recoil/common/ToggleState";
 
-const ToggleTap = ({leftTitle, rightTitle}) => {
-  const [isSelected, setIsSelected] = useState('left')
-  
+const ToggleTap = ({ leftTitle, rightTitle }) => {
+  const [isSelected, setIsSelected] = useRecoilState(toggleState);
+
   // 정보 선택 함수
   const onClickLeftSelected = () => {
     setIsSelected("left");
@@ -13,14 +16,29 @@ const ToggleTap = ({leftTitle, rightTitle}) => {
   const onClickRightSelected = () => {
     setIsSelected("right");
   };
-  
+
   return (
     <div className="flex">
-      <p className={`${isSelected === "left" ? "font-bold" : null}`} onClick={() => onClickLeftSelected()}>{leftTitle}</p>
-      <p className={`${isSelected === "right" ? "font-bold" : null}`} onClick={() => onClickRightSelected()}>{rightTitle}</p>
+      <p
+        className={`${isSelected === "left" ? "font-bold" : null}`}
+        onClick={() => onClickLeftSelected()}
+      >
+        {leftTitle}
+      </p>
+      <p
+        className={`${isSelected === "right" ? "font-bold" : null}`}
+        onClick={() => onClickRightSelected()}
+      >
+        {rightTitle}
+      </p>
     </div>
-  )
-}
+  );
+};
+
+ToggleTap.propTypes = {
+  leftTitle: PropTypes.string,
+  rightTitle: PropTypes.string,
+};
 
 // const ToggleTap = () => {
 //   const [isLeftSelected, SetisLeftSelected] = useState(true);
