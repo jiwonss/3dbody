@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 
 const CalendarMonth = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date()); // 반환 정보 : Mon Jan 29 2024 ...
   const [calendar, setCalendar] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState); // 리코일 상태 관리
 
   useEffect(() => {
     generateCalendar();
@@ -18,32 +20,35 @@ const CalendarMonth = () => {
     const prevMonthDays =
       startDay > 0
         ? new Array(startDay) // 첫째주 첫째날 이전의 빈칸 채울 리스트 생성
-            .fill(null) // 우선 null 값 채우고, 지난달 마지막 주 숫자로 채우기
+            .fill(null) // 우선 null 값 채우고, 지난달 마지막 주 숫자로 변경
             .map((_, index) => [
               new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 0).getDate() -
                 startDay +
                 index +
                 1,
-              false,
+              "prev",
             ])
         : [];
-    const currentMonthDays = new Array(endDay).fill(null).map((_, index) => [index + 1, true]);
-    const nextMonthDays = new Array(7 - (endOfMonth.getDay() + 1))
+    const currentMonthDays = new Array(endDay).fill(null).map((_, index) => [index + 1, "cur"]);
+    const nextMonthDays = new Array(7 - (endOfMonth.getDay() + 1)) // 마지막주 마지막날 이후의 빈칸 채울 리스트 생성
       .fill(null)
-      .map((_, index) => [index + 1, false]);
+      .map((_, index) => [index + 1, "next"]); // 다음달은 1부터 채우면 됨
 
     setCalendar([...prevMonthDays, ...currentMonthDays, ...nextMonthDays]);
   };
 
   const handlePrevMonth = () => {
+    // 전월 변경 버튼
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
+    // 익월 변경 버튼
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
   };
 
   const isToday = (date) => {
+    // 오늘 날짜 표시용 ( bool )
     const today = new Date();
     return (
       currentMonth.getFullYear() === today.getFullYear() &&
@@ -53,8 +58,23 @@ const CalendarMonth = () => {
   };
 
   const onClickDate = (date) => {
-    setSelectedDate(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), date));
+    // 선택 날짜 변경
+    setSelectedDate([currentMonth.getFullYear(), currentMonth.getMonth(), date]);
   };
+
+  const isSelectedDate = (dayInfo) => {
+    // 선택 날짜 표시용 ( bool )
+    return (
+      currentMonth.getFullYear() === selectedDate[0] &&
+      currentMonth.getMonth() === selectedDate[1] &&
+      dayInfo[0] === selectedDate[2] &&
+      dayInfo[1] === "cur"
+    );
+  };
+
+  useEffect(() => {
+    console.log(selectedDate);
+  }, [selectedDate]);
 
   return (
     <div className="max-w-screen-sm mx-auto mt-2">
@@ -70,7 +90,7 @@ const CalendarMonth = () => {
           &gt;
         </button>
       </div>
-      {/* 요일, 일 표시 */}
+      {/* 요일, 일 표시 ! */}
       <table className="w-full mx-auto">
         <thead>
           <tr>
@@ -100,12 +120,20 @@ const CalendarMonth = () => {
                     key={cellIndex}
                     onClick={() => onClickDate(dayInfo[0])}
                     className={`
-                    text-center 
-                    ${dayInfo[1] === false ? "text-gray-300" : ""}
-                    ${isToday(dayInfo[0]) ? "text-green-600" : ""}
-                  `}
+                      text-center
+                      ${dayInfo[1] !== "cur" ? "text-gray-300" : ""}
+                      ${isToday(dayInfo[0]) ? "text-green-600" : ""}
+                    `}
                   >
-                    {dayInfo[0]}
+                    <div
+                      className={`
+                        grid place-items-center
+                        ${isSelectedDate(dayInfo) ? "bg-green-500 rounded-full" : ""}
+                        h-8 w-8
+                      `}
+                    >
+                      {dayInfo[0]}
+                    </div>
                   </td>
                 ))}
               </tr>
