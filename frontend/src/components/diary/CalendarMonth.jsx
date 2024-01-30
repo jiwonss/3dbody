@@ -90,7 +90,7 @@ const CalendarMonth = () => {
           &gt;
         </button>
       </div>
-      {/* 요일, 일 표시 */}
+      {/* 요일, 일 표시 ! */}
       <table className="w-full mx-auto">
         <thead>
           <tr>
