@@ -9,16 +9,12 @@ const ChallengeDetailComment = () => {
   const { challengeId } = useParams();
   const [commentList, setCommentList] = useState([]);
   const basicUrl = useRecoilValue(BasicUrlState);
-  
+
   // 댓글 리스트 가져오기
   const getCommentList = async () => {
-    const res = (
-      await axios.get(
-        `${basicUrl}api/comment/${challengeId}`
-      )
-    ).data;
+    const res = (await axios.get(`${basicUrl}api/comment/${challengeId}`)).data;
     setCommentList(res);
-    console.log(res)
+    console.log(res);
   };
 
   // onMount 느낌으로 화면 켜질 때
@@ -33,13 +29,9 @@ const ChallengeDetailComment = () => {
         content={comment.content}
         nickname={comment.nickname}
       />
-    )
-  })
-  return (
-    <div>
-      {comments}
-    </div>
-  );
+    );
+  });
+  return <div>{comments}</div>;
 };
 
 export default ChallengeDetailComment;
