@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Button from "./../../components/common/Button";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import { userState } from "../../recoil/common/UserState";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const baseUrl = useRecoilValue(baseUrlState);
+  const setUser = useSetRecoilState(userState);
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -32,6 +34,10 @@ const LoginPage = () => {
         localStorage.setItem("key", res.data.dataBody.tokenDto.accessToken);
         localStorage.setItem("userId", res.data.dataBody.userInfo.userId);
         localStorage.setItem("isLogin", true);
+        setUser({
+          token: res.data.dataBody.tokenDto.accessToken,
+          info: res.data.dataBody.userInfo,
+        });
         window.location.replace("/");
       });
   };

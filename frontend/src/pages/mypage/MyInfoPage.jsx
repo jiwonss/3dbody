@@ -1,40 +1,19 @@
+import { useRecoilValue } from "recoil";
 import BackButton from "./../../components/common/BackButton";
+import { userState } from "../../recoil/common/UserState";
+import MyInfo from "../../components/mypage/MyInfo";
 
 const MyInfoPage = () => {
-  const user = {};
+  const user = useRecoilValue(userState);
+  console.log(user)
   return (
     <div>
       <BackButton />
-      <div>
-        <p>이름</p>
-        <p>{user.name}</p>
-        <hr />
-      </div>
-      <div>
-        <p>이메일</p>
-        <p>{user.email}</p>
-        <hr />
-      </div>
-      <div>
-        <p>닉네임</p>
-        <p>{user.name}</p>
-        <hr />
-      </div>
-      <div>
-        <p>성별</p>
-        <p>{user.name}</p>
-        <hr />
-      </div>
-      <div>
-        <p>신장</p>
-        <p>{user.name}</p>
-        <hr />
-      </div>
-      <div>
-        <p>생년월일</p>
-        <p>{user.name}</p>
-        <hr />
-      </div>
+      <MyInfo category="이메일" data={user.info.email}/>
+      <MyInfo category="이메일" data={user.info.email}/>
+      <MyInfo category="이메일" data={user.info.email}/>
+      <MyInfo category="이메일" data={user.info.email}/>
+      <MyInfo category="이메일" data={user.info.email}/>
     </div>
   );
 };

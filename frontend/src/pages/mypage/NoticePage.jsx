@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
-import BackButton from "../../components/common/BackButton"
-import Notice from "../../components/mypage/Notice"
+import BackButton from "../../components/common/BackButton";
+import Notice from "../../components/mypage/Notice";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const NoticePage = () => {
   const [noticeList, setnoticeList] = useState(null);
+  const baseUrl = useRecoilValue(baseUrlState);
 
   const getNoticeList = async () => {
-    return await axios
-      .get("http://i10c204.p.ssafy.io:8082/api/notice/posts/1")
-      .then((response) => {
-        const res = [];
-        res.push(response.data);
-        console.log(res);
-        setnoticeList(
-          res.map((notice) => {
-            return <Notice key={notice.postId} notice={notice} />;
-          })
-        );
-      });
+    return await axios.get(`${baseUrl}api/notice/posts/list`).then((res) => {
+      setnoticeList(
+        res.data.map((notice) => {
+          return <Notice key={notice.postId} notice={notice} />;
+        })
+      );
+    });
   };
 
   useEffect(() => {
@@ -26,11 +24,11 @@ const NoticePage = () => {
   }, []);
 
   return (
-      <div>
-        <BackButton/>
-        {noticeList}
-      </div>
-  ) 
-}
+    <div>
+      <BackButton />
+      {noticeList}
+    </div>
+  );
+};
 
-export default NoticePage
+export default NoticePage;
