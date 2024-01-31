@@ -2,12 +2,12 @@ import { useState } from "react";
 import Button from "./../../components/common/Button";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { BasicUrlState } from "../../recoil/common/BasicUrlState";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const basicUrl = useRecoilValue(BasicUrlState);
+  const baseUrl = useRecoilValue(baseUrlState);
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -20,7 +20,7 @@ const LoginPage = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     await axios
-      .post(`${basicUrl}api/auth/login`, {
+      .post(`${baseUrl}api/auth/login`, {
         email: email,
         password: password,
       })

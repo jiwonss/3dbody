@@ -5,13 +5,13 @@ import ChallengeDetailInfo from "./ChallengeDetailInfoPage";
 import ChallengeDetailComment from "./ChallengeDetailCommentPage";
 import BackButton from "./../../components/common/BackButton";
 import { useRecoilValue } from "recoil";
-import { BasicUrlState } from "../../recoil/common/BasicUrlState";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const ChallengeDetail = () => {
   const { challengeId } = useParams();
   const [isSelected, setIsSelected] = useState("info");
   const [challenge, setChallenge] = useState({});
-  const basicUrl = useRecoilValue(BasicUrlState);
+  const baseUrl = useRecoilValue(baseUrlState);
 
   // 정보 선택 함수
   const onClickInfoSelected = () => {
@@ -25,9 +25,7 @@ const ChallengeDetail = () => {
 
   // challenge 가져오기
   const getChallenge = async () => {
-    const res = (
-      await axios.get(`${basicUrl}api/challenge/detail/${challengeId}`)
-    ).data;
+    const res = (await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)).data;
     setChallenge(res);
   };
 
@@ -56,11 +54,7 @@ const ChallengeDetail = () => {
         </div>
       </div>
       <hr />
-      {isSelected === "info" ? (
-        <ChallengeDetailInfo />
-      ) : (
-        <ChallengeDetailComment />
-      )}
+      {isSelected === "info" ? <ChallengeDetailInfo /> : <ChallengeDetailComment />}
     </div>
   );
 };

@@ -2,17 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ChallengeCard from "../../components/challenge/ChallengeCard";
 import { useRecoilValue } from "recoil";
-import { BasicUrlState } from "../../recoil/common/BasicUrlState";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const ChallengeParticipating = () => {
   const [challengeList, setChallengeList] = useState([])
-  const basicUrl = useRecoilValue(BasicUrlState);
+  const baseUrl = useRecoilValue(baseUrlState);
 
   // 참여중인 challenge 목록 가져오기
   const getChallengeList = async () => {
     const res = (
       await axios.get(
-        `${basicUrl}api/challenge/list/${localStorage.getItem("userId")}`
+        `${baseUrl}api/challenge/list/${localStorage.getItem("userId")}`
       )
     ).data;
     setChallengeList(res)
