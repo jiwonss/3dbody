@@ -4,6 +4,7 @@ import com.ssafy.backend.domain.challenge.dto.ChallengeDetailResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
 import com.ssafy.backend.domain.challenge.dto.ChallengeRequestDto;
 import com.ssafy.backend.domain.challenge.entity.Challenge;
+import com.ssafy.backend.domain.challenge.entity.UserChallenge;
 import com.ssafy.backend.domain.challenge.repository.ChallengeRepository;
 import com.ssafy.backend.domain.challenge.repository.UserChallengeRepository;
 import com.ssafy.backend.domain.user.entity.User;
@@ -91,11 +92,30 @@ public class ChallengeServiceImpl implements ChallengeService {
         return challengeRepository.save(challenge);
     }
 
+    // 챌린지 정보 삭제
     @Override
     @Transactional
     public void deleteChallenge(Long challengeId) {
         userChallengeRepository.deleteAllByChallenge_ChallengeId(challengeId);
         challengeRepository.deleteById(challengeId);
+    }
+
+    // 챌린지 참여 신청
+    @Override
+    public void applyChallenge(Long challengeId, Long userId) {
+
+        User user = userRepository.getReferenceById(userId);
+
+        Challenge challenge = challengeRepository.getReferenceById(challengeId);
+
+        UserChallenge userChallenge = UserChallenge
+                .builder()
+                .user(user)
+                .challenge(challenge)
+                .build();
+
+        userChallengeRepository.save(userChallenge);
+
     }
 
 
