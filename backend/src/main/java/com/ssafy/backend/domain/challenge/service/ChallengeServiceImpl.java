@@ -134,12 +134,14 @@ public class ChallengeServiceImpl implements ChallengeService {
     public void leaveChallenge(Long challengeId, Long userId) {
 
         log.info("챌린지 참여 취소 비즈니스 로직 들어왔나?");
+        boolean check = userChallengeRepository.existsByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
 
-        Challenge challenge = challengeRepository.getReferenceById(challengeId);
-        challenge.subEntry(); // 참가자수 1 감소
+        if (check) {
+            Challenge challenge = challengeRepository.getReferenceById(challengeId);
+            challenge.subEntry(); // 참가자수 1 감소
 
-        userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
-
+            userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
+        }
     }
 
 }
