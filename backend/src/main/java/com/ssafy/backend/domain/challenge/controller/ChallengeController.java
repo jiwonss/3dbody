@@ -116,6 +116,27 @@ public class ChallengeController {
 
     }
 
+    // 챌린지 참여 취소
+    @DeleteMapping("/{challenge_id}/user/{user_id}")
+    public ResponseEntity<?> leaveChallenge(@PathVariable("challenge_id") Long challengeId,
+                                            @PathVariable("user_id") Long userId) {
+
+        try {
+
+            log.info("챌린지 참여 취소 api 들어왔나?");
+
+            challengeService.leaveChallenge(challengeId, userId);
+
+            return new ResponseEntity<>("챌린지 참여 취소 성공!", HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            return exceptionHandling(e);
+
+        }
+
+    }
+
     // 에러 핸들링
     private ResponseEntity<String> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

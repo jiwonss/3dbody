@@ -118,5 +118,16 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     }
 
+    // 챌린지 참여 취소
+    @Override
+    @Transactional
+    public void leaveChallenge(Long challengeId, Long userId) {
+
+        log.info("챌린지 참여 취소 비즈니스 로직 들어왔나?");
+
+        userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
+
+    }
+
 
 }
