@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import { CalendarDaysIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 
 const CalendarWeek = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const [currentWeek, setCurrentWeek] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     generateWeek();
@@ -29,6 +30,7 @@ const CalendarWeek = () => {
     setSelectedDate((prevDate) => {
       const newDate = new Date(prevDate[0], prevDate[1] - 1, prevDate[2]);
       newDate.setDate(prevDate[2] - 7);
+      updateUrl(newDate);
       return [newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate()];
     });
   };
@@ -37,13 +39,22 @@ const CalendarWeek = () => {
     setSelectedDate((prevDate) => {
       const newDate = new Date(prevDate[0], prevDate[1] - 1, prevDate[2]);
       newDate.setDate(prevDate[2] + 7);
+      updateUrl(newDate);
       return [newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate()];
     });
   };
   
   const handleTodayReturn = () => { // 선택날짜 오늘로 변경
     const today = new Date();
+    updateUrl(today);
     setSelectedDate([today.getFullYear(), today.getMonth() + 1, today.getDate()])
+  }
+
+  const updateUrl = (day) => {
+    const year = day.getFullYear();
+    const month = day.getMonth() + 1;
+    const date = day.getDate();
+    navigate(`/diary/training/${year}/${month}/${date}`);
   }
   
   return (
@@ -78,9 +89,10 @@ const CalendarWeek = () => {
               {currentWeek.map((day, index) => (
                 <td
                   key={index}
-                  onClick={() =>
-                    setSelectedDate([day.getFullYear(), day.getMonth() + 1, day.getDate()])
-                  }
+                  onClick={() => {
+                    updateUrl(day);
+                    setSelectedDate([day.getFullYear(), day.getMonth() + 1, day.getDate()]);
+                  }}
                   className={`
                     text-center 
                     ${day.getMonth() !== selectedDate[1] - 1 ? "text-gray-300" : ""} 
