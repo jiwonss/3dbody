@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 const ChallengeComment = ({ content, nickname }) => {
   return (
     <div>
-      {nickname}
-      {content}
+      <div>{nickname}</div>
+      <div>{content}</div>
+      <hr />
     </div>
   );
 };
