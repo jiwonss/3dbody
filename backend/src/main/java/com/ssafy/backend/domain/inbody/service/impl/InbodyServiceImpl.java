@@ -1,6 +1,7 @@
-package com.ssafy.backend.domain.inbody.service.imp;
+package com.ssafy.backend.domain.inbody.service.impl;
 
 import com.ssafy.backend.domain.inbody.dto.InbodyRequestDto;
+import com.ssafy.backend.domain.inbody.dto.InbodyResponseDto;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
 import com.ssafy.backend.domain.inbody.repository.InbodyImageRepository;
 import com.ssafy.backend.domain.inbody.repository.InbodyRepository;
@@ -12,6 +13,9 @@ import com.ssafy.backend.global.error.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ssafy.backend.global.error.exception.ExceptionType.INVALID_INBODY;
 import static com.ssafy.backend.global.error.exception.ExceptionType.INVALID_USER;
@@ -50,5 +54,13 @@ public class InbodyServiceImpl implements InbodyService {
         inbody.updateDate(inbodyRequestDto.getDate());
 
         inbodyRepository.save(inbody);
+    }
+
+    @Override
+    public List<InbodyResponseDto> getInbodyList(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        return inbodyRepository.findAllByUser(user)
+                .stream().map(InbodyResponseDto::of)
+                .collect(Collectors.toList());
     }
 }

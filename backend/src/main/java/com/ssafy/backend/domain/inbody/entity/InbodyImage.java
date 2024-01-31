@@ -1,8 +1,14 @@
 package com.ssafy.backend.domain.inbody.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@ToString
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class InbodyImage {
 
     @Id
