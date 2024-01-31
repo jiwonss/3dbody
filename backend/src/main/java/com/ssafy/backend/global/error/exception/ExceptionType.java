@@ -23,7 +23,9 @@ public enum ExceptionType {
 
     FORBIDDEN_EXCEPTION(HttpStatus.FORBIDDEN, "권한이 없습니다."),
     AUTHENTICATION_EXCEPTION(HttpStatus.UNAUTHORIZED, "인증되지 않은 요청입니다."),
-    MAIL_SEND_FAILED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "FAILED_TO_SEND_MAIL");
+    MAIL_SEND_FAILED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "FAILED_TO_SEND_MAIL"),
+
+    INVALID_INBODY(HttpStatus.BAD_REQUEST, "존재하는 인바디 정보입니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;
