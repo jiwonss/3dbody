@@ -39,7 +39,7 @@ const PasswordChangePage = () => {
     }
   }, [watch("newPassword"), watch("newPasswordCheck")]);
 
-  // 제출할 경우 api 요청 보낼 함수
+  // submit할 경우 api 요청 보낼 함수
   const onSubmit = (data) => {
     console.log(data);
     console.log(localStorage.getItem("userId"));
@@ -53,6 +53,7 @@ const PasswordChangePage = () => {
         newPasswordCheck: data.newPasswordCheck,
       },
     }).then((res) => {
+      // 성공 했을 시 로그아웃 처리와 홈으로 새로고침
       if (res.data.dataHeader.successCode === 0) {
         localStorage.clear();
         window.location.reload("/");
@@ -61,7 +62,6 @@ const PasswordChangePage = () => {
         alert("비밀번호 변경 실패 재입력!!")
         reset();
       }
-      console.log(res);
     });
   };
 
