@@ -95,7 +95,11 @@ public class UserController {
     @PatchMapping("/{userId}/pin")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updatePin(@PathVariable Long userId, @RequestBody PinRequestDto pinRequestDto) {
-        userService.changePin(userId, pinRequestDto);
+        try {
+            userService.changePin(userId, pinRequestDto);
+        } catch (UserException e) {
+            return ResponseEntity.ok(Response.fail("", "현재 PIN과 일치하지 않습니다."));
+        }
         return ResponseEntity.ok(Response.success());
     }
 
