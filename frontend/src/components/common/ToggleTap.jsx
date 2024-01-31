@@ -2,10 +2,10 @@
 import PropTypes from "prop-types";
 // import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { toggleState } from "../../recoil/common/ToggleState";
+// import { toggleState } from "../../recoil/common/ToggleState";
 
-const ToggleTap = ({ leftTitle, rightTitle }) => {
-  const [isSelected, setIsSelected] = useRecoilState(toggleState);
+const ToggleTap = ({ leftTitle, rightTitle, state }) => {
+  const [isSelected, setIsSelected] = useRecoilState(state);
 
   // 정보 선택 함수
   const onClickLeftSelected = () => {
@@ -38,6 +38,7 @@ const ToggleTap = ({ leftTitle, rightTitle }) => {
 ToggleTap.propTypes = {
   leftTitle: PropTypes.string,
   rightTitle: PropTypes.string,
+  state: PropTypes.string,
 };
 
 // const ToggleTap = () => {
