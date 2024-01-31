@@ -29,4 +29,7 @@ public interface ChallengeService {
 
     // 챌린지 정보 삭제
     void deleteChallenge(Long challengeId);
+
+    // 챌린지 참여 신청
+    void applyChallenge(Long challengeId, Long userId);
 }

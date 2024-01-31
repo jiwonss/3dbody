@@ -69,6 +69,20 @@ public class CommentController {
         }
     }
 
+    // 챌린지 댓글 삭제
+    @DeleteMapping("/{comment_id}")
+    public ResponseEntity<?> deleteComment(@PathVariable("comment_id") Long commentId) {
+        try {
+
+            commentService.deleteComment(commentId);
+
+            return new ResponseEntity<>("챌린지 댓글 삭제 성공! 댓글 ID = " + commentId, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
