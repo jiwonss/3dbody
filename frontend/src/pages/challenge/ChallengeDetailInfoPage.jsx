@@ -13,7 +13,9 @@ const ChallengeDetailInfo = () => {
 
   // challenge 가져오기
   const getChallenge = async () => {
-    const res = (await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)).data;
+    const res = (
+      await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)
+    ).data;
     setChallenge(res);
   };
 
@@ -27,6 +29,17 @@ const ChallengeDetailInfo = () => {
   let subEndDate = "" + challenge.end_date;
   const startDate = subStartDate.slice(0, 10);
   const endDate = subEndDate.slice(0, 10);
+
+  const onParticipate = () => {
+    async (event) => {
+      event.preventDefault();
+      await axios.post(
+        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem("userId")}`)
+        .then((res) => {
+          console.log(res)
+        })
+    };
+  };
 
   return (
     <div>
@@ -47,7 +60,7 @@ const ChallengeDetailInfo = () => {
           <p>{challenge.summary}</p>
         </div>
         <hr />
-        <Button buttonName={"참여하기"} />
+        <Button buttonName={"참여하기"} onClick={() => onParticipate()} />
         <hr />
         {challenge.content}
       </div>
