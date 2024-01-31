@@ -11,4 +11,6 @@ public interface UserChallengeRepository extends JpaRepository<UserChallenge, Lo
 
     void deleteByChallenge_ChallengeIdAndUser_UserId(@Param("challenge_id") Long challengeId, @Param("user_id") Long userId);
 
+    boolean existsByChallenge_ChallengeIdAndUser_UserId(@Param("challenge_id") Long challengeId, @Param("user_id") Long userId);
+
 }

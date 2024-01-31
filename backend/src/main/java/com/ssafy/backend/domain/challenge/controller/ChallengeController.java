@@ -97,6 +97,17 @@ public class ChallengeController {
         }
     }
 
+    // 챌린지 참여 조회
+    @GetMapping("/{challenge_id}/user/{user_id}")
+    public ResponseEntity<?> checkChallenge(@PathVariable("challenge_id") Long challengeId,
+                                            @PathVariable("user_id") Long userId) {
+        try {
+            return new ResponseEntity<>(challengeService.checkChallenge(challengeId, userId), HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     // 챌린지 참여 신청
     @PostMapping("/{challenge_id}/user/{user_id}")
     public ResponseEntity<?> applyChallenge(@PathVariable("challenge_id") Long challengeId,

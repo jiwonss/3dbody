@@ -50,8 +50,10 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     // 챌린지 상세 조회
     @Override
+    @Transactional
     public ChallengeDetailResponseDto getChallengeDetail(Long challengeId) {
         Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 챌린지입니다."));
+        challenge.addHit();
         return ChallengeDetailResponseDto.toDto(challenge);
     }
 
@@ -100,8 +102,15 @@ public class ChallengeServiceImpl implements ChallengeService {
         challengeRepository.deleteById(challengeId);
     }
 
+    // 챌린지 참여 조회
+    @Override
+    public boolean checkChallenge(Long challengeId, Long userId) {
+        return userChallengeRepository.existsByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
+    }
+
     // 챌린지 참여 신청
     @Override
+    @Transactional
     public void applyChallenge(Long challengeId, Long userId) {
 
         User user = userRepository.getReferenceById(userId);
@@ -114,7 +123,8 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .challenge(challenge)
                 .build();
 
-        userChallengeRepository.save(userChallenge);
+        userChallengeRepository.save(userChallenge); // 참가 정보 DB에 저장
+        challenge.addEntry(); // 참가자수 1 증가
 
     }
 
@@ -125,9 +135,11 @@ public class ChallengeServiceImpl implements ChallengeService {
 
         log.info("챌린지 참여 취소 비즈니스 로직 들어왔나?");
 
+        Challenge challenge = challengeRepository.getReferenceById(challengeId);
+        challenge.subEntry(); // 참가자수 1 감소
+
         userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
 
     }
-
 
 }

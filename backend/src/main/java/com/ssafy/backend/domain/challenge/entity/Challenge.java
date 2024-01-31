@@ -53,4 +53,19 @@ public class Challenge {
     @Column(nullable = false)
     private LocalDateTime endDate; // 종료날짜, TIMESTAMP NOT NULL
 
+    // 참가자수 1 증가
+    public void addEntry() {
+        this.entry++;
+    }
+
+    // 참가자수 1 감소
+    public void subEntry() {
+        this.entry--;
+    }
+
+    // 조회수 1 증가
+    public void addHit() {
+        this.hit++;
+    }
+
 }
