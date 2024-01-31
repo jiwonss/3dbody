@@ -6,6 +6,7 @@ const BackButton = () => {
   // 전의 페이지로 옮겨주는 함수 
   const onClickBtn = () => {
     navigate(-1);
+    
   };
   return (
     <>

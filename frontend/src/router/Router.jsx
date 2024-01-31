@@ -12,6 +12,8 @@ import DiaryTrainingPage from '../pages/diary/DiaryTrainingPage';
 import DiaryFoodPage from '../pages/diary/DiaryFoodPage';
 import HomePage from '../pages/home/homePage';
 import PasswordChangePage from "../pages/mypage/PasswordChangePage";
+import TrainingLoadPage from '../pages/diary/training/trainingLoadPage';
+import TrainingChoicePage from './../pages/diary/training/TrainingChoicePage';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
       {
         path: "/diary/food/:year/:month/:date",
         Component: DiaryFoodPage
+      },
+      {
+        path: "/diary/training/load",
+        Component: TrainingLoadPage
+      },
+      {
+        path: "/diary/training/choice",
+        Component: TrainingChoicePage
       },
       {
         path: "/challenge",

@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import { BasicUrlState } from "../../recoil/common/BasicUrlState";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const PasswordChangePage = () => {
-  const basicUrl = useRecoilValue(BasicUrlState);
+  const baseUrl = useRecoilValue(baseUrlState);
   const {
     watch,
     setValue,
@@ -31,7 +31,7 @@ const PasswordChangePage = () => {
     async (event) => {
       event.preventDefault();
       await axios.patch(
-        `${basicUrl}api/users/${localStorage.getItem("userId")}/password`,
+        `${baseUrl}api/users/${localStorage.getItem("userId")}/password`,
         {
           currentpassword: data.currentpassword,
           newPassword: data.newPassword,
