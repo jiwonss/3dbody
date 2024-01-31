@@ -1,19 +1,19 @@
 package com.ssafy.backend.domain.food.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long foodId;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;             //식품명
     @Column(nullable = false)
     private String category;        //분류(아침, 점심, 저녁, 기타)
