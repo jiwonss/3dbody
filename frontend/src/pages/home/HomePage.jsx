@@ -3,7 +3,7 @@
 const HomePage = () => {
   return (
     <>
-      쓰리다비디
+      쓰리디바디
     </>
   )
 };

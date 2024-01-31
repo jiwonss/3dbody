@@ -23,7 +23,7 @@ const PasswordChangePage = () => {
       newPasswordCheck: "",
     },
   });
-  // 새 비밀번호 새 비밀번호 확인 시
+  // (새 비밀번호, 확인을 적고 난 후) 새 비밀 번호 변경 시에 확인 칸에 오류 문구를 띄우기 위한 함수
   useEffect(() => {
     if (
       watch("newPassword") !== watch("newPasswordCheck") &&
@@ -39,23 +39,29 @@ const PasswordChangePage = () => {
     }
   }, [watch("newPassword"), watch("newPasswordCheck")]);
 
-  // submit할 경우 api 요청 보낼 함수
+  // 제출할 경우 api 요청 보낼 함수
   const onSubmit = (data) => {
     console.log(data);
     console.log(localStorage.getItem("userId"));
-    async (event) => {
-      event.preventDefault();
-      await axios.patch(
-        `${baseUrl}api/users/${localStorage.getItem("userId")}/password`,
-        {
-          currentpassword: data.currentpassword,
-          newPassword: data.newPassword,
-          newPasswordCheck: data.newPasswordCheck,
-        }
-      );
-    };
-    console.log(data);
-    reset();
+    axios({
+      method: "patch",
+      url: `${baseUrl}api/users/${localStorage.getItem("userId")}/password`,
+      headers: { Authorization: `Bearer ${localStorage.getItem("key")}` },
+      data: {
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+        newPasswordCheck: data.newPasswordCheck,
+      },
+    }).then((res) => {
+      if (res.data.dataHeader.successCode === 0) {
+        localStorage.clear();
+        window.location.reload("/");
+      } else {
+        alert("비밀번호 변경 실패 재입력!!");
+        reset();
+      }
+      console.log(res);
+    });
   };
 
   return (
