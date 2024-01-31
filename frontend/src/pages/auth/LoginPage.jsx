@@ -19,6 +19,7 @@ const LoginPage = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    console.log(event)
     await axios
       .post(`${baseUrl}api/auth/login`, {
         email: email,

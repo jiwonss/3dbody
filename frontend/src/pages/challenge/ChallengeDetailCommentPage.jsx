@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import ChallengeComment from "./../../components/challenge/ChallengeComment";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { BasicUrlState } from "../../recoil/common/BasicUrlState";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import axios from "axios";
 
 const ChallengeDetailComment = () => {
   const { challengeId } = useParams();
   const [commentList, setCommentList] = useState([]);
-  const basicUrl = useRecoilValue(BasicUrlState);
+  const basicUrl = useRecoilValue(baseUrlState);
 
   // 댓글 리스트 가져오기
   const getCommentList = async () => {

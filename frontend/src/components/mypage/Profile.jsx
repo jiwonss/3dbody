@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import Button from "../common/Button";
 
 const Profile = () => {
+  const logout = () =>{
+    localStorage.clear()
+    window.location.reload("/")
+  }
   return (
     <div className="flex flex-col justify-center">
       <div className="flex justify-center">
@@ -19,7 +23,7 @@ const Profile = () => {
         </Link>
       </div>
       <div className="flex justify-center">
-        <Button buttonStyle={"small"} buttonName={"로그아웃"} />
+        <Button buttonStyle={"small"} buttonName={"로그아웃"} onClick={logout} />
       </div>
     </div>
   );
