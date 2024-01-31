@@ -5,5 +5,6 @@ import com.ssafy.backend.domain.inbody.dto.InbodyRequestDto;
 public interface InbodyService {
 
     void registInbody(Long userId, InbodyRequestDto inbodyRequestDto);
+    void updateInbody(Long userId, Long inbodyId, InbodyRequestDto inbodyRequestDto);
 
 }

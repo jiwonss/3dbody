@@ -16,9 +16,16 @@ public class InbodyController {
     private final InbodyService inbodyService;
 
     @PostMapping("/{userId}")
-    @PreAuthorize("(hasAuthority('ROLE_USER') and (#userId == authentication.principal.userId))")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity registInbody(@PathVariable Long userId, @RequestBody InbodyRequestDto inbodyRequestDto) {
         inbodyService.registInbody(userId, inbodyRequestDto);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/{inbodyId}")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
+    public ResponseEntity updateInbody(@PathVariable Long userId, @PathVariable Long inbodyId, @RequestBody InbodyRequestDto inbodyRequestDto) {
+        inbodyService.updateInbody(userId, inbodyId, inbodyRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
