@@ -12,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,16 +55,8 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity logout(@RequestHeader("Authorization") String accessToken,
-                                 @CookieValue("accessToken") Cookie access,
-                                 @CookieValue("refreshToken") Cookie refresh,
                                  HttpServletResponse response) {
         jwtService.addBlackList(accessToken);
-
-        access.setMaxAge(0);
-        refresh.setMaxAge(0);
-        response.addCookie(access);
-        response.addCookie(refresh);
-
         return ResponseEntity.ok(Response.success());
     }
 
@@ -88,7 +81,7 @@ public class AuthController {
         if (authService.duplicateCheckEmail(email)) {
             return ResponseEntity.ok(Response.fail(DUPLICATED_EMAIL.getHttpStatus().toString(), DUPLICATED_EMAIL.getErrorMessage()));
         }
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok(Response.success(HttpStatus.OK.toString(), "성공"));
     }
 
 }

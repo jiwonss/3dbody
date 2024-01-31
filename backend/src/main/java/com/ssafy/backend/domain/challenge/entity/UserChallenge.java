@@ -12,17 +12,22 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode(of = {"userChallengeId"}, callSuper = false)
 @NamedEntityGraph
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(name = "unique_user_id_and_challenge_id", columnNames = {"challenge_id", "user_id"})
+        }
+)
 public class UserChallenge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userChallengeId;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
 

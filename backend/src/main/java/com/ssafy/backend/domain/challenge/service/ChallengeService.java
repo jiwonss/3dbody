@@ -29,4 +29,13 @@ public interface ChallengeService {
 
     // 챌린지 정보 삭제
     void deleteChallenge(Long challengeId);
+
+    // 챌린지 참여 조회
+    boolean checkChallenge(Long challengeId, Long userId);
+
+    // 챌린지 참여 신청
+    void applyChallenge(Long challengeId, Long userId);
+
+    // 챌린지 참여 취소
+    void leaveChallenge(Long challengeId, Long userId);
 }

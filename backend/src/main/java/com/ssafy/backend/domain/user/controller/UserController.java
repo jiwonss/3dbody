@@ -5,6 +5,7 @@ import com.ssafy.backend.domain.user.dto.PinRequestDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.dto.Response;
+import com.ssafy.backend.global.error.exception.UserException;
 import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,11 @@ public class UserController {
     @PatchMapping("/{userId}/password")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity changePassword(@PathVariable Long userId, @RequestBody PasswordRequestDto passwordRequestDto) {
-        userService.changePassword(userId, passwordRequestDto);
+        try {
+            userService.changePassword(userId, passwordRequestDto);
+        } catch (UserException e) {
+            return ResponseEntity.ok(Response.fail("", "현재 비밀번호가 일치하지 않습니다."));
+        }
         return ResponseEntity.ok(Response.success());
     }
 
@@ -90,7 +95,11 @@ public class UserController {
     @PatchMapping("/{userId}/pin")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updatePin(@PathVariable Long userId, @RequestBody PinRequestDto pinRequestDto) {
-        userService.changePin(userId, pinRequestDto);
+        try {
+            userService.changePin(userId, pinRequestDto);
+        } catch (UserException e) {
+            return ResponseEntity.ok(Response.fail("", "현재 PIN과 일치하지 않습니다."));
+        }
         return ResponseEntity.ok(Response.success());
     }
 

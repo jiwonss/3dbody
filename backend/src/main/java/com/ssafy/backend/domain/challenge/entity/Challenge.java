@@ -53,4 +53,9 @@ public class Challenge {
     @Column(nullable = false)
     private LocalDateTime endDate; // 종료날짜, TIMESTAMP NOT NULL
 
+    // 조회수 1 증가
+    public void addHit() {
+        this.hit++;
+    }
+
 }

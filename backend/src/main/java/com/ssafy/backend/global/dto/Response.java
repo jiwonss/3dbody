@@ -27,6 +27,12 @@ public class Response<T> {
                 .build();
     }
 
+    public static <T> Response<T> success(String resultCode, String resultMessage) {
+        return Response.<T>builder()
+                .dataHeader(DataHeader.success(resultCode, resultMessage))
+                .build();
+    }
+
     public static <T> Response<T> success(T dataBody, String resultCode, String resultMessage) {
         return Response.<T>builder()
                 .dataHeader(DataHeader.success(resultCode, resultMessage))

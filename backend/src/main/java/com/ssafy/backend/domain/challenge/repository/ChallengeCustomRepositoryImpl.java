@@ -5,20 +5,18 @@ import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
 import com.ssafy.backend.domain.challenge.entity.QChallenge;
 import com.ssafy.backend.domain.challenge.entity.QUserChallenge;
 import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class ChallengeCustomRepositoryImpl implements ChallengeCustomRepository {
 
-    JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     QChallenge qChallenge = QChallenge.challenge;
     QUserChallenge qUserChallenge = QUserChallenge.userChallenge;
-
-    public ChallengeCustomRepositoryImpl(EntityManager em) {
-        jpaQueryFactory = new JPAQueryFactory(em);
-    }
 
     // 참여중인 챌린지 목록
     @Override
@@ -29,5 +27,22 @@ public class ChallengeCustomRepositoryImpl implements ChallengeCustomRepository 
                 .on(qChallenge.challengeId.eq(qUserChallenge.challenge.challengeId))
                 .where(qUserChallenge.user.userId.eq(userId))
                 .fetch().stream().map(ChallengeListResponseDto::toDto).collect(Collectors.toList());
+    }
+
+    // 참가자수 1증가
+    @Override
+    public void addEntry(Long challengeId) {
+        jpaQueryFactory.update(qChallenge)
+                .set(qChallenge.entry, qChallenge.entry.add(1))
+                .where(qChallenge.challengeId.eq(challengeId))
+                .execute();
+    }
+
+    @Override
+    public void subEntry(Long challengeId) {
+        jpaQueryFactory.update(qChallenge)
+                .set(qChallenge.entry, qChallenge.entry.subtract(1))
+                .where(qChallenge.challengeId.eq(challengeId))
+                .execute();
     }
 }
