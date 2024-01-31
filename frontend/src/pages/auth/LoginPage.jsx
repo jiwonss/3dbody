@@ -19,18 +19,18 @@ const LoginPage = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(event)
+    console.log(event);
     await axios
       .post(`${baseUrl}api/auth/login`, {
         email: email,
         password: password,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         console.log("성공");
         localStorage.clear();
         localStorage.setItem("key", res.data.dataBody.tokenDto.accessToken);
-        localStorage.setItem("userId", res.data.dataBody.userInfo.userId)
+        localStorage.setItem("userId", res.data.dataBody.userInfo.userId);
         localStorage.setItem("isLogin", true);
         window.location.replace("/");
       });

@@ -10,6 +10,7 @@ const ChallengeDetailInfo = () => {
   const { challengeId } = useParams();
   const [challenge, setChallenge] = useState({});
   const baseUrl = useRecoilValue(baseUrlState);
+  const [isParticipate, setIsParticipate] = useState(null);
 
   // challenge 가져오기
   const getChallenge = async () => {
@@ -19,10 +20,6 @@ const ChallengeDetailInfo = () => {
     setChallenge(res);
   };
 
-  useEffect(() => {
-    getChallenge();
-  }, []);
-
   // 바로하면 date 데이터를 문자열로 못받아와서 에러남
   // ""를 붙여가지고 강제로 문자열로 만들어서 slice
   let subStartDate = "" + challenge.start_date;
@@ -30,16 +27,50 @@ const ChallengeDetailInfo = () => {
   const startDate = subStartDate.slice(0, 10);
   const endDate = subEndDate.slice(0, 10);
 
-  const onParticipate = () => {
-    async (event) => {
-      event.preventDefault();
-      await axios.post(
-        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem("userId")}`)
-        .then((res) => {
-          console.log(res)
-        })
-    };
+  // 챌린지 참여하기
+  const onParticipateHandler = async (event) => {
+    event.preventDefault();
+    await axios
+      .post(
+        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem(
+          "userId"
+        )}`
+      )
+      .then(() => {
+        setIsParticipate(true);
+      });
   };
+
+  // 챌린지 참여 취소하기
+  const onParticipateCancelHandler = async (event) => {
+    event.preventDefault();
+    await axios
+      .delete(
+        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem(
+          "userId"
+        )}`
+      )
+      .then(() => {
+        setIsParticipate(false);
+      });
+  };
+
+  const getParticipateChallenge = async () => {
+    await axios
+      .get(
+        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem(
+          "userId"
+        )}`
+      )
+      .then((res) => {
+        setIsParticipate(res.data);
+      });
+  };
+
+  useEffect(() => {
+    getChallenge();
+    getParticipateChallenge();
+  }, [challenge]);
 
   return (
     <div>
@@ -47,7 +78,6 @@ const ChallengeDetailInfo = () => {
         <div className="flex">
           <CalendarIcon className="w-4 h-4" />
           <p>
-            {/* {challenge.start_date} ~ {challenge.end_date} */}
             {startDate} ~ {endDate}
           </p>
         </div>
@@ -60,7 +90,11 @@ const ChallengeDetailInfo = () => {
           <p>{challenge.summary}</p>
         </div>
         <hr />
-        <Button buttonName={"참여하기"} onClick={() => onParticipate()} />
+        {isParticipate ? (
+          <Button buttonName={"참여 중"} onClick={onParticipateCancelHandler} />
+        ) : (
+          <Button buttonName={"참여하기"} onClick={onParticipateHandler} />
+        )}
         <hr />
         {challenge.content}
       </div>

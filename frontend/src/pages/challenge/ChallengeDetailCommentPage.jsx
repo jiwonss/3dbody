@@ -30,6 +30,7 @@ const ChallengeDetailComment = () => {
         key={comment.comment_id}
         content={comment.content}
         nickname={comment.nickname}
+        commentId={comment.comment_id}
       />
     );
   });
@@ -41,7 +42,6 @@ const ChallengeDetailComment = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(content)
     await axios
       .post(`${baseUrl}api/comment/${challengeId}`, {
         content: content,
@@ -54,7 +54,9 @@ const ChallengeDetailComment = () => {
 
   return (
     <div>
-      <div>{comments}</div>
+      <div>
+        {comments}
+      </div>
       <br />
       <div>
         <form onSubmit={onSubmitHandler}>
