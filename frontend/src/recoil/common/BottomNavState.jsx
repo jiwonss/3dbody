@@ -8,7 +8,7 @@ const { persistAtom } = recoilPersist({
 
 const bottomNavState = atom({
   key: "bottomNavState",
-  default: "home",
+  default: "",
   effects_UNSTABLE: [persistAtom],
 });
 

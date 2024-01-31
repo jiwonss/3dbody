@@ -21,28 +21,8 @@ const router = createBrowserRouter([
     element:<App/>,
     children: [
       {
-        path:"/passwordchange",
-        Component: PasswordChangePage
-      },
-      {
-        path: "/home",
+        path: "",
         Component: HomePage
-      },
-      {
-        path: "/mypage",
-        Component: MyPage
-      },
-      {
-        path: "/myinfo",
-        Component: MyInfoPage
-      },
-      {
-        path: "/notice",
-        Component: NoticePage
-      },
-      {
-        path: "/FAQ",
-        Component: FAQPage
       },
       {
         path: "/diary",
@@ -63,6 +43,26 @@ const router = createBrowserRouter([
       {
         path: "/diary/training/choice",
         Component: TrainingChoicePage
+      },
+      {
+        path: "/mypage",
+        Component: MyPage
+      },
+      {
+        path: "/myinfo",
+        Component: MyInfoPage
+      },
+      {
+        path:"/passwordchange",
+        Component: PasswordChangePage
+      },
+      {
+        path: "/notice",
+        Component: NoticePage
+      },
+      {
+        path: "/FAQ",
+        Component: FAQPage
       },
       {
         path: "/challenge",
