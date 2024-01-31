@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.user.service.impl;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.dto.PinRequestDto;
+import com.ssafy.backend.domain.user.dto.UserResponseDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
@@ -58,8 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserInfo(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+    public UserResponseDto getUserInfo(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        return null;
     }
 
     @Override

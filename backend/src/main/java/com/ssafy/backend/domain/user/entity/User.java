@@ -32,6 +32,10 @@ public class User extends BaseEntity {
 
     private String birthDate;
 
+    private long height;
+
+    private long weight;
+
     @Lob
     private String profileImage;
 

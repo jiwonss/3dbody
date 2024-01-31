@@ -2,11 +2,9 @@ package com.ssafy.backend.domain.user.controller;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.dto.PinRequestDto;
-import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.dto.Response;
 import com.ssafy.backend.global.error.exception.UserException;
-import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,15 +17,16 @@ public class UserController {
 
     private final UserService userService;
 
-    // TODO 인바디 정보 가져와서 조인하기(키)
+    // TODO 이메일, 이름, 닉네임, 성별, 키, 몸무게
     @GetMapping("/{userId}")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity getUserInfo(@PathVariable Long userId) {
-        User user = userService.getUserInfo(userId);
-        return ResponseEntity.ok(Response.success(UserInfoDto.from(user)));
+        return ResponseEntity.ok(Response.success(userService.getUserInfo(userId)));
     }
 
-    // TODO 인바디 정보 가져와서 조인하기(키)
+    // TODO 업데이트 다 분리
+    // - 닉네임 완료
+    // - 이름, 성별, 키, 몸무게
     @PatchMapping("/{userId}")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updateUser(@PathVariable Long userId) {
