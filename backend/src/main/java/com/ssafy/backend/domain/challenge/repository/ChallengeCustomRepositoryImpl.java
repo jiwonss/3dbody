@@ -5,20 +5,18 @@ import com.ssafy.backend.domain.challenge.dto.ChallengeListResponseDto;
 import com.ssafy.backend.domain.challenge.entity.QChallenge;
 import com.ssafy.backend.domain.challenge.entity.QUserChallenge;
 import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class ChallengeCustomRepositoryImpl implements ChallengeCustomRepository {
 
-    JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     QChallenge qChallenge = QChallenge.challenge;
     QUserChallenge qUserChallenge = QUserChallenge.userChallenge;
-
-    public ChallengeCustomRepositoryImpl(EntityManager em) {
-        jpaQueryFactory = new JPAQueryFactory(em);
-    }
 
     // 참여중인 챌린지 목록
     @Override

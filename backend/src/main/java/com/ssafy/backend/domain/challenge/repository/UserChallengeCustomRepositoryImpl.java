@@ -4,18 +4,16 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.backend.domain.challenge.entity.QUserChallenge;
 import com.ssafy.backend.domain.challenge.entity.UserChallenge;
 import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class UserChallengeCustomRepositoryImpl implements UserChallengeCustomRepository {
 
-    JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     QUserChallenge qUserChallenge = QUserChallenge.userChallenge;
-
-    public UserChallengeCustomRepositoryImpl(EntityManager em) {
-        this.jpaQueryFactory = new JPAQueryFactory(em);
-    }
 
     // 챌린지 등록 여부
     @Override
