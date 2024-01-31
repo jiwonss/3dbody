@@ -113,18 +113,15 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Transactional
     public void applyChallenge(Long challengeId, Long userId) {
 
-        User user = userRepository.getReferenceById(userId);
-
-        Challenge challenge = challengeRepository.getReferenceById(challengeId);
-
         UserChallenge userChallenge = UserChallenge
                 .builder()
-                .user(user)
-                .challenge(challenge)
+                .user(User.builder().userId(userId).build())
+                .challenge(Challenge.builder().challengeId(challengeId).build())
                 .build();
 
         userChallengeRepository.save(userChallenge); // 참가 정보 DB에 저장
-        challenge.addEntry(); // 참가자수 1 증가
+
+        challengeRepository.addEntry(challengeId); // 참가자수  1 증가
 
     }
 
@@ -137,10 +134,9 @@ public class ChallengeServiceImpl implements ChallengeService {
         boolean check = userChallengeRepository.existsByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
 
         if (check) {
-            Challenge challenge = challengeRepository.getReferenceById(challengeId);
-            challenge.subEntry(); // 참가자수 1 감소
-
             userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
+
+            challengeRepository.subEntry(challengeId);
         }
     }
 

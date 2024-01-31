@@ -28,4 +28,21 @@ public class ChallengeCustomRepositoryImpl implements ChallengeCustomRepository 
                 .where(qUserChallenge.user.userId.eq(userId))
                 .fetch().stream().map(ChallengeListResponseDto::toDto).collect(Collectors.toList());
     }
+
+    // 참가자수 1증가
+    @Override
+    public void addEntry(Long challengeId) {
+        jpaQueryFactory.update(qChallenge)
+                .set(qChallenge.entry, qChallenge.entry.add(1))
+                .where(qChallenge.challengeId.eq(challengeId))
+                .execute();
+    }
+
+    @Override
+    public void subEntry(Long challengeId) {
+        jpaQueryFactory.update(qChallenge)
+                .set(qChallenge.entry, qChallenge.entry.subtract(1))
+                .where(qChallenge.challengeId.eq(challengeId))
+                .execute();
+    }
 }
