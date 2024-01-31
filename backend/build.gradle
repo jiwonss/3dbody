@@ -78,6 +78,7 @@ tasks.named('processResources') {
 	mustRunAfter 'copyPrivate'
 }
 
+
 processResources {
 	dependsOn "printCurrentPath"
 }
