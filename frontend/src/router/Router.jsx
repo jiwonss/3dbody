@@ -42,11 +42,11 @@ const router = createBrowserRouter([
         Component: DiaryPage
       },
       {
-        path: "/diary/training/:year/:month/:day",
+        path: "/diary/training/:year/:month/:date",
         Component: DiaryTrainingPage
       },
       {
-        path: "/diary/food/:year/:month/:day",
+        path: "/diary/food/:year/:month/:date",
         Component: DiaryFoodPage
       },
       {
