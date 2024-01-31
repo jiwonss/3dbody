@@ -32,4 +32,7 @@ public interface ChallengeService {
 
     // 챌린지 참여 신청
     void applyChallenge(Long challengeId, Long userId);
+
+    // 챌린지 참여 취소
+    void leaveChallenge(Long challengeId, Long userId);
 }
