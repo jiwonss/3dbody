@@ -1,19 +1,16 @@
 package com.ssafy.backend.domain.food.controller;
 
 import com.ssafy.backend.domain.food.dto.FoodListDto;
-import com.ssafy.backend.domain.food.entity.Food;
+import com.ssafy.backend.domain.food.dto.FoodListRequestDto;
+import com.ssafy.backend.domain.food.dto.UserFoodListDto;
 import com.ssafy.backend.domain.food.service.FoodService;
-import io.lettuce.core.dynamic.annotation.Param;
+import com.ssafy.backend.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,9 +26,26 @@ public class FoodController {
     //음식 검색
     @GetMapping("/search")
     public ResponseEntity<?> searchFoodList(@RequestParam("keyword") String keyword) {
-        log.info("controller 들어와?");
         List<FoodListDto> foodList;
         foodList = foodService.findByNameContaining(keyword);
         return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addFoodList(@RequestBody FoodListRequestDto foodListRequestDto){
+        foodService.addFoodList(foodListRequestDto);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    //식단 관리 페이지
+    @GetMapping("/list/{user_id}")
+    public ResponseEntity<?> findByUserIdAndDate(@PathVariable("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day){
+        log.info("들어와?");
+        List<UserFoodListDto> userFoodList = foodService.findByUserIdAndDate(userId, year, month, day);
+        log.info("controll return 잘돼?들어와?");
+        return new ResponseEntity<>(userFoodList, HttpStatus.OK);
+    }
+
+
+
 }

@@ -1,8 +1,12 @@
 package com.ssafy.backend.domain.food.service;
 
 import com.ssafy.backend.domain.food.dto.FoodListDto;
+import com.ssafy.backend.domain.food.dto.FoodListRequestDto;
+import com.ssafy.backend.domain.food.dto.UserFoodListDto;
 import com.ssafy.backend.domain.food.entity.Food;
+import com.ssafy.backend.domain.food.entity.UserFood;
 import com.ssafy.backend.domain.food.repository.FoodRepository;
+import com.ssafy.backend.domain.food.repository.UserFoodRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,12 +20,29 @@ import java.util.stream.Collectors;
 public class FoodServiceImpl implements FoodService{
 
     final FoodRepository foodRepository;
+    final UserFoodRepository userFoodRepository;
 
     //식단 관리 페이지
+    @Override
+    public List<UserFoodListDto> findByUserIdAndDate(Long userId, int year, int month, int day){
+        log.info("service들어와?");
+        List<UserFood> userFoodEntities = userFoodRepository.findByUserIdAndDate(userId, year, month, day);
+        log.info("service return 잘 받아? {}", userFoodEntities);
+        List<UserFoodListDto> userFoodList = userFoodEntities.stream()
+                .map(UserFoodListDto::toDto)
+                .toList();
+
+        return userFoodList;
+    }
 
     //전체 목록
 
-    //등록
+    //음식 등록
+    @Override
+    public void addFoodList(FoodListRequestDto foodListRequestDto){
+        Food food = foodListRequestDto.toEntity();
+        foodRepository.save(food);
+    }
 
     //음식 검색
     @Override
@@ -33,5 +54,7 @@ public class FoodServiceImpl implements FoodService{
                 .collect(Collectors.toList());
         return foodList;
     }
+
+
 
 }
