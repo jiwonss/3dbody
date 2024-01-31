@@ -38,7 +38,7 @@ const ToggleTap = ({ leftTitle, rightTitle, state }) => {
 ToggleTap.propTypes = {
   leftTitle: PropTypes.string,
   rightTitle: PropTypes.string,
-  state: PropTypes.string,
+  state: PropTypes.object,
 };
 
 // const ToggleTap = () => {

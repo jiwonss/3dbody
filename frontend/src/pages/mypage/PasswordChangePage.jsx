@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import { BasicUrlState } from "../../recoil/common/BasicUrlState";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const PasswordChangePage = () => {
-  const basicUrl = useRecoilValue(BasicUrlState);
+  const basicUrl = useRecoilValue(baseUrlState);
   const {
     watch,
     setValue,
