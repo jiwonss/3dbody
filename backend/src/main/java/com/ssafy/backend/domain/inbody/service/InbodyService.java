@@ -10,5 +10,6 @@ public interface InbodyService {
     void registInbody(Long userId, InbodyRequestDto inbodyRequestDto);
     void updateInbody(Long userId, Long inbodyId, InbodyRequestDto inbodyRequestDto);
     List<InbodyResponseDto>  getInbodyList(Long userId);
+    void deleteInbody(Long userId, Long inbodyId);
 
 }

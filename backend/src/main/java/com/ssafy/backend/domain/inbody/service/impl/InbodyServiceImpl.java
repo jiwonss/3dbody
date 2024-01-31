@@ -63,4 +63,11 @@ public class InbodyServiceImpl implements InbodyService {
                 .stream().map(InbodyResponseDto::of)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public void deleteInbody(Long userId, Long inbodyId) {
+        // 인바디 이미지 삭제
+        inbodyRepository.deleteById(inbodyId);
+    }
 }
