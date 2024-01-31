@@ -2,7 +2,9 @@
 const Graph = () => {
   return (
     <>
-      그래프
+      <div className='text-center'>
+        그래프입니다
+      </div>
     </>
   );
 };

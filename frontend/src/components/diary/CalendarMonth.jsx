@@ -86,10 +86,6 @@ const CalendarMonth = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(selectedDate);
-  }, [selectedDate]);
-
   return (
     <div className="max-w-screen-sm mx-auto mt-2">
       {/* 연, 월 표시, 방향버튼으로 월 변경 */}

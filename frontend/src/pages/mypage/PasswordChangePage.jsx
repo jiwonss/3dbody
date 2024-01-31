@@ -6,7 +6,6 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const PasswordChangePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
-  
   const {
     watch,
     getValues,
@@ -44,26 +43,19 @@ const PasswordChangePage = () => {
   const onSubmit = (data) => {
     console.log(data);
     console.log(localStorage.getItem("userId"));
-    axios({
-      method: "patch",
-      url: `${baseUrl}api/users/${localStorage.getItem("userId")}/password`,
-      headers: { Authorization: `Bearer ${localStorage.getItem("key")}` },
-      data: {
-        currentPassword: data.currentPassword,
-        newPassword: data.newPassword,
-        newPasswordCheck: data.newPasswordCheck,
-      },
-    }).then((res) => {
-      // 성공 했을 시 로그아웃 처리와 홈으로 새로고침
-      if (res.data.dataHeader.successCode === 0) {
-        localStorage.clear();
-        window.location.reload("/");
-      }
-      else{
-        alert("비밀번호 변경 실패 재입력!!")
-        reset();
-      }
-    });
+    async (event) => {
+      event.preventDefault();
+      await axios.patch(
+        `${baseUrl}api/users/${localStorage.getItem("userId")}/password`,
+        {
+          currentpassword: data.currentpassword,
+          newPassword: data.newPassword,
+          newPasswordCheck: data.newPasswordCheck,
+        }
+      );
+    };
+    console.log(data);
+    reset();
   };
 
   return (

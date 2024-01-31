@@ -12,6 +12,7 @@ const ChallengeDetailComment = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const [content, setContent] = useState("");
 
+
   // 댓글 리스트 가져오기
   const getCommentList = async () => {
     const res = (await axios.get(`${baseUrl}api/comment/${challengeId}`)).data;

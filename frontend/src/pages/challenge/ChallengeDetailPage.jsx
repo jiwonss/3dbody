@@ -54,7 +54,11 @@ const ChallengeDetail = () => {
         </div>
       </div>
       <hr />
-      {isSelected === "info" ? <ChallengeDetailInfo /> : <ChallengeDetailComment />}
+      {isSelected === "info" ? (
+        <ChallengeDetailInfo />
+      ) : (
+        <ChallengeDetailComment />
+      )}
     </div>
   );
 };

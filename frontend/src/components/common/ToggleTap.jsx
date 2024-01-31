@@ -1,8 +1,5 @@
-// import Button from "./Button";
 import PropTypes from "prop-types";
-// import { useState } from "react";
 import { useRecoilState } from "recoil";
-// import { toggleState } from "../../recoil/common/ToggleState";
 
 const ToggleTap = ({ leftTitle, rightTitle, state }) => {
   const [isSelected, setIsSelected] = useRecoilState(state);
