@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 
-import firebase from "firebase/app";
-import "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 
-import { ReactComponent as HangupIcon } from "./icons/hangup.svg";
-import { ReactComponent as MoreIcon } from "./icons/more-vertical.svg";
-import { ReactComponent as CopyIcon } from "./icons/copy.svg";
+// import { HangupIcon } from "./icons/hangup.svg";
+// import { MoreIcon } from "./icons/more-vertical.svg";
+// import { CopyIcon } from "./icons/copy.svg";
 
 import "./WebRTCPage.css";
 
@@ -225,17 +225,17 @@ function Videos({ mode, callId, setPage }) {
           disabled={!webcamActive}
           className="hangup button"
         >
-          <HangupIcon />
+          {/* <HangupIcon /> */}
         </button>
         <div tabIndex={0} role="button" className="more button">
-          <MoreIcon />
+          {/* <MoreIcon /> */}
           <div className="popover">
             <button
               onClick={() => {
                 navigator.clipboard.writeText(roomId);
               }}
             >
-              <CopyIcon /> Copy joining code
+              {/* <CopyIcon /> Copy joining code */}
             </button>
           </div>
         </div>
