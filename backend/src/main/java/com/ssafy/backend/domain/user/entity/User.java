@@ -65,7 +65,7 @@ public class User extends BaseEntity {
         ROLE_ADMIN
     }
 
-    public static User create(String email, String password, String name, Gender gender, String birthDate) {
+    public static User create(String email, String password, String name, Gender gender, String birthDate, Role role) {
         return User.builder()
                 .email(email)
                 .password(password)
@@ -73,7 +73,7 @@ public class User extends BaseEntity {
                 .gender(gender)
                 .birthDate(birthDate)
                 .status(Status.MEMBER)
-                .role(Role.ROLE_USER)
+                .role(role)
                 .build();
     }
 
