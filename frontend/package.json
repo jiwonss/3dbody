@@ -12,13 +12,16 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "aws-sdk": "^2.1548.0",
     "axios": "^1.6.7",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.3",
+    "react-uuid": "^2.0.0",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "sort-by": "^1.2.0"
