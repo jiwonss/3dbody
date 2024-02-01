@@ -31,6 +31,7 @@ const ChallengeCanParticipate = () => {
         challengeId={challenge.challenge_id}
         challengeTitle={challenge.title}
         challengeSummary={challenge.summary}
+        challengeThumbnail={challenge.thumbanil}
       />
     );
   });
@@ -38,7 +39,7 @@ const ChallengeCanParticipate = () => {
   return (
     <div>
       {challenges.length ? (
-        <div>{challenges}</div>
+        <div className='grid grid-cols-2'>{challenges}</div>
       ) : (
         <div className="flex justify-center">
           {"참여 가능한 챌린지가 없습니다."}

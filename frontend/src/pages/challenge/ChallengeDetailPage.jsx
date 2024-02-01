@@ -36,7 +36,7 @@ const ChallengeDetail = () => {
   return (
     <div>
       <BackButton />
-      <img src="challenge/example.jpg" alt="..." />
+      <img src={challenge.Image} alt="..." />
       {challenge.title}
       <hr />
       <div className="flex">

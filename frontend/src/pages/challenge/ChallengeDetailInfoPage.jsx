@@ -58,6 +58,13 @@ const ChallengeDetailInfo = () => {
       });
   };
 
+  const onChallengeDeleteHandler = async (event) => {
+    event.preventDefault();
+    await axios.delete(`${baseUrl}api/challenge/${challengeId}`).then(() => {
+      window.location.replace("/challenge");
+    });
+  };
+
   useEffect(() => {
     getChallenge();
     getParticipateChallenge();
@@ -88,6 +95,14 @@ const ChallengeDetailInfo = () => {
         )}
         <hr />
         {challenge.content}
+        <div>
+          {user.info.role === "ROLE_ADMIN" ? (
+            <Button
+              buttonName={"삭제하기"}
+              onClick={onChallengeDeleteHandler}
+            />
+          ) : null}
+        </div>
       </div>
     </div>
   );
