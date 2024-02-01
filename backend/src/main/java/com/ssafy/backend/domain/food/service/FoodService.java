@@ -11,4 +11,5 @@ public interface FoodService {
     public void addFoodList(FoodListRequestDto foodListRequestDto);         //음식등록
     public List<UserFoodListDto> findByUserIdAndDate(Long userId, int year, int month, int day);        //식사기록메인
     public List<UserFoodListDto> findByListCategory(Long userId, int year, int month, int day, String category);
+    public void deleteById(Long userFoodId);
 }

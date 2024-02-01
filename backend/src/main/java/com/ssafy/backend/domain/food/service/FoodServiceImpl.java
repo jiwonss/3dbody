@@ -60,6 +60,11 @@ public class FoodServiceImpl implements FoodService{
         return foodList;
     }
 
+    //음식 삭제
+    public void deleteById(Long userFoodId){
+        userFoodRepository.deleteById(userFoodId);
+    }
+
 
 
 }

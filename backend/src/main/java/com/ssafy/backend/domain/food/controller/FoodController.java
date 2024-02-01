@@ -30,7 +30,7 @@ public class FoodController {
         foodList = foodService.findByNameContaining(keyword);
         return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
-
+    //음식 추가
     @PostMapping("/add")
     public ResponseEntity<?> addFoodList(@RequestBody FoodListRequestDto foodListRequestDto){
         foodService.addFoodList(foodListRequestDto);
@@ -53,4 +53,11 @@ public class FoodController {
         return new ResponseEntity<>(userFoodListCategory, HttpStatus.OK);
     }
 
+    //음식 삭제
+    @DeleteMapping("/delete/{user_food_id}")
+    public ResponseEntity<?> deleteById(@PathVariable("user_food_id") Long userFoodId){
+        log.info("와?");
+        foodService.deleteById(userFoodId);
+        return ResponseEntity.ok(Response.success());
+    }
 }
