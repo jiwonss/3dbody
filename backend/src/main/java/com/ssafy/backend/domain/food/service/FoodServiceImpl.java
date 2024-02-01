@@ -31,11 +31,16 @@ public class FoodServiceImpl implements FoodService{
         List<UserFoodListDto> userFoodList = userFoodEntities.stream()
                 .map(UserFoodListDto::toDto)
                 .toList();
-
         return userFoodList;
     }
-
-    //전체 목록
+    //식단 관리 카테고리별 상세
+    public List<UserFoodListDto> findByListCategory(Long userId, int year, int month, int day, String category){
+        List<UserFood> userFoodCategoryEntites = userFoodRepository.findByListCategory(userId, year, month, day, category);
+       List<UserFoodListDto> userFoodListCategory = userFoodCategoryEntites.stream()
+               .map(UserFoodListDto::toDto)
+               .toList();
+        return userFoodListCategory;
+    }
 
     //음식 등록
     @Override
