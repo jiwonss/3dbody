@@ -15,7 +15,7 @@ const Menus = () => {
         {
           menuicon: <LockClosedIcon className="w-6 h-6" />,
           menutitle: "비밀번호 변경",
-          menuurl: "/passwordchange",
+          menuurl: "/mypage/passwordchange",
         },
         {
           menuicon: <Squares2X2Icon className="w-6 h-6" />,
@@ -30,12 +30,12 @@ const Menus = () => {
         {
           menuicon: <MegaphoneIcon className="w-6 h-6" />,
           menutitle: "공지사항",
-          menuurl: "/notice",
+          menuurl: "/mypage/notice",
         },
         {
           menuicon: <QuestionMarkCircleIcon className="w-6 h-6" />,
           menutitle: "자주 묻는 질문",
-          menuurl: "/FAQ",
+          menuurl: "/mypage/FAQ",
         },
       ],
     },

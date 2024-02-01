@@ -1,8 +1,11 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import Button from "../common/Button";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../recoil/common/UserState";
 
 const Profile = () => {
+  const user = useRecoilValue(userState)
   const logout = () =>{
     localStorage.clear()
     window.location.reload("/")
@@ -17,8 +20,8 @@ const Profile = () => {
         />
       </div>
       <div className="flex justify-center">
-        <p>김싸피 님</p>
-        <Link to="/myinfo">
+        <p>{user.info.nickname}님</p>
+        <Link to="/mypage/myinfo">
           <PencilSquareIcon className="w-6 h-6" />
         </Link>
       </div>

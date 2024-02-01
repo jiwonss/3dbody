@@ -74,19 +74,19 @@ const router = createBrowserRouter([
         Component: MyPage,
       },
       {
-        path: "/myinfo",
+        path: "/mypage/myinfo",
         Component: MyInfoPage,
       },
       {
-        path: "/passwordchange",
+        path: "/mypage/passwordchange",
         Component: PasswordChangePage,
       },
       {
-        path: "/notice",
+        path: "/mypage/notice",
         Component: NoticePage,
       },
       {
-        path: "/FAQ",
+        path: "/mypage/FAQ",
         Component: FAQPage,
       },
       {

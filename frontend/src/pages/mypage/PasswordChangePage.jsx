@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import { userState } from "../../recoil/common/UserState";
 
 const PasswordChangePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const {
     watch,
     getValues,
@@ -45,8 +47,8 @@ const PasswordChangePage = () => {
     console.log(localStorage.getItem("userId"));
     axios({
       method: "patch",
-      url: `${baseUrl}api/users/${localStorage.getItem("userId")}/password`,
-      headers: { Authorization: `Bearer ${localStorage.getItem("key")}` },
+      url: `${baseUrl}api/users/${user.info.userId}/password`,
+      headers: { Authorization: `Bearer ${user.token}` },
       data: {
         currentPassword: data.currentPassword,
         newPassword: data.newPassword,
