@@ -10,4 +10,4 @@ RUN npm install
 RUN npm install react-scripts@3.0.1 -g
 
 CMD ["npm", "run", "dev"]
-EXPOSE 3000
+EXPOSE 5173

@@ -73,7 +73,7 @@ pipeline {
                         try{
                             sh "docker stop -f front || true"
                             sh "docker rm -f front || true"
-                            sh "docker run -d --name front -p 8083:5173 ${DOCKER_USER_ID}/front"
+                            sh "docker run -d --name front -p 8083:3000 ${DOCKER_USER_ID}/front"
                         } catch (Exception e){
                             sh "docker restart front"
                         }
