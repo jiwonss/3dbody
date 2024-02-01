@@ -20,6 +20,7 @@ import RoutineLoadPage from "./../pages/diary/training/routine/RoutineLoadPage";
 import RoutineChoicePage from "./../pages/diary/training/routine/RoutineChoicePage";
 import RoutineEditPage from './../pages/diary/training/RoutineEditPage';
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
+import ChallengeUpdatePage from './../pages/challenge/ChallengeUpdatePage';
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
         path: "challenge/registration",
         Component: ChallengeRegistrationPage,
       },
+      {
+        path: "challenge/update",
+        Component: ChallengeUpdatePage,
+      }
     ],
   },
 ]);

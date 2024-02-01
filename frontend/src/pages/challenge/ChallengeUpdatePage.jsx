@@ -7,7 +7,7 @@ import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
 import AWS from "aws-sdk";
 
-const ChallengeRegistrationPage = () => {
+const ChallengeUpdatePage = () => {
   const [challengeTitle, setChallengeTitle] = useState("");
   const [challengeSummary, setChallengeSummary] = useState("");
   const [challengeContent, setChallengeContent] = useState("");
@@ -21,8 +21,8 @@ const ChallengeRegistrationPage = () => {
 
   AWS.config.update({
     region: region,
-    accessKeyId: "AKIAQ3EGP36XZXYPTXHB",
-    secretAccessKey: "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",
+    accessKeyId: 'AKIAQ3EGP36XZXYPTXHB',
+    secretAccessKey: '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',
   });
 
   // console.log("env,", import.meta.env.AWS_CONFIG)
@@ -35,37 +35,6 @@ const ChallengeRegistrationPage = () => {
   };
   const onChallengeContentHandler = (event) => {
     setChallengeContent(event.currentTarget.value);
-  };
-  const onChallengeThumnailHandler = async (event) => {
-    event.preventDefault();
-    const file = event.target[0].files[0];
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: bucket,
-        Key: file.name, //uuid
-        Body: file,
-        ContentType: "multipart/form-data",
-      },
-    });
-    const promise = upload.promise();
-    promise.then(() => {
-      console.log("성공");
-    });
-  };
-  const onChallengeImageHandler = (event) => {
-    event.preventDefault();
-    const file = event.target.files[0];
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: bucket,
-        Key: file.name, //uuid
-        Body: file,
-      },
-    });
-    const promise = upload.promise();
-    promise.then(() => {
-      console.log("성공");
-    });
   };
   const onChallengeStartDateHandler = (event) => {
     if (event.currentTarget.value > challengeEndDate) {
@@ -84,6 +53,7 @@ const ChallengeRegistrationPage = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    const file = event.target[3].files[0];
     await axios.post(
       `${baseUrl}api/challenge`,
       {
@@ -101,6 +71,19 @@ const ChallengeRegistrationPage = () => {
         },
       }
     );
+
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: bucket,
+        Key: `${uuid()}_${file.name}`, //uuid
+        Body: file,
+      },
+    });
+
+    const promise = upload.promise();
+    promise.then(() => {
+      window.location.replace("/challenge");
+    });
   };
 
   return (
@@ -136,6 +119,11 @@ const ChallengeRegistrationPage = () => {
         </div>
         <br />
         <div>
+          <label>포스터</label>
+          <input type="file" className="border-2" />
+        </div>
+        <br />
+        <div>
           <label>시작일</label>
           <input
             type="datetime-local"
@@ -155,18 +143,8 @@ const ChallengeRegistrationPage = () => {
         </div>
         <Button type={"submit"} buttonName={"등록하기"} />
       </form>
-      <form onSubmit={onChallengeThumnailHandler}>
-        <label>썸네일</label>
-        <input type="file" className="border-2" />
-        <button type="submit">등록</button>
-      </form>
-      <form onSubmit={onChallengeImageHandler}>
-        <label>전체 포스터</label>
-        <input type="file" className="border-2" />
-        <button type="submit">등록</button>
-      </form>
     </div>
   );
 };
 
-export default ChallengeRegistrationPage;
+export default ChallengeUpdatePage;

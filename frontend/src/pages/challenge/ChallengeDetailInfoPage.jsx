@@ -6,6 +6,7 @@ import Button from "./../../components/common/Button";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import { Link } from 'react-router-dom';
 
 const ChallengeDetailInfo = () => {
   const { challengeId } = useParams();
@@ -101,6 +102,11 @@ const ChallengeDetailInfo = () => {
               buttonName={"삭제하기"}
               onClick={onChallengeDeleteHandler}
             />
+          ) : null}
+          {user.info.role === "ROLE_ADMIN" ? (
+            <Link to="/challenge/update">
+              <Button buttonName={"수정하기"} />
+            </Link>
           ) : null}
         </div>
       </div>
