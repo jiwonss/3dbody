@@ -9,6 +9,7 @@ const Input = ({ type, value, placeholder, onChange, onKeyDown }) => {
         placeholder={placeholder}
         onChange={onChange}
         onKeyDown={onKeyDown}
+        className='border border-gray-500 rounded-md'
       />
     </div>
   );

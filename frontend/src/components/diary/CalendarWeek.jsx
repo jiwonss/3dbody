@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Link, useNavigate } from "react-router-dom";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
-import { CalendarDaysIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
+import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 
 const CalendarWeek = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
@@ -68,10 +68,8 @@ const CalendarWeek = () => {
         </span>
         <ArrowPathIcon className="w-6 h-6" onClick={handleTodayReturn} />
       </div>
-      <div className="flex">
-        <button onClick={handlePrevWeek} className="text-lg">
-          &lt;
-        </button>
+      <div className="flex items-center justify-center mx-4">
+        <ChevronLeftIcon className='w-6 h-6 ' onClick={handlePrevWeek} />
         <table className="w-full mx-auto">
           <thead>
             <tr>
@@ -110,9 +108,7 @@ const CalendarWeek = () => {
             </tr>
           </tbody>
         </table>
-        <button onClick={handleNextWeek} className="text-lg">
-          &gt;
-        </button>
+        <ChevronRightIcon className='w-6 h-6' onClick={handleNextWeek} />
       </div>
     </div>
   );

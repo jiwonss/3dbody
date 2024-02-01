@@ -10,6 +10,7 @@ import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userFoodState } from "../../recoil/diary/UserFoodState";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
+import FoodData from '../../components/diary/food/FoodData';
 
 const DiaryTrainingPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
@@ -19,13 +20,13 @@ const DiaryTrainingPage = () => {
 
   const foodDetailData = () => {
     return (
-      "음식 컴포넌트 만들어서 출력"
+      <FoodData />
     )
   }
 
-  // const getUserFood = async () => {
+  // const getUserManagementDay = async () => {
   //   await axios.get(
-  //     `${baseUrl}api/user/food/${day[0]}/${day[1]}/${day[2]}` 페이크주소임
+  //     `${baseUrl}management/calendar/day/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
   //   ).then(res => {
   //     setUserFood(res)
   //   }).catch(err => {
@@ -36,7 +37,7 @@ const DiaryTrainingPage = () => {
 
   useEffect(() => {
     console.log(userFood);
-    // getUserFood();
+    // getUserManagementDay();
   }, [selectedDate]);
 
   return (

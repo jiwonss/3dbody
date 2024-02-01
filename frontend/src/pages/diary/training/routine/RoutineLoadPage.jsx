@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
-import { useRecoilValue } from 'recoil';
 
-import PageTitle from './../../../components/common/PageTitle';
-import BackButton from './../../../components/common/BackButton';
-import Description from './../../../components/diary/training/Description';
-import Button from '../../../components/common/Button';
-import { selectedDateState } from '../../../recoil/diary/SelectedDateState';
+import PageTitle from '../../../../components/common/PageTitle';
+import BackButton from '../../../../components/common/BackButton';
+import Description from '../../../../components/diary/training/Description';
+import Button from '../../../../components/common/Button';
 
-const TrainingLoadPage = () => {
-  const selectedDate = useRecoilValue(selectedDateState);
+const RoutineLoadPage = () => {
   const test = false
 
   const checkButton = () => {
@@ -17,7 +14,7 @@ const TrainingLoadPage = () => {
         {test ?
           <Button buttonName="운동 기록을 선택해주세요." disabled />
           : 
-          <Link to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
+          <Link to={`/diary/training/myroutine/edit`}>
             <Button buttonName="확인" />
           </Link>
         }
@@ -30,8 +27,7 @@ const TrainingLoadPage = () => {
       <div className='absolute'>
         <BackButton />
       </div>
-      <PageTitle pageTitle={"불러오기"} />
-      
+      <PageTitle pageTitle={"전체 운동 기록"} />
       <div className='m-4'>
         <Description size="sm" subsize="xs" />
         <br />
@@ -43,4 +39,4 @@ const TrainingLoadPage = () => {
   )
 };
 
-export default TrainingLoadPage;
+export default RoutineLoadPage;

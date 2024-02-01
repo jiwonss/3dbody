@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-const Description = ({ Title, size, subTitle, subsize }) => {
+const Description = ({ Title, size, subTitle, subsize, font }) => {
   return (
     <>
-      <p className={`text-${size} font-semibold`}>{Title}</p>
-      <p className={`text-${subsize} font-light`}>{subTitle}</p>
+      <p className={`text-${size} font-${font}`}>{Title}</p>
+      <p className={`text-${subsize} text-gray-500`}>{subTitle}</p>
     </>
   )
 };
@@ -14,13 +14,15 @@ Description.propTypes = {
   size: PropTypes.string,
   subTitle: PropTypes.string,
   subsize: PropTypes.string,
+  font: PropTypes.string,
 };
 
 Description.defaultProps = {
   Title: "이전 운동 기록을 선택해주세요.",
-  size: "sm",
+  size: "base",
   subTitle: "최근 수행 순",
-  subsize: "xs",
+  subsize: "sm",
+  font: "semibold"
 };
 
 export default Description;

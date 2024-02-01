@@ -13,6 +13,8 @@ import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { userTrainingState } from "../../recoil/diary/UserTrainingState";
 import { userFoodState } from "../../recoil/diary/UserFoodState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import TrainingSummary from '../../components/diary/TrainingSummary';
+import FoodSummary from '../../components/diary/FoodSummary';
 
 const DiaryPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
@@ -24,10 +26,10 @@ const DiaryPage = () => {
   const trainingData = () => {
     return (
       <Link to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
-        {userTraining.length ? (
-          "운동데이터 보여주기"
+        {!userTraining.length ? (
+          <TrainingSummary />
         ) : (
-          <Button buttonStyle="large" buttonName="운동 계확하기" />
+          <Button btnCss="w-full" buttonName="운동 계확하기" />
         )}
       </Link>
     );
@@ -36,29 +38,20 @@ const DiaryPage = () => {
   const foodData = () => {
     return (
       <Link to={`/diary/food/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
-        {userFood.length ? (
-          "음식데이터 보여주기"
+        {!userFood.length ? (
+          <FoodSummary />
         ) : (
-          <Button buttonStyle="large" buttonName="식단 관리하기" />
+          <Button btnCss="w-full" buttonName="식단 관리하기" />
         )}
       </Link>
     );
   };
 
-  // const getUserTraining = async () => {
+  // const getUserManagementDay = async () => {
   //   await axios.get(
-  //     `${baseUrl}api/user/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
+  //     `${baseUrl}management/calendar/day/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
   //   ).then(res => {
   //     setUserTraining(res)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // };
-
-  //   const getUserFood = async () => {
-  //   await axios.get(
-  //     `${baseUrl}api/user/food/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
-  //   ).then(res => {
   //     setUserFood(res)
   //   }).catch(err => {
   //     console.log(err)
@@ -68,18 +61,18 @@ const DiaryPage = () => {
   useEffect(() => {
     console.log(userTraining);
     console.log(userFood);
-    // getUserTraining();
-    // setUserFood();
-  }, []);
+    // getUserManagementDay();
+  }, [selectedDate]);
 
   return (
     <div>
       <PageTitle pageTitle={"다이어리"} />
+      
       <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
       {isSelected === "left" ? <CalendarMonth /> : <Graph />}
       <hr className="my-4" />
 
-      <div className="flex flex-col gap-4 text-center">
+      <div className="flex flex-col gap-4 m-4">
         {trainingData()}
         {foodData()}
       </div>
