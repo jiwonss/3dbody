@@ -128,5 +128,35 @@ public class UserServiceImpl implements UserService {
         updatePin(user, null);
     }
 
+    @Override
+    public void updateName(Long userId, String name) {
+
+    }
+
+    @Override
+    public void updateGender(Long userId, User.Gender gender) {
+
+    }
+
+    @Override
+    public void updateHeight(Long userId, float height) {
+
+    }
+
+    @Override
+    public void updateWeight(Long userId, float weight) {
+
+    }
+
+    @Override
+    public void updateBirthDate(Long userId, String birthDate) {
+
+    }
+
+    @Override
+    public void updateProfileImage(Long userId, String profileImage) {
+
+    }
+
 
 }

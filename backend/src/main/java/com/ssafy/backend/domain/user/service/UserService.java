@@ -22,5 +22,11 @@ public interface UserService {
     void createPin(Long userId, PinRequestDto pinRequestDto);
     void changePin(Long userId, PinRequestDto pinRequestDto);
     void deletePin(Long userId);
+    void updateName(Long userId, String name);
+    void updateGender(Long userId, User.Gender gender);
+    void updateHeight(Long userId, float height);
+    void updateWeight(Long userId, float weight);
+    void updateBirthDate(Long userId, String birthDate);
+    void updateProfileImage(Long userId, String profileImage);
 
 }

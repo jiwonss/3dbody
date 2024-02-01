@@ -24,9 +24,6 @@ public class UserController {
         return ResponseEntity.ok(Response.success(userService.getUserInfo(userId)));
     }
 
-    // TODO 업데이트 다 분리
-    // - 닉네임 완료
-    // - 이름, 성별, 키, 몸무게
     @PatchMapping("/{userId}")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity updateUser(@PathVariable Long userId) {
@@ -106,6 +103,39 @@ public class UserController {
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
     public ResponseEntity deletePin(@PathVariable Long userId) {
         userService.deletePin(userId);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    // TODO 업데이트 다 분리
+    // - 닉네임 완료
+    // - 이름, 성별, 키, 몸무게, 생년월일, 프로필 이미지
+    @PatchMapping("/{userId}/name")
+    public ResponseEntity updateName(@PathVariable Long userId) {
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/gender")
+    public ResponseEntity updateGender(@PathVariable Long userId) {
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/height")
+    public ResponseEntity updateHeight(@PathVariable Long userId) {
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/weight")
+    public ResponseEntity updateWeight(@PathVariable Long userId) {
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/birthdate")
+    public ResponseEntity updateBirthDate(@PathVariable Long userId) {
+        return ResponseEntity.ok(Response.success());
+    }
+
+    @PatchMapping("/{userId}/profile")
+    public ResponseEntity updateProfileImage(@PathVariable Long userId) {
         return ResponseEntity.ok(Response.success());
     }
 

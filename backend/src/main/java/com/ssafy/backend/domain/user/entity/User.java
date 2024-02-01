@@ -32,11 +32,10 @@ public class User extends BaseEntity {
 
     private String birthDate;
 
-    private long height;
+    private float height;
 
-    private long weight;
+    private float weight;
 
-    @Lob
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
@@ -92,4 +91,29 @@ public class User extends BaseEntity {
         this.pin = pin;
     }
 
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void updateBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void updateHeight(float height) {
+        this.height = height;
+    }
+
+    public void updateWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
 }
+
