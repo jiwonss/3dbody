@@ -22,9 +22,9 @@ const DiaryTrainingPage = () => {
     return userTraining.length ? "운동 데이터 있다" : <TrainingNoData />;
   };
 
-  // const getUserTraining = async () => {
+  // const getUserManagementDay = async () => {
   //   await axios.get(
-  //     `${baseUrl}api/user/training/${day[0]}/${day[1]}/${day[2]}`
+  //     `${baseUrl}management/calendar/day/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
   //   ).then(res => {
   //     setUserTraining(res)
   //   }).catch(err => {
@@ -35,7 +35,7 @@ const DiaryTrainingPage = () => {
 
   useEffect(() => {
     console.log(userTraining);
-    // getUserTraining();
+    // getUserManagementDay();
   }, [selectedDate]);
 
   return (

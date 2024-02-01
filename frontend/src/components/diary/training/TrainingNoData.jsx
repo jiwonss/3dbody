@@ -1,28 +1,52 @@
-import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import axios from "axios";
+import { useRecoilState, useRecoilValue } from "recoil";
+
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
-import Button from './../../common/Button';
+import { isRestState } from "../../../recoil/diary/IsRestState";
+import { baseUrlState } from "../../../recoil/common/BaseUrlState";
+import Rest from "./Rest";
+import Plan from "./Plan";
 
 const TrainingNoData = () => {
   const selectedDate = useRecoilValue(selectedDateState);
-  const selectedDay = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]);
-  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
-  const dayOfWeekStr = daysOfWeek[selectedDay.getDay()];
+  const [isRest, setIsRest] = useRecoilState(isRestState);
+  const baseUrl = useRecoilValue(baseUrlState);
+
+  // const getIsRest = async () => {
+  //   await axios.get(
+  //     `${baseUrl}management/calendar/day/rest/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+  //   ).then(res => {
+  //     setIsRest(res)
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // };
+
+  // useEffect(() => {
+  //   getIsRest()
+  // }, [])
+
+  // const postIsRest = async () => {
+  //   await axios.post(
+  //     `${baseUrl}management/calendar/day/rest/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`, {
+  //       is_rest: isRest,
+  //     }
+  //   ).then(res => {
+  //     console.log(res.data);
+  //     console.log("성공");
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // };
+
+  // useEffect(() => {
+  //   postIsRest()
+  // }, [isRest])
 
   return (
     <>
-      <div className='m-4'>
-        <p>{selectedDate[1]}월 {selectedDate[2]}일 {dayOfWeekStr}</p>
-        <p>운동을 직접 계획해보세요!</p>
-        <div className='flex justify-center gap-4'>
-          <Link to={`/diary/training/load`}>
-            <Button buttonName="불러오기" />
-          </Link>
-          <Link to={`/diary/training/choice`}>
-            <Button buttonName="운동 선택하기" />
-          </Link>
-        </div>
-      </div>
+      {isRest ? <Rest /> : <Plan />}
     </>
   );
 };

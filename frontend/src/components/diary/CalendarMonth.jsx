@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 
 const CalendarMonth = () => {
@@ -90,15 +92,11 @@ const CalendarMonth = () => {
     <div className="max-w-screen-sm mx-auto mt-2">
       {/* 연, 월 표시, 방향버튼으로 월 변경 */}
       <div className="flex items-center justify-between px-4">
-        <button onClick={handlePrevMonth} className="text-lg">
-          &lt;
-        </button>
+        <ChevronLeftIcon className='w-6 h-6' onClick={handlePrevMonth} />
         <span className="font-bold text-gray-800">
           {currentMonth.toLocaleDateString("ko-KR", { year: "numeric", month: "short" })}
         </span>
-        <button onClick={handleNextMonth} className="text-lg">
-          &gt;
-        </button>
+        <ChevronRightIcon className='w-6 h-6' onClick={handleNextMonth} />
       </div>
       {/* 요일, 일 표시 ! */}
       <table className="w-full mx-auto">
