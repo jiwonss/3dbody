@@ -30,7 +30,7 @@ public class FoodController {
         foodList = foodService.findByNameContaining(keyword);
         return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
-
+    //음식 추가
     @PostMapping("/add")
     public ResponseEntity<?> addFoodList(@RequestBody FoodListRequestDto foodListRequestDto){
         foodService.addFoodList(foodListRequestDto);
@@ -42,10 +42,22 @@ public class FoodController {
     public ResponseEntity<?> findByUserIdAndDate(@PathVariable("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day){
         log.info("들어와?");
         List<UserFoodListDto> userFoodList = foodService.findByUserIdAndDate(userId, year, month, day);
-        log.info("controll return 잘돼?들어와?");
+
         return new ResponseEntity<>(userFoodList, HttpStatus.OK);
     }
 
+//    //카테고리(아침, 점심, 저녁, 기타)별 상세 조회
+    @GetMapping("/list/category/{user_id}")
+    public ResponseEntity<?> findByListCategory(@PathVariable("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day, @RequestParam("category") String category){
+        List<UserFoodListDto> userFoodListCategory = foodService.findByListCategory(userId, year, month, day, category);
+        return new ResponseEntity<>(userFoodListCategory, HttpStatus.OK);
+    }
 
-
+    //음식 삭제
+    @DeleteMapping("/delete/{user_food_id}")
+    public ResponseEntity<?> deleteById(@PathVariable("user_food_id") Long userFoodId){
+        log.info("와?");
+        foodService.deleteById(userFoodId);
+        return ResponseEntity.ok(Response.success());
+    }
 }
