@@ -5,13 +5,14 @@ import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import axios from "axios";
 import Button from "./../../components/common/Button";
+import { userState } from "../../recoil/common/UserState";
 
 const ChallengeDetailComment = () => {
   const { challengeId } = useParams();
   const [commentList, setCommentList] = useState([]);
   const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const [content, setContent] = useState("");
-
 
   // 댓글 리스트 가져오기
   const getCommentList = async () => {
@@ -32,6 +33,7 @@ const ChallengeDetailComment = () => {
         content={comment.content}
         nickname={comment.nickname}
         commentId={comment.comment_id}
+        userId={comment.user_id}
       />
     );
   });
@@ -46,18 +48,16 @@ const ChallengeDetailComment = () => {
     await axios
       .post(`${baseUrl}api/comment/${challengeId}`, {
         content: content,
-        user_id: localStorage.getItem("userId"),
+        user_id: user.info.userId,
       })
       .then(() => {
-        setContent("")
+        setContent("");
       });
   };
 
   return (
     <div>
-      <div>
-        {comments}
-      </div>
+      <div>{comments}</div>
       <br />
       <div>
         <form onSubmit={onSubmitHandler}>

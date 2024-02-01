@@ -37,7 +37,13 @@ const ChallengeCanParticipate = () => {
 
   return (
     <div>
-      <div>{challenges}</div>
+      {challenges.length ? (
+        <div>{challenges}</div>
+      ) : (
+        <div className="flex justify-center">
+          {"참여 가능한 챌린지가 없습니다."}
+        </div>
+      )}
     </div>
   );
 };

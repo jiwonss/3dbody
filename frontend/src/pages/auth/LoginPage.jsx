@@ -31,8 +31,6 @@ const LoginPage = () => {
         console.log(res.data);
         console.log("성공");
         localStorage.clear();
-        localStorage.setItem("key", res.data.dataBody.tokenDto.accessToken);
-        localStorage.setItem("userId", res.data.dataBody.userInfo.userId);
         localStorage.setItem("isLogin", true);
         setUser({
           token: res.data.dataBody.tokenDto.accessToken,

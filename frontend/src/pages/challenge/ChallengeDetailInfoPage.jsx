@@ -5,11 +5,13 @@ import { CalendarIcon, UsersIcon, FlagIcon } from "@heroicons/react/24/solid";
 import Button from "./../../components/common/Button";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import { userState } from "../../recoil/common/UserState";
 
 const ChallengeDetailInfo = () => {
   const { challengeId } = useParams();
   const [challenge, setChallenge] = useState({});
   const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const [isParticipate, setIsParticipate] = useState(null);
 
   // challenge 가져오기
@@ -18,6 +20,15 @@ const ChallengeDetailInfo = () => {
       await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)
     ).data;
     setChallenge(res);
+  };
+
+  // 참여중인 챌린지 가져오기
+  const getParticipateChallenge = async () => {
+    await axios
+      .get(`${baseUrl}api/challenge/${challengeId}/user/${user.info.userId}`)
+      .then((res) => {
+        setIsParticipate(res.data);
+      });
   };
 
   // 바로하면 date 데이터를 문자열로 못받아와서 에러남
@@ -31,11 +42,7 @@ const ChallengeDetailInfo = () => {
   const onParticipateHandler = async (event) => {
     event.preventDefault();
     await axios
-      .post(
-        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem(
-          "userId"
-        )}`
-      )
+      .post(`${baseUrl}api/challenge/${challengeId}/user/${user.info.userId}`)
       .then(() => {
         setIsParticipate(true);
       });
@@ -45,25 +52,9 @@ const ChallengeDetailInfo = () => {
   const onParticipateCancelHandler = async (event) => {
     event.preventDefault();
     await axios
-      .delete(
-        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem(
-          "userId"
-        )}`
-      )
+      .delete(`${baseUrl}api/challenge/${challengeId}/user/${user.info.userId}`)
       .then(() => {
         setIsParticipate(false);
-      });
-  };
-
-  const getParticipateChallenge = async () => {
-    await axios
-      .get(
-        `${baseUrl}api/challenge/${challengeId}/user/${localStorage.getItem(
-          "userId"
-        )}`
-      )
-      .then((res) => {
-        setIsParticipate(res.data);
       });
   };
 
