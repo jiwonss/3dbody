@@ -9,7 +9,7 @@ pipeline {
     environment {
         REPO = "s10-webmobile1-sub2/S10P12C204"
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -71,7 +71,7 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
                         try{
-                            sh "docker stop -f front || true"
+                            // sh "docker stop -f front || true"
                             sh "docker rm -f front || true"
                             sh "docker run -d --name front -p 8083:3000 ${DOCKER_USER_ID}/front"
                         } catch (Exception e){
