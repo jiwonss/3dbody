@@ -6,6 +6,7 @@ import Button from "./../../components/common/Button";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import { Link } from "react-router-dom";
 
 const ChallengeDetailInfo = () => {
   const { challengeId } = useParams();
@@ -88,6 +89,11 @@ const ChallengeDetailInfo = () => {
         )}
         <hr />
         {challenge.content}
+      </div>
+      <div>
+        <Link to="/challenge/ongoing">
+          <button>참여하기</button>
+        </Link>
       </div>
     </div>
   );
