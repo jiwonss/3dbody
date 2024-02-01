@@ -112,5 +112,9 @@ public class Inbody {
         this.date = date;
     }
 
+    public void addInbodyImage(InbodyImage inbodyImage) {
+        this.inbodyImages.add(inbodyImage);
+    }
+
 
 }
