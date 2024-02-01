@@ -16,12 +16,12 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     //notice 목록
-    @Query("select new com.ssafy.backend.domain.post.dto.PostListDto(p.createdAt, p.category, p.title) " +
+    @Query("select new com.ssafy.backend.domain.post.dto.PostListDto(p.postId, p.createdAt, p.category, p.title) " +
     "from Post p " +
     "where p.category = 'NOTICE'")
     List<PostListDto> findAllByNotice();
 
-    @Query("select new com.ssafy.backend.domain.post.dto.PostListDto(p.createdAt, p.category, p.title) " +
+    @Query("select new com.ssafy.backend.domain.post.dto.PostListDto(p.postId, p.createdAt, p.category, p.title) " +
             "from Post p " +
             "where p.category = 'FAQ'")
     List<PostListDto> findAllByFaq();
