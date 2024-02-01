@@ -12,7 +12,8 @@ const BaseModal = () => {
       ariaHideApp={false}
       onRequestClose={() => setModal(false)}
     >
-      기본
+      <button onClick={setModal(false)}>취소</button>
+      <button>확인</button>
     </Modal>
   );
 };
