@@ -11,9 +11,6 @@ const ChangeGenderModal = ({ onClose, data }) => {
   const baseUrl = useRecoilState(baseUrlState);
   const { register, handleSubmit } = useForm({
     mode: "onSubmit",
-    defaultValues: {
-      gender: { data },
-    },
   });
 
   const onSubmit = () => {
@@ -24,12 +21,12 @@ const ChangeGenderModal = ({ onClose, data }) => {
       className={"absolute p-5  bg-red-200 overflow-auto inset"}
       isOpen={modalData.type === "changeGender"}
       ariaHideApp={false}
-      onRequestClose={() => setModalData(null)}
+      onRequestClose={() => setModalData({type:null, data:null})}
     >
       <h1>성별을 알려주세요</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <select {...register("gender")}>
-          <option value="now">{data}</option>
+          <option value="now" selected>{data}</option>
           <option value="another">{ data === "남자" ? "여자" : "남자"}</option>
         </select>
         <button onClick={onClose}>취소</button>

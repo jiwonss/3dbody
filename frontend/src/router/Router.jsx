@@ -22,6 +22,7 @@ import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
 import ChallengeUpdatePage from "./../pages/challenge/ChallengeUpdatePage";
 import WebRTCPage from "./../pages/challenge/WebRTCPage";
+import PinChangePage from "../pages/mypage/PinChangePage";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/mypage/passwordchange",
         Component: PasswordChangePage,
+      },
+      {
+        path: "/mypage/pinchange",
+        Component: PinChangePage,
       },
       {
         path: "/mypage/notice",
