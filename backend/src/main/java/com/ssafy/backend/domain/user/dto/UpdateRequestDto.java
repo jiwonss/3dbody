@@ -10,6 +10,7 @@ import lombok.ToString;
 public class UpdateRequestDto {
 
     private String name;
+    private String nickname;
     private User.Gender gender;
     private float height;
     private float weight;

@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.user.service.impl;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.dto.PinRequestDto;
+import com.ssafy.backend.domain.user.dto.UpdateRequestDto;
 import com.ssafy.backend.domain.user.dto.UserResponseDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
@@ -32,7 +33,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePassword(User user, String password) {
         user.updatePassword(passwordEncoder.encode(password));
-        userRepository.save(user);
     }
 
     @Override
@@ -66,8 +66,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+    public void updateUser(Long userId, UpdateRequestDto updateRequestDto) {
+        userRepository.findById(userId).ifPresentOrElse(
+                user -> {
+                     user.updateName(updateRequestDto.getName());
+                     user.updateNickname(updateRequestDto.getNickname());
+                     user.updateGender(updateRequestDto.getGender());
+                     user.updateHeight(updateRequestDto.getHeight());
+                     user.updateWeight(updateRequestDto.getWeight());
+                     user.updateBirthDate(updateRequestDto.getBirthDate());
+                },
+                () -> new UserException(INVALID_USER)
+        );
     }
 
     @Override
@@ -78,7 +88,6 @@ public class UserServiceImpl implements UserService {
             throw new UserException(DUPLICATED_NICKNAME);
         }
         user.updateNickname(nickname);
-        userRepository.save(user);
     }
 
     @Override
@@ -86,7 +95,6 @@ public class UserServiceImpl implements UserService {
     public void updateStatus(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         user.updateStatus(User.Status.WITHDRAWAL);
-        userRepository.save(user);
     }
 
     @Override
@@ -104,7 +112,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePin(User user, String pin) {
         user.updatePin(pin);
-        userRepository.save(user);
     }
 
     @Override
@@ -129,33 +136,51 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateName(Long userId, String name) {
-
+        userRepository.findById(userId).ifPresent(user -> {
+            user.updateName(name);
+        });
     }
 
     @Override
+    @Transactional
     public void updateGender(Long userId, User.Gender gender) {
-
+        userRepository.findById(userId).ifPresent(user -> {
+            user.updateGender(gender);
+        });
     }
 
     @Override
+    @Transactional
     public void updateHeight(Long userId, float height) {
-
+        userRepository.findById(userId).ifPresent(user -> {
+            user.updateHeight(height);
+        });
     }
 
     @Override
+    @Transactional
     public void updateWeight(Long userId, float weight) {
-
+        userRepository.findById(userId).ifPresent(user -> {
+            user.updateWeight(weight);
+        });
     }
 
     @Override
+    @Transactional
     public void updateBirthDate(Long userId, String birthDate) {
-
+        userRepository.findById(userId).ifPresent(user -> {
+            user.updateBirthDate(birthDate);
+        });
     }
 
     @Override
+    @Transactional
     public void updateProfileImage(Long userId, String profileImage) {
-
+        userRepository.findById(userId).ifPresent(user -> {
+            user.updateProfileImage(profileImage);
+        });
     }
 
 
