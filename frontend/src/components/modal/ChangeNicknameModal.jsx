@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import { modalState } from "../../recoil/modal/modalState";
+import { modalState } from "../../recoil/modal/ModalState";
 import { useRecoilState } from "recoil";
 import { PropTypes } from "prop-types";
 

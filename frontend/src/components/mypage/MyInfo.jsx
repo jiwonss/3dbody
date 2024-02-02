@@ -1,18 +1,25 @@
 import { PropTypes } from "prop-types";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "../../recoil/modal/modalState";
+import { useRecoilState } from "recoil";
+import { modalState } from "../../recoil/modal/ModalState";
 
 const MyInfo = ({ category, data, modalname }) => {
-  const setModalName = useSetRecoilState(modalState);
+  const [modalData, setModalData] = useRecoilState(modalState);
 
   return (
     <>
-      <div
-        onClick={() => setModalName(modalname)}
-        className="flex justify-between"
-      >
+      <div className="flex justify-between">
         <div>{category}</div>
-        <div>{data}</div>
+        <div
+          onClick={(event) => {
+            setModalData({
+              type: modalname,
+              data: event.currentTarget.innerText,
+            });
+            console.log(modalData)
+          }}
+        >
+          {data}
+        </div>
       </div>
       <hr />
     </>

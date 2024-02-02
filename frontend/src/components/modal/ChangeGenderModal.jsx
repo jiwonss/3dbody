@@ -1,29 +1,47 @@
 import Modal from "react-modal";
-import { modalState } from "../../recoil/modal/modalState";
+import { modalState } from "../../recoil/modal/ModalState";
 import { useRecoilState } from "recoil";
 import { PropTypes } from "prop-types";
+import { useForm } from "react-hook-form";
+import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import axios from "axios";
 
-const ChangeGenderModal = ({ onClose }) => {
-  const [modalName, setModalName] = useRecoilState(modalState);
+const ChangeGenderModal = ({ onClose, data }) => {
+  const [modalData, setModalData] = useRecoilState(modalState);
+  const baseUrl = useRecoilState(baseUrlState);
+  const { register, handleSubmit } = useForm({
+    mode: "onSubmit",
+    defaultValues: {
+      gender: { data },
+    },
+  });
 
+  const onSubmit = () => {
+    console.log("앙")
+  };
   return (
     <Modal
       className={"absolute p-5  bg-red-200 overflow-auto inset"}
-      isOpen={modalName === "changeGender"}
+      isOpen={modalData.type === "changeGender"}
       ariaHideApp={false}
-      onRequestClose={() => setModalName(null)}
+      onRequestClose={() => setModalData(null)}
     >
-      <input type="text" />
-      <p>밥이 넘어가니</p>
-      성별 변경
-      <button onClick={onClose}>취소</button>
-      <button>확인</button>
+      <h1>성별을 알려주세요</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <select {...register("gender")}>
+          <option value="now">{data}</option>
+          <option value="another">{ data === "남자" ? "여자" : "남자"}</option>
+        </select>
+        <button onClick={onClose}>취소</button>
+        <input type="submit" value={"확인"} />
+      </form>
     </Modal>
   );
 };
 
 ChangeGenderModal.propTypes = {
   onClose: PropTypes.func,
+  data: PropTypes.string,
 };
 
 export default ChangeGenderModal;

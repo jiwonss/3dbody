@@ -18,7 +18,7 @@ import MyRoutinePage from "./../pages/diary/training/MyRoutinePage";
 import RoutineCreatePage from "./../pages/diary/training/RoutineCreatePage";
 import RoutineLoadPage from "./../pages/diary/training/routine/RoutineLoadPage";
 import RoutineChoicePage from "./../pages/diary/training/routine/RoutineChoicePage";
-import RoutineEditPage from './../pages/diary/training/RoutineEditPage';
+import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
 
 const router = createBrowserRouter([
