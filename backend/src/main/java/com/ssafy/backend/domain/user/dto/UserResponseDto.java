@@ -1,15 +1,14 @@
 package com.ssafy.backend.domain.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.backend.domain.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserResponseDto {
 
     private String email;
@@ -18,7 +17,11 @@ public class UserResponseDto {
     private User.Gender gender;
     private long height;
     private long weight;
+
+    @JsonProperty("birth_date")
     private String birthDate;
+
+    @JsonProperty("profile_image")
     private String profileImage;
 
 
