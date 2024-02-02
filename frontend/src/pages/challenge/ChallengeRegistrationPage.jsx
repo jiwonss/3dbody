@@ -6,6 +6,7 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
 import AWS from "aws-sdk";
+import BackButton from "./../../components/common/BackButton";
 
 const ChallengeRegistrationPage = () => {
   const [challengeTitle, setChallengeTitle] = useState("");
@@ -30,8 +31,6 @@ const ChallengeRegistrationPage = () => {
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
   });
 
-  // console.log("env,", import.meta.env.AWS_CONFIG)
-
   const onChallengeThumnailHandler = (event) => {
     setThumbnail(event.currentTarget.files[0]);
     setThumbnailName(`${uuid()}_${event.currentTarget.files[0].name}`); //uuid => 난수 설정
@@ -50,11 +49,7 @@ const ChallengeRegistrationPage = () => {
     setChallengeContent(event.currentTarget.value);
   };
   const onChallengeStartDateHandler = (event) => {
-    if (event.currentTarget.value > challengeEndDate) {
-      alert("종료일이 시작일보다 빠릅니다.");
-    } else {
-      setChallengeStartDate(event.currentTarget.value);
-    }
+    setChallengeStartDate(event.currentTarget.value);
   };
   const onChallengeEndDateHandler = (event) => {
     if (event.currentTarget.value < challengeStartDate) {
@@ -105,7 +100,7 @@ const ChallengeRegistrationPage = () => {
       console.log("성공");
     });
   };
-  
+
   // S3 에 넣기
   const onChallengeImageSubmitHandler = async (event) => {
     event.preventDefault();
@@ -132,6 +127,7 @@ const ChallengeRegistrationPage = () => {
 
   return (
     <div>
+      <BackButton />
       <form onSubmit={onChallengeThumnailSubmitHandler}>
         <label>썸네일</label>
         <input
