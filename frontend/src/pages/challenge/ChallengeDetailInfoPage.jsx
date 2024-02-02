@@ -110,6 +110,11 @@ const ChallengeDetailInfo = () => {
           ) : null}
         </div>
       </div>
+      <div>
+        <Link to="/challenge/ongoing">
+          <button>참여하기</button>
+        </Link>
+      </div>
     </div>
   );
 };

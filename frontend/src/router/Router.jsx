@@ -21,6 +21,7 @@ import RoutineChoicePage from "./../pages/diary/training/routine/RoutineChoicePa
 import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
 import ChallengeUpdatePage from "./../pages/challenge/ChallengeUpdatePage";
+import WebRTCPage from "./../pages/challenge/WebRTCPage";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
       {
         path: "challenge/:challengeId/update",
         Component: ChallengeUpdatePage,
+      },
+      {
+        path: "/challenge/ongoing",
+        Component: WebRTCPage,
       },
     ],
   },

@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.1.1",
     "aws-sdk": "^2.1548.0",
     "axios": "^1.6.7",
+    "firebase": "^10.7.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.3",
     "react": "^18.2.0",
