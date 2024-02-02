@@ -69,11 +69,12 @@ public class ChallengeController {
     }
 
     // 챌린지 정보 수정
-    @PutMapping
-    public ResponseEntity<?> updateChallenge(@RequestBody ChallengeRequestDto requestDto) {
+    @PutMapping("/{challenge_id}")
+    public ResponseEntity<?> updateChallenge(@PathVariable("challenge_id") Long challengeId,
+                                             @RequestBody ChallengeRequestDto requestDto) {
         try {
             log.info("챌린지 정보 수정 - requestDto : {}", requestDto);
-            Challenge challenge = challengeService.updateChallenge(requestDto);
+            Challenge challenge = challengeService.updateChallenge(challengeId, requestDto);
 
             return new ResponseEntity<>("챌린지 수정 성공! " + challenge, HttpStatus.OK);
 

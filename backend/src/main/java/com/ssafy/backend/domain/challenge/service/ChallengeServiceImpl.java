@@ -79,10 +79,12 @@ public class ChallengeServiceImpl implements ChallengeService {
     // 챌린지 정보 수정
     @Override
     @Transactional
-    public Challenge updateChallenge(ChallengeRequestDto requestDto) {
+    public Challenge updateChallenge(Long challengeId, ChallengeRequestDto requestDto) {
         log.info("챌린지 정보 수정 - serviceImpl");
+        User user = userRepository.getReferenceById(requestDto.getUserId());
         Challenge challenge = Challenge.builder()
-                .challengeId(requestDto.getChallengeId())
+                .challengeId(challengeId)
+                .user(user)
                 .title(requestDto.getTitle())
                 .summary(requestDto.getSummary())
                 .content(requestDto.getContent())
