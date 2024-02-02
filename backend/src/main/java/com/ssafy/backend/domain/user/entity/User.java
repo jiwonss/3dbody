@@ -32,7 +32,10 @@ public class User extends BaseEntity {
 
     private String birthDate;
 
-    @Lob
+    private float height;
+
+    private float weight;
+
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
@@ -62,7 +65,7 @@ public class User extends BaseEntity {
         ROLE_ADMIN
     }
 
-    public static User create(String email, String password, String name, Gender gender, String birthDate) {
+    public static User create(String email, String password, String name, Gender gender, String birthDate, Role role) {
         return User.builder()
                 .email(email)
                 .password(password)
@@ -70,7 +73,7 @@ public class User extends BaseEntity {
                 .gender(gender)
                 .birthDate(birthDate)
                 .status(Status.MEMBER)
-                .role(Role.ROLE_USER)
+                .role(role)
                 .build();
     }
 
@@ -88,4 +91,29 @@ public class User extends BaseEntity {
         this.pin = pin;
     }
 
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void updateBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void updateHeight(float height) {
+        this.height = height;
+    }
+
+    public void updateWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
 }
+

@@ -13,9 +13,10 @@ public class SignupRequestDto {
     private String name;
     private User.Gender gender;
     private String birthDate;
+    private User.Role role;
 
     public User toEntity() {
-        return User.create(email, password, name, gender, birthDate);
+        return User.create(email, password, name, gender, birthDate, role);
     }
 
 }

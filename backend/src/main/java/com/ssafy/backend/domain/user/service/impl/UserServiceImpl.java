@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.user.service.impl;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.dto.PinRequestDto;
+import com.ssafy.backend.domain.user.dto.UserResponseDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ssafy.backend.global.error.exception.ExceptionType.*;
 
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updatePassword(User user, String password) {
         user.updatePassword(passwordEncoder.encode(password));
         userRepository.save(user);
@@ -56,16 +59,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserInfo(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+    public UserResponseDto getUserInfo(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        return null;
     }
 
     @Override
+    @Transactional
     public void updateUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
     }
 
     @Override
+    @Transactional
     public void updateNickname(Long userId, String nickname) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         if (userRepository.existsByNickname(nickname)) {
@@ -76,6 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateStatus(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         user.updateStatus(User.Status.WITHDRAWAL);
@@ -94,6 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updatePin(User user, String pin) {
         user.updatePin(pin);
         userRepository.save(user);
@@ -118,6 +126,36 @@ public class UserServiceImpl implements UserService {
     public void deletePin(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         updatePin(user, null);
+    }
+
+    @Override
+    public void updateName(Long userId, String name) {
+
+    }
+
+    @Override
+    public void updateGender(Long userId, User.Gender gender) {
+
+    }
+
+    @Override
+    public void updateHeight(Long userId, float height) {
+
+    }
+
+    @Override
+    public void updateWeight(Long userId, float weight) {
+
+    }
+
+    @Override
+    public void updateBirthDate(Long userId, String birthDate) {
+
+    }
+
+    @Override
+    public void updateProfileImage(Long userId, String profileImage) {
+
     }
 
 

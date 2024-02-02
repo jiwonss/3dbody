@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.user.controller;
 
 import com.ssafy.backend.domain.user.dto.LoginRequestDto;
+import com.ssafy.backend.domain.user.dto.LoginResponseDto;
 import com.ssafy.backend.domain.user.dto.ReissueDto;
 import com.ssafy.backend.domain.user.dto.SignupRequestDto;
 import com.ssafy.backend.domain.user.service.AuthService;
@@ -15,9 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_EMAIL;
 
@@ -46,16 +44,16 @@ public class AuthController {
         log.info("로그인 결과(UserInfoDto) : {}", userInfoDto);
         log.info("로그인 결과(TokenDto) : {}", tokenDto);
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("userInfo", userInfoDto);
-        map.put("tokenDto", tokenDto);
-
-        return ResponseEntity.ok(Response.success(map));
+        return ResponseEntity.ok(Response.success(
+                LoginResponseDto.builder()
+                        .userInfo(userInfoDto)
+                        .token(tokenDto)
+                        .build())
+        );
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(@RequestHeader("Authorization") String accessToken,
-                                 HttpServletResponse response) {
+    public ResponseEntity logout(@RequestHeader("Authorization") String accessToken) {
         jwtService.addBlackList(accessToken);
         return ResponseEntity.ok(Response.success());
     }
