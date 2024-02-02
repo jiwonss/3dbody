@@ -17,6 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_EMAIL;
 
 @Slf4j
@@ -59,19 +62,13 @@ public class AuthController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity reissue(@RequestBody ReissueDto reissueDto, HttpServletResponse response) {
+    public ResponseEntity reissue(@RequestBody ReissueDto reissueDto) {
         TokenDto tokenDto = authService.reissue(reissueDto.getRefreshToken());
 
-        Cookie accessTokenCookie = new Cookie("accessToken", tokenDto.getAccessToken());
-        accessTokenCookie.setMaxAge((int)tokenDto.getAccessTokenExpired());
-        accessTokenCookie.setPath("/");
-        Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
-        refreshTokenCookie.setMaxAge((int)tokenDto.getRefreshTokenExpired());
-        refreshTokenCookie.setPath("/");
-        response.addCookie(accessTokenCookie);
-        response.addCookie(refreshTokenCookie);
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", tokenDto);
 
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok(Response.success(map));
     }
 
     @GetMapping
