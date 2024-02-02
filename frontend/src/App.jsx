@@ -1,11 +1,10 @@
-import { useRecoilValue } from 'recoil';
-import './App.css'
-import BottomNavbar from './components/common/BottomNavbar';
-import LoginPage from './pages/auth/LoginPage';
-import {  modalComponent } from './recoil/modal/ModalComponent';
+import "./App.css";
+
+import BottomNavbar from "./components/common/BottomNavbar";
+import LoginPage from "./pages/auth/LoginPage";
+import ModalManager from "./recoil/modal/ModalManager";
 
 function App() {
-  const modal = useRecoilValue(modalComponent)
   return (
     <div>
       {localStorage.getItem("isLogin") === "true" ? (
@@ -13,7 +12,7 @@ function App() {
       ) : (
         <LoginPage />
       )}
-      {modal}
+      {ModalManager()}
     </div>
   );
 }
