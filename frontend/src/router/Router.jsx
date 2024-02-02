@@ -12,7 +12,7 @@ import DiaryTrainingPage from "../pages/diary/DiaryTrainingPage";
 import DiaryFoodPage from "../pages/diary/DiaryFoodPage";
 import HomePage from "../pages/home/HomePage";
 import PasswordChangePage from "../pages/mypage/PasswordChangePage";
-import TrainingLoadPage from "../pages/diary/training/trainingLoadPage";
+import TrainingLoadPage from "../pages/diary/training/TrainingLoadPage";
 import TrainingChoicePage from "./../pages/diary/training/TrainingChoicePage";
 import MyRoutinePage from "./../pages/diary/training/MyRoutinePage";
 import RoutineCreatePage from "./../pages/diary/training/RoutineCreatePage";
