@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.training.service;
 
 import com.ssafy.backend.domain.training.dto.TrainingResponseDto;
 import com.ssafy.backend.domain.training.entity.Training;
+import com.ssafy.backend.domain.training.repository.RestRepository;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.List;
 public class TrainingServiceImpl implements TrainingService {
 
     private final TrainingRepository trainingRepository;
+    private final RestRepository restRepository;
 
     // 운동 리스트(검색, 카테고리)
     @Override

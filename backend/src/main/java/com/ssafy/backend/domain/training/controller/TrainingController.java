@@ -34,4 +34,9 @@ public class TrainingController {
 
     }
 
+    @GetMapping("/rest")
+    public ResponseEntity<?> checkRest(@RequestParam(""))
+
+
+
 }
