@@ -32,6 +32,12 @@ public class InbodyController {
         return ResponseEntity.ok(Response.success());
     }
 
+    @GetMapping("/{userId}/{inbodyId}")
+    public ResponseEntity getInbodyItem(@PathVariable Long userId, @PathVariable Long inbodyId) {
+        InbodyResponseDto inbodyResponseDto = inbodyService.getInbodyItem(inbodyId);
+        return ResponseEntity.ok(Response.success(inbodyResponseDto));
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity getInbodyList(@PathVariable Long userId) {
         List<InbodyResponseDto> result = inbodyService.getInbodyList(userId);

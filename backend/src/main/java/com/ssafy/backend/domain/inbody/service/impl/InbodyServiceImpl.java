@@ -57,6 +57,12 @@ public class InbodyServiceImpl implements InbodyService {
     }
 
     @Override
+    public InbodyResponseDto getInbodyItem(Long inbodyId) {
+        Inbody inbody = inbodyRepository.findById(inbodyId).orElseThrow(() -> new InbodyException(INVALID_INBODY));
+        return InbodyResponseDto.of(inbody);
+    }
+
+    @Override
     public List<InbodyResponseDto> getInbodyList(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         return inbodyRepository.findAllByUser(user)
