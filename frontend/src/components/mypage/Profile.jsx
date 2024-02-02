@@ -9,7 +9,7 @@ const Profile = () => {
   const logout = () =>{
     localStorage.clear()
     window.location.reload("/")
-  }
+  // S3 아직 하는중
   const onProfileUpdate = async (event) => {
     event.preventDefault();
     if (thumbnailName.includes("jpg") || thumbnailName.includes("jpeg")) {
