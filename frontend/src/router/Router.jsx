@@ -10,7 +10,7 @@ import ChallengePage from "../pages/challenge/ChallengePage";
 import ChallengeDetailPage from "./../pages/challenge/ChallengeDetailPage";
 import DiaryTrainingPage from "../pages/diary/DiaryTrainingPage";
 import DiaryFoodPage from "../pages/diary/DiaryFoodPage";
-import HomePage from "../pages/home/homePage";
+import HomePage from "../pages/home/HomePage";
 import PasswordChangePage from "../pages/mypage/PasswordChangePage";
 import TrainingLoadPage from "../pages/diary/training/trainingLoadPage";
 import TrainingChoicePage from "./../pages/diary/training/TrainingChoicePage";
