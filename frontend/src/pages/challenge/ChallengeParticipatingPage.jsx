@@ -4,6 +4,8 @@ import ChallengeCard from "../../components/challenge/ChallengeCard";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 const ChallengeParticipating = () => {
   const [challengeList, setChallengeList] = useState([]);
@@ -39,7 +41,16 @@ const ChallengeParticipating = () => {
   return (
     <div>
       {challenges.length ? (
-        <div className="grid grid-cols-2">{challenges}</div>
+        <div className="grid grid-cols-2">
+          {challenges}
+          <Link to="/challenge/registration">
+            {user.info.role === "ROLE_ADMIN" ? (
+              <div className="card">
+                <PlusIcon className="w-6 h-6" />
+              </div>
+            ) : null}
+          </Link>
+        </div>
       ) : (
         <div className="flex justify-center">
           {"참여중인 챌린지가 없습니다."}

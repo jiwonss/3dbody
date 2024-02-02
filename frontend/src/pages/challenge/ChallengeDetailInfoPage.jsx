@@ -104,7 +104,7 @@ const ChallengeDetailInfo = () => {
             />
           ) : null}
           {user.info.role === "ROLE_ADMIN" ? (
-            <Link to="/challenge/update">
+            <Link to={`/challenge/${challengeId}/update`}>
               <Button buttonName={"수정하기"} />
             </Link>
           ) : null}

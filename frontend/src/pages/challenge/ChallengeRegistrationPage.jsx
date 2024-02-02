@@ -6,6 +6,7 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
 import AWS from "aws-sdk";
+import BackButton from "./../../components/common/BackButton";
 
 const ChallengeRegistrationPage = () => {
   const [challengeTitle, setChallengeTitle] = useState("");
@@ -29,8 +30,6 @@ const ChallengeRegistrationPage = () => {
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
   });
-
-  // console.log("env,", import.meta.env.AWS_CONFIG)
 
   const onChallengeThumnailHandler = (event) => {
     setThumbnail(event.currentTarget.files[0]);
@@ -105,7 +104,7 @@ const ChallengeRegistrationPage = () => {
       console.log("성공");
     });
   };
-  
+
   // S3 에 넣기
   const onChallengeImageSubmitHandler = async (event) => {
     event.preventDefault();
@@ -132,6 +131,7 @@ const ChallengeRegistrationPage = () => {
 
   return (
     <div>
+      <BackButton />
       <form onSubmit={onChallengeThumnailSubmitHandler}>
         <label>썸네일</label>
         <input

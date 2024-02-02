@@ -104,7 +104,7 @@ const router = createBrowserRouter([
         Component: ChallengeRegistrationPage,
       },
       {
-        path: "challenge/update",
+        path: "challenge/:challengeId/update",
         Component: ChallengeUpdatePage,
       },
     ],
