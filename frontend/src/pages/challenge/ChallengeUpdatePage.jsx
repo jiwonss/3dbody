@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 const ChallengeUpdatePage = () => {
   const { challengeId } = useParams();
   const [challenge, setChallenge] = useState({});
-  console.log(challenge.start_date)
+  // console.log(challenge.start_date)
   const [challengeTitle, setChallengeTitle] = useState(`${challenge.title}`);
   const [challengeSummary, setChallengeSummary] = useState(`${challenge.summary}`);
   const [challengeContent, setChallengeContent] = useState(`${challenge.content}`);
@@ -40,7 +40,7 @@ const ChallengeUpdatePage = () => {
     ).data;
     setChallenge(res);
   };
-
+  console.log(challenge)
   const onChallengeThumnailHandler = (event) => {
     setThumbnail(event.currentTarget.files[0]);
     setThumbnailName(`${uuid()}_${event.currentTarget.files[0].name}`); //uuid => 난수 설정
