@@ -9,7 +9,7 @@ import { selectedDateState } from '../../../recoil/diary/SelectedDateState';
 
 const TrainingLoadPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
-  const test = false
+  const test = false // 운동선택하면 바뀌게
 
   const checkButton = () => {
     return (

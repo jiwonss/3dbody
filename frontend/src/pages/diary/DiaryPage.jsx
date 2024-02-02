@@ -13,8 +13,9 @@ import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { userTrainingState } from "../../recoil/diary/UserTrainingState";
 import { userFoodState } from "../../recoil/diary/UserFoodState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
-import TrainingSummary from '../../components/diary/TrainingSummary';
-import FoodSummary from '../../components/diary/FoodSummary';
+import TrainingSummary from "../../components/diary/TrainingSummary";
+import FoodSummary from "../../components/diary/FoodSummary";
+import { userState } from "../../recoil/common/UserState";
 
 const DiaryPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
@@ -22,8 +23,9 @@ const DiaryPage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const [userTraining, setUserTraining] = useRecoilState(userTrainingState);
   const [userFood, setUserFood] = useRecoilState(userFoodState);
+  const user = useRecoilValue(userState);
 
-  const trainingData = () => {
+  const trainingData = () => { // 운동 데이터 표시하기
     return (
       <Link to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
         {!userTraining.length ? (
@@ -35,39 +37,32 @@ const DiaryPage = () => {
     );
   };
 
-  const foodData = () => {
+  const foodData = () => { // 식단 데이터 표시하기
     return (
       <Link to={`/diary/food/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
-        {!userFood.length ? (
-          <FoodSummary />
-        ) : (
-          <Button btnCss="w-full" buttonName="식단 관리하기" />
-        )}
+        {userFood.length ? <FoodSummary /> : <Button btnCss="w-full" buttonName="식단 관리하기" />}
       </Link>
     );
   };
 
-  // const getUserManagementDay = async () => {
-  //   await axios.get(
-  //     `${baseUrl}management/calendar/day/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
-  //   ).then(res => {
-  //     setUserTraining(res)
-  //     setUserFood(res)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // };
+  const getUserFood = async () => { // 식단 데이터 가져오기
+    await axios.get(
+      `${baseUrl}api/management/food/list/${user.info.userId}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+    ).then(res => {
+      setUserFood(res.data)
+    }).catch(err => {
+      console.log(err)
+    })
+  };
 
   useEffect(() => {
-    console.log(userTraining);
-    console.log(userFood);
-    // getUserManagementDay();
+    getUserFood();
   }, [selectedDate]);
 
   return (
     <div>
       <PageTitle pageTitle={"다이어리"} />
-      
+
       <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
       {isSelected === "left" ? <CalendarMonth /> : <Graph />}
       <hr className="my-4" />

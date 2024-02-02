@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Link, useNavigate } from "react-router-dom";
-import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
+import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 
 const CalendarWeek = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);

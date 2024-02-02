@@ -11,12 +11,14 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userFoodState } from "../../recoil/diary/UserFoodState";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import FoodData from '../../components/diary/food/FoodData';
+import { userState } from '../../recoil/common/UserState';
 
 const DiaryTrainingPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = useRecoilValue(toggleDiaryState);
   const baseUrl = useRecoilValue(baseUrlState);
   const [userFood, setUserFood] = useRecoilState(userFoodState);
+  const user = useRecoilValue(userState);
 
   const foodDetailData = () => {
     return (
@@ -24,20 +26,18 @@ const DiaryTrainingPage = () => {
     )
   }
 
-  // const getUserManagementDay = async () => {
-  //   await axios.get(
-  //     `${baseUrl}management/calendar/day/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
-  //   ).then(res => {
-  //     setUserFood(res)
-  //   }).catch(err => {
-  //     console.log(err)
-  //     setUserFood([])
-  //   })
-  // };
+  const getUserFood = async () => { // 식단 데이터 가져오기
+    await axios.get(
+    `${baseUrl}api/management/food/list/${user.info.userId}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+      ).then(res => {
+      setUserFood(res.data)
+    }).catch(err => {
+      console.log(err)
+    })
+  };
 
   useEffect(() => {
-    console.log(userFood);
-    // getUserManagementDay();
+    getUserFood();
   }, [selectedDate]);
 
   return (

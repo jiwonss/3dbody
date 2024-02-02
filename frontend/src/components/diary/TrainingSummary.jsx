@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+
 import { userTrainingState } from "../../recoil/diary/UserTrainingState";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import NextButton from "../common/NextButton";
 import Description from "./training/Description";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
 
 const TrainingSummary = () => {
   const selectedDate = useRecoilValue(selectedDateState);
@@ -12,15 +13,15 @@ const TrainingSummary = () => {
   const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeekStr = daysOfWeek[selectedDay.getDay()];
   const userTraining = useRecoilValue(userTrainingState);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(true);
 
   const isCompletedCheck = () => {
     console.log("userTraining 돌면서 is_finished가 모두 true면 true반환");
-    return false;
+    return true;
   };
 
   useEffect(() => {
-    setIsCompleted(isCompleted);
+    setIsCompleted(isCompletedCheck);
   }, [userTraining]);
 
   return (
@@ -34,8 +35,10 @@ const TrainingSummary = () => {
         </p>
         <div className="flex flex-col items-center m-4">
           {isCompleted ? (
-            <div>
-              <p>운동요약 데이터 보여주기</p>
+            <div className='flex gap-10'>
+              <ion-icon name="alarm-outline" style={{ 'fontSize': '24px' }}></ion-icon>
+              <ion-icon name="barbell-outline" style={{ 'fontSize': '24px' }}></ion-icon>
+              <ion-icon name="accessibility-sharp" style={{ 'fontSize': '24px' }}></ion-icon>
             </div>
           ) : (
             <>
