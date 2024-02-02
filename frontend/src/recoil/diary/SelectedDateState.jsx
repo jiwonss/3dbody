@@ -7,4 +7,9 @@ const selectedDateState = atom({
   default: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
 });
 
-export { selectedDateState };
+const selectedDayState = atom({
+  key: "selectedDayState", // 선택한 날의 요일 정보
+  default: "",
+});
+
+export { selectedDateState, selectedDayState };

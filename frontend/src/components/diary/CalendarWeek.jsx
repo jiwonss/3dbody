@@ -1,23 +1,34 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
-import { selectedDateState } from "../../recoil/diary/SelectedDateState";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CalendarDaysIcon,
+  ArrowPathIcon,
+} from "@heroicons/react/24/solid";
+import { selectedDateState, selectedDayState } from "../../recoil/diary/SelectedDateState";
 
 const CalendarWeek = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const [currentWeek, setCurrentWeek] = useState([]);
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+  const setSelectedDay = useSetRecoilState(selectedDayState);
   const navigate = useNavigate();
 
   useEffect(() => {
     generateWeek();
+    // 선택 날짜 요일 정보 저장 ("일", "월", "화", "수", "목", "금", "토")
+    const selectedDayInfo = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]);
+    setSelectedDay(daysOfWeek[selectedDayInfo.getDay()]);
   }, [selectedDate]);
 
-  const generateWeek = () => {
+  const generateWeek = () => { // 주간 달력 초기화
     const startOfWeek = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]);
     startOfWeek.setDate(selectedDate[2] - startOfWeek.getDay()); // 선택날 해당 주의 첫번째 날짜로 조정
 
-    const weekDays = [...Array(7)].map((_, index) => { // 각 인덱스에 Date 객체 저장
+    const weekDays = [...Array(7)].map((_, index) => {
+      // 각 인덱스에 Date 객체 저장
       const currentDate = new Date(startOfWeek);
       currentDate.setDate(startOfWeek.getDate() + index);
       return currentDate;
@@ -26,7 +37,8 @@ const CalendarWeek = () => {
     setCurrentWeek(weekDays);
   };
 
-  const handlePrevWeek = () => { // 전주 변경 버튼
+  const handlePrevWeek = () => {
+    // 전주 변경 버튼
     setSelectedDate((prevDate) => {
       const newDate = new Date(prevDate[0], prevDate[1] - 1, prevDate[2]);
       newDate.setDate(prevDate[2] - 7);
@@ -35,7 +47,8 @@ const CalendarWeek = () => {
     });
   };
 
-  const handleNextWeek = () => { // 익주 변경 버튼
+  const handleNextWeek = () => {
+    // 익주 변경 버튼
     setSelectedDate((prevDate) => {
       const newDate = new Date(prevDate[0], prevDate[1] - 1, prevDate[2]);
       newDate.setDate(prevDate[2] + 7);
@@ -43,20 +56,25 @@ const CalendarWeek = () => {
       return [newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate()];
     });
   };
-  
-  const handleTodayReturn = () => { // 선택날짜 오늘로 변경
+
+  const handleTodayReturn = () => {
+    // 선택날짜 오늘로 변경
     const today = new Date();
     updateUrl(today);
-    setSelectedDate([today.getFullYear(), today.getMonth() + 1, today.getDate()])
-  }
+    setSelectedDate([today.getFullYear(), today.getMonth() + 1, today.getDate()]);
+  };
 
-  const updateUrl = (day) => {
+  const updateUrl = (day) => { // 선택날짜로 url 업데이트
     const year = day.getFullYear();
     const month = day.getMonth() + 1;
     const date = day.getDate();
-    navigate(`/diary/training/${year}/${month}/${date}`);
-  }
-  
+    navigate(
+      window.location.href.includes("training")
+        ? `/diary/training/${year}/${month}/${date}`
+        : `/diary/food/${year}/${month}/${date}`
+    );
+  };
+
   return (
     <div className="max-w-screen-sm mx-auto mt-2">
       <div className="flex items-center justify-between px-4">
@@ -69,7 +87,7 @@ const CalendarWeek = () => {
         <ArrowPathIcon className="w-6 h-6" onClick={handleTodayReturn} />
       </div>
       <div className="flex items-center justify-center mx-4">
-        <ChevronLeftIcon className='w-6 h-6 ' onClick={handlePrevWeek} />
+        <ChevronLeftIcon className="w-6 h-6 " onClick={handlePrevWeek} />
         <table className="w-full mx-auto">
           <thead>
             <tr>
@@ -96,11 +114,17 @@ const CalendarWeek = () => {
                     ${day.getMonth() !== selectedDate[1] - 1 ? "text-gray-300" : ""} 
                     `}
                 >
-                  <div className={`
+                  <div
+                    className={`
                     flex justify-center items-center
                     w-8 h-8 mx-auto
-                    ${day.getDate() === selectedDate[2] ? "bg-green-500 rounded-full text-white" : ""}
-                  `}>
+                    ${
+                      day.getDate() === selectedDate[2]
+                        ? "bg-green-500 rounded-full text-white"
+                        : ""
+                    }
+                  `}
+                  >
                     {day.getDate()}
                   </div>
                 </td>
@@ -108,7 +132,7 @@ const CalendarWeek = () => {
             </tr>
           </tbody>
         </table>
-        <ChevronRightIcon className='w-6 h-6' onClick={handleNextWeek} />
+        <ChevronRightIcon className="w-6 h-6" onClick={handleNextWeek} />
       </div>
     </div>
   );

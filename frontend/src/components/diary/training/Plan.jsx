@@ -4,16 +4,15 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Description from './Description';
 import Button from '../../common/Button';
 import NextButton from '../../common/NextButton';
-import { selectedDateState } from '../../../recoil/diary/SelectedDateState';
+import { selectedDateState, selectedDayState } from '../../../recoil/diary/SelectedDateState';
 import { isRestState } from '../../../recoil/diary/IsRestState';
 
 
 const Plan = () => {
   const setIsRest = useSetRecoilState(isRestState);
   const selectedDate = useRecoilValue(selectedDateState);
-  const selectedDay = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]);
-  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
-  const dayOfWeekStr = daysOfWeek[selectedDay.getDay()];
+  const selectedDay = useRecoilValue(selectedDayState);
+
   
   const onClickHandler = () => {
     setIsRest(true)
@@ -23,7 +22,7 @@ const Plan = () => {
     <div className="flex flex-col gap-4 m-4">
       <div>
         <Description
-          Title={`${selectedDate[1]}월 ${selectedDate[2]}일 ${dayOfWeekStr}`}
+          Title={`${selectedDate[1]}월 ${selectedDate[2]}일 ${selectedDay}`}
           subTitle={"운동을 직접 계획해보세요!"}
         />
       <div className="flex justify-center gap-4 my-4">

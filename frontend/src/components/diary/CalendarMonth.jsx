@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { selectedDateState } from "../../recoil/diary/SelectedDateState";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { selectedDateState, selectedDayState } from "../../recoil/diary/SelectedDateState";
 
 const CalendarMonth = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState); // 리코일 상태 관리
-  const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2])); // 반환 정보 : Mon Jan 29 2024 ...
+  const [currentMonth, setCurrentMonth] = useState(
+    new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2])
+  ); // 반환 정보 : Mon Jan 29 2024 ...
   const [calendar, setCalendar] = useState([]);
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+  const setSelectedDay = useSetRecoilState(selectedDayState);
 
   useEffect(() => {
     generateCalendar();
   }, [currentMonth]);
 
-  const generateCalendar = () => {
+  const generateCalendar = () => { // 달력 초기화
     const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1); // 선택달의 첫째 날 정보
     const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0); // 선택달의 마지막 날 정보
     const startDay = startOfMonth.getDay(); // 선택달의 첫째날 요일 (0 ~ 6, 일 ~ 토)
@@ -67,14 +71,18 @@ const CalendarMonth = () => {
       setSelectedDate([
         currentMonth.getMonth() === 0 ? currentMonth.getFullYear() - 1 : currentMonth.getFullYear(),
         currentMonth.getMonth() === 0 ? 12 : currentMonth.getMonth(),
-        dayInfo[0]]);
-      handlePrevMonth()
+        dayInfo[0],
+      ]);
+      handlePrevMonth();
     } else if (dayInfo[1] === "next") {
       setSelectedDate([
-        currentMonth.getMonth() === 11 ? currentMonth.getFullYear() + 1 : currentMonth.getFullYear(),
+        currentMonth.getMonth() === 11
+          ? currentMonth.getFullYear() + 1
+          : currentMonth.getFullYear(),
         currentMonth.getMonth() === 11 ? 1 : currentMonth.getMonth() + 2,
-        dayInfo[0]]);
-      handleNextMonth()
+        dayInfo[0],
+      ]);
+      handleNextMonth();
     }
   };
 
@@ -88,15 +96,20 @@ const CalendarMonth = () => {
     );
   };
 
+  useEffect(() => { // 선택 날짜 요일 정보 저장 ("일", "월", "화", "수", "목", "금", "토")
+    const selectedDayInfo = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]);
+    setSelectedDay(daysOfWeek[selectedDayInfo.getDay()]);
+  }, [selectedDate]);
+
   return (
     <div className="max-w-screen-sm mx-auto mt-2">
       {/* 연, 월 표시, 방향버튼으로 월 변경 */}
       <div className="flex items-center justify-between px-4">
-        <ChevronLeftIcon className='w-6 h-6' onClick={handlePrevMonth} />
+        <ChevronLeftIcon className="w-6 h-6" onClick={handlePrevMonth} />
         <span className="font-bold text-gray-800">
           {currentMonth.toLocaleDateString("ko-KR", { year: "numeric", month: "short" })}
         </span>
-        <ChevronRightIcon className='w-6 h-6' onClick={handleNextMonth} />
+        <ChevronRightIcon className="w-6 h-6" onClick={handleNextMonth} />
       </div>
       {/* 요일, 일 표시 ! */}
       <table className="w-full mx-auto">
