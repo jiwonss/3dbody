@@ -14,7 +14,7 @@ const ChallengeCard = ({
         <div className="card">
           <div className="content">
             <div>
-              <img className="poster" src={challengeThumbnail} alt="..." />
+              <img className="thumbnail" src={challengeThumbnail} alt="..." />
             </div>
             <div className="title">{challengeTitle}</div>
             <div className="description">{challengeSummary}</div>

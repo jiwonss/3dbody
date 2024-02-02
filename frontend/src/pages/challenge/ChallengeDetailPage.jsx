@@ -12,7 +12,6 @@ const ChallengeDetail = () => {
   const [isSelected, setIsSelected] = useState("info");
   const [challenge, setChallenge] = useState({});
   const baseUrl = useRecoilValue(baseUrlState);
-
   // 정보 선택 함수
   const onClickInfoSelected = () => {
     setIsSelected("info");
@@ -36,7 +35,7 @@ const ChallengeDetail = () => {
   return (
     <div>
       <BackButton />
-      <img src={challenge.Image} alt="..." />
+      <img src={challenge.image} alt="..." />
       {challenge.title}
       <hr />
       <div className="flex">
