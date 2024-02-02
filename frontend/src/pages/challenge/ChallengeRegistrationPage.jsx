@@ -49,11 +49,7 @@ const ChallengeRegistrationPage = () => {
     setChallengeContent(event.currentTarget.value);
   };
   const onChallengeStartDateHandler = (event) => {
-    if (event.currentTarget.value > challengeEndDate) {
-      alert("종료일이 시작일보다 빠릅니다.");
-    } else {
-      setChallengeStartDate(event.currentTarget.value);
-    }
+    setChallengeStartDate(event.currentTarget.value);
   };
   const onChallengeEndDateHandler = (event) => {
     if (event.currentTarget.value < challengeStartDate) {

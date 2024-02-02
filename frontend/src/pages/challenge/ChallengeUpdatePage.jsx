@@ -12,11 +12,12 @@ import { useParams } from "react-router-dom";
 const ChallengeUpdatePage = () => {
   const { challengeId } = useParams();
   const [challenge, setChallenge] = useState({});
-  const [challengeTitle, setChallengeTitle] = useState(challenge.title);
-  const [challengeSummary, setChallengeSummary] = useState(challenge.summary);
-  const [challengeContent, setChallengeContent] = useState(challenge.content);
-  const [challengeStartDate, setChallengeStartDate] = useState(challenge.start_date);
-  const [challengeEndDate, setChallengeEndDate] = useState(challenge.end_date);
+  console.log(challenge.start_date)
+  const [challengeTitle, setChallengeTitle] = useState(`${challenge.title}`);
+  const [challengeSummary, setChallengeSummary] = useState(`${challenge.summary}`);
+  const [challengeContent, setChallengeContent] = useState(`${challenge.content}`);
+  const [challengeStartDate, setChallengeStartDate] = useState(`${challenge.start_date}`);
+  const [challengeEndDate, setChallengeEndDate] = useState(`${challenge.end_date}`);
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const region = "ap-northeast-2"; // S3 지역 이름
@@ -140,7 +141,7 @@ const ChallengeUpdatePage = () => {
 
   useEffect(() => {
     getChallenge();
-  }, [challenge]);
+  }, []);
 
   return (
     <div>
