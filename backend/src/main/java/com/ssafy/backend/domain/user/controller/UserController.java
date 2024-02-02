@@ -23,6 +23,8 @@ public class UserController {
 
     @GetMapping("/{user_id}")
     public ResponseEntity getUserInfo(@PathVariable("user_id") Long userId) {
+        log.info("User 회원 정보 조회 - userId : {}", userId);
+        
         return ResponseEntity.ok(Response.success(userService.getUserInfo(userId)));
     }
 
@@ -149,7 +151,7 @@ public class UserController {
         return ResponseEntity.ok(Response.success());
     }
 
-    @PatchMapping("/{user_id}/birthdate")
+    @PatchMapping("/{user_id}/birth-date")
     public ResponseEntity updateBirthDate(@PathVariable("user_id") Long userId, @RequestBody UpdateRequestDto updateRequestDto) {
         log.info("User 생년월일 변경 - birthDate : {}", updateRequestDto.getBirthDate());
 
@@ -157,7 +159,7 @@ public class UserController {
         return ResponseEntity.ok(Response.success());
     }
 
-    @PatchMapping("/{user_id}/profile")
+    @PatchMapping("/{user_id}/profile-image")
     public ResponseEntity updateProfileImage(@PathVariable("user_id") Long userId, @RequestBody UpdateRequestDto updateRequestDto) {
         log.info("User 프로필이미지 변경 - profileImage : {}", updateRequestDto.getProfileImage());
 

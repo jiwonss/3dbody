@@ -8,6 +8,7 @@ import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.error.exception.UserException;
+import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,13 +62,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getUserInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
-        return null;
+        return UserResponseDto.from(user);
     }
 
     @Override
     @Transactional
     public void updateUser(Long userId, UpdateRequestDto updateRequestDto) {
-        userRepository.findById(userId).ifPresentOrElse(
+        userRepository.findById(userId).ifPresent(
                 user -> {
                      user.updateName(updateRequestDto.getName());
                      user.updateNickname(updateRequestDto.getNickname());
@@ -75,8 +76,7 @@ public class UserServiceImpl implements UserService {
                      user.updateHeight(updateRequestDto.getHeight());
                      user.updateWeight(updateRequestDto.getWeight());
                      user.updateBirthDate(updateRequestDto.getBirthDate());
-                },
-                () -> new UserException(INVALID_USER)
+                }
         );
     }
 

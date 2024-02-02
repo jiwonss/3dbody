@@ -11,18 +11,33 @@ import lombok.*;
 @ToString
 public class UserResponseDto {
 
+    private Long userId;
     private String email;
     private String name;
     private String nickname;
     private User.Gender gender;
-    private long height;
-    private long weight;
+    private float height;
+    private float weight;
 
     @JsonProperty("birth_date")
     private String birthDate;
 
     @JsonProperty("profile_image")
     private String profileImage;
+
+    public static UserResponseDto from(User user) {
+        return UserResponseDto.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .gender(user.getGender())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .birthDate(user.getBirthDate())
+                .profileImage(user.getProfileImage())
+                .build();
+    }
 
 
 }
