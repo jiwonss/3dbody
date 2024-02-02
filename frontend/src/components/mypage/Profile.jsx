@@ -9,7 +9,29 @@ const Profile = () => {
   const logout = () =>{
     localStorage.clear()
     window.location.reload("/")
-  }
+  // S3 아직 하는중
+  const onProfileUpdate = async (event) => {
+    event.preventDefault();
+    if (thumbnailName.includes("jpg") || thumbnailName.includes("jpeg")) {
+      extension = "image/jpeg";
+    } else if (thumbnailName.includes("png")) {
+      extension = "image/png";
+    } else if (thumbnailName.includes("gif")) {
+      extension = "image/gif";
+    }
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: bucket,
+        Key: thumbnailName,
+        Body: thumbnail,
+        ContentType: extension,
+      },
+    });
+    const promise = upload.promise();
+    promise.then(() => {
+      console.log("성공");
+    });
+  };
   return (
     <div className="flex flex-col justify-center">
       <div className="flex justify-center">

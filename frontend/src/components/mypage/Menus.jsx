@@ -20,7 +20,7 @@ const Menus = () => {
         {
           menuicon: <Squares2X2Icon className="w-6 h-6" />,
           menutitle: "PIN 번호 변경",
-          menuurl: "/",
+          menuurl: "/mypage/pinchange",
         },
       ],
     },

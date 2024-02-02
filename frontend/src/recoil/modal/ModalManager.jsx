@@ -16,7 +16,7 @@ const ModalManager = () => {
     case "changeGender":
       return <ChangeGenderModal onClose={closeModal} data={modalData.data}/>;
     default:
-      return null;
+      return <></>;
   }
 };
 
