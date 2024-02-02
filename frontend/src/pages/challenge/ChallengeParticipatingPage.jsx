@@ -31,7 +31,7 @@ const ChallengeParticipating = () => {
         challengeId={challenge.challenge_id}
         challengeTitle={challenge.title}
         challengeSummary={challenge.summary}
-        challengeThumbnail={challenge.thumbanil}
+        challengeThumbnail={challenge.thumbnail}
       />
     );
   });
