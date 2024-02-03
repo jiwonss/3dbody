@@ -5,6 +5,7 @@ import com.ssafy.backend.domain.user.dto.LoginResponseDto;
 import com.ssafy.backend.domain.user.dto.ReissueDto;
 import com.ssafy.backend.domain.user.dto.SignupRequestDto;
 import com.ssafy.backend.domain.user.service.AuthService;
+import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.dto.Response;
 import com.ssafy.backend.global.jwt.dto.TokenDto;
 import com.ssafy.backend.global.jwt.dto.UserInfoDto;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_EMAIL;
-
 @Slf4j
 @RestController
 @RequestMapping("/api/auth")
@@ -28,10 +27,12 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtService jwtService;
+    private final UserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody SignupRequestDto signupRequestDto) {
         log.info("회원가입 - signupRequestDto : {}", signupRequestDto);
+
         authService.signup(signupRequestDto);
         return ResponseEntity.ok(Response.success());
     }
@@ -48,10 +49,12 @@ public class AuthController {
 
         return ResponseEntity.ok(Response.success(
                 LoginResponseDto.builder()
-                        .userInfo(userInfoDto)
+                        .userInfo(userService.getUserInfo(userInfoDto.getUserId()))
                         .token(tokenDto)
-                        .build())
+                        .build(),
+                HttpStatus.OK.name(), "")
         );
+
     }
 
     @PostMapping("/logout")

@@ -14,7 +14,6 @@ public interface UserService {
     String getRandomNickname();
     String nicknameGenerator();
     UserResponseDto getUserInfo(Long userId);
-    void updateUser(Long userId, UpdateRequestDto updateRequestDto);
     void updateStatus(Long userId);
     void updateNickname(Long userId, String nickname);
     boolean duplicateCheckNickname(String nickname);

@@ -67,26 +67,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Long userId, UpdateRequestDto updateRequestDto) {
-        userRepository.findById(userId).ifPresent(
-                user -> {
-                     user.updateName(updateRequestDto.getName());
-                     user.updateNickname(updateRequestDto.getNickname());
-                     user.updateGender(updateRequestDto.getGender());
-                     user.updateHeight(updateRequestDto.getHeight());
-                     user.updateWeight(updateRequestDto.getWeight());
-                     user.updateBirthDate(updateRequestDto.getBirthDate());
-                }
-        );
-    }
-
-    @Override
-    @Transactional
     public void updateNickname(Long userId, String nickname) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+
         if (userRepository.existsByNickname(nickname)) {
             throw new UserException(DUPLICATED_NICKNAME);
         }
+
         user.updateNickname(nickname);
     }
 
