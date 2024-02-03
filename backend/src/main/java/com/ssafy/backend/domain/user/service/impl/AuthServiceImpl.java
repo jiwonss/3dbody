@@ -26,6 +26,7 @@ public class AuthServiceImpl implements AuthService {
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // TODO 회원탈퇴한 유저 제외시키기
     @Override
     public void signup(SignupRequestDto signupRequestDto) {
         User user = signupRequestDto.toEntity();
@@ -43,8 +44,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserInfoDto login(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException(INVALID_EMAIL));
-        String savedPassword = user.getPassword();
 
+        if (user.getStatus() == User.Status.WITHDRAWAL) {
+            throw new UserException(WITHDRWA_USER);
+        }
+
+        String savedPassword = user.getPassword();
         if (!passwordEncoder.matches(password, savedPassword)) {
             throw new UserException(INVALID_PASSWORD);
         }
