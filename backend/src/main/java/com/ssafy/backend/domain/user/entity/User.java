@@ -66,6 +66,9 @@ public class User extends BaseEntity {
     }
 
     public static User create(String email, String password, String name, Gender gender, String birthDate, Role role) {
+        if (role == null) {
+            role = Role.ROLE_USER;
+        }
         return User.builder()
                 .email(email)
                 .password(password)
