@@ -13,6 +13,7 @@ import com.ssafy.backend.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ssafy.backend.global.error.exception.ExceptionType.*;
 
@@ -26,17 +27,23 @@ public class AuthServiceImpl implements AuthService {
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // TODO 회원탈퇴한 유저 제외시키기
     @Override
+    @Transactional
     public void signup(SignupRequestDto signupRequestDto) {
-        User user = signupRequestDto.toEntity();
-        String password = passwordEncoder.encode(user.getPassword());
-
-        if (userRepository.countByEmail(user.getEmail()) > 0) {
+        if (userRepository.countByEmail(signupRequestDto.getEmail()) > 0) {
+            userRepository.findByEmail(signupRequestDto.getEmail()).ifPresent(user -> {
+                if (user.getStatus() == User.Status.WITHDRAWAL) {
+                    throw new UserException(WITHDRAW_USER);
+                }
+            });
             throw new UserException(DUPLICATED_USER);
         }
 
+        User user = signupRequestDto.toEntity();
+
         user.updateNickname(userService.nicknameGenerator());
+
+        String password = passwordEncoder.encode(user.getPassword());
         user.updatePassword(password);
         userRepository.save(user);
     }
@@ -46,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException(INVALID_EMAIL));
 
         if (user.getStatus() == User.Status.WITHDRAWAL) {
-            throw new UserException(WITHDRWA_USER);
+            throw new UserException(WITHDRAW_USER);
         }
 
         String savedPassword = user.getPassword();
@@ -64,14 +71,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public TokenDto reissue(String refreshToken) {
         Long id = jwtService.parseRefreshToken(refreshToken);
         User user = userRepository.findById(id).orElseThrow(() -> new UserException(INVALID_USER));
         UserInfoDto userInfo = UserInfoDto.from(user);
 
         tokenRepository.delete(String.valueOf(id));
-        TokenDto tokenDto = jwtService.issueToken(userInfo);
-        return tokenDto;
+        return jwtService.issueToken(userInfo);
     }
 
     @Override

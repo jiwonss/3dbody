@@ -62,27 +62,29 @@ public class AuthController {
         log.info("로그아웃 - accessToken : {}", accessToken);
 
         jwtService.addBlackList(accessToken);
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok((Response.success(HttpStatus.OK.name(), "")));
+
     }
 
     @PostMapping("/reissue")
     public ResponseEntity reissue(@RequestBody ReissueDto reissueDto) {
+        log.info("토큰 재발급 - reissueDto : {}", reissueDto);
+
         TokenDto tokenDto = authService.reissue(reissueDto.getRefreshToken());
 
         Map<String, Object> map = new HashMap<>();
         map.put("token", tokenDto);
 
         return ResponseEntity.ok(Response.success(map));
+
     }
 
     @GetMapping
     public ResponseEntity duplicateCheckEmail(@RequestParam String email) {
         log.info("이메일 중복 확인 - email : {}", email);
 
-        if (authService.duplicateCheckEmail(email)) {
-            return ResponseEntity.ok(Response.fail(DUPLICATED_EMAIL.getHttpStatus().toString(), DUPLICATED_EMAIL.getErrorMessage()));
-        }
-        return ResponseEntity.ok(Response.success(HttpStatus.OK.toString(), "성공"));
+        authService.duplicateCheckEmail(email);
+        return ResponseEntity.ok(Response.success(HttpStatus.OK.name(), ""));
     }
 
 }
