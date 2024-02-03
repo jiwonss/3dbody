@@ -125,50 +125,49 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateName(Long userId, String name) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.updateName(name);
-        });
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateName(name);
     }
 
     @Override
     @Transactional
     public void updateGender(Long userId, User.Gender gender) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.updateGender(gender);
-        });
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateGender(gender);
     }
 
     @Override
     @Transactional
     public void updateHeight(Long userId, float height) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.updateHeight(height);
-        });
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (height < 0.0) {
+            throw new UserException(INVALID_VALUE);
+        }
+        user.updateHeight(height);
     }
 
     @Override
     @Transactional
     public void updateWeight(Long userId, float weight) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.updateWeight(weight);
-        });
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (weight < 0.0) {
+            throw new UserException(INVALID_VALUE);
+        }
+        user.updateWeight(weight);
     }
 
     @Override
     @Transactional
     public void updateBirthDate(Long userId, String birthDate) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.updateBirthDate(birthDate);
-        });
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateBirthDate(birthDate);
     }
 
     @Override
     @Transactional
     public void updateProfileImage(Long userId, String profileImage) {
-        userRepository.findById(userId).ifPresent(user -> {
-            user.updateProfileImage(profileImage);
-        });
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateProfileImage(profileImage);
     }
-
 
 }

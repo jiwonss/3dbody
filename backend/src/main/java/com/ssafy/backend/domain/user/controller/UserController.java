@@ -8,6 +8,7 @@ import com.ssafy.backend.global.dto.Response;
 import com.ssafy.backend.global.error.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class UserController {
         log.info("User 비밀번호 확인 - passwordRequestDto : {}", passwordRequestDto);
 
         if (!userService.checkPassword(userId, passwordRequestDto.getCurrentPassword())) {
-            return ResponseEntity.ok(Response.fail("", "비밀번호가 맞지 않습니다."));
+            return ResponseEntity.ok(Response.fail(HttpStatus.BAD_REQUEST.name(), "비밀번호가 맞지 않습니다."));
         }
         return ResponseEntity.ok(Response.success());
     }
@@ -50,7 +51,7 @@ public class UserController {
         try {
             userService.changePassword(userId, passwordRequestDto);
         } catch (UserException e) {
-            return ResponseEntity.ok(Response.fail("", "현재 비밀번호가 일치하지 않습니다."));
+            return ResponseEntity.ok(Response.fail(HttpStatus.BAD_REQUEST.name(), "현재 비밀번호가 일치하지 않습니다."));
         }
         return ResponseEntity.ok(Response.success());
     }
@@ -77,7 +78,7 @@ public class UserController {
         log.info("User PIN 확인 - pinRequestDto : {}", pinRequestDto);
 
         if (!userService.checkPin(userId, pinRequestDto.getCurrentPin())) {
-            return ResponseEntity.ok(Response.fail("", "PIN이 맞지 않습니다."));
+            return ResponseEntity.ok(Response.fail(HttpStatus.BAD_REQUEST.name(), "PIN이 맞지 않습니다."));
         }
         return ResponseEntity.ok(Response.success());
     }
@@ -97,7 +98,7 @@ public class UserController {
         try {
             userService.changePin(userId, pinRequestDto);
         } catch (UserException e) {
-            return ResponseEntity.ok(Response.fail("", "현재 PIN과 일치하지 않습니다."));
+            return ResponseEntity.ok(Response.fail(HttpStatus.BAD_REQUEST.name(), "현재 PIN과 일치하지 않습니다."));
         }
         return ResponseEntity.ok(Response.success());
     }

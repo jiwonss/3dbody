@@ -15,6 +15,7 @@ public enum ExceptionType {
     INVALID_PIN(HttpStatus.BAD_REQUEST, "잘못된 PIN 입니다."),
     INVALID_EMAIL(HttpStatus.BAD_REQUEST, "email을 다시 확인해 주세요"),
     INVALID_USER(HttpStatus.BAD_REQUEST, "존재하지않는 사용자입니다."),
+    INVALID_VALUE(HttpStatus.BAD_REQUEST, "입력값이 올바르지 않습니다."),
     WITHDRAW_USER(HttpStatus.BAD_REQUEST, "회원탈퇴한 사용자입니다."),
 
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
