@@ -16,9 +16,10 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(unique = true)
+    @Column(unique = true, updatable = false, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     private String pin;
@@ -39,9 +40,11 @@ public class User extends BaseEntity {
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     public enum Gender {
