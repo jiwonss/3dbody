@@ -2,13 +2,11 @@ package com.ssafy.backend.domain.user.service.impl;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.dto.PinRequestDto;
-import com.ssafy.backend.domain.user.dto.UpdateRequestDto;
 import com.ssafy.backend.domain.user.dto.UserResponseDto;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.error.exception.UserException;
-import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
