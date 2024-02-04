@@ -31,7 +31,7 @@ public class InbodyRequestDto {
     private int score;
     private LocalDateTime date;
 
-    private List<InbodyImageDto> images;
+    private List<InbodyImageDto> images = new ArrayList<>();
 
     public Inbody toEntity(User user) {
         return Inbody.builder()

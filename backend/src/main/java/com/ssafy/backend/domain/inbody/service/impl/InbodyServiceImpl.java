@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,14 +38,14 @@ public class InbodyServiceImpl implements InbodyService {
 
         Inbody inbody = inbodyRepository.save(inbodyRequestDto.toEntity(user));
 
-        for(InbodyImageDto image : inbodyRequestDto.getImages()) {
+        inbodyRequestDto.getImages().forEach(image -> {
             InbodyImage inbodyImage = InbodyImage.builder()
                     .inbody(inbody)
                     .url(image.getUrl())
                     .build();
             inbody.addInbodyImage(inbodyImage);
             inbodyImageRepository.save(inbodyImage);
-        }
+        });
     }
 
     @Override
@@ -64,15 +65,34 @@ public class InbodyServiceImpl implements InbodyService {
         inbody.updateScore(inbodyRequestDto.getScore());
         inbody.updateDate(inbodyRequestDto.getDate());
 
-        List<InbodyImage> images = inbodyRequestDto.getImages().stream().map(image -> {
-            InbodyImage inbodyImage = InbodyImage.builder()
-                    .inbody(inbody)
-                    .url(image.getUrl())
-                    .build();
-            return inbodyImageRepository.save(inbodyImage);
-        }).toList();
+        if (!inbodyRequestDto.getImages().isEmpty()) {
+            inbody.getInbodyImages().forEach(inbodyImage -> {
+                long cnt = inbodyRequestDto.getImages().stream()
+                        .filter(i -> inbodyImage.getUrl().equals(i.getUrl()))
+                        .count();
 
-        inbody.updateInbodyImage(images);
+                if (cnt == 0) {
+                    inbody.deleteInbodyImage(inbodyImage);
+                    inbodyImageRepository.delete(inbodyImage);
+                }
+            });
+
+            inbodyRequestDto.getImages().forEach(image -> {
+                long cnt = inbody.getInbodyImages().stream()
+                        .filter(i -> !image.getUrl().equals(i.getUrl()))
+                        .count();
+
+                if (cnt > 0) {
+                    InbodyImage inbodyImage = InbodyImage.builder()
+                            .inbody(inbody)
+                            .url(image.getUrl())
+                            .build();
+
+                    inbody.addInbodyImage(inbodyImage);
+                    inbodyImageRepository.save(inbodyImage);
+                }
+            });
+        }
     }
 
     @Override
