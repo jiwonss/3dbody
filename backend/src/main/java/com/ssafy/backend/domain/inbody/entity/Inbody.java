@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,8 +46,8 @@ public class Inbody {
 
     private LocalDateTime date; // 검사일자
 
-    @OneToMany(mappedBy = "inbody")
-    private List<InbodyImage> inbodyImages;
+    @OneToMany(mappedBy = "inbody", orphanRemoval = true)
+    private List<InbodyImage> inbodyImages = new ArrayList<>();
 
     public void updateHeight(float height) {
         if (height > 0.0) {
