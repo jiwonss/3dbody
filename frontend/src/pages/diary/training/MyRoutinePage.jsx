@@ -17,7 +17,7 @@ const MyRoutinePage = () => {
 
   return (
     <>
-      <div className="absolute">
+      <div className="absolute my-4">
         <ChevronLeftIcon className="w-6 h-6 text-blue-500" onClick={onClickBtn} />
       </div>
       <PageTitle pageTitle="나만의 루틴" />

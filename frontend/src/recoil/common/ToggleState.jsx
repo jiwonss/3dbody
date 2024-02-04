@@ -10,4 +10,9 @@ const toggleState = atom({
   default: "left",
 });
 
-export { toggleDiaryState, toggleState };
+const toggleModelState = atom({
+  key: "toggleModelState",
+  default: "left",
+});
+
+export { toggleDiaryState, toggleState, toggleModelState };

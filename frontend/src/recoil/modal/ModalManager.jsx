@@ -2,6 +2,7 @@ import { useRecoilState } from "recoil";
 import { modalState } from "./ModalState";
 import ChangeNicknameModal from "../../components/modal/ChangeNicknameModal";
 import ChangeGenderModal from "../../components/modal/ChangeGenderModal";
+import SelfInputFoodModal from "../../components/modal/SelfInputFoodModal";
 
 const ModalManager = () => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -15,6 +16,8 @@ const ModalManager = () => {
       return <ChangeNicknameModal onClose={closeModal} data={modalData.data}/>;
     case "changeGender":
       return <ChangeGenderModal onClose={closeModal} data={modalData.data}/>;
+    case "selfInputFood":
+      return <SelfInputFoodModal onClose={closeModal} data={modalData.data}/>;
     default:
       return <></>;
   }

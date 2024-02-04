@@ -33,8 +33,8 @@ const LoginPage = () => {
         localStorage.clear();
         localStorage.setItem("isLogin", true);
         setUser({
-          token: res.data.dataBody.token.accessToken,
-          info: res.data.dataBody.userInfo,
+          token: res.data.data_body.token.access_token,
+          info: res.data.data_body.user_info,
         });
         window.location.replace("/");
       });

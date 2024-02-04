@@ -15,7 +15,7 @@ const RoutineCreatePage = () => {
 
       <div className='m-4'>
         <p>나만의 루틴을 만들어보세요!</p>
-        <Input placeholder={"  루틴 이름을 입력하세요"} />
+        <Input placeholder={"루틴 이름을 입력하세요"} />
       </div>
 
       <div className="flex justify-between m-4 mt-auto">

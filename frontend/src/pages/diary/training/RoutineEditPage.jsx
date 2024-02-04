@@ -3,10 +3,10 @@ import BackButton from "./../../../components/common/BackButton";
 import PageTitle from "./../../../components/common/PageTitle";
 import Button from '../../../components/common/Button';
 import { useRecoilValue } from 'recoil';
-import { RoutineState } from '../../../recoil/diary/RoutineState';
+import { routineState } from '../../../recoil/diary/RoutineState';
 
 const RoutineEditPage = () => {
-  const routine = useRecoilValue(RoutineState);
+  const routine = useRecoilValue(routineState);
   const isRoutineId = routine?.id ? true : false;
 
   const onClickBtn = () => {
