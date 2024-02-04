@@ -69,7 +69,7 @@ const FoodAddFage = () => {
   const onClickModal = () => {
     setModalData({
       type: "selfInputFood",
-      data: null,
+      data: category.substring(0,2),
     });
   }
 
