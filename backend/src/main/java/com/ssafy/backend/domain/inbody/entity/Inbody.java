@@ -120,9 +120,4 @@ public class Inbody extends BaseEntity {
 
     public void deleteInbodyImage(InbodyImage inbodyImage) { this.inbodyImages.remove(inbodyImage);}
 
-    public void updateInbodyImage(List<InbodyImage> inbodyImages) {
-        this.inbodyImages = inbodyImages;
-    }
-
-
 }
