@@ -1,6 +1,5 @@
 package com.ssafy.backend.domain.inbody.service.impl;
 
-import com.ssafy.backend.domain.inbody.dto.InbodyImageDto;
 import com.ssafy.backend.domain.inbody.dto.InbodyRequestDto;
 import com.ssafy.backend.domain.inbody.dto.InbodyResponseDto;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
