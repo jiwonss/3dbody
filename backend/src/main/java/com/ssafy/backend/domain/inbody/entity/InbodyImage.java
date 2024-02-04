@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.inbody.entity;
 
+import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class InbodyImage {
+public class InbodyImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

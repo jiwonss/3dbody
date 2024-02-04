@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.inbody.entity;
 
 import com.ssafy.backend.domain.user.entity.User;
+import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Inbody {
+public class Inbody extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,6 +117,8 @@ public class Inbody {
     public void addInbodyImage(InbodyImage inbodyImage) {
         this.inbodyImages.add(inbodyImage);
     }
+
+    public void deleteInbodyImage(InbodyImage inbodyImage) { this.inbodyImages.remove(inbodyImage);}
 
     public void updateInbodyImage(List<InbodyImage> inbodyImages) {
         this.inbodyImages = inbodyImages;
