@@ -30,12 +30,20 @@ public class FoodController {
         foodList = foodService.findByNameContaining(keyword);
         return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
-    //음식 추가
+    //음식 추가 직접 입력
     @PostMapping("/add")
     public ResponseEntity<?> addFoodList(@RequestBody FoodListRequestDto foodListRequestDto){
         foodService.addFoodList(foodListRequestDto);
         return ResponseEntity.ok(Response.success());
     }
+
+    //음식 추가 리스트
+    //카테고리랑, userId, foodId
+//    @GetMapping("/add/{user_id}")
+//    public ResponseEntity<?> saveUserFoodList(@PathVariable("user_id") Long userId, @RequestParam("food_id") Long foodId, @RequestParam("category") String category){
+//        foodService.saveUserFoodList(userId, foodId, category);
+//        return ResponseEntity.ok(Response.success());
+//    }
 
     //식단 관리 페이지
     @GetMapping("/list/{user_id}")

@@ -42,11 +42,20 @@ public class FoodServiceImpl implements FoodService{
         return userFoodListCategory;
     }
 
-    //음식 등록
+    //음식 직접 입력 등록
     @Override
     public void addFoodList(FoodListRequestDto foodListRequestDto){
         Food food = foodListRequestDto.toEntity();
         foodRepository.save(food);
+    }
+
+    //음식 리스트 중에서 등록
+    public void saveUserFoodList(Long userId, Long foodId, String category){
+
+//        UserFood userFood = null;
+//        userFood.setCategory(category);
+//
+//        userFoodRepository.save(userFood);
     }
 
     //음식 검색
