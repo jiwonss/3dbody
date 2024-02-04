@@ -6,7 +6,7 @@ import Button from "./../../components/common/Button";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const ChallengeDetailInfo = () => {
   const { challengeId } = useParams();
@@ -69,7 +69,7 @@ const ChallengeDetailInfo = () => {
   useEffect(() => {
     getChallenge();
     getParticipateChallenge();
-  }, [challenge]);
+  }, []);
 
   return (
     <div>
@@ -104,8 +104,12 @@ const ChallengeDetailInfo = () => {
             />
           ) : null}
           {user.info.role === "ROLE_ADMIN" ? (
-            <Link to={`/challenge/${challengeId}/update`}>
+            <Link
+              to={`/challenge/${challengeId}/update`}
+              state={{ value: challenge }}
+            >
               <Button buttonName={"수정하기"} />
+              {challenge.title}
             </Link>
           ) : null}
         </div>
