@@ -5,6 +5,7 @@ import com.ssafy.backend.domain.inbody.entity.Inbody;
 import com.ssafy.backend.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class InbodyRequestDto {
     private float whr;
     private float bmi;
     private int score;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date;
 
     private List<InbodyImageDto> images = new ArrayList<>();
