@@ -111,7 +111,9 @@ public class Inbody extends BaseEntity {
     }
 
     public void updateDate(LocalDateTime date) {
-        this.date = date;
+        if (date != null) {
+            this.date = date;
+        }
     }
 
     public void addInbodyImage(InbodyImage inbodyImage) {

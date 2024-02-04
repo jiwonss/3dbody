@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,12 @@ public class InbodyServiceImpl implements InbodyService {
     public void registInbody(Long userId, InbodyRequestDto inbodyRequestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
 
-        Inbody inbody = inbodyRepository.save(inbodyRequestDto.toEntity(user));
+        Inbody inpuInbody = inbodyRequestDto.toEntity(user);
+        if (inpuInbody.getDate() == null) {
+            inpuInbody.updateDate(LocalDateTime.now());
+        }
+
+        Inbody inbody = inbodyRepository.save(inpuInbody);
 
         inbodyRequestDto.getImages().forEach(image -> {
             InbodyImage inbodyImage = InbodyImage.builder()
