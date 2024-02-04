@@ -1,11 +1,13 @@
 package com.ssafy.backend.domain.inbody.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
 import com.ssafy.backend.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -15,13 +17,20 @@ public class InbodyRequestDto {
     private  float weight;
     private int bmr;
     private float muscle;
+
+    @JsonProperty("fat_mass")
     private float fatMass;
+
+    @JsonProperty("fat_per")
     private float fatPer;
+
     private float tbw;
     private float whr;
     private float bmi;
     private int score;
     private LocalDateTime date;
+
+    private List<InbodyImageDto> images;
 
     public Inbody toEntity(User user) {
         return Inbody.builder()

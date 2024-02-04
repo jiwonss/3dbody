@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.inbody.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,13 +17,20 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class InbodyResponseDto {
 
+    @JsonProperty("inbody_id")
     private Long inbodyId;
+
     private float height;
     private  float weight;
     private int bmr;
     private float muscle;
+
+    @JsonProperty("fat_mass")
     private float fatMass;
+
+    @JsonProperty("fat_per")
     private float fatPer;
+
     private float tbw;
     private float whr;
     private float bmi;

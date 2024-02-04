@@ -116,5 +116,9 @@ public class Inbody {
         this.inbodyImages.add(inbodyImage);
     }
 
+    public void updateInbodyImage(List<InbodyImage> inbodyImages) {
+        this.inbodyImages = inbodyImages;
+    }
+
 
 }
