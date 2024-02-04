@@ -15,9 +15,10 @@ public class UserResponseDto {
     private String email;
     private String name;
     private String nickname;
-    private User.Gender gender;
+    private String gender;
     private float height;
     private float weight;
+    private String role;
 
     @JsonProperty("birth_date")
     private String birthDate;
@@ -31,9 +32,10 @@ public class UserResponseDto {
                 .email(user.getEmail())
                 .name(user.getName())
                 .nickname(user.getNickname())
-                .gender(user.getGender())
+                .gender(user.getGender().name())
                 .height(user.getHeight())
                 .weight(user.getWeight())
+                .role(user.getRole().name())
                 .birthDate(user.getBirthDate())
                 .profileImage(user.getProfileImage())
                 .build();
