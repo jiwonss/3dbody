@@ -49,7 +49,7 @@ const FoodData = () => {
         {selectedDate[1]}월 {selectedDate[2]}일 {selectedDay} - 식단
       </p>
       <div className="px-4 py-2 border rounded-xl">
-        <div className="grid grid-cols-3 divide-x-4 font-semibold">
+        <div className="grid grid-cols-3 font-semibold divide-x-4">
           <p className="text-center">총 칼로리</p>
           <p className="text-center">{totalcalorie} kcal</p>
         </div>

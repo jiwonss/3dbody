@@ -46,12 +46,12 @@ const SelfInputFoodModal = ({ onClose }) => {
 
     return (
       <div className="flex gap-2">
-        <div className="flex basis-1/3 justify-center items-center border rounded-md bg-teal-700 text-white text-base py-1">
+        <div className="flex items-center justify-center py-1 text-base text-white bg-teal-700 border rounded-md basis-1/3">
           식품 명
         </div>
         <input
           type="text"
-          className="border-teal-700 rounded-md border-2 w-full px-2"
+          className="w-full px-2 border-2 border-teal-700 rounded-md"
           onChange={onChangeInput}
         />
       </div>
@@ -65,13 +65,13 @@ const SelfInputFoodModal = ({ onClose }) => {
 
     return (
       <div className="flex gap-2">
-        <div className="flex basis-1/3 justify-center items-center border rounded-md bg-teal-700 text-white text-base py-1">
+        <div className="flex items-center justify-center py-1 text-base text-white bg-teal-700 border rounded-md basis-1/3">
           식품 양
         </div>
         <input
           type="text"
           placeholder="g 단위로 입력해주세요."
-          className="border-teal-700 rounded-md border-2 w-full px-2"
+          className="w-full px-2 border-2 border-teal-700 rounded-md"
           onChange={onChangeInput}
         />
       </div>
@@ -85,12 +85,12 @@ const SelfInputFoodModal = ({ onClose }) => {
 
     return (
       <div className="flex gap-2">
-        <div className="flex basis-1/3 justify-center items-center border rounded-md bg-teal-700 text-white text-base py-1">
+        <div className="flex items-center justify-center py-1 text-base text-white bg-teal-700 border rounded-md basis-1/3">
           칼로리
         </div>
         <input
           type="text"
-          className="border-teal-700 rounded-md border-2 w-full px-2"
+          className="w-full px-2 border-2 border-teal-700 rounded-md"
           onChange={onChangeInput}
         />
       </div>
@@ -104,12 +104,12 @@ const SelfInputFoodModal = ({ onClose }) => {
 
     return (
       <div className="flex gap-2">
-        <div className="flex basis-1/3 justify-center items-center border rounded-md bg-teal-700 text-white text-base py-1">
+        <div className="flex items-center justify-center py-1 text-base text-white bg-teal-700 border rounded-md basis-1/3">
           탄수화물
         </div>
         <input
           type="text"
-          className="border-teal-700 rounded-md border-2 w-full px-2"
+          className="w-full px-2 border-2 border-teal-700 rounded-md"
           onChange={onChangeInput}
         />
       </div>
@@ -123,12 +123,12 @@ const SelfInputFoodModal = ({ onClose }) => {
 
     return (
       <div className="flex gap-2">
-        <div className="flex basis-1/3 justify-center items-center border rounded-md bg-teal-700 text-white text-base py-1">
+        <div className="flex items-center justify-center py-1 text-base text-white bg-teal-700 border rounded-md basis-1/3">
           단백질
         </div>
         <input
           type="text"
-          className="border-teal-700 rounded-md border-2 w-full px-2"
+          className="w-full px-2 border-2 border-teal-700 rounded-md"
           onChange={onChangeInput}
         />
       </div>
@@ -142,12 +142,12 @@ const SelfInputFoodModal = ({ onClose }) => {
 
     return (
       <div className="flex gap-2">
-        <div className="flex basis-1/3 justify-center items-center border rounded-md bg-teal-700 text-white text-base py-1">
+        <div className="flex items-center justify-center py-1 text-base text-white bg-teal-700 border rounded-md basis-1/3">
           지방
         </div>
         <input
           type="text"
-          className="border-teal-700 rounded-md border-2 w-full px-2"
+          className="w-full px-2 border-2 border-teal-700 rounded-md"
           onChange={onChangeInput}
         />
       </div>
@@ -162,7 +162,7 @@ const SelfInputFoodModal = ({ onClose }) => {
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <div className="m-4 flex flex-col gap-2">
+      <div className="flex flex-col gap-2 m-4">
         <p className="font-semibold">음식 직접입력</p>
         {foodNameDiv()}
         {servingSizeDiv()}
@@ -173,13 +173,13 @@ const SelfInputFoodModal = ({ onClose }) => {
         <div className="flex gap-2 mt-2">
           <button
             onClick={onClose}
-            className="basis-1/2 border border-teal-700 rounded-md bg-white text-teal-700 py-1"
+            className="py-1 text-teal-700 bg-white border border-teal-700 rounded-md basis-1/2"
           >
             취소
           </button>
           <button
             onClick={() => onClickPostFood()}
-            className="basis-1/2 border rounded-md  bg-teal-700 text-white py-1"
+            className="py-1 text-white bg-teal-700 border rounded-md basis-1/2"
           >
             추가하기
           </button>

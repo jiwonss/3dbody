@@ -58,7 +58,7 @@ const FoodAddFage = () => {
           count: 1,
           date: new Date(),
         });
-  
+
         console.log("Request successful:", res.data);
       } catch (err) {
         console.error("Error during request:", err);
@@ -69,9 +69,9 @@ const FoodAddFage = () => {
   const onClickModal = () => {
     setModalData({
       type: "selfInputFood",
-      data: category.substring(0,2),
+      data: category.substring(0, 2),
     });
-  }
+  };
 
   return (
     <>
@@ -80,30 +80,56 @@ const FoodAddFage = () => {
       </div>
       <PageTitle pageTitle="음식 추가하기" />
       {/* 검색 창 */}
-      <Search onSubmit={getSearchFood} onChange={onChangeSearchFood} placeholder={`찾으시는 음식을 검색해보세요.`} />
+      <Search
+        onSubmit={getSearchFood}
+        onChange={onChangeSearchFood}
+        placeholder={`찾으시는 음식을 검색해보세요.`}
+      />
       {/* 검색 결과 목록 */}
       <div className="m-4">
         {searchFoodList.map((data) => {
           return (
             <div className="flex mb-2 border-2" key={data.foodId}>
-              <input type="checkbox" onChange={() => handleCheckboxChange(data.foodId)} className="w-6 ml-4" />
-              <div className="flex flex-col basis-3/5 pl-4 py-1">
+              <input
+                type="checkbox"
+                onChange={() => handleCheckboxChange(data.foodId)}
+                className="w-6 ml-4"
+              />
+              <div className="flex flex-col py-1 pl-4 basis-3/5">
                 <p>{data.name}</p>
-                <p style={{ "fontSize": "12px" }}>탄 {data.carbohydrate.toFixed(1)}g 단 {data.protein.toFixed(1)}g 지 {data.lipid.toFixed(1)}g</p>
+                <p style={{ fontSize: "12px" }}>
+                  탄 {data.carbohydrate.toFixed(1)}g 단{" "}
+                  {data.protein.toFixed(1)}g 지 {data.lipid.toFixed(1)}g
+                </p>
               </div>
               <div className="flex basis-2/5">
-                <input type="text" onChange={(e) => {console.log(e.target.value)}} value={data.servingSize + " g"} className="m-2 border-2 basis-3/5 text-center"/>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
+                  value={data.servingSize + " g"}
+                  className="m-2 text-center border-2 basis-3/5"
+                />
               </div>
             </div>
-          )
+          );
         })}
       </div>
       {/* 버튼 */}
-      <div className="fixed bottom-16 w-full">
+      <div className="fixed w-full bottom-16">
         <div className="m-4">
           <div className="flex gap-4">
-            <Button btnCss={"basis-1/2 border-2 text-center p-2"} buttonName={"직접 입력하기"} onClick={onClickModal} />
-            <Button btnCss={"basis-1/2 border-2 text-center p-2 "} buttonName={"추가하기"} onClick={() => postFood(selectedFoodList)} />
+            <Button
+              btnCss={"basis-1/2 border-2 text-center p-2"}
+              buttonName={"직접 입력하기"}
+              onClick={onClickModal}
+            />
+            <Button
+              btnCss={"basis-1/2 border-2 text-center p-2 "}
+              buttonName={"추가하기"}
+              onClick={() => postFood(selectedFoodList)}
+            />
           </div>
         </div>
       </div>

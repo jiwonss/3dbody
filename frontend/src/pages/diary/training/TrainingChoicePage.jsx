@@ -30,7 +30,7 @@ const TrainingChoicePage = () => {
         `${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`
       )
       .then((res) => {
-        console.log(res.data);
+        console.table(res.data);
         setSearchTrainingList(res.data);
       })
       .catch((err) => {
@@ -44,7 +44,7 @@ const TrainingChoicePage = () => {
         `${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`
       )
       .then((res) => {
-        console.log(res.data);
+        console.table(res.data);
         setSearchTrainingList(res.data);
       })
       .catch((err) => {
@@ -62,7 +62,9 @@ const TrainingChoicePage = () => {
   // 체크박스로 운동 저장
   const handleCheckboxChange = (trainingId) => {
     if (selectedTrainingList.includes(trainingId)) {
-      setSelectedTrainingList(selectedTrainingList.filter((id) => id !== trainingId));
+      setSelectedTrainingList(
+        selectedTrainingList.filter((id) => id !== trainingId)
+      );
     } else {
       setSelectedTrainingList([...selectedTrainingList, trainingId]);
     }
@@ -123,25 +125,37 @@ const TrainingChoicePage = () => {
         />
       </div>
       {/* 운동 리스트 */}
-      <div className="m-4 flex flex-col gap-2">
+      <div className="flex flex-col gap-2 m-4">
         {searchTrainingList.map((data) => {
           return (
             <div className="flex flex-col gap-2" key={data.training_id}>
               <div className="flex">
-                <input type="checkbox" onChange={() => handleCheckboxChange(data.training_id)} className="w-6 ml-4" />
-                <div className="flex pl-4 py-2">
+                <input
+                  type="checkbox"
+                  onChange={() => handleCheckboxChange(data.training_id)}
+                  checked={selectedTrainingList.includes(data.training_id)}
+                  className="w-6 ml-4"
+                />
+                <div className="flex gap-2 py-2 pl-4">
+                  <img src="" alt="img" />
                   <p>{data.name}</p>
                 </div>
               </div>
               <hr />
             </div>
-          )
+          );
         })}
       </div>
       {/* 하단 버튼 */}
       <div className="m-4">
-        {test ? (
-          <Button btnCss={""} buttonName="운동을 선택하세요" disabled />
+        {!selectedTrainingList.length ? (
+          <Button
+            btnCss={
+              "w-full p-2 border rounded-md border-teal-700 text-teal-700"
+            }
+            buttonName="운동을 선택하세요"
+            disabled
+          />
         ) : (
           <Link
             to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}

@@ -56,7 +56,7 @@ const DiaryTrainingPage = () => {
         {isSelected === "left" ? <CalendarWeek /> : <Graph />}
         <hr className="my-4" />
       </div>
-      
+
       {foodDetailData()}
     </>
   );
