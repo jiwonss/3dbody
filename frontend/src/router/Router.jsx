@@ -4,6 +4,7 @@ import App from "../App";
 import MyPage from "../pages/mypage/MyPage";
 import MyInfoPage from "../pages/mypage/MyInfoPage";
 import NoticePage from "../pages/mypage/NoticePage";
+import NoticeDetailPage from "../pages/mypage/NoticeDetailPage";
 import FAQPage from "../pages/mypage/FAQPage";
 import DiaryPage from "../pages/diary/DiaryPage";
 import ChallengePage from "../pages/challenge/ChallengePage";
@@ -25,6 +26,7 @@ import WebRTCPage from "./../pages/challenge/WebRTCPage";
 import PinChangePage from "../pages/mypage/PinChangePage";
 import FoodCategoryPage from "../pages/diary/food/FoodCategoryPage";
 import FoodAddFage from "../pages/diary/food/FoodAddFage";
+import FAQDetailPage from "../pages/mypage/FAQDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -104,8 +106,16 @@ const router = createBrowserRouter([
         Component: NoticePage,
       },
       {
+        path: "/mypage/notice/:postId",
+        Component: NoticeDetailPage,
+      },
+      {
         path: "/mypage/FAQ",
         Component: FAQPage,
+      },
+      {
+        path: "/mypage/FAQ/:postId",
+        Component: FAQDetailPage,
       },
       {
         path: "/challenge",
