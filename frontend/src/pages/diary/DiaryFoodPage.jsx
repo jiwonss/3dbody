@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 
 import PageTitle from "./../../components/common/PageTitle";
@@ -8,13 +8,7 @@ import CalendarWeek from "./../../components/diary/CalendarWeek";
 import Graph from "../../components/diary/Graph";
 import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
-import {
-  calorieState,
-  carbohydrateState,
-  lipidState,
-  proteinState,
-  userFoodState,
-} from "../../recoil/diary/UserFoodState";
+import { userFoodState } from "../../recoil/diary/UserFoodState";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import FoodData from "../../components/diary/food/FoodData";
 import { userState } from "../../recoil/common/UserState";
@@ -23,12 +17,8 @@ const DiaryTrainingPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = useRecoilValue(toggleDiaryState);
   const baseUrl = useRecoilValue(baseUrlState);
-  const [userFood, setUserFood] = useRecoilState(userFoodState);
+  const setUserFood = useSetRecoilState(userFoodState);
   const user = useRecoilValue(userState);
-  const setCalorie = useSetRecoilState(calorieState);
-  const setCarbohydrate = useSetRecoilState(carbohydrateState);
-  const setProtein = useSetRecoilState(proteinState);
-  const setLipid = useSetRecoilState(lipidState);
 
   const foodDetailData = () => {
     return <FoodData />;
@@ -52,44 +42,21 @@ const DiaryTrainingPage = () => {
     getUserFood();
   }, [selectedDate]);
 
-  useEffect(() => {
-    setCalorie(
-      userFood
-        .reduce((acc, cur) => {
-          return acc + cur.food.calorie;
-        }, 0)
-        .toFixed(1)
-    );
-    setCarbohydrate(
-      userFood
-        .reduce((acc, cur) => {
-          return acc + cur.food.carbohydrate;
-        }, 0)
-        .toFixed(1)
-    );
-    setProtein(
-      userFood
-        .reduce((acc, cur) => {
-          return acc + cur.food.protein;
-        }, 0)
-        .toFixed(1)
-    );
-    setLipid(
-      userFood
-        .reduce((acc, cur) => {
-          return acc + cur.food.lipid;
-        }, 0)
-        .toFixed(1)
-    );
-  }, [userFood]);
-
   return (
     <>
-      <PageTitle pageTitle={"다이어리"} />
+      {/* sticky 부분과 겹치는 내용(foodDetailData 스크롤 했을 경우) 안보이게 하게 위해 배경 설정함 */}
+      <div className="sticky top-0 z-50 bg-white">
+        <PageTitle pageTitle={"다이어리"} />
 
-      <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
-      {isSelected === "left" ? <CalendarWeek /> : <Graph />}
-      <hr className="my-4" />
+        <ToggleTap
+          leftTitle={"캘린더"}
+          rightTitle={"그래프"}
+          state={toggleDiaryState}
+        />
+        {isSelected === "left" ? <CalendarWeek /> : <Graph />}
+        <hr className="my-4" />
+      </div>
+      
       {foodDetailData()}
     </>
   );

@@ -20,6 +20,8 @@ import RoutineLoadPage from "./../pages/diary/training/routine/RoutineLoadPage";
 import RoutineChoicePage from "./../pages/diary/training/routine/RoutineChoicePage";
 import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
+import FoodCategoryPage from "../pages/diary/food/FoodCategoryPage";
+import FoodAddFage from "../pages/diary/food/FoodAddFage";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
       {
         path: "/diary/training/myroutine/edit",
         Component: RoutineEditPage,
+      },
+      {
+        path: "/diary/food/:category",
+        Component: FoodCategoryPage,
+      },
+      {
+        path: "/diary/food/:category/add",
+        Component: FoodAddFage,
       },
       {
         path: "/mypage",

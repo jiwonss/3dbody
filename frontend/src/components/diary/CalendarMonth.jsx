@@ -143,13 +143,13 @@ const CalendarMonth = () => {
                     className={`
                       text-center
                       ${dayInfo[1] !== "cur" ? "text-gray-300" : ""}
-                      ${isToday(dayInfo[0]) ? "text-green-600" : ""}
+                      ${isToday(dayInfo[0]) ? "font-semibold text-teal-700" : ""}
                     `}
                   >
                     <div
                       className={`
                         flex justify-center items-center
-                        ${isSelectedDate(dayInfo) ? "bg-green-500 rounded-full text-white" : ""}
+                        ${isSelectedDate(dayInfo) ? "bg-teal-700 rounded-full text-white" : ""}
                         w-8 h-8
                         mx-auto
                       `}

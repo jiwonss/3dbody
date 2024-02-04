@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Input = ({ type, value, placeholder, onChange, onKeyDown }) => {
+const Input = ({ type, value, placeholder, onChange }) => {
   return (
     <div>
       <input
@@ -8,8 +8,7 @@ const Input = ({ type, value, placeholder, onChange, onKeyDown }) => {
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        onKeyDown={onKeyDown}
-        className='border border-gray-500 rounded-md'
+        className="border border-gray-500 rounded-md px-2"
       />
     </div>
   );
@@ -20,7 +19,6 @@ Input.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  onKeyDown: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -28,31 +26,3 @@ Input.defaultProps = {
 };
 
 export default Input;
-
-// import { useState } from "react";
-// import InputComponent from "./common/Input";
-
-// function App() {
-//   const [value, setValue] = useState("");
-
-//   const handleSearch = () => {
-//     console.log("검색어:", value);
-//   };
-
-//   const onChangeInput = (e) => {
-//     setValue(e.target.value);
-//   };
-
-//   const onHandleKeyDown = (e) => {
-//     if (e.key === "Enter") {
-//       handleSearch();
-//     }
-//   };
-
-//   return (
-//     <>
-//       <div>{value}</div>
-//       <InputComponent type="text" value={value} onChange={onChangeInput} onKeyDown={onHandleKeyDown} />
-//     </>
-//   );
-// }

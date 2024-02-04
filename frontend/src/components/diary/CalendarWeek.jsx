@@ -120,7 +120,7 @@ const CalendarWeek = () => {
                     w-8 h-8 mx-auto
                     ${
                       day.getDate() === selectedDate[2]
-                        ? "bg-green-500 rounded-full text-white"
+                        ? "bg-teal-700 rounded-full text-white"
                         : ""
                     }
                   `}
