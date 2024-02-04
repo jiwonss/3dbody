@@ -42,14 +42,24 @@ const ChallengeCanParticipate = () => {
       {challenges.length ? (
         <div className="grid grid-cols-2">
           {challenges}
-          <Link to="/challenge/registration">
-            {user.info.role === "ROLE_ADMIN" ? (
-              <div className="card">
-                <PlusIcon className="w-6 h-6" />
-              </div>
-            ) : null}
+          <Link
+            to="/challenge/registration"
+            className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
+          >
+            <div className="card">
+              <PlusIcon className="w-6 h-6" />
+            </div>
           </Link>
         </div>
+      ) : user.info.role === "ROLE_ADMIN" ? (
+        <Link
+          to="/challenge/registration"
+          className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
+        >
+          <div className="card">
+            <PlusIcon className="w-6 h-6" />
+          </div>
+        </Link>
       ) : (
         <div className="flex justify-center">
           {"참여 가능한 챌린지가 없습니다."}

@@ -43,12 +43,13 @@ const ChallengeParticipating = () => {
       {challenges.length ? (
         <div className="grid grid-cols-2">
           {challenges}
-          <Link to="/challenge/registration">
-            {user.info.role === "ROLE_ADMIN" ? (
-              <div className="card">
-                <PlusIcon className="w-6 h-6" />
-              </div>
-            ) : null}
+          <Link
+            to="/challenge/registration"
+            className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
+          >
+            <div className="card">
+              <PlusIcon className="w-6 h-6" />
+            </div>
           </Link>
         </div>
       ) : (

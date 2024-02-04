@@ -103,15 +103,13 @@ const ChallengeDetailInfo = () => {
               onClick={onChallengeDeleteHandler}
             />
           ) : null}
-          {user.info.role === "ROLE_ADMIN" ? (
-            <Link
-              to={`/challenge/${challengeId}/update`}
-              state={{ value: challenge }}
-            >
-              <Button buttonName={"수정하기"} />
-              {challenge.title}
-            </Link>
-          ) : null}
+          <Link
+            to={`/challenge/${challengeId}/update`}
+            state={{ value: challenge }}
+            className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
+          >
+            <Button buttonName={"수정하기"} />
+          </Link>
         </div>
       </div>
       <div>
