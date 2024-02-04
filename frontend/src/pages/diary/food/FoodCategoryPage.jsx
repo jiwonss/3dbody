@@ -92,7 +92,6 @@ const FoodCategoryPage = () => {
         </div>
         {/* 카테고리 - 음식 리스트 */}
         {foodList.map((data) => {
-          console.log(data)
           return (
             <div className="flex mb-2 border-2" key={data.userFoodId}>
               <div className="flex flex-col basis-3/5 pl-4 py-1">
