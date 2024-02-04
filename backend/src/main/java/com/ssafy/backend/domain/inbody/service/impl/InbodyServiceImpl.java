@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.inbody.service.impl;
 import com.ssafy.backend.domain.inbody.dto.InbodyRequestDto;
 import com.ssafy.backend.domain.inbody.dto.InbodyResponseDto;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
+import com.ssafy.backend.domain.inbody.entity.InbodyImage;
 import com.ssafy.backend.domain.inbody.repository.InbodyImageRepository;
 import com.ssafy.backend.domain.inbody.repository.InbodyRepository;
 import com.ssafy.backend.domain.inbody.service.InbodyService;
@@ -28,12 +29,22 @@ public class InbodyServiceImpl implements InbodyService {
     private final InbodyRepository inbodyRepository;
     private final InbodyImageRepository inbodyImageRepository;
 
-
     @Override
     @Transactional
     public void registInbody(Long userId, InbodyRequestDto inbodyRequestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
-        inbodyRepository.save(inbodyRequestDto.toEntity(user));
+
+        Inbody inbody = inbodyRepository.save(inbodyRequestDto.toEntity(user));
+
+        List<InbodyImage> images = inbodyRequestDto.getImages().stream().map(image -> {
+            InbodyImage inbodyImage = InbodyImage.builder()
+                    .inbody(inbody)
+                    .url(image.getUrl())
+                    .build();
+            return inbodyImageRepository.save(inbodyImage);
+        }).toList();
+
+        inbody.updateInbodyImage(images);
     }
 
     @Override
