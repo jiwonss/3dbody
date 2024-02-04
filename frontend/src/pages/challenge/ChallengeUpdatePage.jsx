@@ -7,17 +7,29 @@ import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
 import AWS from "aws-sdk";
 import BackButton from "./../../components/common/BackButton";
+import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const ChallengeUpdatePage = () => {
   const { challengeId } = useParams();
-  const [challenge, setChallenge] = useState({});
+  // const [challenge, setChallenge] = useState({});
   // console.log(challenge.start_date)
+  const location = useLocation();
+  const challenge = location.state.value
+
   const [challengeTitle, setChallengeTitle] = useState(`${challenge.title}`);
-  const [challengeSummary, setChallengeSummary] = useState(`${challenge.summary}`);
-  const [challengeContent, setChallengeContent] = useState(`${challenge.content}`);
-  const [challengeStartDate, setChallengeStartDate] = useState(`${challenge.start_date}`);
-  const [challengeEndDate, setChallengeEndDate] = useState(`${challenge.end_date}`);
+  const [challengeSummary, setChallengeSummary] = useState(
+    `${challenge.summary}`
+  );
+  const [challengeContent, setChallengeContent] = useState(
+    `${challenge.content}`
+  );
+  const [challengeStartDate, setChallengeStartDate] = useState(
+    `${challenge.start_date}`
+  );
+  const [challengeEndDate, setChallengeEndDate] = useState(
+    `${challenge.end_date}`
+  );
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const region = "ap-northeast-2"; // S3 지역 이름
@@ -34,13 +46,13 @@ const ChallengeUpdatePage = () => {
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
   });
 
-  const getChallenge = async () => {
-    const res = (
-      await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)
-    ).data;
-    setChallenge(res);
-  };
-  console.log(challenge)
+  // const getChallenge = async () => {
+  //   const res = (
+  //     await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)
+  //   ).data;
+  //   setChallenge(res);
+  // };
+  // console.log(challenge)
   const onChallengeThumnailHandler = (event) => {
     setThumbnail(event.currentTarget.files[0]);
     setThumbnailName(`${uuid()}_${event.currentTarget.files[0].name}`); //uuid => 난수 설정
@@ -139,9 +151,9 @@ const ChallengeUpdatePage = () => {
     });
   };
 
-  useEffect(() => {
-    getChallenge();
-  }, []);
+  // useEffect(() => {
+  //   getChallenge();
+  // }, []);
 
   return (
     <div>
