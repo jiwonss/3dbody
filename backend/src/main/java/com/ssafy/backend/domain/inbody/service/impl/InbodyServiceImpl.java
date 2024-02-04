@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.inbody.service.impl;
 
+import com.ssafy.backend.domain.inbody.dto.InbodyImageDto;
 import com.ssafy.backend.domain.inbody.dto.InbodyRequestDto;
 import com.ssafy.backend.domain.inbody.dto.InbodyResponseDto;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
@@ -36,15 +37,14 @@ public class InbodyServiceImpl implements InbodyService {
 
         Inbody inbody = inbodyRepository.save(inbodyRequestDto.toEntity(user));
 
-        List<InbodyImage> images = inbodyRequestDto.getImages().stream().map(image -> {
+        for(InbodyImageDto image : inbodyRequestDto.getImages()) {
             InbodyImage inbodyImage = InbodyImage.builder()
                     .inbody(inbody)
                     .url(image.getUrl())
                     .build();
-            return inbodyImageRepository.save(inbodyImage);
-        }).toList();
-
-        inbody.updateInbodyImage(images);
+            inbody.addInbodyImage(inbodyImage);
+            inbodyImageRepository.save(inbodyImage);
+        }
     }
 
     @Override
@@ -64,7 +64,15 @@ public class InbodyServiceImpl implements InbodyService {
         inbody.updateScore(inbodyRequestDto.getScore());
         inbody.updateDate(inbodyRequestDto.getDate());
 
-        inbodyRepository.save(inbody);
+        List<InbodyImage> images = inbodyRequestDto.getImages().stream().map(image -> {
+            InbodyImage inbodyImage = InbodyImage.builder()
+                    .inbody(inbody)
+                    .url(image.getUrl())
+                    .build();
+            return inbodyImageRepository.save(inbodyImage);
+        }).toList();
+
+        inbody.updateInbodyImage(images);
     }
 
     @Override
@@ -84,7 +92,8 @@ public class InbodyServiceImpl implements InbodyService {
     @Override
     @Transactional
     public void deleteInbody(Long userId, Long inbodyId) {
-        // 인바디 이미지 삭제
         inbodyRepository.deleteById(inbodyId);
+
+        // TODO 이미지 삭제 시 S3에서도 삭제하기
     }
 }
