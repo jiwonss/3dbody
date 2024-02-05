@@ -42,7 +42,6 @@ const pc = new RTCPeerConnection(servers);
 const WebRTCPage = () => {
   const [currentPage, setCurrentPage] = useState("home");
   const [joinCode, setJoinCode] = useState("");
-
   return (
     <div className="app">
       {currentPage === "home" ? (
@@ -210,8 +209,8 @@ function Videos({ mode, callId, setPage }) {
 
       await roomRef.delete();
     }
-
-    window.location.reload();
+    setPage("home")
+    // window.location.reload();
   };
 
   return (
@@ -225,9 +224,11 @@ function Videos({ mode, callId, setPage }) {
           disabled={!webcamActive}
           className="hangup button"
         >
+          HangUp
           {/* <HangupIcon /> */}
         </button>
         <div tabIndex={0} role="button" className="more button">
+          More
           {/* <MoreIcon /> */}
           <div className="popover">
             <button
@@ -235,6 +236,7 @@ function Videos({ mode, callId, setPage }) {
                 navigator.clipboard.writeText(roomId);
               }}
             >
+              Copy
               {/* <CopyIcon /> Copy joining code */}
             </button>
           </div>
