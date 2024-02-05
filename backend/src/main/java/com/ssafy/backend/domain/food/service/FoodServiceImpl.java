@@ -54,6 +54,23 @@ public class FoodServiceImpl implements FoodService{
         foodRepository.save(food);
     }
 
+    //음식 개수 or 일일제공량 업데이트
+    @Override
+    public void updateUserFood(UserFoodRequestDto userFoodRequestDto, Long userFoodId){
+        int foodCount = userFoodRequestDto.getFoodCount();
+        int servingSize = userFoodRequestDto.getServingSize();
+        UserFood userFood = userFoodRepository.findById(userFoodId).orElse(null);
+        // 찾아온 UserFood 업데이트
+        if (userFood != null) {
+            // 음식 개수(foodCount) 업데이트
+            userFood.setFoodCount(foodCount);
+            // 1회 제공량(servingSize) 업데이트
+            userFood.setServingSize(servingSize);
+            // 엔터티를 저장
+            userFoodRepository.save(userFood);
+        }
+    }
+
     //user 식단 추가
     @Override
     public void saveUserFoodList(UserFoodRequestDto userFoodRequestDto){

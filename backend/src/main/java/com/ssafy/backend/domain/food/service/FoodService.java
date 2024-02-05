@@ -14,4 +14,5 @@ public interface FoodService {
     public List<UserFoodListDto> findByListCategory(Long userId, int year, int month, int day, String category);
     public void saveUserFoodList(UserFoodRequestDto userFoodRequestDto);            //user 식단 추가
     public void deleteById(Long userFoodId);
+    public void updateUserFood(UserFoodRequestDto userFoodRequestDto, Long userFoodId);              ////음식 개수 or 일일제공량 업데이트
 }
