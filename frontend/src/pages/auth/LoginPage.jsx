@@ -60,8 +60,6 @@ const LoginPage = () => {
         <input type="password" value={password} onChange={onPasswordHandler} />
         <Button type={"submit"} buttonName={"로그인"} />
       </form>
-      <label>숫자입력 테스트</label>
-      <input type="number" />
     </div>
   );
 };
