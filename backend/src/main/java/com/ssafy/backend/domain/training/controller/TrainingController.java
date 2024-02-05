@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.training.controller;
 
 import com.ssafy.backend.domain.training.dto.TrainingResponseDto;
+import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 import com.ssafy.backend.domain.training.service.TrainingService;
 import com.ssafy.backend.domain.training.service.UserTrainingService;
 import lombok.RequiredArgsConstructor;
@@ -98,6 +99,19 @@ public class TrainingController {
         userTrainingService.saveTrainings(userId, year, month, day, trainings);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 운동 관리
+    @GetMapping
+    public ResponseEntity<?> getTrainings(@RequestParam("user_id") Long userId,
+                                           @RequestParam("year") int year,
+                                           @RequestParam("month") int month,
+                                           @RequestParam("day") int day) {
+        log.info("운동 관리 들어왔나?");
+
+        List<UserTrainingResponseDto> list = userTrainingService.getTrainings(userId, year, month, day);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     private ResponseEntity<?> exceptionHandling(Exception e) {

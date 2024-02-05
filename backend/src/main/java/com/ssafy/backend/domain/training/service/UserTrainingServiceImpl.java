@@ -1,5 +1,7 @@
 package com.ssafy.backend.domain.training.service;
 
+import com.ssafy.backend.domain.training.dto.SetDto;
+import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 import com.ssafy.backend.domain.training.entity.Training;
 import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +57,42 @@ public class UserTrainingServiceImpl implements UserTrainingService {
 
         userTrainingRepository.saveAllAndFlush(userTrainingList);
     }
-    
+
+    // 운동 관리
+    @Override
+    public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
+
+        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
+
+        log.info("운동 관리 데이터 받아왔나? {}", userTrainings);
+
+        List<UserTrainingResponseDto> userTrainingResponseDtos = new ArrayList<>();
+        TreeMap<Integer, UserTrainingResponseDto> userTrainingResponseDtoTreeMap = new TreeMap<>();
+
+        userTrainings.forEach(u -> {
+
+            int index = u.getSequence();
+
+            if (userTrainingResponseDtoTreeMap.get(index) == null) {
+                UserTrainingResponseDto userTrainingResponseDto = UserTrainingResponseDto.toDto(u);
+                userTrainingResponseDtoTreeMap.put(index, userTrainingResponseDto);
+            }
+
+            SetDto setDto = SetDto.toDto(u);
+
+            userTrainingResponseDtoTreeMap.get(index).getSets().add(setDto);
+
+        });
+
+        log.info("TreeMap {}", userTrainingResponseDtoTreeMap);
+
+        Set<Integer> keySet = userTrainingResponseDtoTreeMap.keySet();
+
+        for (Integer key : keySet) {
+            userTrainingResponseDtos.add(userTrainingResponseDtoTreeMap.get(key));
+        }
+
+        return userTrainingResponseDtos;
+    }
+
 }
