@@ -45,7 +45,7 @@ const Menus = () => {
         {
           menuicon: <ExclamationCircleIcon className="w-6 h-6" />,
           menutitle: "회원 탈퇴",
-          menuurl: "/",
+          menuurl: "/mypage/delete",
         },
       ],
     },

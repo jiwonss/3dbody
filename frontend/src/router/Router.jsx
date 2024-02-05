@@ -27,6 +27,7 @@ import PinChangePage from "../pages/mypage/PinChangePage";
 import FoodCategoryPage from "../pages/diary/food/FoodCategoryPage";
 import FoodAddFage from "../pages/diary/food/FoodAddFage";
 import FAQDetailPage from "../pages/mypage/FAQDetailPage";
+import UserDelete from "../components/mypage/UserDelete";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: "/mypage/FAQ/:postId",
         Component: FAQDetailPage,
+      },
+      {
+        path: "/mypage/delete",
+        Component: UserDelete,
       },
       {
         path: "/challenge",
