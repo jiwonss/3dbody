@@ -1,9 +1,8 @@
 package com.ssafy.backend.domain.training.controller;
 
 import com.ssafy.backend.domain.training.dto.TrainingResponseDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestListDto;
 import com.ssafy.backend.domain.training.service.TrainingService;
+import com.ssafy.backend.domain.training.service.UserTrainingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,7 @@ import java.util.List;
 public class TrainingController {
 
     private final TrainingService trainingService;
+    private final UserTrainingService userTrainingService;
 
     // 운동 리스트(검색, 카테고리)
     @GetMapping("/list")
@@ -84,19 +84,18 @@ public class TrainingController {
     }
 
     // 운동 저장
-//    @PostMapping
-//    public ResponseEntity<?> saveTrainings(@RequestBody List<UserTrainingRequestDto> requestDtoList) {
-//        log.info("운동 저장 들어왔나?");
-//        log.info("{}", requestDtoList);
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
-    // 운동 저장
     @PostMapping
-    public ResponseEntity<?> saveTrainings(@RequestBody UserTrainingRequestListDto requestListDto) {
+    public ResponseEntity<?> saveTrainings(@RequestParam("user_id") Long userId,
+                                           @RequestParam("year") int year,
+                                           @RequestParam("month") int month,
+                                           @RequestParam("day") int day,
+                                           @RequestBody List<Long> trainings) {
         log.info("운동 저장 들어왔나?");
-        log.info("{}", requestListDto);
+        log.info("{}", trainings);
+
+        log.info("userId={}, 오늘날짜: {}-{}-{}", userId, year, month, day);
+
+        userTrainingService.saveTrainings(userId, year, month, day, trainings);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
