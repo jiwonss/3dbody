@@ -25,25 +25,25 @@ const FoodCategoryPage = () => {
   // 날짜별 칼탄단지 총합 --------------------------------------------------------------------
   const totalcalorie = userCategoryFood
     .reduce((acc, cur) => {
-      return acc + cur.food.calorie;
+      return acc + (cur.food.calorie * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 
   const totalcarbohydrate = userCategoryFood
     .reduce((acc, cur) => {
-      return acc + cur.food.carbohydrate;
+      return acc + (cur.food.carbohydrate * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 
   const totalprotein = userCategoryFood
     .reduce((acc, cur) => {
-      return acc + cur.food.protein;
+      return acc + (cur.food.protein * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 
   const totallipid = userCategoryFood
     .reduce((acc, cur) => {
-      return acc + cur.food.lipid;
+      return acc + (cur.food.lipid * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
   // 날짜별 칼탄단지 총합 --------------------------------------------------------------------
@@ -156,9 +156,9 @@ const FoodCategoryPage = () => {
               <div className="flex flex-col justify-center pb-1 pl-4 basis-full">
                 <p className="text-base">{data.food.name}</p>
                 <p style={{ fontSize: "12px" }}>
-                  탄 {data.food.carbohydrate.toFixed(1)}g 단{" "}
-                  {data.food.protein.toFixed(1)}g 지{" "}
-                  {data.food.lipid.toFixed(1)}g
+                  탄 {(data.food.carbohydrate * (data.servingSize / data.food.servingSize) * data.foodCount).toFixed(1)}g 단{" "}
+                  {(data.food.protein * (data.servingSize / data.food.servingSize) * data.foodCount).toFixed(1)}g 지{" "}
+                  {(data.food.lipid * (data.servingSize / data.food.servingSize) * data.foodCount).toFixed(1)}g
                 </p>
               </div>
               {/* 정보 변경 및 삭제 */}

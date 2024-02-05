@@ -16,25 +16,25 @@ const FoodSummary = () => {
 
   const totalcalorie = userFood
     .reduce((acc, cur) => {
-      return acc + cur.food.calorie;
+      return acc + (cur.food.calorie * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 
   const totalcarbohydrate = userFood
     .reduce((acc, cur) => {
-      return acc + cur.food.carbohydrate;
+      return acc + (cur.food.carbohydrate * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 
   const totalprotein = userFood
     .reduce((acc, cur) => {
-      return acc + cur.food.protein;
+      return acc + (cur.food.protein * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 
   const totallipid = userFood
     .reduce((acc, cur) => {
-      return acc + cur.food.lipid;
+      return acc + (cur.food.lipid * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
     }, 0)
     .toFixed(1);
 

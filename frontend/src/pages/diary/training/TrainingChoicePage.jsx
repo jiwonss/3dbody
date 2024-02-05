@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -7,10 +8,11 @@ import Button from "../../../components/common/Button";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 import Search from "../../../components/common/Search";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
-import axios from "axios";
+import { userState } from "../../../recoil/common/UserState";
 
 const TrainingChoicePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const [searchTraining, setSearchTraining] = useState("");
   const [searchTrainingList, setSearchTrainingList] = useState([]);
@@ -26,7 +28,9 @@ const TrainingChoicePage = () => {
   const onSubmitGetSearchTraining = async (e) => {
     e.preventDefault();
     await axios
-      .get(`${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`)
+      .get(
+        `${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`
+      )
       .then((res) => {
         console.table(res.data);
         setSearchTrainingList(res.data);
@@ -38,7 +42,9 @@ const TrainingChoicePage = () => {
   // 운동 카테고리 별 리스트 가져오기
   const getSearchTraining = async () => {
     await axios
-      .get(`${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`)
+      .get(
+        `${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`
+      )
       .then((res) => {
         console.table(res.data);
         setSearchTrainingList(res.data);
@@ -58,21 +64,28 @@ const TrainingChoicePage = () => {
   // 체크박스로 운동 저장
   const handleCheckboxChange = (trainingId) => {
     if (selectedTrainingList.includes(trainingId)) {
-      setSelectedTrainingList(selectedTrainingList.filter((id) => id !== trainingId));
+      setSelectedTrainingList(
+        selectedTrainingList.filter((id) => id !== trainingId)
+      );
     } else {
       setSelectedTrainingList([...selectedTrainingList, trainingId]);
     }
   };
   // 운동 리스트에 추가하기
   const postTrainingList = async () => {
-    // await axios
-    //   .get(`${baseUrl}api/management/training`)
-    //   .then((res) => {
-    //     console.table(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    await axios
+      .post(
+        `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`,
+        {
+          trainings: selectedTrainingList,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   // 페이지 로딩 시 전체 운동 리스트 가져오기
   useEffect(() => {
@@ -157,7 +170,9 @@ const TrainingChoicePage = () => {
       <div className="fixed w-full bg-white bottom-[57px]">
         <div
           className={`p-2 m-4 text-center border border-teal-700 rounded-md ${
-            !selectedTrainingList.length ? "text-teal-700" : "bg-teal-700 text-white"
+            !selectedTrainingList.length
+              ? "text-teal-700"
+              : "bg-teal-700 text-white"
           }`}
         >
           {!selectedTrainingList.length ? (
@@ -170,7 +185,10 @@ const TrainingChoicePage = () => {
                   : `/diary/training/myroutine/edit/create`
               }
             >
-              <Button buttonName={`${"n"}개의 운동 추가하기`} onClick={() => postTrainingList()} />
+              <Button
+                buttonName={`${"n"}개의 운동 추가하기`}
+                onClick={() => postTrainingList()}
+              />
             </Link>
           )}
         </div>

@@ -23,27 +23,26 @@ const DiaryTrainingPage = () => {
 
   const trainingDetailData = () => {
     // 해당 날짜 운동데이터 유무
-    return userTraining.length ? <TrainingData /> : <TrainingNoData />;
+    return !userTraining.length ? <TrainingData /> : <TrainingNoData />;
   };
 
   // 운동 데이터 가져오기
-  // const getUserTraining = async () => {
-  //   await axios
-  //     .get(
-  //       `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       setUserTraining(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const getUserTraining = async () => {
+    await axios
+      .get(
+        `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+      )
+      .then((res) => {
+        console.log(res);
+        setUserTraining(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    console.log(userTraining);
-    // getUserTraining();
+    getUserTraining();
   }, [selectedDate]);
 
   return (
@@ -52,7 +51,7 @@ const DiaryTrainingPage = () => {
 
       <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
       {isSelected === "left" ? <CalendarWeek /> : <Graph />}
-      <hr className="my-4" />
+      <hr className="mt-4" />
       {trainingDetailData()}
     </>
   );
