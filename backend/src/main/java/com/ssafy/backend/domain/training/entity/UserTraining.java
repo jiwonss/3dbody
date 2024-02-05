@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -30,8 +30,9 @@ public class UserTraining extends BaseEntity {
     private Training training; // 운동 ID, BIGINT, FK, NOT NULL
 
     @Column(nullable = false)
-    private LocalDateTime date; // 날짜, TIMESTAMP, NOT NULL
+    private LocalDate date; // 날짜, TIMESTAMP, NOT NULL
 
+    @ColumnDefault("0")
     @Column(nullable = false)
     private int sequence; // 순서, INT, NOT NULL
 
@@ -43,6 +44,7 @@ public class UserTraining extends BaseEntity {
     @Column(nullable = false)
     private int count; // 횟수, INT, NOT NULL, DEFAULT 0
 
+    @ColumnDefault("0")
     @Column(nullable = false)
     private int sets; // 세트, INT, NOT NULL
 

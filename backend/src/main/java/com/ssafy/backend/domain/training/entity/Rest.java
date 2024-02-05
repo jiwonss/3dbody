@@ -13,7 +13,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode(of = {""})
+@EqualsAndHashCode(of = {"restId"})
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(name = "unique_user_id_and_date", columnNames = {"user_id", "date"})
+        }
+)
 public class Rest {
 
     @Id
@@ -27,8 +32,7 @@ public class Rest {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ColumnDefault("FALSE")
-    private boolean isRest;
-
+//    @ColumnDefault("FALSE")
+//    private boolean isRest;
 
 }
