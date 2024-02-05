@@ -13,6 +13,9 @@ import java.util.List;
 @Builder
 public class UserTrainingResponseDto {
 
+    @JsonProperty("user_training_id")
+    private Long userTrainingId;
+
     @JsonProperty("user_id")
     private Long userId;
 
@@ -31,6 +34,7 @@ public class UserTrainingResponseDto {
 
         return UserTrainingResponseDto
                 .builder()
+                .userTrainingId(userTraining.getUserTrainingId())
                 .userId(userTraining.getUser().getUserId())
                 .trainingId(userTraining.getTraining().getTrainingId())
                 .date(userTraining.getDate())

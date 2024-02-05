@@ -12,4 +12,7 @@ public interface UserTrainingService {
 
     // 운동 관리
     List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day);
+
+    // 운동 완료 여부 수정
+    void toggle(Long userTrainingId);
 }

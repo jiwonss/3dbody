@@ -52,4 +52,8 @@ public class UserTraining extends BaseEntity {
     @Column(nullable = false)
     private boolean isFinished; // 완료여부, BOOLEAN, NOT NULL, DEFAULT 0
 
+    public void updateIsFinished() {
+        this.isFinished = !this.isFinished;
+    }
+
 }

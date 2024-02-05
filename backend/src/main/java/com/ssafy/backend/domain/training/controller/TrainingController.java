@@ -114,6 +114,15 @@ public class TrainingController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 운동 완료 여부 수정
+    @PutMapping("/user_training/{user_training_id}")
+    public ResponseEntity<?> checkTraining(@PathVariable("user_training_id") Long userTrainingId) {
+
+        userTrainingService.toggle(userTrainingId);
+
+        return new ResponseEntity<>("운동 완료 여부 수정 완료", HttpStatus.OK);
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }

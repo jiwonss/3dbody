@@ -60,6 +60,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
 
     // 운동 관리
     @Override
+    @Transactional
     public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
 
         List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
@@ -93,6 +94,15 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         }
 
         return userTrainingResponseDtos;
+    }
+
+    @Override
+    @Transactional
+    public void toggle(Long userTrainingId) {
+        UserTraining userTraining = userTrainingRepository.findById(userTrainingId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 userTrainingId 입니다."));
+
+        userTraining.updateIsFinished();
     }
 
 }
