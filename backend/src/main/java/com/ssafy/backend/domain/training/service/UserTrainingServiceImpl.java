@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.training.service;
 
-import com.ssafy.backend.domain.training.dto.SetDto;
+import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
+import com.ssafy.backend.domain.training.dto.SetResponseDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 import com.ssafy.backend.domain.training.entity.Training;
 import com.ssafy.backend.domain.training.entity.UserTraining;
@@ -79,9 +80,9 @@ public class UserTrainingServiceImpl implements UserTrainingService {
                 userTrainingResponseDtoTreeMap.put(index, userTrainingResponseDto);
             }
 
-            SetDto setDto = SetDto.toDto(u);
+            SetResponseDto setResponseDto = SetResponseDto.toDto(u);
 
-            userTrainingResponseDtoTreeMap.get(index).getSets().add(setDto);
+            userTrainingResponseDtoTreeMap.get(index).getSets().add(setResponseDto);
 
         });
 
@@ -103,6 +104,29 @@ public class UserTrainingServiceImpl implements UserTrainingService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 userTrainingId 입니다."));
 
         userTraining.updateIsFinished();
+    }
+
+    // 세트 추가
+    @Override
+    public void addSet(UserTrainingRequestDto requestDto) {
+
+        log.info("잘 들어왔나? -{}", requestDto);
+
+        User user = userRepository.getReferenceById(requestDto.getUserId());
+        Training training = trainingRepository.getReferenceById(requestDto.getTrainingId());
+
+        UserTraining userTraining = UserTraining
+                .builder()
+                .user(user)
+                .training(training)
+                .date(requestDto.getDate())
+                .sequence(requestDto.getSequence())
+                .sets(requestDto.getSets())
+                .kg(requestDto.getKg())
+                .count(requestDto.getCount())
+                .build();
+
+        userTrainingRepository.saveAndFlush(userTraining);
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SetDto {
+public class SetResponseDto {
 
     @JsonProperty("user_training_id")
     private Long userTrainingId;
@@ -16,9 +16,9 @@ public class SetDto {
 
     private int count;
 
-    public static SetDto toDto(UserTraining userTraining) {
+    public static SetResponseDto toDto(UserTraining userTraining) {
 
-        return SetDto
+        return SetResponseDto
                 .builder()
                 .userTrainingId(userTraining.getUserTrainingId())
                 .kg(userTraining.getKg())
