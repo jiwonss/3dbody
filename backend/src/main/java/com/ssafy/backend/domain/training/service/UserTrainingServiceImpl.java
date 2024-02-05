@@ -129,4 +129,13 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         userTrainingRepository.saveAndFlush(userTraining);
     }
 
+    // 세트 삭제
+    @Override
+    @Transactional
+    public void removeSet(UserTrainingRequestDto requestDto) {
+
+        userTrainingRepository.deleteWithUserIdAndTrainingIdAndDate(requestDto);
+
+    }
+
 }

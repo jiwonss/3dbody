@@ -135,6 +135,16 @@ public class TrainingController {
         return new ResponseEntity<>("새트 추가 완료.", HttpStatus.OK);
     }
 
+    @DeleteMapping("/set")
+    public ResponseEntity<?> removeSet(@RequestBody UserTrainingRequestDto requestDto) {
+
+        log.info("세트 삭제 요청 들어옴? - {}", requestDto);
+
+        userTrainingService.removeSet(requestDto);
+
+        return new ResponseEntity<>("세트 삭제 완료.", HttpStatus.OK);
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }

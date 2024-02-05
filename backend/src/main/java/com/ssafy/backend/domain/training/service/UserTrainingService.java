@@ -19,4 +19,7 @@ public interface UserTrainingService {
 
     // 세트 추가
     void addSet(UserTrainingRequestDto requestDto);
+
+    // 세트 삭제
+    void removeSet(UserTrainingRequestDto requestDto);
 }

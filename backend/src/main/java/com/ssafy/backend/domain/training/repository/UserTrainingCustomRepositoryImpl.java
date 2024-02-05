@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.training.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
 import com.ssafy.backend.domain.training.entity.QUserTraining;
 import com.ssafy.backend.domain.training.entity.UserTraining;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,17 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                 .where(qUserTraining.user.userId.eq(userId), qUserTraining.date.eq(date))
                 .orderBy(qUserTraining.sequence.asc(), qUserTraining.sets.asc())
                 .fetch();
+    }
+
+    @Override
+    public void deleteWithUserIdAndTrainingIdAndDate(UserTrainingRequestDto requestDto) {
+
+        jpaQueryFactory.delete(qUserTraining)
+                .where(qUserTraining.user.userId.eq(requestDto.getUserId()),
+                        qUserTraining.training.trainingId.eq(requestDto.getTrainingId()),
+                        qUserTraining.date.eq(requestDto.getDate()),
+                        qUserTraining.sequence.eq(requestDto.getSequence()),
+                        qUserTraining.sets.eq(requestDto.getSets()))
+                .execute();
     }
 }
