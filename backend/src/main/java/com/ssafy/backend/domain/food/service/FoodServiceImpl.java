@@ -63,9 +63,13 @@ public class FoodServiceImpl implements FoodService{
         // 찾아온 UserFood 업데이트
         if (userFood != null) {
             // 음식 개수(foodCount) 업데이트
-            userFood.setFoodCount(foodCount);
+            if(foodCount != 0){
+                userFood.setFoodCount(foodCount);
+            }
             // 1회 제공량(servingSize) 업데이트
-            userFood.setServingSize(servingSize);
+            if(servingSize != 0){
+                userFood.setServingSize(servingSize);
+            }
             // 엔터티를 저장
             userFoodRepository.save(userFood);
         }
