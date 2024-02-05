@@ -64,8 +64,8 @@ public class UserController {
         return ResponseEntity.ok(Response.success());
     }
 
-    @GetMapping
-    public ResponseEntity duplicateCheckNickname(@RequestParam String nickname) {
+    @GetMapping("/{user_id}/nickname")
+    public ResponseEntity duplicateCheckNickname(@PathVariable("user_id") Long userId, @RequestParam String nickname) {
         log.info("User 닉네임 중복 확인 - nickname : {}", nickname);
 
         if (userService.duplicateCheckNickname(nickname)) {
