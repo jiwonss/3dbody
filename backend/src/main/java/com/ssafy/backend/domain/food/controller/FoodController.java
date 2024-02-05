@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.food.controller;
 import com.ssafy.backend.domain.food.dto.FoodListDto;
 import com.ssafy.backend.domain.food.dto.FoodListRequestDto;
 import com.ssafy.backend.domain.food.dto.UserFoodListDto;
+import com.ssafy.backend.domain.food.dto.UserFoodRequestDto;
 import com.ssafy.backend.domain.food.service.FoodService;
 import com.ssafy.backend.global.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class FoodController {
         return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
     //음식 추가 직접 입력
-    @PostMapping("/add")
+    @PostMapping("/list/add")
     public ResponseEntity<?> addFoodList(@RequestBody FoodListRequestDto foodListRequestDto){
         foodService.addFoodList(foodListRequestDto);
         return ResponseEntity.ok(Response.success());
@@ -44,6 +45,14 @@ public class FoodController {
 //        foodService.saveUserFoodList(userId, foodId, category);
 //        return ResponseEntity.ok(Response.success());
 //    }
+
+    //user 식단 추가
+    @PostMapping("/add")
+    public ResponseEntity<?> saveUserFoodList(@RequestBody UserFoodRequestDto userFoodRequestDto){
+        log.info("controller에서확인 {}",userFoodRequestDto);
+        foodService.saveUserFoodList(userFoodRequestDto);
+        return ResponseEntity.ok(Response.success());
+    }
 
     //식단 관리 페이지
     @GetMapping("/list/{user_id}")

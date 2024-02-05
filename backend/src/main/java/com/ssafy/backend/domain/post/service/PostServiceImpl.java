@@ -48,8 +48,10 @@ public class PostServiceImpl implements PostService{
     /* read 게시글 상세 조회 */
     @Transactional(rollbackFor = Exception.class)
     public PostDto findById(Long id){
+        log.info("service 위에 들어오나");
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No found with postId" + id));
+        log.info("service 들어오나");
         return PostDto.toDto(post);
     }
 

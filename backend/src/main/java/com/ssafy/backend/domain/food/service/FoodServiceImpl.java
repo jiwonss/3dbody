@@ -3,10 +3,13 @@ package com.ssafy.backend.domain.food.service;
 import com.ssafy.backend.domain.food.dto.FoodListDto;
 import com.ssafy.backend.domain.food.dto.FoodListRequestDto;
 import com.ssafy.backend.domain.food.dto.UserFoodListDto;
+import com.ssafy.backend.domain.food.dto.UserFoodRequestDto;
 import com.ssafy.backend.domain.food.entity.Food;
 import com.ssafy.backend.domain.food.entity.UserFood;
 import com.ssafy.backend.domain.food.repository.FoodRepository;
 import com.ssafy.backend.domain.food.repository.UserFoodRepository;
+import com.ssafy.backend.domain.user.entity.User;
+import com.ssafy.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ public class FoodServiceImpl implements FoodService{
 
     final FoodRepository foodRepository;
     final UserFoodRepository userFoodRepository;
+    final UserRepository userRepository;
 
     //식단 관리 페이지
     @Override
@@ -34,6 +38,7 @@ public class FoodServiceImpl implements FoodService{
         return userFoodList;
     }
     //식단 관리 카테고리별 상세
+    @Override
     public List<UserFoodListDto> findByListCategory(Long userId, int year, int month, int day, String category){
         List<UserFood> userFoodCategoryEntites = userFoodRepository.findByListCategory(userId, year, month, day, category);
        List<UserFoodListDto> userFoodListCategory = userFoodCategoryEntites.stream()
@@ -49,13 +54,28 @@ public class FoodServiceImpl implements FoodService{
         foodRepository.save(food);
     }
 
-    //음식 리스트 중에서 등록
-    public void saveUserFoodList(Long userId, Long foodId, String category){
+    //user 식단 추가
+    @Override
+    public void saveUserFoodList(UserFoodRequestDto userFoodRequestDto){
+        log.info("dto 확인: {}", userFoodRequestDto);
 
-//        UserFood userFood = null;
-//        userFood.setCategory(category);
-//
-//        userFoodRepository.save(userFood);
+        User user = userRepository.getReferenceById(userFoodRequestDto.getUserId());
+        Food food = foodRepository.getReferenceById(userFoodRequestDto.getFoodId());
+
+        // UserFood 초기화
+        UserFood userFood = UserFood.builder()
+                .user(user)
+                .food(food)
+                .foodCount(userFoodRequestDto.getFoodCount())
+                .category(userFoodRequestDto.getCategory())
+                .date(userFoodRequestDto.getDate())
+                .build();
+
+        // UserFood에 servingSize 설정
+        userFood.setServingSize(food.getServingSize());
+
+        log.info("확인: {}", userFood);
+        userFoodRepository.save(userFood);
     }
 
     //음식 검색
