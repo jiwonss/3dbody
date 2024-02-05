@@ -7,48 +7,34 @@ import { isRestState } from "../../../recoil/diary/IsRestState";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
 import Rest from "./Rest";
 import Plan from "./Plan";
+import { userState } from "../../../recoil/common/UserState";
 
 const TrainingNoData = () => {
+  const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const [isRest, setIsRest] = useRecoilState(isRestState);
-  const baseUrl = useRecoilValue(baseUrlState);
 
-  // const getIsRest = async () => {
-  //   await axios.get(
-  //     `${baseUrl}management/calendar/day/rest/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
-  //   ).then(res => {
-  //     setIsRest(res)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // };
+  // 해당 날짜 휴식 여부 가져오기
+  const getIsRest = async () => {
+    await axios
+      .get(
+        `${baseUrl}api/management/training/rest?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+      )
+      .then((res) => {
+        console.log("휴식 여부 : " + res.data);
+        setIsRest(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  // useEffect(() => {
-  //   getIsRest()
-  // }, [])
+  useEffect(() => {
+    getIsRest();
+  }, [selectedDate]);
 
-  // const postIsRest = async () => {
-  //   await axios.post(
-  //     `${baseUrl}management/calendar/day/rest/${id}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`, {
-  //       is_rest: isRest,
-  //     }
-  //   ).then(res => {
-  //     console.log(res.data);
-  //     console.log("성공");
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // };
-
-  // useEffect(() => {
-  //   postIsRest()
-  // }, [isRest])
-
-  return (
-    <>
-      {isRest ? <Rest /> : <Plan />}
-    </>
-  );
+  return <>{isRest ? <Rest /> : <Plan />}</>;
 };
 
 export default TrainingNoData;

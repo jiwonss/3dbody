@@ -1,11 +1,32 @@
-import { useSetRecoilState } from "recoil";
+import axios from 'axios';
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isRestState } from "../../../recoil/diary/IsRestState";
+import { baseUrlState } from '../../../recoil/common/BaseUrlState';
+import { userState } from '../../../recoil/common/UserState';
+import { selectedDateState } from '../../../recoil/diary/SelectedDateState';
 
 const Rest = () => {
+  const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
+  const selectedDate = useRecoilValue(selectedDateState);
   const setIsRest = useSetRecoilState(isRestState);
 
   const onClickHandler = () => {
-    setIsRest(false);
+    const deleteIsRest = async () => {
+      await axios
+        .delete(
+          `${baseUrl}api/management/training/rest?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          setIsRest(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    deleteIsRest();
   };
 
   return (

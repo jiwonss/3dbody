@@ -10,16 +10,23 @@ import Search from "../../../components/common/Search";
 import Button from "../../../components/common/Button";
 import { userState } from "../../../recoil/common/UserState";
 import { modalState } from "../../../recoil/modal/ModalState";
+import { selectedDateState } from '../../../recoil/diary/SelectedDateState';
 
 const FoodAddFage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const { category } = useParams();
   const user = useRecoilValue(userState);
+  const selectedDate = useRecoilValue(selectedDateState);
   const [searchFood, setSearchFood] = useState(null);
   const [searchFoodList, setSearchFoodList] = useState([]);
   const [selectedFoodList, setSelectedFoodList] = useState([]);
   const [modalData, setModalData] = useRecoilState(modalState);
-
+  
+  // 백 요청에 보낼 시간 계산
+  const selectedTime = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]) // 선택한 시간
+  const KoreaTimeDiff = 9 * 60 * 60 * 1000 // 한국 시간은 GMT 시간보다 9시간 앞서 있다.
+  const KoreaNow = new Date(selectedTime.getTime() + KoreaTimeDiff) // 백에서 -9시간 되므로 +9시간 값을 보내준다
+  
   const onChangeSearchFood = (e) => {
     setSearchFood(e.target.value);
   };
@@ -51,12 +58,11 @@ const FoodAddFage = () => {
   const postFood = async (selectedFoodList) => {
     for (const foodId of selectedFoodList) {
       try {
-        const res = await axios.post(`${baseUrl}api/management/food/`, {
+        const res = await axios.post(`${baseUrl}api/management/food/list/add`, {
           user_id: user.info.userId,
           food_id: foodId,
           category: category.substring(0, 2),
-          count: 1,
-          date: new Date(),
+          date: KoreaNow,
         });
 
         console.log("Request successful:", res.data);
@@ -110,6 +116,7 @@ const FoodAddFage = () => {
                   }}
                   value={data.servingSize + " g"}
                   className="m-2 text-center border-2 basis-3/5"
+                  disabled
                 />
               </div>
             </div>
