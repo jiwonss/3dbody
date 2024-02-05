@@ -26,7 +26,7 @@ public class NoticeController {
 
     @GetMapping("/notice/posts/{postId}")
     public ResponseEntity read(@PathVariable("postId") Long postId){
-        log.info("확인");
+        log.info("상세확인");
         return ResponseEntity.ok(postService.findById(postId));
     }
 

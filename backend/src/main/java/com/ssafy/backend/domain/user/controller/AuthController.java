@@ -82,9 +82,10 @@ public class AuthController {
     @GetMapping
     public ResponseEntity duplicateCheckEmail(@RequestParam String email) {
         log.info("이메일 중복 확인 - email : {}", email);
-
-        authService.duplicateCheckEmail(email);
-        return ResponseEntity.ok(Response.success(HttpStatus.OK.name(), ""));
+        if (authService.duplicateCheckEmail(email)) {
+            return ResponseEntity.ok(Response.fail("", ""));
+        }
+        return ResponseEntity.ok(Response.success("", ""));
     }
 
 }
