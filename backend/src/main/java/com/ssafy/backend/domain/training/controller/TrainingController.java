@@ -84,12 +84,19 @@ public class TrainingController {
     }
 
     // 운동 저장
+//    @PostMapping
+//    public ResponseEntity<?> saveTrainings(@RequestBody List<UserTrainingRequestDto> requestDtoList) {
+//        log.info("운동 저장 들어왔나?");
+//        log.info("{}", requestDtoList);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
+    // 운동 저장
     @PostMapping
-    public ResponseEntity<?> saveTrainings(@RequestBody List<UserTrainingRequestDto> requestDtoList) {
+    public ResponseEntity<?> saveTrainings(@RequestBody UserTrainingRequestListDto requestListDto) {
         log.info("운동 저장 들어왔나?");
-        log.info("{}", requestDtoList);
-
-
+        log.info("{}", requestListDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

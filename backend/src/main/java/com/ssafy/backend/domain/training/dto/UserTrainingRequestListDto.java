@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.training.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.util.List;
 public class UserTrainingRequestListDto {
 
     @Builder.Default
+    @JsonProperty("dto_list")
     private List<UserTrainingRequestDto> dtoList = new ArrayList<>();
 
 }

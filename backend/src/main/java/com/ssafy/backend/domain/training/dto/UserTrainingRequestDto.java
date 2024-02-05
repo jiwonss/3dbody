@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,5 +19,7 @@ public class UserTrainingRequestDto {
 
     @JsonProperty("training_id")
     private Long trainingId;
+
+    private LocalDate date;
 
 }
