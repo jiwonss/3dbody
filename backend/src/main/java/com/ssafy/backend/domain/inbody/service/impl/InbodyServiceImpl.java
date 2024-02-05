@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.inbody.service.impl;
 import com.ssafy.backend.domain.inbody.dto.InbodyRequestDto;
 import com.ssafy.backend.domain.inbody.dto.InbodyResponseDto;
 import com.ssafy.backend.domain.inbody.entity.Inbody;
+import com.ssafy.backend.domain.inbody.entity.InbodyImage;
 import com.ssafy.backend.domain.inbody.repository.InbodyImageRepository;
 import com.ssafy.backend.domain.inbody.repository.InbodyRepository;
 import com.ssafy.backend.domain.inbody.service.InbodyService;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,12 +30,26 @@ public class InbodyServiceImpl implements InbodyService {
     private final InbodyRepository inbodyRepository;
     private final InbodyImageRepository inbodyImageRepository;
 
-
     @Override
     @Transactional
     public void registInbody(Long userId, InbodyRequestDto inbodyRequestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
-        inbodyRepository.save(inbodyRequestDto.toEntity(user));
+
+        Inbody inpuInbody = inbodyRequestDto.toEntity(user);
+        if (inpuInbody.getDate() == null) {
+            inpuInbody.updateDate(LocalDateTime.now());
+        }
+
+        Inbody inbody = inbodyRepository.save(inpuInbody);
+
+        inbodyRequestDto.getImages().forEach(image -> {
+            InbodyImage inbodyImage = InbodyImage.builder()
+                    .inbody(inbody)
+                    .url(image.getUrl())
+                    .build();
+            inbody.addInbodyImage(inbodyImage);
+            inbodyImageRepository.save(inbodyImage);
+        });
     }
 
     @Override
@@ -53,7 +69,34 @@ public class InbodyServiceImpl implements InbodyService {
         inbody.updateScore(inbodyRequestDto.getScore());
         inbody.updateDate(inbodyRequestDto.getDate());
 
-        inbodyRepository.save(inbody);
+        if (!inbodyRequestDto.getImages().isEmpty()) {
+            inbody.getInbodyImages().forEach(inbodyImage -> {
+                long cnt = inbodyRequestDto.getImages().stream()
+                        .filter(i -> inbodyImage.getUrl().equals(i.getUrl()))
+                        .count();
+
+                if (cnt == 0) {
+                    inbody.deleteInbodyImage(inbodyImage);
+                    inbodyImageRepository.delete(inbodyImage);
+                }
+            });
+
+            inbodyRequestDto.getImages().forEach(image -> {
+                long cnt = inbody.getInbodyImages().stream()
+                        .filter(i -> !image.getUrl().equals(i.getUrl()))
+                        .count();
+
+                if (cnt > 0) {
+                    InbodyImage inbodyImage = InbodyImage.builder()
+                            .inbody(inbody)
+                            .url(image.getUrl())
+                            .build();
+
+                    inbody.addInbodyImage(inbodyImage);
+                    inbodyImageRepository.save(inbodyImage);
+                }
+            });
+        }
     }
 
     @Override
@@ -73,7 +116,8 @@ public class InbodyServiceImpl implements InbodyService {
     @Override
     @Transactional
     public void deleteInbody(Long userId, Long inbodyId) {
-        // 인바디 이미지 삭제
         inbodyRepository.deleteById(inbodyId);
+
+        // TODO 이미지 삭제 시 S3에서도 삭제하기
     }
 }

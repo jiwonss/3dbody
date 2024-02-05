@@ -5,47 +5,58 @@ import com.ssafy.backend.domain.inbody.dto.InbodyResponseDto;
 import com.ssafy.backend.domain.inbody.service.InbodyService;
 import com.ssafy.backend.global.dto.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/inbody")
 @RequiredArgsConstructor
-@PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) " +
-        "and (#userId == authentication.principal.userId)")
+@PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == authentication.principal.userId)")
 public class InbodyController {
 
     private final InbodyService inbodyService;
 
-    @PostMapping("/{userId}")
-    public ResponseEntity registInbody(@PathVariable Long userId, @RequestBody InbodyRequestDto inbodyRequestDto) {
+    @PostMapping("/{user_id}")
+    public ResponseEntity registInbody(@PathVariable("user_id") Long userId, @RequestBody InbodyRequestDto inbodyRequestDto) {
+        log.info("Inbody 등록 - inbodyRequestDto : {}", inbodyRequestDto);
+
         inbodyService.registInbody(userId, inbodyRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
-    @PatchMapping("/{userId}/{inbodyId}")
-    public ResponseEntity updateInbody(@PathVariable Long userId, @PathVariable Long inbodyId, @RequestBody InbodyRequestDto inbodyRequestDto) {
+    @PatchMapping("/{user_id}/{inbody_id}")
+    public ResponseEntity updateInbody(@PathVariable("user_id") Long userId, @PathVariable("inbody_id") Long inbodyId, @RequestBody InbodyRequestDto inbodyRequestDto) {
+        log.info("Inbody 수정 - inbodyRequestDto : {}", inbodyRequestDto);
+
         inbodyService.updateInbody(userId, inbodyId, inbodyRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
-    @GetMapping("/{userId}/{inbodyId}")
-    public ResponseEntity getInbodyItem(@PathVariable Long userId, @PathVariable Long inbodyId) {
+    @GetMapping("/{user_id}/{inbody_id}")
+    public ResponseEntity getInbodyItem(@PathVariable("user_id") Long userId, @PathVariable("inbody_id") Long inbodyId) {
+        log.info("Inbody 조회 - inbodyId : {}", inbodyId);
+
         InbodyResponseDto inbodyResponseDto = inbodyService.getInbodyItem(inbodyId);
         return ResponseEntity.ok(Response.success(inbodyResponseDto));
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity getInbodyList(@PathVariable Long userId) {
+    @GetMapping("/{user_id}")
+    public ResponseEntity getInbodyList(@PathVariable("user_id") Long userId) {
+        log.info("Inbody 리스트 - userId : {}", userId);
+
         List<InbodyResponseDto> result = inbodyService.getInbodyList(userId);
         return ResponseEntity.ok(Response.success(result));
     }
 
-    @DeleteMapping("/{userId}/{inbodyId}")
-    public ResponseEntity deleteInbody(@PathVariable Long userId, @PathVariable Long inbodyId) {
+    @DeleteMapping("/{user_id}/{inbody_id}")
+    public ResponseEntity deleteInbody(@PathVariable("user_id") Long userId, @PathVariable("inbody_id") Long inbodyId) {
+        log.info("Inbody 삭제 - inbodyId : {}", inbodyId);
+
         inbodyService.deleteInbody(userId, inbodyId);
         return ResponseEntity.ok(Response.success());
     }

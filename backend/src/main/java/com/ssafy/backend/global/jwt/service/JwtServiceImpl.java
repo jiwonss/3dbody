@@ -28,12 +28,6 @@ public class JwtServiceImpl implements JwtService {
     private final JwtUtils jwtUtils;
     private final TokenRepository tokenRepository;
 
-//    @Autowired
-//    public JwtServiceImpl(JwtUtils jwtUtils, TokenRepository tokenRepository){
-//        this.jwtUtils = jwtUtils;
-//        this.tokenRepository = tokenRepository;
-//    }
-
     private static final String CLAIM_EMAIL = "email";
     private static final String CLAIM_NICKNAME = "nickname";
     private static final String CLAIM_PROFILE_IMAGE = "profileImage";

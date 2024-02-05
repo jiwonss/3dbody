@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePassword(User user, String password) {
         user.updatePassword(passwordEncoder.encode(password));
-        userRepository.save(user);
     }
 
     @Override
@@ -61,24 +60,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getUserInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
-        return null;
-    }
-
-    @Override
-    @Transactional
-    public void updateUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        return UserResponseDto.from(user);
     }
 
     @Override
     @Transactional
     public void updateNickname(Long userId, String nickname) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+
         if (userRepository.existsByNickname(nickname)) {
             throw new UserException(DUPLICATED_NICKNAME);
         }
+
         user.updateNickname(nickname);
-        userRepository.save(user);
     }
 
     @Override
@@ -86,7 +80,6 @@ public class UserServiceImpl implements UserService {
     public void updateStatus(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         user.updateStatus(User.Status.WITHDRAWAL);
-        userRepository.save(user);
     }
 
     @Override
@@ -104,7 +97,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePin(User user, String pin) {
         user.updatePin(pin);
-        userRepository.save(user);
     }
 
     @Override
@@ -129,34 +121,51 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateName(Long userId, String name) {
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateName(name);
     }
 
     @Override
+    @Transactional
     public void updateGender(Long userId, User.Gender gender) {
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateGender(gender);
     }
 
     @Override
+    @Transactional
     public void updateHeight(Long userId, float height) {
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (height < 0.0) {
+            throw new UserException(INVALID_VALUE);
+        }
+        user.updateHeight(height);
     }
 
     @Override
+    @Transactional
     public void updateWeight(Long userId, float weight) {
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        if (weight < 0.0) {
+            throw new UserException(INVALID_VALUE);
+        }
+        user.updateWeight(weight);
     }
 
     @Override
+    @Transactional
     public void updateBirthDate(Long userId, String birthDate) {
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateBirthDate(birthDate);
     }
 
     @Override
+    @Transactional
     public void updateProfileImage(Long userId, String profileImage) {
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
+        user.updateProfileImage(profileImage);
     }
-
 
 }
