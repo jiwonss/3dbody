@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void changePassword(Long userId, PasswordRequestDto passwordRequestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         if (!passwordEncoder.matches(passwordRequestDto.getCurrentPassword(), user.getPassword())) {
@@ -100,12 +101,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void createPin(Long userId, PinRequestDto pinRequestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         updatePin(user, pinRequestDto.getNewPin());
     }
 
     @Override
+    @Transactional
     public void changePin(Long userId, PinRequestDto pinRequestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         if (!user.getPin().equals(pinRequestDto.getCurrentPin())) {
@@ -115,6 +118,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deletePin(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException(INVALID_USER));
         updatePin(user, null);
