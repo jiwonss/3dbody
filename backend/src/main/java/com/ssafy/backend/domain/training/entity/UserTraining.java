@@ -29,7 +29,6 @@ public class UserTraining extends BaseEntity {
     @JoinColumn(name = "training_id")
     private Training training; // 운동 ID, BIGINT, FK, NOT NULL
 
-    @Column(nullable = false)
     private LocalDate date; // 날짜, TIMESTAMP, NOT NULL
 
     @ColumnDefault("0")
@@ -48,8 +47,6 @@ public class UserTraining extends BaseEntity {
     @Column(nullable = false)
     private int sets; // 세트, INT, NOT NULL
 
-    @ColumnDefault("FALSE")
-    @Column(nullable = false)
     private boolean isFinished; // 완료여부, BOOLEAN, NOT NULL, DEFAULT 0
 
     public void updateIsFinished() {

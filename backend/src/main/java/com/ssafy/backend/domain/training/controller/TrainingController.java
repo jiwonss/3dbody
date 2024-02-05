@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.training.controller;
 
+import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
 import com.ssafy.backend.domain.training.dto.TrainingResponseDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 import com.ssafy.backend.domain.training.service.TrainingService;
@@ -121,6 +122,17 @@ public class TrainingController {
         userTrainingService.toggle(userTrainingId);
 
         return new ResponseEntity<>("운동 완료 여부 수정 완료", HttpStatus.OK);
+    }
+
+    // 세트 추가
+    @PostMapping("/set")
+    public ResponseEntity<?> addSet(@RequestBody UserTrainingRequestDto requestDto) {
+
+        log.info("세트 추가 요청 들어오나? {}", requestDto);
+
+        userTrainingService.addSet(requestDto);
+
+        return new ResponseEntity<>("새트 추가 완료.", HttpStatus.OK);
     }
 
     private ResponseEntity<?> exceptionHandling(Exception e) {

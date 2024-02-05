@@ -24,11 +24,15 @@ public class UserTrainingResponseDto {
 
     private LocalDate date;
 
+    private float kg;
+
+    private int count;
+
     @JsonProperty("is_finished")
     private boolean isFinished;
 
     @Builder.Default
-    private List<SetDto> sets = new ArrayList<>();
+    private List<SetResponseDto> sets = new ArrayList<>();
 
     public static UserTrainingResponseDto toDto(UserTraining userTraining) {
 
