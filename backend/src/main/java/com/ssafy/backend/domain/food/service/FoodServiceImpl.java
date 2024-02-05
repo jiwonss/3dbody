@@ -91,6 +91,10 @@ public class FoodServiceImpl implements FoodService{
         // UserFood에 servingSize 설정
         userFood.setServingSize(food.getServingSize());
 
+        if(userFood.getFoodCount() == 0){
+            userFood.setFoodCount(1);
+        }
+
         log.info("확인: {}", userFood);
         userFoodRepository.save(userFood);
     }
