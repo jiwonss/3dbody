@@ -21,8 +21,8 @@ const RoutineEditPage = () => {
   };
 
   const onChangeName = (e) => {
-    setName(e.target.value)
-  }
+    setName(e.target.value);
+  };
 
   return (
     <>
@@ -31,7 +31,7 @@ const RoutineEditPage = () => {
       </div>
       <PageTitle pageTitle="루틴 편집" />
       <div className="m-4">
-        <Input value={name} onChange={() => onChangeName()}/>
+        <Input value={name} onChange={() => onChangeName()} />
       </div>
 
       <div className="fixed w-full bottom-16">
