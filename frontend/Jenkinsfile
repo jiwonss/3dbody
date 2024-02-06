@@ -10,6 +10,7 @@ pipeline {
         REPO = "s10-webmobile1-sub2/S10P12C204"
         VITE_AWS_ACCESS_KEY_ID = "${env.VITE_AWS_ACCESS_KEY_ID}"
         VITE_AWS_SECRET_ACCESS_KEY = "${env.VITE_AWS_SECRET_ACCESS_KEY}"
+        VITE_VIDEOSDK_TOKEN= "${VITE_VIDEOSDK_TOKEN}"
     }
 
 
@@ -80,6 +81,7 @@ pipeline {
                             sh "docker run -d --name front -p 8083:3000 \
                             -e VITE_AWS_ACCESS_KEY_ID=${VITE_AWS_ACCESS_KEY_ID} \
                             -e VITE_AWS_SECRET_ACCESS_KEY=${VITE_AWS_SECRET_ACCESS_KEY} \
+                            -e VITE_VIDEOSDK_TOKEN=${VITE_VIDEOSDK_TOKEN} \
                              ${DOCKER_USER_ID}/front"
                         } catch (Exception e){
                             sh "docker restart front"
