@@ -3,13 +3,13 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect } from 'react';
 
 import PageTitle from "./../../../components/common/PageTitle";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 import { userRoutineState } from "../../../recoil/diary/UserRoutineState";
-import { useEffect } from 'react';
-import RoutineNoData from '../../../components/diary/training/routine/routineNoData';
-import RoutineList from '../../../components/diary/training/routine/routineList';
+import RoutineNoData from '../../../components/diary/training/routine/RoutineNoData';
+import RoutineList from '../../../components/diary/training/routine/RoutineList';
 
 const MyRoutinePage = () => {
   const selectedDate = useRecoilValue(selectedDateState);

@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
+import { BsFillTrash3Fill } from "react-icons/bs";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
-import { BsFillTrash3Fill } from "react-icons/bs";
 
 const TrainingDetailBox = ({ data, idx }) => {
   const baseUrl = useRecoilValue(baseUrlState);
