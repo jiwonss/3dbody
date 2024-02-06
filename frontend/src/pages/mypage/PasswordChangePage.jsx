@@ -50,12 +50,12 @@ const PasswordChangePage = () => {
       url: `${baseUrl}api/users/${user.info.userId}/password`,
       headers: { Authorization: `Bearer ${user.token}` },
       data: {
-        currentPassword: data.currentPassword,
-        newPassword: data.newPassword,
-        newPasswordCheck: data.newPasswordCheck,
+        current_password: data.currentPassword,
+        new_password: data.newPassword,
+        new_passwordCheck: data.newPasswordCheck,
       },
     }).then((res) => {
-      if (res.data.dataHeader.successCode === 0) {
+      if (res.data.data_header.success_code === 0) {
         localStorage.clear();
         window.location.reload("/");
       } else {

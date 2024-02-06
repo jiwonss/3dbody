@@ -3,14 +3,14 @@ import { modalState } from "../../recoil/modal/ModalState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { PropTypes } from "prop-types";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import axios from "axios";
 
 const ChangeNicknameModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
   const baseUrl = useRecoilValue(baseUrlState);
-  const user = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState(userState);
   const { register, handleSubmit, watch } = useForm({
     mode: "onSubmit",
   });
@@ -19,15 +19,30 @@ const ChangeNicknameModal = ({ onClose, data }) => {
   const checkNickname = () => {
     axios({
       method: "get",
-      url: `${baseUrl}api/users?nickname=${nickname}`,
+      url: `${baseUrl}api/users/${user.info.userId}/nickname?nickname=${nickname}`,
       headers: { Authorization: `Bearer ${user.token}` },
     }).then((res) => {
-      console.log(res);
+      if (res.data.data_header.success_code === 0) {
+        alert("변경 가능합니다.");
+      } else {
+        alert("닉네임이 중복됩니다");
+      }
     });
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    axios({
+      method: "patch",
+      url: `${baseUrl}api/users/${user.info.userId}/nickname`,
+      headers: { Authorization: `Bearer ${user.token}` },
+      data: { nickname: data.nickname },
+    }).then(() => {
+      setUser({
+        token: user.token,
+        info: { ...user.info, nickname: data.nickname },
+      });
+      setModalData({ type: null, data: null });
+    });
   };
 
   return (
@@ -37,14 +52,19 @@ const ChangeNicknameModal = ({ onClose, data }) => {
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <h1>닉네임을 변경해주세요</h1>
+      <h1>닉네임 변경</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex m-2">
-          <input {...register("nickname")} type="text" defaultValue={data} />
+          <input
+            placeholder="닉네임을 변경해주세요"
+            {...register("nickname")}
+            type="text"
+            defaultValue={data}
+          />
           <input type="button" onClick={checkNickname} value={"중복검사"} />
         </div>
-        <div className="flex m-2" >
-          <input type="button" onClick={onClose} value={"취소"}/>
+        <div className="flex m-2">
+          <input type="button" onClick={onClose} value={"취소"} />
           <input type="submit" value="확인" />
         </div>
       </form>
@@ -55,10 +75,6 @@ const ChangeNicknameModal = ({ onClose, data }) => {
 ChangeNicknameModal.propTypes = {
   onClose: PropTypes.func,
   data: PropTypes.string,
-};
-
-ChangeNicknameModal.propTypes = {
-  onClose: PropTypes.func,
 };
 
 export default ChangeNicknameModal;

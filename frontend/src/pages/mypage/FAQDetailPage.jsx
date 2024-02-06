@@ -9,14 +9,14 @@ import { useState } from "react";
 const FAQDetailPage = () => {
   const { postId } = useParams();
   const baseUrl = useRecoilValue(baseUrlState);
-  const [FAQ, setFAQ] = useState()
+  const [FAQ, setFAQ] = useState({});
   const getFAQ = () => {
     axios({
       method: "get",
       url: `${baseUrl}api/faq/posts/${postId}`,
     }).then((res) => {
       console.log(res);
-      setFAQ(res)
+      setFAQ(res.data);
     });
   };
   useEffect(() => {
@@ -25,7 +25,7 @@ const FAQDetailPage = () => {
   return (
     <div>
       <BackButton />
-      <div>{FAQ}</div>
+      <div>{FAQ.content}</div>
     </div>
   );
 };

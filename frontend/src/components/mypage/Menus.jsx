@@ -45,7 +45,7 @@ const Menus = () => {
         {
           menuicon: <ExclamationCircleIcon className="w-6 h-6" />,
           menutitle: "회원 탈퇴",
-          menuurl: "/",
+          menuurl: "/mypage/delete",
         },
       ],
     },
@@ -56,7 +56,7 @@ const Menus = () => {
       {categorylist.map((menulist) => {
         return (
           <div key={menulist.category}>
-            <div>{menulist.category}</div>
+            <div className="m-2">{menulist.category}</div>
             <Menu menus={menulist.list} />
           </div>
         );

@@ -23,7 +23,7 @@ const DiaryTrainingPage = () => {
 
   const trainingDetailData = () => {
     // 해당 날짜 운동데이터 유무
-    return !userTraining.length ? <TrainingData /> : <TrainingNoData />;
+    return userTraining.length ? <TrainingData /> : <TrainingNoData />;
   };
 
   // 운동 데이터 가져오기
@@ -33,7 +33,7 @@ const DiaryTrainingPage = () => {
         `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
       )
       .then((res) => {
-        console.log(res);
+        console.table(res.data);
         setUserTraining(res.data);
       })
       .catch((err) => {
@@ -46,14 +46,16 @@ const DiaryTrainingPage = () => {
   }, [selectedDate]);
 
   return (
-    <>
-      <PageTitle pageTitle={"다이어리"} />
+    <div className='bg-gray-100'>
+      <div className="sticky top-0 bg-white">
+        <PageTitle pageTitle={"다이어리"} />
 
-      <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
-      {isSelected === "left" ? <CalendarWeek /> : <Graph />}
-      <hr className="mt-4" />
+        <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
+        {isSelected === "left" ? <CalendarWeek /> : <Graph />}
+        <hr className="mt-4" />
+      </div>
       {trainingDetailData()}
-    </>
+    </div>
   );
 };
 

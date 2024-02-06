@@ -45,26 +45,28 @@ const FoodDetailBox = ({ data, category }) => {
       });
   };
 
+  // g단위 변경 요청
   const patchServingSize = async (e) => {
     e.preventDefault();
     await axios
-      .patch(`${baseUrl}api/management/food/update/${data.userFoodId}`, {
-        servingSize: value,
+      .put(`${baseUrl}api/management/food/update/${data.userFoodId}`, {
+        servingSize: parseInt(value, 10), // 정수변환 (100g -> 100)
       })
       .then((res) => {
         console.log(data.food.name + "데이터 수정");
-        // getUserFoodCategory();
+        getUserFoodCategory();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  // 개수 단위 변경 요청
   const patchCount = async (e) => {
     e.preventDefault();
     await axios
-      .patch(`${baseUrl}api/management/food/update/${data.userFoodId}`, {
-        foodCount: value,
+      .put(`${baseUrl}api/management/food/update/${data.userFoodId}`, {
+        foodCount: value.replace(/개/g, ""), // 문자대체 (2개 -> 2)
       })
       .then((res) => {
         console.log(data.food.name + "데이터 수정");

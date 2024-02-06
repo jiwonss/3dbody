@@ -1,15 +1,21 @@
 import { useState } from "react";
 import Button from "./../../components/common/Button";
 import axios from "axios";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import { modalState } from "../../recoil/modal/ModalState";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const baseUrl = useRecoilValue(baseUrlState);
   const setUser = useSetRecoilState(userState);
+  const setModalData = useSetRecoilState(modalState);
+
+  const onSignUpHandler = () => {
+    setModalData({ type: "signup", data: "" });
+  };
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -59,6 +65,7 @@ const LoginPage = () => {
         <label>Password</label>
         <input type="password" value={password} onChange={onPasswordHandler} />
         <Button type={"submit"} buttonName={"로그인"} />
+        <input type="button" onClick={onSignUpHandler} value={"회원가입"} />
       </form>
     </div>
   );

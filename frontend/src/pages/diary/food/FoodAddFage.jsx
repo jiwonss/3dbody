@@ -99,7 +99,7 @@ const FoodAddFage = () => {
               <input
                 type="checkbox"
                 onChange={() => handleCheckboxChange(data.foodId)}
-                className="w-6 ml-4"
+                className="w-6 ml-4 accent-teal-600"
               />
               <div className="flex flex-col py-1 pl-4 basis-3/5">
                 <p>{data.name}</p>
