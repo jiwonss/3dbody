@@ -86,7 +86,7 @@ export function MeetingDetailsScreen({
                   onClickJoin(studioCode);
                 } else setStudioCodeError(true);
               }
-            }}
+            }} 
           >
             {iscreateMeetingClicked
               ? "Start a meeting"
