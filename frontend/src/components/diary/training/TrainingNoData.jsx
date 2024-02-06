@@ -34,7 +34,11 @@ const TrainingNoData = () => {
     getIsRest();
   }, [selectedDate]);
 
-  return <>{isRest ? <Rest /> : <Plan />}</>;
+  return (
+    <div className='pb-80'>
+      {isRest ? <Rest /> : <Plan />}
+    </div>
+  );
 };
 
 export default TrainingNoData;

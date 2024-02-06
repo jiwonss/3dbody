@@ -36,7 +36,7 @@ const Plan = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 m-4">
+    <div className="flex flex-col gap-4 pt-2 mx-4">
       <div>
         <Description
           Title={`${selectedDate[1]}월 ${selectedDate[2]}일 ${selectedDay}`}
