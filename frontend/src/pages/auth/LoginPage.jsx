@@ -1,17 +1,17 @@
-import { useState } from "react";
-import Button from "./../../components/common/Button";
 import axios from "axios";
+import { useState } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
+import Button from "./../../components/common/Button";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
 import { modalState } from "../../recoil/modal/ModalState";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const baseUrl = useRecoilValue(baseUrlState);
   const setUser = useSetRecoilState(userState);
   const setModalData = useSetRecoilState(modalState);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const onSignUpHandler = () => {
     setModalData({ type: "signup", data: "" });
@@ -47,29 +47,20 @@ const LoginPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={onSubmitHandler}
-      >
-        <label>Email</label>
-        <input type="email" value={email} onChange={onEmailHandler} />
-        <label>Password</label>
-        <input type="password" value={password} onChange={onPasswordHandler} />
-        <Button type={"submit"} buttonName={"로그인"} />
-        <input type="button" onClick={onSignUpHandler} value={"회원가입"} />
+    <div className="flex flex-col items-center justify-center w-full h-screen gap-32">
+      <div className="font-mono text-3xl text-teal-700">
+        3D Body
+      </div>
+      <form className="flex flex-col gap-4 p-4 border border-teal-700 rounded-md" onSubmit={onSubmitHandler}>
+        <label className="font-mono">Email</label>
+        <input type="email" value={email} onChange={onEmailHandler} className="px-2 py-1 border rounded-md"/>
+        <label className="font-mono">Password</label>
+        <input type="password" value={password} onChange={onPasswordHandler} className="px-2 py-1 border rounded-md"/>
+        <Button type={"submit"} buttonName={"로그인"} btnCss={"py-1 text-white bg-teal-700 rounded-md"}/>
+        <input type="button" onClick={onSignUpHandler} value={"회원가입"} className="py-1 text-white bg-teal-700 rounded-md"/>
       </form>
     </div>
   );
 };
 
 export default LoginPage;
- 

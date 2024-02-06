@@ -65,7 +65,7 @@ const router = createBrowserRouter([
         Component: RoutineCreatePage,
       },
       {
-        path: "/diary/training/myroutine/edit/:basepage",
+        path: "/diary/training/myroutine/edit/:routineId",
         Component: RoutineEditPage,
       },
       {

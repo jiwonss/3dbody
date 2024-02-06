@@ -21,6 +21,7 @@ const SignUpModal = ({ onClose }) => {
   } = useForm({
     mode: "onChange",
   });
+
   const signUpHandler = (data) => {
     axios({
       method: "post",
@@ -36,6 +37,7 @@ const SignUpModal = ({ onClose }) => {
       console.log(res);
     });
   };
+
   const emailCheck = () => {
     const email = watch("email");
     axios({
@@ -65,69 +67,120 @@ const SignUpModal = ({ onClose }) => {
       clearErrors("passwordCheck");
     }
   }, [watch("password"), watch("passwordCheck")]);
+
   return (
     <Modal
-      className={"fixed bottom-0 w-full bg-white"}
+      className={"fixed bottom-0 overflow-auto inset-x-12 bottom-20"}
       isOpen={modalData.type === "signup"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <form onSubmit={handleSubmit(signUpHandler)}>
-        <h1>회원가입</h1>
-        <label htmlFor="email">이메일</label>
-        <input
-          id="email"
-          type="email"
-          {...register("email", {
-            required: true,
-          })}
-        />
-        <input type="button" onClick={emailCheck} value="중복확인" />
-        <label htmlFor="name">이름</label>
-        <input type="text" id="name" {...register("name")} />
-        <label htmlFor="password">비밀번호</label>
-        <input
-          id="password"
-          type="password"
-          {...register("password", {
-            required: true,
-            pattern: {
-              value:
-                /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,
-              message: "영문, 숫자, 특수문자 포함 8 ~ 20자로 입력해주세요",
-            },
-          })}
-        />
-        {errors.password && <p>{errors.password.message}</p>}
+      <form
+        onSubmit={handleSubmit(signUpHandler)}
+        className="flex flex-col gap-2 p-4 bg-white border border-teal-700 rounded-md"
+      >
+        <h1 className="pb-2 text-lg text-center text-teal-700 underline underline-offset-4">
+          회원가입
+        </h1>
 
-        <label htmlFor="passwordCheck">비밀번호 확인</label>
-        <input
-          id="passwordCheck"
-          type="password"
-          {...register("passwordCheck", {
-            required: true,
-            validate: {
-              matchPassword: (value) => {
-                const { password } = getValues();
-                console.log(password, value);
-                return password === value || "비밀번호가 일치하지 않습니다";
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email">이메일</label>
+          <input
+            id="email"
+            type="email"
+            {...register("email", {
+              required: true,
+            })}
+            className="px-2 border rounded-md"
+          />
+          <input
+            type="button"
+            onClick={emailCheck}
+            value="중복확인"
+            className="w-1/2 mx-auto text-white bg-teal-700 border rounded-md"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name">이름</label>
+          <input
+            type="text"
+            id="name"
+            {...register("name")}
+            className="px-2 border rounded-md"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password">비밀번호</label>
+          <input
+            id="password"
+            type="password"
+            {...register("password", {
+              required: true,
+              pattern: {
+                value:
+                  /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,
+                message: "영문, 숫자, 특수문자 포함 8 ~ 20자로 입력해주세요",
               },
-            },
-          })}
-        />
-        {errors.passwordCheck && <p>{errors.passwordCheck.message}</p>}
-        <select name="gender" {...register("gender")}>
-          <option value="MALE">남자</option>
-          <option value="FEMALE">여자</option>
-        </select>
-        <input
-          type="date"
-          {...register("birth_date", {
-            required: true,
-          })}
-        />
-        <input type="button" onClick={onClose} value={"취소"} />
-        <input type="submit" />
+            })}
+            className="px-2 border rounded-md"
+          />
+          {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="passwordCheck">비밀번호 확인</label>
+          <input
+            id="passwordCheck"
+            type="password"
+            {...register("passwordCheck", {
+              required: true,
+              validate: {
+                matchPassword: (value) => {
+                  const { password } = getValues();
+                  console.log(password, value);
+                  return password === value || "비밀번호가 일치하지 않습니다";
+                },
+              },
+            })}
+            className="px-2 border rounded-md"
+          />
+          {errors.passwordCheck && <p className="text-xs text-red-500">{errors.passwordCheck.message}</p>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <p>성별</p>
+          <select
+            name="gender"
+            {...register("gender")}
+            className="text-center border rounded-md"
+          >
+            <option value="MALE" className="text-xs">남자</option>
+            <option value="FEMALE" className="text-xs">여자</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <p>생년월일</p>
+          <input
+            type="date"
+            {...register("birth_date", {
+              required: true,
+            })}
+            className="text-center border rounded-md"
+          />
+        </div>
+
+        <div className="flex gap-2 mt-4 mb-2">
+          <input
+            type="button"
+            onClick={onClose}
+            value={"취소"}
+            className="border border-teal-700 rounded-md"
+          />
+          <input type="submit" className="text-white bg-teal-700 rounded-md" />
+        </div>
       </form>
     </Modal>
   );
