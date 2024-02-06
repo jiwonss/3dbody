@@ -18,19 +18,17 @@ import FoodSummary from "../../components/diary/FoodSummary";
 import { userState } from "../../recoil/common/UserState";
 
 const DiaryPage = () => {
+  const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = useRecoilValue(toggleDiaryState);
-  const baseUrl = useRecoilValue(baseUrlState);
   const [userTraining, setUserTraining] = useRecoilState(userTrainingState);
   const [userFood, setUserFood] = useRecoilState(userFoodState);
-  const user = useRecoilValue(userState);
-  
+
+  // 운동 데이터 표시하기
   const trainingData = () => {
-    // 운동 데이터 표시하기
     return (
-      <Link
-        to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}
-      >
+      <Link to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
         {!userTraining.length ? (
           <TrainingSummary />
         ) : (
@@ -40,12 +38,25 @@ const DiaryPage = () => {
     );
   };
 
+  // 운동 데이터 가져오기
+  // const getUserTraining = async () => {
+  //   await axios
+  //     .get(
+  //       `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+  //     )
+  //     .then((res) => {
+  //       console.log(res)
+  //       setUserTraining(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // 식단 데이터 표시하기
   const foodData = () => {
-    // 식단 데이터 표시하기
     return (
-      <Link
-        to={`/diary/food/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}
-      >
+      <Link to={`/diary/food/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
         {userFood.length ? (
           <FoodSummary />
         ) : (
@@ -55,8 +66,8 @@ const DiaryPage = () => {
     );
   };
 
+  // 식단 데이터 가져오기
   const getUserFood = async () => {
-    // 식단 데이터 가져오기
     await axios
       .get(
         `${baseUrl}api/management/food/list/${user.info.userId}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
@@ -69,8 +80,9 @@ const DiaryPage = () => {
       });
   };
 
+  // 날짜 바뀌면 해당 날짜 유저 식단 정보 불러오기
   useEffect(() => {
-    // 날짜 바뀌면 해당 날짜 유저 식단 정보 불러오기
+    // getUserTraining();
     getUserFood();
   }, [selectedDate]);
 
@@ -78,11 +90,8 @@ const DiaryPage = () => {
     <div>
       <PageTitle pageTitle={"다이어리"} />
 
-      <ToggleTap
-        leftTitle={"캘린더"}
-        rightTitle={"그래프"}
-        state={toggleDiaryState}
-      />
+      <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
+      
       {isSelected === "left" ? <CalendarMonth /> : <Graph />}
       <hr className="my-4" />
 

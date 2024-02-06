@@ -23,7 +23,7 @@ const TrainingSummary = () => {
 
   useEffect(() => {
     setIsCompleted(isCompletedCheck);
-  }, [userTraining]);
+  }, [selectedDate]);
 
   return (
     <>
@@ -38,15 +38,15 @@ const TrainingSummary = () => {
           <div className="grid grid-cols-3 py-4 bg-gray-100 border-white divide-x-4 rounded-xl">
             <div className='flex flex-col items-center'>
               <BsAlarm className='w-6 h-6'/>
-              <Description Title={"50분"} subTitle={"운동 시간"} />
+              <Description Title={"**분"} subTitle={"운동 시간"} />
             </div>
             <div className='flex flex-col items-center'>
               <FaDumbbell className='w-6 h-6'/>
-              <Description Title={"2개"} subTitle={"운동 개수"} />
+              <Description Title={"**개"} subTitle={"운동 개수"} />
             </div>
             <div className='flex flex-col items-center'>
               <GiMuscleUp className='w-6 h-6'/>
-              <Description Title={"25kg"} subTitle={"전체 볼륨"} />
+              <Description Title={"**kg"} subTitle={"전체 볼륨"} />
             </div>
           </div>
         ) : (

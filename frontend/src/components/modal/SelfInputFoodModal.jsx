@@ -5,21 +5,33 @@ import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState } from "../../recoil/modal/ModalState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 
 const SelfInputFoodModal = ({ onClose }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
   const baseUrl = useRecoilValue(baseUrlState);
+  const selectedDate = useRecoilValue(selectedDateState);
   const [foodName, setFoodName] = useState("");
   const [servingSize, setServingSize] = useState("");
   const [calorie, setCalorie] = useState("");
   const [carbohydrate, setCarbohydrate] = useState("");
   const [protein, setProtein] = useState("");
   const [lipid, setLipid] = useState("");
+  const selectedTime = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]); // 선택한 시간
+  const KoreaTimeDiff = 9 * 60 * 60 * 1000; // 한국 시간은 GMT 시간보다 9시간 앞서 있다.
+  const KoreaNow = new Date(selectedTime.getTime() + KoreaTimeDiff); // 백에서 -9시간 되므로 +9시간 값을 보내준다
 
   // 직접입력 음식 등록하기
   const onClickPostFood = async () => {
+    console.log(foodName);
+    console.log(modalData.data);
+    console.log(servingSize);
+    console.log(calorie);
+    console.log(carbohydrate);
+    console.log(protein);
+    console.log(lipid);
     await axios
-      .get(`${baseUrl}api/management/food/add`, {
+      .post(`${baseUrl}api/management/food/add`, {
         name: foodName,
         category: modalData.data,
         servingSize: servingSize,
@@ -27,6 +39,7 @@ const SelfInputFoodModal = ({ onClose }) => {
         carbohydrate: carbohydrate,
         protein: protein,
         lipid: lipid,
+        date: KoreaNow,
       })
       .then((res) => {
         console.log(res.data);

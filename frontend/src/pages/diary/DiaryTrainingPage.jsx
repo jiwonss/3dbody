@@ -12,7 +12,7 @@ import { userTrainingState } from "../../recoil/diary/UserTrainingState";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import TrainingNoData from "../../components/diary/training/TrainingNoData";
 import TrainingData from "./../../components/diary/training/TrainingData";
-import { userState } from '../../recoil/common/UserState';
+import { userState } from "../../recoil/common/UserState";
 
 const DiaryTrainingPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
@@ -21,18 +21,24 @@ const DiaryTrainingPage = () => {
   const [userTraining, setUserTraining] = useRecoilState(userTrainingState);
   const user = useRecoilValue(userState);
 
-  const trainingDetailData = () => { // 해당 날짜 운동데이터 유무
+  const trainingDetailData = () => {
+    // 해당 날짜 운동데이터 유무
     return userTraining.length ? <TrainingData /> : <TrainingNoData />;
   };
 
-  // const getUserTraining = async () => { // 운동 데이터 가져오기
-  //   await axios.get(
-  //     `${baseUrl}api/management/training/${user.info.userId}?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
-  //   ).then(res => {
-  //     setUserTraining(res.data)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
+  // 운동 데이터 가져오기
+  // const getUserTraining = async () => {
+  //   await axios
+  //     .get(
+  //       `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       setUserTraining(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
   // };
 
   useEffect(() => {

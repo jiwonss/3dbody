@@ -56,7 +56,7 @@ const Menus = () => {
       {categorylist.map((menulist) => {
         return (
           <div key={menulist.category}>
-            <div>{menulist.category}</div>
+            <div className="m-2">{menulist.category}</div>
             <Menu menus={menulist.list} />
           </div>
         );

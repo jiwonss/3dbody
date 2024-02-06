@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import BackButton from "./../../../components/common/BackButton";
@@ -16,7 +16,7 @@ const TrainingChoicePage = () => {
   const [searchTrainingList, setSearchTrainingList] = useState([]);
   const [category, setCategory] = useState("");
   const [selectedTrainingList, setSelectedTrainingList] = useState([]);
-  const [test, setTest] = useState(false);
+  const { basepage } = useParams();
 
   // 운동 검색명 저장
   const onChangeSearchTraining = (e) => {
@@ -26,9 +26,7 @@ const TrainingChoicePage = () => {
   const onSubmitGetSearchTraining = async (e) => {
     e.preventDefault();
     await axios
-      .get(
-        `${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`
-      )
+      .get(`${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`)
       .then((res) => {
         console.table(res.data);
         setSearchTrainingList(res.data);
@@ -40,9 +38,7 @@ const TrainingChoicePage = () => {
   // 운동 카테고리 별 리스트 가져오기
   const getSearchTraining = async () => {
     await axios
-      .get(
-        `${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`
-      )
+      .get(`${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`)
       .then((res) => {
         console.table(res.data);
         setSearchTrainingList(res.data);
@@ -62,12 +58,21 @@ const TrainingChoicePage = () => {
   // 체크박스로 운동 저장
   const handleCheckboxChange = (trainingId) => {
     if (selectedTrainingList.includes(trainingId)) {
-      setSelectedTrainingList(
-        selectedTrainingList.filter((id) => id !== trainingId)
-      );
+      setSelectedTrainingList(selectedTrainingList.filter((id) => id !== trainingId));
     } else {
       setSelectedTrainingList([...selectedTrainingList, trainingId]);
     }
+  };
+  // 운동 리스트에 추가하기
+  const postTrainingList = async () => {
+    // await axios
+    //   .get(`${baseUrl}api/management/training`)
+    //   .then((res) => {
+    //     console.table(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
   // 페이지 로딩 시 전체 운동 리스트 가져오기
   useEffect(() => {
@@ -76,56 +81,58 @@ const TrainingChoicePage = () => {
 
   return (
     <>
-      <div className="absolute">
-        <BackButton />
-      </div>
-      <PageTitle pageTitle="운동 선택하기" />
-      {/* 검색 창 */}
-      <Search
-        onSubmit={onSubmitGetSearchTraining}
-        onChange={onChangeSearchTraining}
-        placeholder={`찾으시는 운동을 검색해보세요.`}
-      />
-      {/* 검색 카테고리 버튼 */}
-      <div className="flex justify-between m-4">
-        <Button
-          btnCss={`basis-1/6 border rounded-xl ${
-            category === "하체" ? "bg-gray-700 text-white" : ""
-          }`}
-          buttonName={"하체"}
-          onClick={onClickCategory}
+      <div className="sticky top-0 bg-white">
+        <div className="absolute">
+          <BackButton />
+        </div>
+        <PageTitle pageTitle="운동 선택하기" />
+        {/* 검색 창 */}
+        <Search
+          onSubmit={onSubmitGetSearchTraining}
+          onChange={onChangeSearchTraining}
+          placeholder={`찾으시는 운동을 검색해보세요.`}
         />
-        <Button
-          btnCss={`basis-1/6 border rounded-xl ${
-            category === "가슴" ? "bg-gray-700 text-white" : ""
-          }`}
-          buttonName={"가슴"}
-          onClick={onClickCategory}
-        />
-        <Button
-          btnCss={`basis-1/6 border rounded-xl ${
-            category === "등" ? "bg-gray-700 text-white" : ""
-          }`}
-          buttonName={"등"}
-          onClick={onClickCategory}
-        />
-        <Button
-          btnCss={`basis-1/6 border rounded-xl ${
-            category === "어깨" ? "bg-gray-700 text-white" : ""
-          }`}
-          buttonName={"어깨"}
-          onClick={onClickCategory}
-        />
-        <Button
-          btnCss={`basis-1/6 border rounded-xl ${
-            category === "팔" ? "bg-gray-700 text-white" : ""
-          }`}
-          buttonName={"팔"}
-          onClick={onClickCategory}
-        />
+        {/* 검색 카테고리 버튼 */}
+        <div className="flex justify-between p-4">
+          <Button
+            btnCss={`basis-1/6 border rounded-xl ${
+              category === "하체" ? "bg-gray-700 text-white" : ""
+            }`}
+            buttonName={"하체"}
+            onClick={onClickCategory}
+          />
+          <Button
+            btnCss={`basis-1/6 border rounded-xl ${
+              category === "가슴" ? "bg-gray-700 text-white" : ""
+            }`}
+            buttonName={"가슴"}
+            onClick={onClickCategory}
+          />
+          <Button
+            btnCss={`basis-1/6 border rounded-xl ${
+              category === "등" ? "bg-gray-700 text-white" : ""
+            }`}
+            buttonName={"등"}
+            onClick={onClickCategory}
+          />
+          <Button
+            btnCss={`basis-1/6 border rounded-xl ${
+              category === "어깨" ? "bg-gray-700 text-white" : ""
+            }`}
+            buttonName={"어깨"}
+            onClick={onClickCategory}
+          />
+          <Button
+            btnCss={`basis-1/6 border rounded-xl ${
+              category === "팔" ? "bg-gray-700 text-white" : ""
+            }`}
+            buttonName={"팔"}
+            onClick={onClickCategory}
+          />
+        </div>
       </div>
       {/* 운동 리스트 */}
-      <div className="flex flex-col gap-2 m-4">
+      <div className="flex flex-col gap-2 mx-4 mb-32">
         {searchTrainingList.map((data) => {
           return (
             <div className="flex flex-col gap-2" key={data.training_id}>
@@ -147,25 +154,26 @@ const TrainingChoicePage = () => {
         })}
       </div>
       {/* 하단 버튼 */}
-      <div className="m-4">
-        {!selectedTrainingList.length ? (
-          <Button
-            btnCss={
-              "w-full p-2 border rounded-md border-teal-700 text-teal-700"
-            }
-            buttonName="운동을 선택하세요"
-            disabled
-          />
-        ) : (
-          <Link
-            to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}
-          >
-            <Button
-              btnCss={"w-full p-2 border rounded-md bg-teal-700 text-white"}
-              buttonName={`${"n"}개의 운동 추가하기`}
-            />
-          </Link>
-        )}
+      <div className="fixed w-full bg-white bottom-[57px]">
+        <div
+          className={`p-2 m-4 text-center border border-teal-700 rounded-md ${
+            !selectedTrainingList.length ? "text-teal-700" : "bg-teal-700 text-white"
+          }`}
+        >
+          {!selectedTrainingList.length ? (
+            <Button buttonName="운동을 선택하세요" disabled />
+          ) : (
+            <Link
+              to={
+                basepage === "basic"
+                  ? `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
+                  : `/diary/training/myroutine/edit/create`
+              }
+            >
+              <Button buttonName={`${"n"}개의 운동 추가하기`} onClick={() => postTrainingList()} />
+            </Link>
+          )}
+        </div>
       </div>
     </>
   );

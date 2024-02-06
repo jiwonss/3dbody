@@ -17,8 +17,6 @@ import TrainingLoadPage from "../pages/diary/training/TrainingLoadPage";
 import TrainingChoicePage from "./../pages/diary/training/TrainingChoicePage";
 import MyRoutinePage from "./../pages/diary/training/MyRoutinePage";
 import RoutineCreatePage from "./../pages/diary/training/RoutineCreatePage";
-import RoutineLoadPage from "./../pages/diary/training/routine/RoutineLoadPage";
-import RoutineChoicePage from "./../pages/diary/training/routine/RoutineChoicePage";
 import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
 import ChallengeUpdatePage from "./../pages/challenge/ChallengeUpdatePage";
@@ -51,11 +49,11 @@ const router = createBrowserRouter([
         Component: DiaryFoodPage,
       },
       {
-        path: "/diary/training/load",
+        path: "/diary/training/load/:basepage",
         Component: TrainingLoadPage,
       },
       {
-        path: "/diary/training/choice",
+        path: "/diary/training/choice/:basepage",
         Component: TrainingChoicePage,
       },
       {
@@ -67,15 +65,7 @@ const router = createBrowserRouter([
         Component: RoutineCreatePage,
       },
       {
-        path: "/diary/training/myroutine/load",
-        Component: RoutineLoadPage,
-      },
-      {
-        path: "/diary/training/myroutine/choice",
-        Component: RoutineChoicePage,
-      },
-      {
-        path: "/diary/training/myroutine/edit",
+        path: "/diary/training/myroutine/edit/:basepage",
         Component: RoutineEditPage,
       },
       {

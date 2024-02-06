@@ -98,6 +98,7 @@ const ChallengeRegistrationPage = () => {
     const promise = upload.promise();
     promise.then(() => {
       console.log("성공");
+      alert("등록되었습니다.");
     });
   };
 
@@ -122,6 +123,7 @@ const ChallengeRegistrationPage = () => {
     const promise = upload.promise();
     promise.then(() => {
       console.log("성공");
+      alert("등록되었습니다.");
     });
   };
 
