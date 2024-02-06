@@ -20,6 +20,7 @@
     "aws-sdk": "^2.1548.0",
     "axios": "^1.6.7",
     "firebase": "^10.7.2",
+    "hls.js": "^1.5.3",
     "localforage": "^1.10.0",
     "lottie-react": "^2.4.0",
     "match-sorter": "^6.3.3",

@@ -24,8 +24,8 @@ export function MeetingDetailsScreen({
       className={`flex flex-1 flex-col justify-center w-full md:p-[6px] sm:p-1 p-1.5`}
     >
       {iscreateMeetingClicked ? (
-        <div className="border border-solid border-gray-400 rounded-xl px-4 py-3  flex items-center justify-center">
-          <p className="text-white text-base">{`Studio code : ${studioCode}`}</p>
+        <div className="flex items-center justify-center px-4 py-3 border border-gray-400 border-solid rounded-xl">
+          <p className="text-base text-white">{`Studio code : ${studioCode}`}</p>
           <button
             className="ml-2"
             onClick={() => {
@@ -37,9 +37,9 @@ export function MeetingDetailsScreen({
             }}
           >
             {isCopied ? (
-              <CheckIcon className="h-5 w-5 text-green-400" />
+              <CheckIcon className="w-5 h-5 text-green-400" />
             ) : (
-              <ClipboardIcon className="h-5 w-5 text-white" />
+              <ClipboardIcon className="w-5 h-5 text-white" />
             )}
           </button>
         </div>
@@ -50,8 +50,8 @@ export function MeetingDetailsScreen({
             onChange={(e) => {
               setStudioCode(e.target.value);
             }}
-            placeholder={"Enter studio code"}
-            className="px-4 py-3 bg-gray-650 rounded-xl text-white w-full text-center"
+            placeholder="Enter studio code"
+            className="w-full px-4 py-3 text-center text-black bg-gray-650 rounded-xl"
           />
           {studioCodeError && (
             <p className="text-xs text-red-600">
@@ -67,14 +67,15 @@ export function MeetingDetailsScreen({
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
             placeholder="Enter your name"
-            className="px-4 py-3 mt-5 bg-gray-650 rounded-xl text-white w-full text-center"
+            className="w-full px-4 py-3 mt-5 text-center text-black bg-gray-650 rounded-xl"
           />
           <button
-            disabled={participantName.length < 3}
+            disabled={participantName.length < 1}
             className={`w-full ${
-              participantName.length < 3 ? "bg-gray-650" : "bg-purple-350"
+              participantName.length < 1 ? "bg-gray-650" : "bg-purple-350"
             }  text-white px-2 py-3 rounded-xl mt-5`}
             onClick={(e) => {
+              console.log(participantName)
               if (iscreateMeetingClicked) {
                 if (videoTrack) {
                   videoTrack.stop();
@@ -99,10 +100,10 @@ export function MeetingDetailsScreen({
       )}
 
       {!iscreateMeetingClicked && !isJoinMeetingClicked && (
-        <div className="w-full md:mt-0 mt-4 flex flex-col">
-          <div className="flex items-center justify-center flex-col w-full">
+        <div className="flex flex-col w-full mt-4 md:mt-0">
+          <div className="flex flex-col items-center justify-center w-full">
             <button
-              className="w-full bg-purple-350 text-white px-2 py-3 rounded-xl"
+              className="w-full px-2 py-3 text-white bg-purple-350 rounded-xl"
               onClick={async (e) => {
                 const studioCode = await _handleOnCreateMeeting();
                 setStudioCode(studioCode);
@@ -114,7 +115,7 @@ export function MeetingDetailsScreen({
             </button>
 
             <button
-              className="w-full bg-purple-350 text-white px-2 py-3 mt-5 rounded-xl"
+              className="w-full px-2 py-3 mt-5 text-white bg-purple-350 rounded-xl"
               onClick={async (e) => {
                 setIsJoinMeetingClicked(true);
                 setMeetingMode(Constants.modes.CONFERENCE);
@@ -123,7 +124,7 @@ export function MeetingDetailsScreen({
               Join as a Host
             </button>
             <button
-              className="w-full bg-gray-650 text-white px-2 py-3 rounded-xl mt-5"
+              className="w-full px-2 py-3 mt-5 text-white bg-gray-650 rounded-xl"
               onClick={(e) => {
                 setIsJoinMeetingClicked(true);
                 setMeetingMode(Constants.modes.VIEWER);
