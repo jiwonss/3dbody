@@ -12,19 +12,19 @@ const FoodByCategory = ({ category, data }) => {
             Title={category}
             subTitle={`${data
               .reduce((acc, cur) => {
-                return acc + cur.food.calorie;
+                return acc + (cur.food.calorie * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
               }, 0)
               .toFixed(1)}kcal / ${data
               .reduce((acc, cur) => {
-                return acc + cur.food.carbohydrate;
+                return acc + (cur.food.carbohydrate * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
               }, 0)
               .toFixed(1)}g / ${data
               .reduce((acc, cur) => {
-                return acc + cur.food.protein;
+                return acc + (cur.food.protein * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
               }, 0)
               .toFixed(1)}g / ${data
               .reduce((acc, cur) => {
-                return acc + cur.food.lipid;
+                return acc + (cur.food.lipid * (cur.servingSize / cur.food.servingSize) * cur.foodCount);
               }, 0)
               .toFixed(1)}g`}
           />

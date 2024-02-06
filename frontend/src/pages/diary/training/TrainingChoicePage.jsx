@@ -1,22 +1,26 @@
+import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import BackButton from "./../../../components/common/BackButton";
 import PageTitle from "./../../../components/common/PageTitle";
 import Button from "../../../components/common/Button";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 import Search from "../../../components/common/Search";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
-import axios from "axios";
+import { userState } from "../../../recoil/common/UserState";
+import { selectedRoutineState } from "../../../recoil/diary/SelectedRoutineState";
 
 const TrainingChoicePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const [searchTraining, setSearchTraining] = useState("");
   const [searchTrainingList, setSearchTrainingList] = useState([]);
   const [category, setCategory] = useState("");
   const [selectedTrainingList, setSelectedTrainingList] = useState([]);
   const { basepage } = useParams();
+  const setSelectedRoutine = useSetRecoilState(selectedRoutineState);
 
   // 운동 검색명 저장
   const onChangeSearchTraining = (e) => {
@@ -65,14 +69,21 @@ const TrainingChoicePage = () => {
   };
   // 운동 리스트에 추가하기
   const postTrainingList = async () => {
-    // await axios
-    //   .get(`${baseUrl}api/management/training`)
-    //   .then((res) => {
-    //     console.table(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    await axios
+      .post(
+        `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`,
+        selectedTrainingList
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // 루틴에 운동 리스트 저장 (로컬)
+  const saveTrainingList = () => {
+    setSelectedRoutine(selectedTrainingList)
   };
   // 페이지 로딩 시 전체 운동 리스트 가져오기
   useEffect(() => {
@@ -170,7 +181,12 @@ const TrainingChoicePage = () => {
                   : `/diary/training/myroutine/edit/create`
               }
             >
-              <Button buttonName={`${"n"}개의 운동 추가하기`} onClick={() => postTrainingList()} />
+              <Button
+                buttonName={`${"n"}개의 운동 추가하기`}
+                onClick={() => {
+                  basepage === "basic" ? postTrainingList() : saveTrainingList();
+                }}
+              />
             </Link>
           )}
         </div>

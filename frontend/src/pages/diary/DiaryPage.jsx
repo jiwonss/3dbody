@@ -29,7 +29,7 @@ const DiaryPage = () => {
   const trainingData = () => {
     return (
       <Link to={`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`}>
-        {!userTraining.length ? (
+        {userTraining.length ? (
           <TrainingSummary />
         ) : (
           <Button btnCss="w-full border-2 p-2 text-lg rounded-md" buttonName="운동 계확하기" />
@@ -39,19 +39,19 @@ const DiaryPage = () => {
   };
 
   // 운동 데이터 가져오기
-  // const getUserTraining = async () => {
-  //   await axios
-  //     .get(
-  //       `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
-  //     )
-  //     .then((res) => {
-  //       console.log(res)
-  //       setUserTraining(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const getUserTraining = async () => {
+    await axios
+      .get(
+        `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+      )
+      .then((res) => {
+        console.log(res)
+        setUserTraining(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // 식단 데이터 표시하기
   const foodData = () => {
@@ -82,7 +82,7 @@ const DiaryPage = () => {
 
   // 날짜 바뀌면 해당 날짜 유저 식단 정보 불러오기
   useEffect(() => {
-    // getUserTraining();
+    getUserTraining();
     getUserFood();
   }, [selectedDate]);
 
