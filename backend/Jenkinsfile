@@ -76,7 +76,7 @@ pipeline {
         stage('Prune old images'){
             steps{
                 script{
-                    sh "docker system prune --filter until=1h"
+//                     sh "docker system prune --filter until=1h"
                 }
             }
         }
@@ -109,7 +109,7 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
                         try {
-//                             sh "docker rmi xogns5/back"     //images 날리기
+                            sh "docker rmi xogns5/back"     //images 날리기
                             sh "docker stop back || true"  // Ignore error ifgit  container doesn't exist
                             sh "docker rm back || true"    // Ignore error if container doesn't exist
                             sh "docker run -d --name back -p 8082:8080 \
