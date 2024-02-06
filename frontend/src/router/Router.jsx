@@ -20,7 +20,7 @@ import RoutineCreatePage from "./../pages/diary/training/RoutineCreatePage";
 import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
 import ChallengeUpdatePage from "./../pages/challenge/ChallengeUpdatePage";
-import WebRTCPage from "./../pages/challenge/WebRTCPage";
+import WebRTCPage from "./../pages/challenge/WebRTC/WebRTCPage";
 import PinChangePage from "../pages/mypage/PinChangePage";
 import FoodCategoryPage from "../pages/diary/food/FoodCategoryPage";
 import FoodAddFage from "../pages/diary/food/FoodAddFage";
