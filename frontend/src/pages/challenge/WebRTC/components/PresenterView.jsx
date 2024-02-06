@@ -90,7 +90,7 @@ export function PresenterView({ height }) {
           }}
         />
         <div
-          className="bottom-2 left-2 bg-gray-750 p-2 absolute rounded-md flex items-center justify-center"
+          className="absolute flex items-center justify-center p-2 rounded-md bottom-2 left-2 bg-gray-750"
           style={{
             transition: "all 200ms",
             transitionTimingFunction: "linear",
@@ -112,18 +112,18 @@ export function PresenterView({ height }) {
         </div>
         {isLocal ? (
           <>
-            <div className="p-10 rounded-2xl flex flex-col items-center justify-center absolute top-1/2 left-1/2 bg-gray-750 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute flex flex-col items-center justify-center p-10 transform -translate-x-1/2 -translate-y-1/2 rounded-2xl top-1/2 left-1/2 bg-gray-750">
               <ScreenShareIcon
                 style={{ height: 48, width: 48, color: "white" }}
               />
               <div className="mt-4">
-                <p className="text-white text-xl font-semibold">
+                <p className="text-xl font-semibold text-white">
                   You are presenting to everyone
                 </p>
               </div>
               <div className="mt-8">
                 <button
-                  className="bg-purple-550 text-white px-4 py-2 rounded text-sm text-center font-medium"
+                  className="px-4 py-2 text-sm font-medium text-center text-white rounded bg-purple-550"
                   onClick={(e) => {
                     e.stopPropagation();
                     mMeeting.toggleScreenShare();

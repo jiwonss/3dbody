@@ -199,7 +199,7 @@ export const OutlinedButton = ({
                 ))}
             </div>
             {buttonText ? (
-              <p className="text-sm text-white font-semibold mr-2 text-center">
+              <p className="mr-2 text-sm font-semibold text-center text-white">
                 {buttonText}
               </p>
             ) : null}

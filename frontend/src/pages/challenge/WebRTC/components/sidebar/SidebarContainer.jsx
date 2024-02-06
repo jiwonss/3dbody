@@ -58,7 +58,7 @@ const SideBarTabView = ({
                   borderBottom: "1px solid #70707033",
                 }}
               >
-                <p className="text-base text-white font-bold">
+                <p className="text-base font-bold text-white">
                   {sideBarMode === "PARTICIPANTS"
                     ? `${
                         sideBarMode.charAt(0).toUpperCase() +
@@ -86,7 +86,7 @@ const SideBarTabView = ({
                   onClick={handleClose}
                   style={{ margin: 0, padding: 0 }}
                 >
-                  <XMarkIcon className="h-5 w-5" />
+                  <XMarkIcon className="w-5 h-5" />
                 </button>
               </div>
             )}
@@ -185,8 +185,8 @@ export function SidebarConatiner({
             leaveTo="translate-y-full opacity-0 scale-95"
           >
             <div className="fixed inset-0 overflow-y-hidden">
-              <div className="flex h-screen items-center justify-center text-center">
-                <Dialog.Panel className="w-screen transform overflow-hidden bg-gray-800 shadow-xl transition-all">
+              <div className="flex items-center justify-center h-screen text-center">
+                <Dialog.Panel className="w-screen overflow-hidden transition-all transform bg-gray-800 shadow-xl">
                   <SideBarTabView
                     height={"100%"}
                     sideBarContainerWidth={"100%"}

@@ -103,7 +103,7 @@ const OutlineIconTextButton = ({
           onClick={onClick}
         >
           <div
-            className="flex items-center justify-center p-1 m-1 rounded-lg overflow-hidden"
+            className="flex items-center justify-center p-1 m-1 overflow-hidden rounded-lg"
             style={{
               opacity: disabled ? 0.7 : 1,
               transform: `scale(${mouseOver ? (mouseDown ? 0.97 : 1.05) : 1})`,

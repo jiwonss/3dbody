@@ -4,7 +4,7 @@ import {
   useMeeting,
   usePubSub,
 } from "@videosdk.live/react-sdk";
-import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   ClipboardIcon,
   CheckIcon,
@@ -188,7 +188,7 @@ export function ILSBottomBar({
                             }}
                           >
                             <ChevronDownIcon
-                              className="h-4 w-4"
+                              className="w-4 h-4"
                               style={{
                                 color: mMeeting.localMicOn ? "white" : "black",
                               }}
@@ -205,7 +205,7 @@ export function ILSBottomBar({
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="absolute left-1/2 bottom-full z-10 mt-3 w-72 -translate-x-1/2 transform px-4 sm:px-0 pb-4">
+                        <Popover.Panel className="absolute z-10 px-4 pb-4 mt-3 transform -translate-x-1/2 left-1/2 bottom-full w-72 sm:px-0">
                           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className={" bg-gray-750 py-1"}>
                               <div>
@@ -215,12 +215,13 @@ export function ILSBottomBar({
                                   </p>
                                 </div>
                                 <div className="flex flex-col">
-                                  {mics.map(({ deviceId, label }, index) => (
+                                  {mics.map(({ deviceId, label }, idx) => (
                                     <div
                                       className={`px-3 py-1 my-1 pl-6 text-white text-left ${
                                         deviceId === selectMicDeviceId &&
                                         "bg-gray-150"
-                                      }`}
+                                        }`}
+                                      key={idx}
                                     >
                                       <button
                                         className={`flex flex-1 w-full ${
@@ -234,7 +235,7 @@ export function ILSBottomBar({
                                           close();
                                         }}
                                       >
-                                        {label || `Mic ${index + 1}`}
+                                        {label || `Mic ${idx + 1}`}
                                       </button>
                                     </div>
                                   ))}
@@ -335,7 +336,7 @@ export function ILSBottomBar({
                             }}
                           >
                             <ChevronDownIcon
-                              className="h-4 w-4"
+                              className="w-4 h-4"
                               style={{
                                 color: localWebcamOn ? "white" : "black",
                               }}
@@ -352,7 +353,7 @@ export function ILSBottomBar({
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="absolute left-1/2 bottom-full z-10 mt-3 w-72 -translate-x-1/2 transform px-4 sm:px-0 pb-4">
+                        <Popover.Panel className="absolute z-10 px-4 pb-4 mt-3 transform -translate-x-1/2 left-1/2 bottom-full w-72 sm:px-0">
                           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className={" bg-gray-750 py-1"}>
                               <div>
@@ -362,12 +363,13 @@ export function ILSBottomBar({
                                   </p>
                                 </div>
                                 <div className="flex flex-col">
-                                  {webcams.map(({ deviceId, label }, index) => (
+                                  {webcams.map(({ deviceId, label }, idx) => (
                                     <div
                                       className={`px-3 py-1 my-1 pl-6 text-white text-left ${
                                         deviceId === selectWebcamDeviceId &&
                                         "bg-gray-150"
-                                      }`}
+                                        }`}
+                                      key={idx}
                                     >
                                       <button
                                         className={`flex flex-1 w-full ${
@@ -389,7 +391,7 @@ export function ILSBottomBar({
                                           close();
                                         }}
                                       >
-                                        {label || `Webcam ${index + 1}`}
+                                        {label || `Webcam ${idx + 1}`}
                                       </button>
                                     </div>
                                   ))}
@@ -742,9 +744,9 @@ export function ILSBottomBar({
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute left-1/2 bottom-full z-10 mt-3  -translate-x-1/2 transform px-4 sm:px-0 ">
+                <Popover.Panel className="absolute z-10 px-4 mt-3 transform -translate-x-1/2 left-1/2 bottom-full sm:px-0 ">
                   <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div className="px-1 py-2 bg-white rounded-md flex">
+                    <div className="flex px-1 py-2 bg-white rounded-md">
                       {emojiArray.map(({ emoji, emojiName }) => (
                         <button
                           key={`reaction-${emojiName}`}
@@ -800,9 +802,9 @@ export function ILSBottomBar({
     const { meetingId } = useMeeting();
     const [isCopied, setIsCopied] = useState(false);
     return (
-      <div className="flex items-center justify-center lg:ml-0 ml-4 mt-4 xl:mt-0">
-        <div className="flex border-2 border-gray-850 p-2 rounded-md items-center justify-center">
-          <h1 className="text-white text-base ">{meetingId}</h1>
+      <div className="flex items-center justify-center mt-4 ml-4 lg:ml-0 xl:mt-0">
+        <div className="flex items-center justify-center p-2 border-2 rounded-md border-gray-850">
+          <h1 className="text-base text-white ">{meetingId}</h1>
           <button
             className="ml-2"
             onClick={() => {
@@ -814,9 +816,9 @@ export function ILSBottomBar({
             }}
           >
             {isCopied ? (
-              <CheckIcon className="h-5 w-5 text-green-400" />
+              <CheckIcon className="w-5 h-5 text-green-400" />
             ) : (
-              <ClipboardIcon className="h-5 w-5 text-white" />
+              <ClipboardIcon className="w-5 h-5 text-white" />
             )}
           </button>
         </div>
@@ -917,18 +919,19 @@ export function ILSBottomBar({
             leaveTo="translate-y-full opacity-0 scale-95"
           >
             <div className="fixed inset-0 overflow-y-hidden">
-              <div className="flex h-full items-end justify-end text-center">
-                <Dialog.Panel className="w-screen transform overflow-hidden bg-gray-800 shadow-xl transition-all">
-                  <div className="grid container bg-gray-800 py-6">
+              <div className="flex items-end justify-end h-full text-center">
+                <Dialog.Panel className="w-screen overflow-hidden transition-all transform bg-gray-800 shadow-xl">
+                  <div className="container grid py-6 bg-gray-800">
                     <div className="grid grid-cols-12 gap-2">
-                      {otherFeatures.map(({ icon }) => {
+                      {otherFeatures.map(({ icon }, idx) => {
                         return (
                           <div
                             className={`grid items-center justify-center ${
                               icon === BottomBarButtonTypes.MEETING_ID_COPY
                                 ? "col-span-7 sm:col-span-5 md:col-span-3"
                                 : "col-span-4 sm:col-span-3 md:col-span-2"
-                            }`}
+                              }`}
+                            key={idx}
                           >
                             {icon === BottomBarButtonTypes.RAISE_HAND ? (
                               <RaiseHandBTN isMobile={isMobile} isTab={isTab} />
@@ -978,7 +981,7 @@ export function ILSBottomBar({
         onOpen={handleClickFAB}
         style={{ paddingBottom: "100px" }}
       >
-        <Grid container className="bg-gray-800 py-6">
+        <Grid container className="py-6 bg-gray-800">
           {otherFeatures.map(({ icon }) => {
             return (
               <Grid
@@ -1015,10 +1018,10 @@ export function ILSBottomBar({
       </SwipeableDrawer> */}
     </div>
   ) : (
-    <div className="md:flex lg:px-2 xl:px-6 pb-2 px-2 hidden">
+    <div className="hidden px-2 pb-2 md:flex lg:px-2 xl:px-6">
       <MeetingIdCopyBTN />
 
-      <div className="flex flex-1 items-center justify-center" ref={tollTipEl}>
+      <div className="flex items-center justify-center flex-1" ref={tollTipEl}>
         {meetingMode === Constants.modes.CONFERENCE && (
           <ScreenShareBTN isMobile={isMobile} isTab={isTab} />
         )}

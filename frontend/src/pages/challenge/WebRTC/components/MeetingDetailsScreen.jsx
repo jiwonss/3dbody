@@ -75,7 +75,6 @@ export function MeetingDetailsScreen({
               participantName.length < 1 ? "bg-gray-650" : "bg-purple-350"
             }  text-white px-2 py-3 rounded-xl mt-5`}
             onClick={(e) => {
-              console.log(participantName)
               if (iscreateMeetingClicked) {
                 if (videoTrack) {
                   videoTrack.stop();
@@ -122,15 +121,6 @@ export function MeetingDetailsScreen({
               }}
             >
               Join as a Host
-            </button>
-            <button
-              className="w-full px-2 py-3 mt-5 text-white bg-gray-650 rounded-xl"
-              onClick={(e) => {
-                setIsJoinMeetingClicked(true);
-                setMeetingMode(Constants.modes.VIEWER);
-              }}
-            >
-              Join as a Viewer
             </button>
           </div>
         </div>

@@ -68,7 +68,7 @@ const WaitingToJoinScreen = () => {
             style={{ height: "100%", width: "100%" }}
           />
         </div>
-        <h1 className="text-white text-center font-bold mt-1 text-xl">
+        <h1 className="mt-1 text-xl font-bold text-center text-white">
           {message.text}
         </h1>
       </div>

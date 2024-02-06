@@ -479,7 +479,7 @@ export function JoiningScreen({
                           setVideoTrack(null);
                         }
                         onClickStartMeeting();
-                        setParticipantName("");
+                        // setParticipantName("");
                       } else alert("Invalid Meeting Id");
                     }}
                     _handleOnCreateMeeting={async () => {
@@ -487,7 +487,7 @@ export function JoiningScreen({
                       const _meetingId = await createMeeting({ token });
                       setToken(token);
                       setMeetingId(_meetingId);
-                      setParticipantName("");
+                      // setParticipantName("");
                       return _meetingId;
                     }}
                   />

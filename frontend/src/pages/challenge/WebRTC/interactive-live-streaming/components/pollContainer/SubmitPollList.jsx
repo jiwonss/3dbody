@@ -168,8 +168,8 @@ const SubmitPollListItem = ({ poll }) => {
     <div style={{ borderBottom: "1px solid #70707033" }}>
       <div className="xl:m-4 m-2 xl:my-[18px] lg:my-4 md:my-[14px] sm:my-3 my-[10px]">
         <div className="flex items-center p-0 m-0">
-          <p className="text-sm text-gray-900 font-medium my-0">{`Poll ${index}`}</p>
-          <p className="mx-2 text-gray-900 font-medium my-0">&#x2022;</p>
+          <p className="my-0 text-sm font-medium text-gray-900">{`Poll ${index}`}</p>
+          <p className="mx-2 my-0 font-medium text-gray-900">&#x2022;</p>
           <p
             className={`mx-2 text-sm ${
               isPollActive ? "text-orange-350" : "text-gray-900"
@@ -183,7 +183,7 @@ const SubmitPollListItem = ({ poll }) => {
           </p>
         </div>
         <div className="mt-4">
-          <p className="text-base text-white font-semibold">{poll.question}</p>
+          <p className="text-base font-semibold text-white">{poll.question}</p>
           <div className="mt-4">
             {localSubmittedOption || !isPollActive
               ? poll.options.map((option) => {
@@ -203,7 +203,7 @@ const SubmitPollListItem = ({ poll }) => {
 
                   return (
                     <div className="flex mb-3">
-                      <div className="mt-0 w-full">
+                      <div className="w-full mt-0">
                         <div className="flex items-center">
                           <p className="text-[15px] text-white font-normal">
                             {option.option}
@@ -248,8 +248,8 @@ const SubmitPollListItem = ({ poll }) => {
                               style={{ width: `${percentage}%` }}
                             ></div>
                           </div>
-                          <div className="ml-6 w-10 flex items-end justify-end">
-                            <p className="m-0 p-0 text-white">
+                          <div className="flex items-end justify-end w-10 ml-6">
+                            <p className="p-0 m-0 text-white">
                               {`${Math.floor(percentage)}%`}
                             </p>
                           </div>
@@ -260,7 +260,7 @@ const SubmitPollListItem = ({ poll }) => {
                 })
               : poll?.options.map((option) => {
                   return (
-                    <div className="flex mb-3 items-center">
+                    <div className="flex items-center mb-3">
                       <Input
                         type="checkbox"
                         onClick={() => {
@@ -269,11 +269,11 @@ const SubmitPollListItem = ({ poll }) => {
                             { persist: true }
                           );
                         }}
-                        className="bg-transparent rounded-xl h-5 w-5 border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
+                        className="w-5 h-5 bg-transparent border-2 border-gray-300 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-0"
                       />
 
                       <div
-                        className="ml-3 w-full rounded bg-gray-700"
+                        className="w-full ml-3 bg-gray-700 rounded"
                         style={{ padding: "8px 8px 8px" }}
                       >
                         <p className="text-white">{option.option}</p>
@@ -292,7 +292,7 @@ const SubmitPollList = ({ panelHeight }) => {
   const { polls } = useMeetingAppContext();
   return (
     <div
-      className="overflow-y-auto overflow-x-hidden"
+      className="overflow-x-hidden overflow-y-auto"
       style={{ height: panelHeight - 14 }}
     >
       <div className="flex flex-col flex-1 h-full">
@@ -310,11 +310,11 @@ const SubmitPollList = ({ panelHeight }) => {
           })
         ) : (
           <div
-            className="flex flex-1 flex-col items-center justify-center"
+            className="flex flex-col items-center justify-center flex-1"
             style={{ marginTop: "-50px" }}
           >
             <NoPollActiveIcon />
-            <p className="text-white text-base font-bold">
+            <p className="text-base font-bold text-white">
               No Poll has been launched yet.
             </p>
           </div>

@@ -221,7 +221,7 @@ export const CornerDisplayName = ({
   return (
     <>
       <div
-        className="absolute bottom-2 left-2 rounded-md flex items-center justify-center p-2"
+        className="absolute flex items-center justify-center p-2 rounded-md bottom-2 left-2"
         style={{
           backgroundColor: "#00000066",
           transition: "all 200ms",
@@ -252,7 +252,7 @@ export const CornerDisplayName = ({
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="absolute top-2 right-2 rounded-md  p-2 cursor-pointer "
+            className="absolute p-2 rounded-md cursor-pointer top-2 right-2 "
           >
             <Popover className="relative ">
               {({ close }) => (
@@ -329,7 +329,7 @@ export const CornerDisplayName = ({
                                     : "#FF5D5D",
                               }}
                             >
-                              <p className="text-sm text-white font-semibold">{`Quality Score : ${
+                              <p className="text-sm font-semibold text-white">{`Quality Score : ${
                                 score > 7
                                   ? "Good"
                                   : score > 4
@@ -362,6 +362,7 @@ export const CornerDisplayName = ({
                                             ? ""
                                             : `1px solid #ffffff33`,
                                       }}
+                                      key={index}
                                     >
                                       <div className="flex flex-1 items-center w-[120px]">
                                         {index !== 0 && (
@@ -371,7 +372,7 @@ export const CornerDisplayName = ({
                                         )}
                                       </div>
                                       <div
-                                        className="flex flex-1 items-center justify-center"
+                                        className="flex items-center justify-center flex-1"
                                         style={{
                                           borderLeft: `1px solid #ffffff33`,
                                         }}
@@ -381,7 +382,7 @@ export const CornerDisplayName = ({
                                         </p>
                                       </div>
                                       <div
-                                        className="flex flex-1 items-center justify-center"
+                                        className="flex items-center justify-center flex-1"
                                         style={{
                                           borderLeft: `1px solid #ffffff33`,
                                         }}
@@ -481,7 +482,7 @@ export function ParticipantView({ participantId }) {
           }}
         />
       ) : (
-        <div className="h-full w-full flex items-center justify-center">
+        <div className="flex items-center justify-center w-full h-full">
           <div
             className={`z-10 flex items-center justify-center rounded-full bg-gray-800 2xl:h-[92px] h-[52px] 2xl:w-[92px] w-[52px]`}
           >

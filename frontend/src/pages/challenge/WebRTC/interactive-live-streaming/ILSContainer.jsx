@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createRef } from "react";
+import { useState, useEffect, useRef, createRef } from "react";
 import {
   Constants,
   createCameraVideoTrack,
@@ -316,7 +316,7 @@ export function ILSContainer({
 
   return (
     <div className="fixed inset-0">
-      <div ref={containerRef} className="h-full flex flex-col bg-gray-800">
+      <div ref={containerRef} className="flex flex-col h-full bg-gray-800">
         <FlyingEmojisOverlay />
         {typeof localParticipantAllowedJoin === "boolean" ? (
           localParticipantAllowedJoin ? (

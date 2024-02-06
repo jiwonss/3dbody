@@ -28,7 +28,7 @@ const ConfirmBox = ({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center  text-center">
+            <div className="flex items-center justify-center min-h-full text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -38,8 +38,8 @@ const ConfirmBox = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-11/12 max-w-md transform overflow-hidden rounded bg-gray-750 p-4 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title className="text-base font-medium  text-white ">
+                <Dialog.Panel className="w-11/12 max-w-md p-4 overflow-hidden text-left align-middle transition-all transform rounded shadow-xl bg-gray-750">
+                  <Dialog.Title className="text-base font-medium text-white ">
                     {title}
                   </Dialog.Title>
                   <div className="mt-2">
@@ -53,11 +53,11 @@ const ConfirmBox = ({
                     </p>
                   </div>
 
-                  <div className="mt-6 flex justify-end">
+                  <div className="flex justify-end mt-6">
                     {rejectText && (
                       <button
                         type="button"
-                        className="mr-2 rounded px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 "
+                        className="px-4 py-2 mr-2 text-sm font-medium text-white rounded hover:bg-gray-700 "
                         onClick={onReject}
                       >
                         {rejectText}
@@ -65,7 +65,7 @@ const ConfirmBox = ({
                     )}
                     <button
                       type="button"
-                      className="rounded border border-white bg-transparent px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
+                      className="px-4 py-2 text-sm font-medium text-white bg-transparent border border-white rounded hover:bg-gray-700"
                       onClick={onSuccess}
                     >
                       {successText}

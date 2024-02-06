@@ -167,7 +167,7 @@ export default function SettingDialogueBox({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -177,7 +177,7 @@ export default function SettingDialogueBox({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded bg-gray-750 p-6 text-center align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-2xl p-6 overflow-hidden text-center align-middle transition-all transform rounded shadow-xl bg-gray-750">
                   <Dialog.Title
                     as="h5"
                     className="text-lg font-medium leading-6 text-white"
@@ -193,11 +193,11 @@ export default function SettingDialogueBox({
                           }}
                           className="focus-visible:border-none"
                         >
-                          <XMarkIcon className="h-6 w-6 text-white" />
+                          <XMarkIcon className="w-6 h-6 text-white" />
                         </button>
                       </div>
                     </div>
-                    <div className="flex flex-1 flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center flex-1">
                       <div className="mt-10">
                         <div>
                           {[
@@ -226,11 +226,11 @@ export default function SettingDialogueBox({
                     {setting === "audio" ? (
                       <div ref={boxRef}>
                         <div className="w-full">
-                          <div className="grid container grid-flow-col">
+                          <div className="container grid grid-flow-col">
                             <div className="grid grid-cols-12">
                               <div class="col-span-7">
                                 <div className="flex flex-col mt-6">
-                                  <p className="text-sm text-left text-white font-bold">
+                                  <p className="text-sm font-bold text-left text-white">
                                     Microphone
                                   </p>
 
@@ -238,13 +238,13 @@ export default function SettingDialogueBox({
                                     <Popover className="relative">
                                       {({ close }) => (
                                         <>
-                                          <Popover.Button className="flex  w-full ">
-                                            <button className="flex items-center justify-between text-white w-full border border-gray-300 rounded py-3 px-2">
+                                          <Popover.Button className="flex w-full ">
+                                            <button className="flex items-center justify-between w-full px-2 py-3 text-white border border-gray-300 rounded">
                                               {selectedMicLabel
                                                 ? selectedMicLabel
                                                 : "Select"}
                                               <ChevronDownIcon
-                                                className="h-4 w-4"
+                                                className="w-4 h-4"
                                                 style={{
                                                   color: "white",
                                                 }}
@@ -260,7 +260,7 @@ export default function SettingDialogueBox({
                                             leaveFrom="opacity-100 translate-y-0"
                                             leaveTo="opacity-0 translate-y-1"
                                           >
-                                            <Popover.Panel className="absolute left-1/2  z-10 mt-2 w-full -translate-x-1/2 transform px-4 sm:px-0 pb-4">
+                                            <Popover.Panel className="absolute z-10 w-full px-4 pb-4 mt-2 transform -translate-x-1/2 left-1/2 sm:px-0">
                                               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div
                                                   className={"bg-gray-800 py-1"}
@@ -326,12 +326,12 @@ export default function SettingDialogueBox({
                               </div>
 
                               <div class="col-span-5">
-                                <div className="p-4 relative mt-0 md:mt-10 ">
+                                <div className="relative p-4 mt-0 md:mt-10 ">
                                   <div
-                                    className="flex flex-1 relative w-1/2 md:w-full h-1/2 md:h-auto overflow-hidden rounded"
+                                    className="relative flex flex-1 w-1/2 overflow-hidden rounded md:w-full h-1/2 md:h-auto"
                                     style={{ paddingTop: "56.25%" }}
                                   >
-                                    <div className="md:absolute top-0 bottom-0 left-0 right-0 flex items-start flex-col rounded-sm overflow-hidden">
+                                    <div className="top-0 bottom-0 left-0 right-0 flex flex-col items-start overflow-hidden rounded-sm md:absolute">
                                       <AudioAnalyser audioTrack={audioTrack} />
                                     </div>
                                   </div>
@@ -344,11 +344,11 @@ export default function SettingDialogueBox({
                     ) : setting === "video" ? (
                       <div ref={boxRef}>
                         <div className="w-full">
-                          <div className="grid container grid-flow-col">
+                          <div className="container grid grid-flow-col">
                             <div className="grid grid-cols-12">
                               <div className="col-span-7">
                                 <div className="flex flex-col mt-6">
-                                  <p className="text-sm text-left text-white font-bold">
+                                  <p className="text-sm font-bold text-left text-white">
                                     Camera
                                   </p>
 
@@ -356,13 +356,13 @@ export default function SettingDialogueBox({
                                     <Popover className="relative">
                                       {({ close }) => (
                                         <>
-                                          <Popover.Button className="flex  w-full ">
-                                            <button className="flex items-center justify-between text-white w-full border border-gray-300 rounded py-3 px-2">
+                                          <Popover.Button className="flex w-full ">
+                                            <button className="flex items-center justify-between w-full px-2 py-3 text-white border border-gray-300 rounded">
                                               {selectedWebcamLabel
                                                 ? selectedWebcamLabel
                                                 : "Select"}
                                               <ChevronDownIcon
-                                                className="h-4 w-4"
+                                                className="w-4 h-4"
                                                 style={{
                                                   color: "white",
                                                 }}
@@ -378,7 +378,7 @@ export default function SettingDialogueBox({
                                             leaveFrom="opacity-100 translate-y-0"
                                             leaveTo="opacity-0 translate-y-1"
                                           >
-                                            <Popover.Panel className="absolute left-1/2  z-10 mt-2 w-full -translate-x-1/2 transform px-4 sm:px-0 pb-4">
+                                            <Popover.Panel className="absolute z-10 w-full px-4 pb-4 mt-2 transform -translate-x-1/2 left-1/2 sm:px-0">
                                               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div
                                                   className={"bg-gray-800 py-1"}
@@ -445,12 +445,12 @@ export default function SettingDialogueBox({
                                 </div>
                               </div>
                               <div className="col-span-5">
-                                <div className="p-4 relative mt-0 md:mt-10 ">
+                                <div className="relative p-4 mt-0 md:mt-10 ">
                                   <div
-                                    className="flex flex-1 relative w-1/2 md:w-full h-1/2 md:h-auto overflow-hidden rounded"
+                                    className="relative flex flex-1 w-1/2 overflow-hidden rounded md:w-full h-1/2 md:h-auto"
                                     style={{ paddingTop: "56.25%" }}
                                   >
-                                    <div className="md:absolute top-0 bottom-0 left-0 right-0 flex items-start flex-col rounded-sm overflow-hidden">
+                                    <div className="top-0 bottom-0 left-0 right-0 flex flex-col items-start overflow-hidden rounded-sm md:absolute">
                                       <video
                                         autoPlay
                                         playsInline

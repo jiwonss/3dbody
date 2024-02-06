@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Lottie from "lottie-react";
 import { createPopper } from "@popperjs/core";
 
@@ -148,4 +148,3 @@ export const MobileIconButton = ({
     </>
   );
 };
- 

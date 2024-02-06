@@ -87,7 +87,7 @@ const CreatePollPart = ({
                             })
                           );
                         }}
-                        className="bg-transparent rounded-xl h-5 w-5 border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
+                        className="w-5 h-5 bg-transparent border-2 border-gray-300 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-0"
                       />
                     )}
                     <div
@@ -182,7 +182,7 @@ const CreatePollPart = ({
                     isCorrect: false,
                   });
                 }}
-                className="bg-transparent rounded-xl h-5 w-5 border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
+                className="w-5 h-5 bg-transparent border-2 border-gray-300 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-0"
               />
             )}
             <input
@@ -224,19 +224,19 @@ const CreatePollPart = ({
                   _handleKeyDown(e);
                   focusCreateOption();
                 }}
-                className="w-full bg-customGray-900 mt-4 focus:ring-0 rounded"
+                className="w-full mt-4 rounded bg-customGray-900 focus:ring-0"
               />
             </div>
           )}
           {/* end of dummy Text */}
 
           {minOptionErr && (
-            <p className="text-xs text-red-150 mt-1">
+            <p className="mt-1 text-xs text-red-150">
               Please add atleast 2 options.
             </p>
           )}
           {optionErr && (
-            <p className="text-xs text-red-150 mt-1">
+            <p className="mt-1 text-xs text-red-150">
               Please enter valid option value.
             </p>
           )}
@@ -248,20 +248,20 @@ const CreatePollPart = ({
                   onClick={(e) => {
                     setIsMarkAsCorrectChecked((s) => !s);
                   }}
-                  className="bg-transparent h-5 w-5 border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
+                  className="w-5 h-5 bg-transparent border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
                 />
-                <p className="text-base text-white ml-3">Mark correct option</p>
+                <p className="ml-3 text-base text-white">Mark correct option</p>
               </Label>
             </div>
             {correctAnswerErr && (
-              <p className="text-xs text-red-150 mt-1">
+              <p className="mt-1 text-xs text-red-150">
                 {
                   "Please check any one option as correct if `isMarkAsCorrectChecked`"
                 }
               </p>
             )}
             <div className="flex flex-col">
-              <div className="flex items-center flex-row mt-5 relative">
+              <div className="relative flex flex-row items-center mt-5">
                 <div className="flex items-center pl-1">
                   <Label check>
                     <Input
@@ -269,9 +269,9 @@ const CreatePollPart = ({
                       onClick={(e) => {
                         setIsSetTimerChecked((s) => !s);
                       }}
-                      className="bg-transparent h-5 w-5 border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
+                      className="w-5 h-5 bg-transparent border-2 border-gray-300 focus:outline-none focus:border-gray-300 focus:ring-0"
                     />
-                    <p className="text-base text-white ml-3">Set Timer</p>
+                    <p className="ml-3 text-base text-white">Set Timer</p>
                   </Label>
                 </div>
                 {isSetTimerChecked && (
@@ -391,9 +391,9 @@ const PollButtonPart = ({
   };
 
   return (
-    <div className="flex xl:pt-4 xl:pb-2 xl:pl-4 xl:pr-4 pt-2 pb-1 pl-2 pr-2">
+    <div className="flex pt-2 pb-1 pl-2 pr-2 xl:pt-4 xl:pb-2 xl:pl-4 xl:pr-4">
       <button
-        className="w-1/2 bg-gray-700 text-white p-2 rounded"
+        className="w-1/2 p-2 text-white bg-gray-700 rounded"
         onClick={() => {
           const isValid = handleValidation({
             question,
@@ -428,7 +428,7 @@ const PollButtonPart = ({
         Save
       </button>
       <button
-        className="w-1/2 ml-2 p-2 text-white bg-purple-550 rounded"
+        className="w-1/2 p-2 ml-2 text-white rounded bg-purple-550"
         onClick={() => {
           const isValid = handleValidation({
             question,
@@ -503,7 +503,7 @@ const CreatePoll = ({ panelHeight }) => {
 
   return (
     <div
-      className="overflow-y-auto overflow-x-hidden"
+      className="overflow-x-hidden overflow-y-auto"
       style={{ height: Height }}
     >
       <div className="flex flex-col justify-between flex-1 h-full">

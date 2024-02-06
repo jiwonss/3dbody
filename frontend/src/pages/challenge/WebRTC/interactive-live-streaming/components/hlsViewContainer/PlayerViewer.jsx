@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef } from "react";
-// import Lottie from "lottie-react";
-// import animationData from "../../../static/animations/wait_for_HLS_animation.json";
-// import stoppedHLSSnimationData from "../../../static/animations/stopped_HLS_animation.json";
+import Lottie from "lottie-react";
+import animationData from "../../../static/animations/wait_for_HLS_animation.json";
+import stoppedHLSSnimationData from "../../../static/animations/stopped_HLS_animation.json";
 import Hls from "hls.js";
-// import useIsMobile from "../../../hooks/useIsMobile";
-// import useIsTab from "../../../hooks/useIsTab";
-// import { useMediaQuery } from "react-responsive";
-// import { useMeetingAppContext } from "../../../MeetingAppContextDef";
+import useIsMobile from "../../../hooks/useIsMobile";
+import useIsTab from "../../../hooks/useIsTab";
+import { useMediaQuery } from "react-responsive";
+import { useMeetingAppContext } from "../../../MeetingAppContextDef";
 import { Constants, useMeeting } from "@videosdk.live/react-sdk";
 
 export async function sleep(ms) {
@@ -16,14 +16,14 @@ export async function sleep(ms) {
 }
 
 const PlayerViewer = () => {
-  // const { afterMeetingJoinedHLSState } = useMeetingAppContext();
+  const { afterMeetingJoinedHLSState } = useMeetingAppContext();
   const { hlsUrls, hlsState } = useMeeting();
   const playerRef = useRef();
 
-  // const isMobile = useIsMobile();
-  // const isTab = useIsTab();
-  // const isLGDesktop = useMediaQuery({ minWidth: 1024, maxWidth: 1439 });
-  // const isXLDesktop = useMediaQuery({ minWidth: 1440 });
+  const isMobile = useIsMobile();
+  const isTab = useIsTab();
+  const isLGDesktop = useMediaQuery({ minWidth: 1024, maxWidth: 1439 });
+  const isXLDesktop = useMediaQuery({ minWidth: 1440 });
 
   const playHls = useMemo(() => {
     return (
@@ -33,15 +33,15 @@ const PlayerViewer = () => {
     );
   }, [hlsUrls, hlsState]);
 
-  // const lottieSize = isMobile
-  //   ? 180
-  //   : isTab
-  //   ? 180
-  //   : isLGDesktop
-  //   ? 240
-  //   : isXLDesktop
-  //   ? 240
-  //   : 160;
+  const lottieSize = isMobile
+    ? 180
+    : isTab
+    ? 180
+    : isLGDesktop
+    ? 240
+    : isXLDesktop
+    ? 240
+    : 160;
 
   useEffect(() => {
     if (playHls) {
@@ -107,44 +107,44 @@ const PlayerViewer = () => {
             }}
           ></video>
         </div>
-      ) : ( null
-        // <div className="flex items-center justify-center w-full h-full">
-        //   <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
-        //     <div
-        //       style={{
-        //         height: lottieSize,
-        //         width: lottieSize,
-        //       }}
-        //     >
-        //       <Lottie
-        //         animationData={
-        //           afterMeetingJoinedHLSState === "STOPPED"
-        //             ? stoppedHLSSnimationData
-        //             : animationData
-        //         }
-        //         rendererSettings={{
-        //           preserveAspectRatio: "xMidYMid slice",
-        //         }}
-        //         loop={afterMeetingJoinedHLSState === "STOPPED" ? false : true}
-        //         autoPlay={true}
-        //         style={{
-        //           height: "100%",
-        //           width: "100%",
-        //         }}
-        //       />
-        //     </div>
-        //     <p className="mt-0 text-2xl font-semibold text-center text-white">
-        //       {afterMeetingJoinedHLSState === "STOPPED"
-        //         ? "Host has stopped the live streaming."
-        //         : "Waiting for host to start live stream."}
-        //     </p>
-        //     {afterMeetingJoinedHLSState !== "STOPPED" && (
-        //       <p className="text-2xl font-semibold text-center text-white">
-        //         Meanwhile, take a few deep breaths.
-        //       </p>
-        //     )}
-        //   </div>
-        // </div>
+      ) : (
+        <div className="flex items-center justify-center w-full h-full">
+          <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
+            <div
+              style={{
+                height: lottieSize,
+                width: lottieSize,
+              }}
+            >
+              <Lottie
+                animationData={
+                  afterMeetingJoinedHLSState === "STOPPED"
+                    ? stoppedHLSSnimationData
+                    : animationData
+                }
+                rendererSettings={{
+                  preserveAspectRatio: "xMidYMid slice",
+                }}
+                loop={afterMeetingJoinedHLSState === "STOPPED" ? false : true}
+                autoPlay={true}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+            </div>
+            <p className="mt-0 text-2xl font-semibold text-center text-white">
+              {afterMeetingJoinedHLSState === "STOPPED"
+                ? "Host has stopped the live streaming."
+                : "Waiting for host to start live stream."}
+            </p>
+            {afterMeetingJoinedHLSState !== "STOPPED" && (
+              <p className="text-2xl font-semibold text-center text-white">
+                Meanwhile, take a few deep breaths.
+              </p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

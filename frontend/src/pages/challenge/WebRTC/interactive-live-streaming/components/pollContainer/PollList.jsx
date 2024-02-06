@@ -149,10 +149,10 @@ const Poll = ({ poll, isDraft, publishDraftPoll }) => {
     <div style={{ borderBottom: "1px solid #70707033" }}>
       <div className="xl:m-4 m-2 xl:my-[18px] lg:my-4 md:my-[14px] sm:my-3 my-[10px]">
         <div className="flex items-center p-0 m-0">
-          <p className="text-sm text-gray-900 font-medium my-0">{`Poll ${
+          <p className="my-0 text-sm font-medium text-gray-900">{`Poll ${
             index || ""
           }`}</p>
-          <p className="mx-2 text-gray-900 font-medium my-0">&#x2022;</p>
+          <p className="mx-2 my-0 font-medium text-gray-900">&#x2022;</p>
           <p
             className={`mx-2 text-sm ${
               isPollActive || isDraft ? "text-orange-350" : "text-gray-900"
@@ -168,7 +168,7 @@ const Poll = ({ poll, isDraft, publishDraftPoll }) => {
           </p>
         </div>
         <div className="mt-4">
-          <p className="text-base text-white font-semibold">{poll.question}</p>
+          <p className="text-base font-semibold text-white">{poll.question}</p>
           {poll.options.map((item, j) => {
             const total = groupedSubmissionCount
               ? groupedSubmissionCount[item.optionId]
@@ -187,7 +187,7 @@ const Poll = ({ poll, isDraft, publishDraftPoll }) => {
                 <p className="text-[15px] text-white font-normal">
                   {item.option}
                 </p>
-                <div className="mt-0 flex items-center">
+                <div className="flex items-center mt-0">
                   <div className="h-[6px] rounded flex flex-1 bg-gray-700">
                     <div
                       className={`${
@@ -204,8 +204,8 @@ const Poll = ({ poll, isDraft, publishDraftPoll }) => {
                   </div>
 
                   {!isDraft && (
-                    <div className="ml-6 w-10 flex items-end justify-end">
-                      <p className="m-0 p-0 text-white">{`${Math.floor(
+                    <div className="flex items-end justify-end w-10 ml-6">
+                      <p className="p-0 m-0 text-white">{`${Math.floor(
                         percentage
                       )}%`}</p>
                     </div>
@@ -262,10 +262,10 @@ const PollList = ({ panelHeight }) => {
 
   return (
     <div
-      className="overflow-y-auto overflow-x-hidden"
+      className="overflow-x-hidden overflow-y-auto"
       style={{ height: panelHeight - 14 }}
     >
-      <div className="flex flex-1 flex-col justify-between h-full">
+      <div className="flex flex-col justify-between flex-1 h-full">
         <div className="flex flex-col overflow-y-auto ">
           {draftPolls &&
             draftPolls.map((poll, index) => {
@@ -315,7 +315,7 @@ const PollList = ({ panelHeight }) => {
         </div>
         <div className="xl:p-3 p-2 xl:mt-[18px] lg:mt-4 md:mt-[14px] sm:mt-3 mt-[10px]">
           <button
-            className="w-full text-white p-3 bg-purple-550"
+            className="w-full p-3 text-white bg-purple-550"
             onClick={() => {
               setSideBarMode(sideBarModes.CREATE_POLL);
             }}

@@ -24,7 +24,7 @@ const ChatMessage = ({ senderId, senderName, text, timestamp }) => {
           {localSender ? "You" : nameTructed(senderName, 15)}
         </p>
         <div>
-          <p className="inline-block whitespace-pre-wrap break-words text-right text-white">
+          <p className="inline-block text-right text-white break-words whitespace-pre-wrap">
             {text}
           </p>
         </div>
@@ -45,7 +45,7 @@ const ChatInput = ({ inputHeight }) => {
 
   return (
     <div
-      className="w-full flex items-center px-2"
+      className="flex items-center w-full px-2"
       style={{ height: inputHeight }}
     >
       <div class="relative  w-full">
@@ -74,7 +74,7 @@ const ChatInput = ({ inputHeight }) => {
         </span>
         <input
           type="text"
-          className="py-4 text-base text-white border-gray-400 border bg-gray-750 rounded pr-10 pl-2 focus:outline-none w-full"
+          className="w-full py-4 pl-2 pr-10 text-base text-white border border-gray-400 rounded bg-gray-750 focus:outline-none"
           placeholder="Write your message"
           autocomplete="off"
           ref={input}

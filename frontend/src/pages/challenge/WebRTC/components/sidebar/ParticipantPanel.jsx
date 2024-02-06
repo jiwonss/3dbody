@@ -16,29 +16,29 @@ function ParticipantListItem({ participantId, raisedHand }) {
   const isHls = useIsHls();
 
   return (
-    <div className="mt-2 m-2 p-2 bg-gray-700 rounded-lg mb-0">
-      <div className="flex flex-1 items-center justify-center relative">
+    <div className="p-2 m-2 mt-2 mb-0 bg-gray-700 rounded-lg">
+      <div className="relative flex items-center justify-center flex-1">
         <div
           style={{
             color: "#212032",
             backgroundColor: "#757575",
           }}
-          className="h-10 w-10 text-lg mt-0 rounded overflow-hidden flex relative items-center justify-center"
+          className="relative flex items-center justify-center w-10 h-10 mt-0 overflow-hidden text-lg rounded"
         >
           {displayName?.charAt(0).toUpperCase()}
         </div>
-        <div className="ml-2 mr-1 flex flex-1">
-          <p className="text-base text-white overflow-hidden whitespace-pre-wrap overflow-ellipsis">
+        <div className="flex flex-1 ml-2 mr-1">
+          <p className="overflow-hidden text-base text-white whitespace-pre-wrap overflow-ellipsis">
             {isLocal ? "You" : nameTructed(displayName, 15)}
           </p>
         </div>
         {raisedHand && (
-          <div className="flex items-center justify-center m-1 p-1">
+          <div className="flex items-center justify-center p-1 m-1">
             <RaiseHand fillcolor={"#fff"} />
           </div>
         )}
-        <div className="m-1 p-1">{micOn ? <MicOnIcon /> : <MicOffIcon />}</div>
-        <div className="m-1 p-1">
+        <div className="p-1 m-1">{micOn ? <MicOnIcon /> : <MicOffIcon />}</div>
+        <div className="p-1 m-1">
           {webcamOn ? <VideoCamOnIcon /> : <VideoCamOffIcon />}
         </div>
         {isHls && (
