@@ -71,7 +71,7 @@ export const MobileIconButton = ({
             onClick={onClick}
           >
             <div
-              className="p-1 relative flex items-center justify-center rounded-lg"
+              className="relative flex items-center justify-center p-1 rounded-lg"
               style={{
                 opacity: disabled ? disabledOpacity || 0.7 : 1,
                 transform: `scale(${mouseOver ? (mouseDown ? 0.95 : 1.1) : 1})`,
@@ -148,3 +148,4 @@ export const MobileIconButton = ({
     </>
   );
 };
+ 
