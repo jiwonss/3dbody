@@ -76,6 +76,7 @@ pipeline {
         stage('Prune old images'){
             steps{
                 script{
+                    sh "docker ps"
 //                     sh "docker system prune --filter until=1h"
                 }
             }
