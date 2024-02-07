@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.food.controller;
 import com.ssafy.backend.domain.food.dto.FoodListDto;
 import com.ssafy.backend.domain.food.dto.FoodListRequestDto;
 import com.ssafy.backend.domain.food.dto.UserFoodListDto;
+import com.ssafy.backend.domain.food.dto.UserFoodRequestDto;
 import com.ssafy.backend.domain.food.service.FoodService;
 import com.ssafy.backend.global.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +31,26 @@ public class FoodController {
         foodList = foodService.findByNameContaining(keyword);
         return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
-    //음식 추가
+    //음식 추가 직접 입력
     @PostMapping("/add")
     public ResponseEntity<?> addFoodList(@RequestBody FoodListRequestDto foodListRequestDto){
         foodService.addFoodList(foodListRequestDto);
+        return ResponseEntity.ok(Response.success());
+    }
+
+    //음식 추가 리스트
+    //카테고리랑, userId, foodId
+//    @GetMapping("/add/{user_id}")
+//    public ResponseEntity<?> saveUserFoodList(@PathVariable("user_id") Long userId, @RequestParam("food_id") Long foodId, @RequestParam("category") String category){
+//        foodService.saveUserFoodList(userId, foodId, category);
+//        return ResponseEntity.ok(Response.success());
+//    }
+
+    //user 식단 추가
+    @PostMapping("/list/add")
+    public ResponseEntity<?> saveUserFoZodList(@RequestBody UserFoodRequestDto userFoodRequestDto){
+        log.info("controller에서확인 {}",userFoodRequestDto);
+        foodService.saveUserFoodList(userFoodRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
@@ -51,6 +68,16 @@ public class FoodController {
     public ResponseEntity<?> findByListCategory(@PathVariable("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day, @RequestParam("category") String category){
         List<UserFoodListDto> userFoodListCategory = foodService.findByListCategory(userId, year, month, day, category);
         return new ResponseEntity<>(userFoodListCategory, HttpStatus.OK);
+    }
+
+    //음식 갯수(foodCount) or 제공량(servingSize) 업데이트
+    @PutMapping("/update/{user_food_id}")
+    public ResponseEntity<?> updateUserFood(@PathVariable("user_food_id") Long userFoodId, @RequestBody UserFoodRequestDto userFoodRequestDto) {
+        // userFoodId를 사용하여 업데이트할 UserFood를 찾아오는 로직이 필요
+        log.info("확인");
+        // 찾아온 UserFood 업데이트
+        foodService.updateUserFood(userFoodRequestDto, userFoodId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //음식 삭제

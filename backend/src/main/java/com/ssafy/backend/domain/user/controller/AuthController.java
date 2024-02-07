@@ -5,19 +5,19 @@ import com.ssafy.backend.domain.user.dto.LoginResponseDto;
 import com.ssafy.backend.domain.user.dto.ReissueDto;
 import com.ssafy.backend.domain.user.dto.SignupRequestDto;
 import com.ssafy.backend.domain.user.service.AuthService;
+import com.ssafy.backend.domain.user.service.UserService;
 import com.ssafy.backend.global.dto.Response;
 import com.ssafy.backend.global.jwt.dto.TokenDto;
 import com.ssafy.backend.global.jwt.dto.UserInfoDto;
 import com.ssafy.backend.global.jwt.service.JwtService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.ssafy.backend.global.error.exception.ExceptionType.DUPLICATED_EMAIL;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -27,59 +27,65 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtService jwtService;
+    private final UserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody SignupRequestDto signupRequestDto) {
-        log.info("회원가입 : {}", signupRequestDto);
+        log.info("회원가입 - signupRequestDto : {}", signupRequestDto);
+
         authService.signup(signupRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) {
-        log.info("로그인 : {}", loginRequestDto);
+        log.info("로그인 - loginRequestDto : {}", loginRequestDto);
 
         UserInfoDto userInfoDto = authService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         TokenDto tokenDto = jwtService.issueToken(userInfoDto);
-        log.info("로그인 결과(UserInfoDto) : {}", userInfoDto);
-        log.info("로그인 결과(TokenDto) : {}", tokenDto);
+
+        log.info("로그인 - userInfoDto : {}", userInfoDto);
+        log.info("로그인 - tokenDto : {}", tokenDto);
 
         return ResponseEntity.ok(Response.success(
                 LoginResponseDto.builder()
-                        .userInfo(userInfoDto)
+                        .userInfo(userService.getUserInfo(userInfoDto.getUserId()))
                         .token(tokenDto)
-                        .build())
+                        .build(),
+                HttpStatus.OK.name(), "로그인 성공")
         );
+
     }
 
     @PostMapping("/logout")
     public ResponseEntity logout(@RequestHeader("Authorization") String accessToken) {
+        log.info("로그아웃 - accessToken : {}", accessToken);
+
         jwtService.addBlackList(accessToken);
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok((Response.success(HttpStatus.OK.name(), "")));
+
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity reissue(@RequestBody ReissueDto reissueDto, HttpServletResponse response) {
+    public ResponseEntity reissue(@RequestBody ReissueDto reissueDto) {
+        log.info("토큰 재발급 - reissueDto : {}", reissueDto);
+
         TokenDto tokenDto = authService.reissue(reissueDto.getRefreshToken());
 
-        Cookie accessTokenCookie = new Cookie("accessToken", tokenDto.getAccessToken());
-        accessTokenCookie.setMaxAge((int)tokenDto.getAccessTokenExpired());
-        accessTokenCookie.setPath("/");
-        Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
-        refreshTokenCookie.setMaxAge((int)tokenDto.getRefreshTokenExpired());
-        refreshTokenCookie.setPath("/");
-        response.addCookie(accessTokenCookie);
-        response.addCookie(refreshTokenCookie);
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", tokenDto);
 
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok(Response.success(map));
+
     }
 
     @GetMapping
     public ResponseEntity duplicateCheckEmail(@RequestParam String email) {
+        log.info("이메일 중복 확인 - email : {}", email);
         if (authService.duplicateCheckEmail(email)) {
-            return ResponseEntity.ok(Response.fail(DUPLICATED_EMAIL.getHttpStatus().toString(), DUPLICATED_EMAIL.getErrorMessage()));
+            return ResponseEntity.ok(Response.fail("", ""));
         }
-        return ResponseEntity.ok(Response.success(HttpStatus.OK.toString(), "성공"));
+        return ResponseEntity.ok(Response.success("", ""));
     }
 
 }

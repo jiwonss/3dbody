@@ -25,7 +25,7 @@ public interface ChallengeService {
     Challenge registerChallenge(ChallengeRequestDto challengeRequestDto);
 
     // 챌린지 정보 수정
-    Challenge updateChallenge(ChallengeRequestDto requestDto);
+    Challenge updateChallenge(Long challengeId, ChallengeRequestDto requestDto);
 
     // 챌린지 정보 삭제
     void deleteChallenge(Long challengeId);

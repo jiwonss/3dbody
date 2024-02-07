@@ -1,14 +1,14 @@
 package com.ssafy.backend.domain.user.dto;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class ReissueDto {
 
+    @JsonProperty("refresh_token")
     private String refreshToken;
 
 }

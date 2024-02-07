@@ -1,10 +1,12 @@
 package com.ssafy.backend.domain.inbody.entity;
 
 import com.ssafy.backend.domain.user.entity.User;
+import com.ssafy.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Inbody {
+public class Inbody extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +47,8 @@ public class Inbody {
 
     private LocalDateTime date; // 검사일자
 
-    @OneToMany(mappedBy = "inbody")
-    private List<InbodyImage> inbodyImages;
+    @OneToMany(mappedBy = "inbody", orphanRemoval = true)
+    private List<InbodyImage> inbodyImages = new ArrayList<>();
 
     public void updateHeight(float height) {
         if (height > 0.0) {
@@ -109,12 +111,15 @@ public class Inbody {
     }
 
     public void updateDate(LocalDateTime date) {
-        this.date = date;
+        if (date != null) {
+            this.date = date;
+        }
     }
 
     public void addInbodyImage(InbodyImage inbodyImage) {
         this.inbodyImages.add(inbodyImage);
     }
 
+    public void deleteInbodyImage(InbodyImage inbodyImage) { this.inbodyImages.remove(inbodyImage);}
 
 }

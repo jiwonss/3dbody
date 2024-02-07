@@ -1,21 +1,24 @@
 package com.ssafy.backend.global.jwt.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.backend.domain.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfoDto {
 
+    @JsonProperty("user_id")
     private Long userId;
+
     private String email;
     private String role;
     private String nickname;
+
+    @JsonProperty("profile_image")
     private String profileImage;
 
     public static UserInfoDto from(User user) {

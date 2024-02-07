@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.user.service;
 
 import com.ssafy.backend.domain.user.dto.PasswordRequestDto;
 import com.ssafy.backend.domain.user.dto.PinRequestDto;
+import com.ssafy.backend.domain.user.dto.UpdateRequestDto;
 import com.ssafy.backend.domain.user.dto.UserResponseDto;
 import com.ssafy.backend.domain.user.entity.User;
 
@@ -13,7 +14,6 @@ public interface UserService {
     String getRandomNickname();
     String nicknameGenerator();
     UserResponseDto getUserInfo(Long userId);
-    void updateUser(Long userId);
     void updateStatus(Long userId);
     void updateNickname(Long userId, String nickname);
     boolean duplicateCheckNickname(String nickname);

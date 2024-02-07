@@ -2,8 +2,8 @@ package com.ssafy.backend.global.error;
 
 import com.ssafy.backend.global.dto.Response;
 import com.ssafy.backend.global.error.exception.ExceptionType;
+import com.ssafy.backend.global.error.exception.InbodyException;
 import com.ssafy.backend.global.error.exception.UserException;
-import jdk.jshell.spi.ExecutionControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import static com.ssafy.backend.global.error.exception.ExceptionType.*;
+import static com.ssafy.backend.global.error.exception.ExceptionType.AUTHENTICATION_EXCEPTION;
+import static com.ssafy.backend.global.error.exception.ExceptionType.FORBIDDEN_EXCEPTION;
 
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
@@ -29,8 +30,15 @@ public class GlobalExceptionAdvice {
                 .body(Response.fail(HttpStatus.UNAUTHORIZED.name(), AUTHENTICATION_EXCEPTION.getErrorMessage()));
     }
 
-    @ExceptionHandler({ExecutionControl.UserException.class})
+    @ExceptionHandler({UserException.class})
     public ResponseEntity userExceptionHandler(UserException ex) {
+        ExceptionType exceptionType = ex.getExceptionType();
+        return ResponseEntity.status(exceptionType.getHttpStatus())
+                .body(Response.fail(exceptionType.name(), exceptionType.getErrorMessage()));
+    }
+
+    @ExceptionHandler({InbodyException.class})
+    public ResponseEntity inbodyExceptionHandler(InbodyException ex) {
         ExceptionType exceptionType = ex.getExceptionType();
         return ResponseEntity.status(exceptionType.getHttpStatus())
                 .body(Response.fail(exceptionType.name(), exceptionType.getErrorMessage()));

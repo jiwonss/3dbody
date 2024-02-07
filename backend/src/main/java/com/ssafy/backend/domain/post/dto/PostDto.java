@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PostDto {
     private Long postId;
-    private User user;
+//    private User user;
     private String nickname;
     private String title;
     private String content;
