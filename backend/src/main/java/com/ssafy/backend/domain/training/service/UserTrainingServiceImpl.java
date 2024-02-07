@@ -29,37 +29,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     private final UserRepository userRepository;
     private final TrainingRepository trainingRepository;
 
-    // 운동 저장
-    @Override
-    @Transactional
-    public void saveTrainings(Long userId, int year, int month, int day, List<Long> trainings) {
-
-        log.info("요청 잘 들어오나?");
-        List<UserTraining> userTrainingList = new ArrayList<>();
-        User user = userRepository.getReferenceById(userId);
-        LocalDate date = LocalDate.of(year, month, day);
-
-        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
-        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
-
-        for (int i = 0; i < trainings.size(); i++) {
-            Training training = trainingRepository.getReferenceById(trainings.get(i));
-
-            UserTraining userTraining = UserTraining
-                    .builder()
-                    .user(user)
-                    .training(training)
-                    .date(date)
-                    .sequence(startIndex + i)
-                    .build();
-
-            userTrainingList.add(userTraining);
-        }
-
-        userTrainingRepository.saveAllAndFlush(userTrainingList);
-    }
-
-    // 운동 관리
+    // 운동 조회(특정 날짜&회원)
     @Override
     @Transactional
     public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
@@ -94,9 +64,42 @@ public class UserTrainingServiceImpl implements UserTrainingService {
             userTrainingResponseDtos.add(userTrainingResponseDtoTreeMap.get(key));
         }
 
+        userTrainingRepository.flush();
+
         return userTrainingResponseDtos;
     }
 
+    // 운동 추가
+    @Override
+    @Transactional
+    public void saveTrainings(Long userId, int year, int month, int day, List<Long> trainings) {
+
+        log.info("요청 잘 들어오나?");
+        List<UserTraining> userTrainingList = new ArrayList<>();
+        User user = userRepository.getReferenceById(userId);
+        LocalDate date = LocalDate.of(year, month, day);
+
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
+        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
+
+        for (int i = 0; i < trainings.size(); i++) {
+            Training training = trainingRepository.getReferenceById(trainings.get(i));
+
+            UserTraining userTraining = UserTraining
+                    .builder()
+                    .user(user)
+                    .training(training)
+                    .date(date)
+                    .sequence(startIndex + i)
+                    .build();
+
+            userTrainingList.add(userTraining);
+        }
+
+        userTrainingRepository.saveAllAndFlush(userTrainingList);
+    }
+
+    // 운동 완료 여부 수정(세트별로)
     @Override
     @Transactional
     public void toggle(Long userTrainingId) {
@@ -104,6 +107,8 @@ public class UserTrainingServiceImpl implements UserTrainingService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 userTrainingId 입니다."));
 
         userTraining.updateIsFinished();
+
+        userTrainingRepository.flush();
     }
 
     // 세트 추가

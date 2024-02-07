@@ -49,6 +49,7 @@ public class UserTraining extends BaseEntity {
 
     private boolean isFinished; // 완료여부, BOOLEAN, NOT NULL, DEFAULT 0
 
+    // 운동 완료 여부 수정(세트별로)
     public void updateIsFinished() {
         this.isFinished = !this.isFinished;
     }

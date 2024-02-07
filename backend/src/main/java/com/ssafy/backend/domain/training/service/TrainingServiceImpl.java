@@ -24,23 +24,10 @@ public class TrainingServiceImpl implements TrainingService {
     private final RestRepository restRepository;
     private final UserRepository userRepository;
 
-    // 운동 리스트(검색, 카테고리)
-    @Override
-    public List<TrainingResponseDto> searchTraining(String category, String keyword) {
-
-        List<Training> trainings = trainingRepository.findAllWithCategoryAndKeyword(category, keyword);
-        List<TrainingResponseDto> dtoList = new ArrayList<>();
-
-        trainings.forEach(t -> {
-            TrainingResponseDto dto = TrainingResponseDto.toDto(t);
-            dtoList.add(dto);
-        });
-        return dtoList;
-    }
-
     // 운동 휴식여부
     @Override
     public boolean checkRest(Long userId, int year, int month, int day) {
+
         return restRepository.existsRestWithUserIdAndYearAndMonthAndDay(userId, year, month, day);
     }
 
@@ -56,7 +43,7 @@ public class TrainingServiceImpl implements TrainingService {
                 .date(date)
                 .build();
 
-        restRepository.save(rest);
+        restRepository.saveAndFlush(rest);
     }
 
     // 운동 휴식해제
@@ -64,5 +51,19 @@ public class TrainingServiceImpl implements TrainingService {
     public void removeRest(Long userId, int year, int month, int day) {
 
         restRepository.deleteRestWithUserIdAndYearAndMonthAndDay(userId, year, month, day);
+    }
+
+    // 운동 리스트(검색, 카테고리)
+    @Override
+    public List<TrainingResponseDto> searchTraining(String category, String keyword) {
+
+        List<Training> trainings = trainingRepository.findAllWithCategoryAndKeyword(category, keyword);
+        List<TrainingResponseDto> dtoList = new ArrayList<>();
+
+        trainings.forEach(t -> {
+            TrainingResponseDto dto = TrainingResponseDto.toDto(t);
+            dtoList.add(dto);
+        });
+        return dtoList;
     }
 }
