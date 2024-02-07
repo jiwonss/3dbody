@@ -69,7 +69,7 @@ const ChallengeDetailInfo = () => {
   useEffect(() => {
     getChallenge();
     getParticipateChallenge();
-  }, []);
+  }, [challenge]);
 
   return (
     <div>
