@@ -65,8 +65,9 @@ public class RoutineServiceImpl implements RoutineService{
 
     //루틴 상세 보기
     @Override
+    @Transactional
     public List<RoutineTrainingResponseDto> detailRoutine(Long routineId){
-        List<RoutineTrainingList> routineEntities = routineTrainingListRepository.findAllByRoutineRoutineId(routineId);
+        List<RoutineTrainingList> routineEntities = routineTrainingListRepository.findAllByroutineTrainingListRoutineId(routineId);
         List<RoutineTrainingResponseDto> routineTrainingResponseDtoList = routineEntities.stream()
                 .map(RoutineTrainingResponseDto::toDto)
                 .collect(Collectors.toList());
@@ -137,5 +138,5 @@ public class RoutineServiceImpl implements RoutineService{
         log.info("service에서 로그 : {}", requestDto);
         routineTrainingListRepository.updateWithRoutineTrainingListIdAndKgAndCount(requestDto.getRoutineTrainingListId(), requestDto.getKg(), requestDto.getCount());
     }
-    //루틴 운동 생성
+    //루틴 운동 삭제
 }
