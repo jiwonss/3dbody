@@ -39,6 +39,12 @@ public class User extends BaseEntity {
 
     private String profileImage;
 
+    private String currentAssetId;
+    private String currentAvatarUrl;
+
+    private String targetAssetId;
+    private String targetAvatarUrl;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
@@ -119,6 +125,16 @@ public class User extends BaseEntity {
 
     public void updateProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public void updateCurrentAvatar(String currentAssetId, String currentAvatarUrl) {
+        this.currentAssetId = currentAssetId;
+        this.currentAvatarUrl = currentAvatarUrl;
+    }
+
+    public void updateTargetAvatar(String targetAssetId, String targetAvatarUrl) {
+        this.targetAssetId = targetAssetId;
+        this.targetAvatarUrl = targetAvatarUrl;
     }
 
 }
