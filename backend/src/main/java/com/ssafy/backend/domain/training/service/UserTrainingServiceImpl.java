@@ -112,6 +112,13 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         userTrainingRepository.flush();
     }
 
+    // kg, count 데이터 수정
+    @Override
+    @Transactional
+    public void updateSet(SetRequestDto requestDto) {
+        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto);
+    }
+
     // 세트 추가
     @Override
     public void addSet(UserTrainingRequestDto requestDto) {
@@ -138,17 +145,19 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     // 세트 삭제
     @Override
     @Transactional
-    public void removeSet(UserTrainingRequestDto requestDto) {
+    public void removeSet(Long userTrainingId) {
 
-        userTrainingRepository.deleteWithUserIdAndTrainingIdAndDate(requestDto);
+        UserTraining userTraining = userTrainingRepository.findById(userTrainingId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원운동ID입니다."));
 
-    }
+        Long userId = userTraining.getUser().getUserId();
+        Long trainingId = userTraining.getTraining().getTrainingId();
+        LocalDate date = userTraining.getDate();
+        int sets = userTraining.getSets();
 
-    // kg, count 데이터 수정
-    @Override
-    @Transactional
-    public void updateSet(SetRequestDto requestDto) {
-        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto);
+        userTrainingRepository.deleteById(userTrainingId);
+        userTrainingRepository.updateWithUserIdAndTrainingIdAndDateAndSets(userId, trainingId, date, sets);
+
+        userTrainingRepository.flush();
     }
 
 }

@@ -48,4 +48,15 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                 .where(qUserTraining.userTrainingId.eq(requestDto.getUserTrainingId()))
                 .execute();
     }
+
+    @Override
+    public void updateWithUserIdAndTrainingIdAndDateAndSets(Long userId, Long trainingId, LocalDate date, int sets) {
+        jpaQueryFactory.update(qUserTraining)
+                .set(qUserTraining.sets, qUserTraining.sets.subtract(1))
+                .where(qUserTraining.user.userId.eq(userId),
+                        qUserTraining.training.trainingId.eq(trainingId),
+                        qUserTraining.date.eq(date),
+                        qUserTraining.sets.gt(sets))
+                .execute();
+    }
 }

@@ -17,12 +17,13 @@ public interface UserTrainingService {
     // 운동 완료 여부 수정(세트별로)
     void toggle(Long userTrainingId);
 
+    // kg, count 데이터 수정
+    void updateSet(SetRequestDto requestDto);
+
     // 세트 추가
     void addSet(UserTrainingRequestDto requestDto);
 
     // 세트 삭제
-    void removeSet(UserTrainingRequestDto requestDto);
+    void removeSet(Long userTrainingId);
 
-    // kg, count 데이터 수정
-    void updateSet(SetRequestDto requestDto);
 }

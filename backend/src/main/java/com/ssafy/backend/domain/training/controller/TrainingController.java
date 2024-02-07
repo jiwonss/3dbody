@@ -119,10 +119,10 @@ public class TrainingController {
     }
 
     // 세트 삭제
-    @DeleteMapping("/set")
-    public ResponseEntity<?> removeSet(@RequestBody UserTrainingRequestDto requestDto) {
-        log.info("세트 삭제 요청 들어옴? - {}", requestDto);
-        userTrainingService.removeSet(requestDto);
+    @DeleteMapping("/set/{user_training_id}")
+    public ResponseEntity<?> removeSet(@PathVariable("user_training_id") Long userTrainingId) {
+        log.info("세트 삭제 요청 들어옴? 회원운동ID - {}", userTrainingId);
+        userTrainingService.removeSet(userTrainingId);
         return new ResponseEntity<>("세트 삭제 완료.", HttpStatus.OK);
     }
 
