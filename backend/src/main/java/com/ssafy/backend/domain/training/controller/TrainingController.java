@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -129,6 +130,20 @@ public class TrainingController {
         log.info("운동 삭제 api 호출 - {}", requestDto);
         userTrainingService.deleteUserTraining(requestDto);
         return new ResponseEntity<>("운동 삭제 완료.", HttpStatus.OK);
+    }
+
+    // 운동 이미지 수정
+    @PutMapping("/{training_id}")
+    public ResponseEntity<?> updateTraining(@PathVariable("training_id") Long trainingId,
+                                            @RequestParam(value = "file") MultipartFile file) {
+
+        trainingService.deleteFile(trainingId);
+        try {
+            trainingService.uploadFile(trainingId, file);
+            return new ResponseEntity<>("운동 수정 성공!", HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
     }
 
     private ResponseEntity<?> exceptionHandling(Exception e) {
