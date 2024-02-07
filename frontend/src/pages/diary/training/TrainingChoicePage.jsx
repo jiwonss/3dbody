@@ -188,7 +188,7 @@ const TrainingChoicePage = () => {
               }
             >
               <Button
-                buttonName={`${"n"}개의 운동 추가하기`}
+                buttonName={`${selectedTrainingList.length}개의 운동 추가하기`}
                 onClick={() => {
                   basepage === "basic" ? postTrainingList() : saveRoutineTrainingList();
                 }}

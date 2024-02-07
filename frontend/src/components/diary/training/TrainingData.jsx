@@ -36,7 +36,7 @@ const TrainingData = () => {
         <div
           className={`flex justify-between ${isToday() ? "" : "opacity-0"}`}
           onClick={() => {
-            return console.log("클릭");
+            return console.log("갤럭시 와치 데이터 연동");
           }}
         >
           <p className="font-semibold">✅Galaxy Watch</p>
@@ -51,7 +51,7 @@ const TrainingData = () => {
         <div className="flex flex-col gap-2">
           {userTraining.map((data, idx) => {
             return (
-              <div key={data.training_id} className="px-4 py-2 bg-white rounded-lg">
+              <div key={idx} className="px-4 py-2 bg-white rounded-lg">
                 <TrainingDetailBox data={data} idx={idx} />
               </div>
             );
