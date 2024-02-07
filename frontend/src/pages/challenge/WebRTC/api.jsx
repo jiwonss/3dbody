@@ -48,3 +48,4 @@ export const validateMeeting = async ({ roomId, token }) => {
 
   return result ? result.roomId === roomId : false;
 };
+ 

@@ -123,9 +123,7 @@ export const MobileIconButton = ({
             <div>
               {buttonText ? (
                 <p
-                  className={`${
-                    isFocused ? "text-white" : "text-gray-900"
-                  } text-sm`}
+                  className={"text-sm text-white"}
                 >
                   {buttonText}
                 </p>

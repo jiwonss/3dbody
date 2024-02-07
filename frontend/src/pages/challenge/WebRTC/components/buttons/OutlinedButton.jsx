@@ -98,7 +98,7 @@ export const OutlinedButton = ({
       >
         <div
           className={`flex items-center justify-center  rounded-lg ${
-            bgColor ? `${bgColor}` : isFocused ? "bg-white" : "bg-gray-750"
+            bgColor ? `${bgColor}` : isFocused ? "bg-white" : "bg-gray-800"
           } ${
             mouseOver
               ? "border-2 border-transparent border-solid"
@@ -188,9 +188,7 @@ export const OutlinedButton = ({
                     />
                     {badge && (
                       <p
-                        className={`${
-                          isFocused ? "text-black" : "text-white"
-                        } text-base ml-2`}
+                        className={"text-base ml-2 text-white"}
                       >
                         {badge}
                       </p>

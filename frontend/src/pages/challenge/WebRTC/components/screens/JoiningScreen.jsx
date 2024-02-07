@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MeetingDetailsScreen } from "../MeetingDetailsScreen";
 import { createMeeting, getToken, validateMeeting } from "../../api";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import SettingDialogueBox from "../SettingDialogueBox";
+// import { CheckCircleIcon } from "@heroicons/react/24/solid";
+// import SettingDialogueBox from "../SettingDialogueBox";
 import ConfirmBox from "../ConfirmBox";
 import { Constants } from "@videosdk.live/react-sdk";
 import useIsMobile from "../../hooks/useIsMobile";
@@ -11,6 +11,7 @@ import WebcamOffIcon from "../../icons/WebcamOffIcon";
 import WebcamOnIcon from "../../icons/Bottombar/WebcamOnIcon";
 import MicOffIcon from "../../icons/MicOffIcon";
 import MicOnIcon from "../../icons/Bottombar/MicOnIcon";
+import BackButton from './../../../../../components/common/BackButton';
 
 export function JoiningScreen({
   participantName,
@@ -47,17 +48,17 @@ export function JoiningScreen({
   const audioTrackRef = useRef();
   const audioAnalyserIntervalRef = useRef();
 
-  const [settingDialogueOpen, setSettingDialogueOpen] = useState(false);
+  // const [settingDialogueOpen, setSettingDialogueOpen] = useState(false);
 
   const [audioTrack, setAudioTrack] = useState(null);
 
-  const handleClickOpen = () => {
-    setSettingDialogueOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setSettingDialogueOpen(true);
+  // };
 
-  const handleClose = (value) => {
-    setSettingDialogueOpen(false);
-  };
+  // const handleClose = (value) => {
+  //   setSettingDialogueOpen(false);
+  // };
 
   const isMobile = useIsMobile();
 
@@ -294,7 +295,7 @@ export function JoiningScreen({
         popupVideoPlayerRef.current.srcObject = null;
       }
     }
-  }, [videoTrack, setting, settingDialogueOpen]);
+  }, [videoTrack, setting]); //[videoTrack, setting, settingDialogueOpen]
 
   useEffect(() => {
     getDevices({ micEnabled, webcamEnabled });
@@ -324,7 +325,7 @@ export function JoiningScreen({
             onMouseLeave={closeTooltip}
             onClick={onClick}
             className={`rounded-full min-w-auto w-11 h-11 flex items-center justify-center ${
-              onState ? "bg-white" : "bg-red-650 text-white"
+              onState ? "bg-white" : "bg-red-600 text-white"
             }`}
             disabled={meetingMode === Constants.modes.VIEWER}
           >
@@ -342,13 +343,6 @@ export function JoiningScreen({
           } overflow-hidden flex flex-col items-center justify-center pb-1.5`}
           ref={tooltipRef}
         >
-          <div className={"rounded-md p-1.5 bg-black "}>
-            <p className="text-base text-white ">
-              {onState
-                ? `Turn off ${mic ? "mic" : "webcam"}`
-                : `Turn on ${mic ? "mic" : "webcam"}`}
-            </p>
-          </div>
         </div>
       </>
     );
@@ -356,7 +350,10 @@ export function JoiningScreen({
 
   return (
     <div className="fixed inset-0">
-      <div className="flex flex-col flex-1 h-screen overflow-y-auto bg-gray-800">
+      <div className="absolute">
+        <BackButton />
+      </div>
+      <div className="flex flex-col flex-1 h-screen overflow-y-auto bg-gray-200">
         <div className="flex flex-1 flex-col md:flex-row items-center justify-center md:m-[72px] m-16">
           <div className="container grid grid-flow-row md:grid-flow-col ">
             <div className="grid grid-cols-12">
@@ -385,14 +382,14 @@ export function JoiningScreen({
                               <p className="text-xl text-white xl:text-lg 2xl:text-xl">
                                 {meetingMode === Constants.modes.VIEWER
                                   ? "You are not permitted to use your microphone and camera."
-                                  : "The camera is off"}
+                                  : "카메라가 꺼져있습니다."}
                               </p>
                             ) : null}
                           </div>
                         </>
                       ) : null}
 
-                      {settingDialogueOpen ? (
+                      {/* {settingDialogueOpen ? (
                         <SettingDialogueBox
                           open={settingDialogueOpen}
                           onClose={handleClose}
@@ -409,7 +406,7 @@ export function JoiningScreen({
                           videoTrack={videoTrack}
                           audioTrack={audioTrack}
                         />
-                      ) : null}
+                      ) : null} */}
 
                       {meetingMode === Constants.modes.CONFERENCE && (
                         <div className="absolute left-0 right-0 xl:bottom-6 bottom-4">
@@ -433,7 +430,7 @@ export function JoiningScreen({
                       )}
                     </div>
 
-                    {!isMobile &&
+                    {/* {!isMobile &&
                       meetingMode === Constants.modes.CONFERENCE && (
                         <div
                           className="absolute m-4 bg-gray-700 rounded cursor-pointer md:left-12 lg:left-24 xl:left-44 md:right-12 lg:right-24 xl:right-44"
@@ -450,7 +447,7 @@ export function JoiningScreen({
                             </p>
                           </div>
                         </div>
-                      )}
+                      )} */}
                   </div>
                 </div>
               </div>

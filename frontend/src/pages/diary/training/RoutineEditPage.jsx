@@ -9,15 +9,13 @@ import { userRoutineState } from "../../../recoil/diary/UserRoutineState";
 import Input from "../../../components/common/Input";
 
 const RoutineEditPage = () => {
-  const { basepage } = useParams();
+  const { routineId } = useParams();
   const selectedRoutine = useRecoilValue(selectedRoutineState);
   const userRoutine = useRecoilState(userRoutineState);
   const [name, setName] = useState(userRoutine?.name);
-
+  
   const onClickBtn = () => {
-    basepage === "basic"
-      ? console.log("루틴 수정요청 보내기")
-      : console.log("루틴 생성요청 보내기");
+    console.log("루틴 수정요청 보내기")
   };
 
   const onChangeName = (e) => {

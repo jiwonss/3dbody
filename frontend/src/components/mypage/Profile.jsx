@@ -21,7 +21,7 @@ const Profile = () => {
   const bucket = "3dbody-image"; // S3 버킷 이름
 
   const logout = () => {
-    // localStorage.clear();
+    localStorage.clear();
     window.location.reload("/");
   };
 

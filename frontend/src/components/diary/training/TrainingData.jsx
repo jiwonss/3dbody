@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { BsFillTrash3Fill } from 'react-icons/bs';
 import { userTrainingState } from "../../../recoil/diary/UserTrainingState";
 import Button from "../../common/Button";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState"
