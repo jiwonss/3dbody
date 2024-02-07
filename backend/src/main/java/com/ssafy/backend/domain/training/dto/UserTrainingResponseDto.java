@@ -13,6 +13,9 @@ import java.util.List;
  * 운동 조회 API에서 사용할 DTO
  * userId - 회원ID
  * trainingId - 운동ID
+ * name - 운동명
+ * category - 운동부위
+ * image - 운동이미지
  * date - 날짜
  * sets - 운동 세트(무게, 횟수, 완료여부)
  */
@@ -26,6 +29,12 @@ public class UserTrainingResponseDto {
     @JsonProperty("training_id")
     private Long trainingId;
 
+    private String name;
+
+    private String category;
+
+    private String image;
+
     private LocalDate date;
 
     @Builder.Default
@@ -37,6 +46,9 @@ public class UserTrainingResponseDto {
                 .builder()
                 .userId(userTraining.getUser().getUserId())
                 .trainingId(userTraining.getTraining().getTrainingId())
+                .name(userTraining.getTraining().getName())
+                .category(userTraining.getTraining().getCategory())
+                .image(userTraining.getTraining().getImage())
                 .date(userTraining.getDate())
                 .build();
 
