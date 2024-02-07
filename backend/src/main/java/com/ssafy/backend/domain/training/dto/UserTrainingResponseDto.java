@@ -5,7 +5,6 @@ import com.ssafy.backend.domain.training.entity.UserTraining;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import java.util.List;
  * name - 운동명
  * category - 운동부위
  * image - 운동이미지
- * date - 날짜
  * sets - 운동 세트(무게, 횟수, 완료여부)
  */
 @Data
@@ -35,8 +33,6 @@ public class UserTrainingResponseDto {
 
     private String image;
 
-    private LocalDate date;
-
     @Builder.Default
     private List<SetResponseDto> sets = new ArrayList<>();
 
@@ -49,7 +45,6 @@ public class UserTrainingResponseDto {
                 .name(userTraining.getTraining().getName())
                 .category(userTraining.getTraining().getCategory())
                 .image(userTraining.getTraining().getImage())
-                .date(userTraining.getDate())
                 .build();
 
     }

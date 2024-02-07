@@ -69,6 +69,17 @@ public class TrainingController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 운동 조회(회원)
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<?> getAllTraining(@PathVariable("user_id") Long userId) {
+        try {
+
+            return new ResponseEntity<>("", HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     // 운동 조회(특정 날짜&회원)
     @GetMapping
     public ResponseEntity<?> getTrainings(@RequestParam("user_id") Long userId,
@@ -76,7 +87,7 @@ public class TrainingController {
                                           @RequestParam("month") int month,
                                           @RequestParam("day") int day) {
         log.info("운동 조회 들어왔나?");
-        List<UserTrainingResponseDto> list = userTrainingService.getTrainings(userId, year, month, day);
+        UserTrainingDataResponseDto list = userTrainingService.getTrainings(userId, year, month, day);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

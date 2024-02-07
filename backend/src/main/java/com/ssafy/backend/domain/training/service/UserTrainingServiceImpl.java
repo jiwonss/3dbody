@@ -30,14 +30,19 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     // 운동 조회(특정 날짜&회원)
     @Override
     @Transactional
-    public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
+    public UserTrainingDataResponseDto getTrainings(Long userId, int year, int month, int day) {
 
         LocalDate date = LocalDate.of(year, month, day);
         List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
 
         log.info("운동 관리 데이터 받아왔나? {}", userTrainings);
 
-        List<UserTrainingResponseDto> userTrainingResponseDtos = new ArrayList<>();
+        UserTrainingDataResponseDto responseDto = UserTrainingDataResponseDto
+                .builder()
+                .date(date)
+                .build();
+
+//        List<UserTrainingResponseDto> userTrainingResponseDtos = new ArrayList<>();
         TreeMap<Integer, UserTrainingResponseDto> userTrainingResponseDtoTreeMap = new TreeMap<>();
 
         userTrainings.forEach(u -> {
@@ -60,12 +65,12 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         Set<Integer> keySet = userTrainingResponseDtoTreeMap.keySet();
 
         for (Integer key : keySet) {
-            userTrainingResponseDtos.add(userTrainingResponseDtoTreeMap.get(key));
+            responseDto.getUserTrainingList().add(userTrainingResponseDtoTreeMap.get(key));
         }
 
         userTrainingRepository.flush();
 
-        return userTrainingResponseDtos;
+        return responseDto;
     }
 
     // 운동 추가

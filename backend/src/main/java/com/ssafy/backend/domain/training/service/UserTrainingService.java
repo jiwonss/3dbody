@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserTrainingService {
 
     // 운동 조회(특정 날짜&회원)
-    List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day);
+    UserTrainingDataResponseDto getTrainings(Long userId, int year, int month, int day);
 
     // 운동 추가
     void saveTrainings(Long userId, int year, int month, int day, List<Long> trainings);
