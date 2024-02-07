@@ -17,9 +17,7 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
     QUserTraining qUserTraining = QUserTraining.userTraining;
 
     @Override
-    public List<UserTraining> findAllWithUserIdAndDate(Long userId, int year, int month, int day) {
-
-        LocalDate date = LocalDate.of(year, month, day);
+    public List<UserTraining> findAllWithUserIdAndDate(Long userId, LocalDate date) {
 
         return jpaQueryFactory.selectFrom(qUserTraining)
                 .where(qUserTraining.user.userId.eq(userId), qUserTraining.date.eq(date))
@@ -46,5 +44,24 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                 .orderBy(qUserTraining.sets.desc())
                 .fetchFirst();
 
+    }
+
+    @Override
+    public void deleteWithUserIdAndTrainingIdAndDate(Long userId, Long trainingId, LocalDate date) {
+        jpaQueryFactory.delete(qUserTraining)
+                .where(qUserTraining.user.userId.eq(userId),
+                        qUserTraining.training.trainingId.eq(trainingId),
+                        qUserTraining.date.eq(date))
+                .execute();
+    }
+
+    @Override
+    public void updateWithUserIdAndDateAndSequence(Long userId, LocalDate date, int sequence) {
+        jpaQueryFactory.update(qUserTraining)
+                .set(qUserTraining.sequence, qUserTraining.sequence.subtract(1))
+                .where(qUserTraining.user.userId.eq(userId),
+                        qUserTraining.date.eq(date),
+                        qUserTraining.sequence.gt(sequence))
+                .execute();
     }
 }

@@ -32,7 +32,8 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     @Transactional
     public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
 
-        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
+        LocalDate date = LocalDate.of(year, month, day);
+        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
 
         log.info("운동 관리 데이터 받아왔나? {}", userTrainings);
 
@@ -77,7 +78,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         User user = userRepository.getReferenceById(userId);
         LocalDate date = LocalDate.of(year, month, day);
 
-        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
         int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
 
         for (int i = 0; i < trainings.size(); i++) {
@@ -156,6 +157,28 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         UserTraining lastUserTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
         userTrainingRepository.delete(lastUserTraining);
         userTrainingRepository.flush();
+    }
+
+    // 운동 삭제
+    @Override
+    @Transactional
+    public void deleteUserTraining(UserTrainingDeleteRequestDto requestDto) {
+
+        Long userId = requestDto.getUserId();
+        Long trainingId = requestDto.getTrainingId();
+        LocalDate date = requestDto.getDate();
+
+        // 삭제할 운동의 sequence 획득
+        UserTraining userTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+
+        int sequence = userTraining.getSequence();
+
+        // 운동 삭제
+        userTrainingRepository.deleteWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+
+        // 삭제한 운동 다음에 있는 운동들 sequence 1씩 감소
+        userTrainingRepository.updateWithUserIdAndDateAndSequence(userId, date, sequence);
+
     }
 
 }

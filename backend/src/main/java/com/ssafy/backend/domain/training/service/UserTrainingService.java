@@ -1,9 +1,6 @@
 package com.ssafy.backend.domain.training.service;
 
-import com.ssafy.backend.domain.training.dto.SetDeleteRequestDto;
-import com.ssafy.backend.domain.training.dto.SetUpdateRequestDto;
-import com.ssafy.backend.domain.training.dto.SetCreateRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
+import com.ssafy.backend.domain.training.dto.*;
 
 import java.util.List;
 
@@ -27,4 +24,6 @@ public interface UserTrainingService {
     // 세트 삭제
     void removeSet(SetDeleteRequestDto requestDto);
 
+    // 운동 삭제
+    void deleteUserTraining(UserTrainingDeleteRequestDto requestDto);
 }

@@ -123,6 +123,14 @@ public class TrainingController {
         return new ResponseEntity<>("세트 삭제 완료.", HttpStatus.OK);
     }
 
+    // 운동 삭제
+    @DeleteMapping
+    public ResponseEntity<?> removeUserTraining(@RequestBody UserTrainingDeleteRequestDto requestDto) {
+        log.info("운동 삭제 api 호출 - {}", requestDto);
+        userTrainingService.deleteUserTraining(requestDto);
+        return new ResponseEntity<>("운동 삭제 완료.", HttpStatus.OK);
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
