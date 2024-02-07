@@ -29,7 +29,7 @@ const SideBarTabView = ({
 
   return (
     <div
-      className="bg-gray-800"
+      className="bg-gray-200"
       style={{
         height,
         width: sideBarContainerWidth,
@@ -58,31 +58,11 @@ const SideBarTabView = ({
                   borderBottom: "1px solid #70707033",
                 }}
               >
-                <p className="text-base font-bold text-white">
-                  {sideBarMode === "PARTICIPANTS"
-                    ? `${
-                        sideBarMode.charAt(0).toUpperCase() +
-                          sideBarMode.slice(1).toLowerCase() || ""
-                      } (${new Map(participants)?.size})`
-                    : sideBarMode === sideBarModes.CREATE_POLL
-                    ? "Create a poll"
-                    : sideBarMode === sideBarModes.POLLS
-                    ? polls?.length >= 1 || draftPolls?.length >= 1
-                      ? `Polls ${
-                          polls?.length || draftPolls?.length
-                            ? `(${polls?.length || draftPolls?.length})`
-                            : ""
-                        }`
-                      : meetingMode === Constants.modes.VIEWER
-                      ? `Polls ${polls?.length ? `(${polls?.length})` : ""}`
-                      : "Create a poll"
-                    : sideBarMode === sideBarModes.ECOMMERCE
-                    ? "Products"
-                    : sideBarMode.charAt(0).toUpperCase() +
-                        sideBarMode.slice(1).toLowerCase() || ""}
+                <p className="text-base font-bold text-gray-800">
+                  {sideBarMode === "CHAT" ? "채팅" : "참가자"}
                 </p>
                 <button
-                  className="text-white"
+                  className="text-gray-800"
                   onClick={handleClose}
                   style={{ margin: 0, padding: 0 }}
                 >
@@ -94,18 +74,6 @@ const SideBarTabView = ({
               <ParticipantPanel panelHeight={panelHeight} />
             ) : sideBarMode === "CHAT" ? (
               <ChatPanel panelHeight={panelHeight} />
-            ) : sideBarMode === "POLLS" && meetingMode !== "VIEWER" ? (
-              polls.length === 0 && draftPolls.length === 0 ? (
-                <CreatePoll {...{ panelHeight }} />
-              ) : (
-                <PollList {...{ panelHeight }} />
-              )
-            ) : sideBarMode === "POLLS" && meetingMode === "VIEWER" ? (
-              <SubmitPollList {...{ panelHeight }} />
-            ) : sideBarMode === "CREATE_POLL" ? (
-              <CreatePoll {...{ panelHeight }} />
-            ) : sideBarMode === "ECOMMERCE" ? (
-              <ECommercePanel {...{ panelHeight }} />
             ) : null}
           </>
         </div>

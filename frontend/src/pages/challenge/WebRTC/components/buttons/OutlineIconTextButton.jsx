@@ -71,7 +71,7 @@ const OutlineIconTextButton = ({
       <div ref={btnRef} onMouseEnter={openTooltip} onMouseLeave={closeTooltip}>
         <button
           className={`flex items-center justify-center  rounded-lg ${
-            bgColor ? `${bgColor}` : isFocused ? "bg-white" : "bg-gray-750"
+            bgColor ? `${bgColor}` : isFocused ? "bg-white" : "bg-gray-800"
           } ${
             mouseOver
               ? "border-2 border-transparent border-solid"

@@ -99,7 +99,7 @@ export function ParticipantPanel({ panelHeight }) {
 
   return (
     <div
-      className={`flex w-full flex-col bg-gray-750 overflow-y-auto `}
+      className={`flex w-full flex-col bg-gray-200 overflow-y-auto `}
       style={{ height: panelHeight }}
     >
       <div
@@ -112,6 +112,7 @@ export function ParticipantPanel({ panelHeight }) {
             <ParticipantListItem
               participantId={peerId}
               raisedHand={raisedHand}
+              key={index}
             />
           );
         })}

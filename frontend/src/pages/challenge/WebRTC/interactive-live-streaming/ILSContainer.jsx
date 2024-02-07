@@ -316,7 +316,7 @@ export function ILSContainer({
 
   return (
     <div className="fixed inset-0">
-      <div ref={containerRef} className="flex flex-col h-full bg-gray-800">
+      <div ref={containerRef} className="flex flex-col h-full bg-gray-200">
         <FlyingEmojisOverlay />
         {typeof localParticipantAllowedJoin === "boolean" ? (
           localParticipantAllowedJoin ? (
@@ -342,7 +342,7 @@ export function ILSContainer({
                   </div>
                 ))}
 
-              <div className={` flex flex-1 flex-row bg-gray-800 `}>
+              <div className={` flex flex-1 flex-row bg-gray-200`}>
                 {meetingMode === Constants.modes.CONFERENCE ? (
                   <div className={`flex flex-1 `}>
                     {isPresenting ? (
