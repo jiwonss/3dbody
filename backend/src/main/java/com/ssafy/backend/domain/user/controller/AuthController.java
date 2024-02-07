@@ -52,7 +52,7 @@ public class AuthController {
                         .userInfo(userService.getUserInfo(userInfoDto.getUserId()))
                         .token(tokenDto)
                         .build(),
-                HttpStatus.OK.name(), "")
+                HttpStatus.OK.name(), "로그인 성공")
         );
 
     }
