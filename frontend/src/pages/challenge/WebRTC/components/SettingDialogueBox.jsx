@@ -203,7 +203,7 @@ export default function SettingDialogueBox({
                           {[
                             { value: "audio", label: "Audio" },
                             { value: "video", label: "Video" },
-                          ].map(({ value, label }) =>
+                          ].map(({ value, label }, idx) =>
                             label === "Audio" || label === "Video" ? (
                               <button
                                 className={`inline-flex items-center justify-center px-4 py-2 border ${
@@ -214,6 +214,7 @@ export default function SettingDialogueBox({
                                 onClick={() => {
                                   handleSetting(null, value);
                                 }}
+                                key={idx}
                               >
                                 {label}
                               </button>
