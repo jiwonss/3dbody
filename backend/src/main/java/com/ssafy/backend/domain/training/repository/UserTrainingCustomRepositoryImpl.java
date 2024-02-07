@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.training.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.backend.domain.training.dto.SetRequestDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
 import com.ssafy.backend.domain.training.entity.QUserTraining;
 import com.ssafy.backend.domain.training.entity.UserTraining;
@@ -36,6 +37,15 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                         qUserTraining.date.eq(requestDto.getDate()),
                         qUserTraining.sequence.eq(requestDto.getSequence()),
                         qUserTraining.sets.eq(requestDto.getSets()))
+                .execute();
+    }
+
+    @Override
+    public void updateWithUserTrainingIdAndKgAndCount(SetRequestDto requestDto) {
+        jpaQueryFactory.update(qUserTraining)
+                .set(qUserTraining.kg, requestDto.getKg())
+                .set(qUserTraining.count, requestDto.getCount())
+                .where(qUserTraining.userTrainingId.eq(requestDto.getUserTrainingId()))
                 .execute();
     }
 }

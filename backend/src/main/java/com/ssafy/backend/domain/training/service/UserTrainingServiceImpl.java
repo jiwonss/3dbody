@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.training.service;
 
+import com.ssafy.backend.domain.training.dto.SetRequestDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
 import com.ssafy.backend.domain.training.dto.SetResponseDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
@@ -141,6 +142,13 @@ public class UserTrainingServiceImpl implements UserTrainingService {
 
         userTrainingRepository.deleteWithUserIdAndTrainingIdAndDate(requestDto);
 
+    }
+
+    // kg, count 데이터 수정
+    @Override
+    @Transactional
+    public void updateSet(SetRequestDto requestDto) {
+        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto);
     }
 
 }
