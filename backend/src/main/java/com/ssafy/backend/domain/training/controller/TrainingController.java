@@ -1,7 +1,7 @@
 package com.ssafy.backend.domain.training.controller;
 
-import com.ssafy.backend.domain.training.dto.SetRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
+import com.ssafy.backend.domain.training.dto.SetUpdateRequestDto;
+import com.ssafy.backend.domain.training.dto.SetCreateRequestDto;
 import com.ssafy.backend.domain.training.dto.TrainingResponseDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 import com.ssafy.backend.domain.training.service.TrainingService;
@@ -105,14 +105,14 @@ public class TrainingController {
 
     // kg, count 데이터 수정
     @PutMapping("/set")
-    public ResponseEntity<?> updateSet(@RequestBody SetRequestDto requestDto) {
+    public ResponseEntity<?> updateSet(@RequestBody SetUpdateRequestDto requestDto) {
         userTrainingService.updateSet(requestDto);
         return new ResponseEntity<>("kg, count 데이터 수정 완료!", HttpStatus.OK);
     }
 
     // 세트 추가
     @PostMapping("/set")
-    public ResponseEntity<?> addSet(@RequestBody UserTrainingRequestDto requestDto) {
+    public ResponseEntity<?> addSet(@RequestBody SetCreateRequestDto requestDto) {
         log.info("세트 추가 요청 들어오나? {}", requestDto);
         userTrainingService.addSet(requestDto);
         return new ResponseEntity<>("새트 추가 완료.", HttpStatus.OK);

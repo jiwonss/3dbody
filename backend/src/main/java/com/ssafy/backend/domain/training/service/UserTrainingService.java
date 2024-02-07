@@ -1,7 +1,7 @@
 package com.ssafy.backend.domain.training.service;
 
-import com.ssafy.backend.domain.training.dto.SetRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
+import com.ssafy.backend.domain.training.dto.SetUpdateRequestDto;
+import com.ssafy.backend.domain.training.dto.SetCreateRequestDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 
 import java.util.List;
@@ -18,10 +18,10 @@ public interface UserTrainingService {
     void toggle(Long userTrainingId);
 
     // kg, count 데이터 수정
-    void updateSet(SetRequestDto requestDto);
+    void updateSet(SetUpdateRequestDto requestDto);
 
     // 세트 추가
-    void addSet(UserTrainingRequestDto requestDto);
+    void addSet(SetCreateRequestDto requestDto);
 
     // 세트 삭제
     void removeSet(Long userTrainingId);

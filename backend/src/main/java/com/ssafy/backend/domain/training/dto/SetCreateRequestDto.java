@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class UserTrainingRequestDto {
+public class SetCreateRequestDto {
 
     @JsonProperty("user_id")
     private Long userId;
@@ -17,13 +17,5 @@ public class UserTrainingRequestDto {
     private Long trainingId;
 
     private LocalDate date;
-
-    private int sequence;
-
-    private int sets;
-
-    private float kg;
-
-    private int count;
 
 }

@@ -1,7 +1,7 @@
 package com.ssafy.backend.domain.training.service;
 
-import com.ssafy.backend.domain.training.dto.SetRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
+import com.ssafy.backend.domain.training.dto.SetUpdateRequestDto;
+import com.ssafy.backend.domain.training.dto.SetCreateRequestDto;
 import com.ssafy.backend.domain.training.dto.SetResponseDto;
 import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
 import com.ssafy.backend.domain.training.entity.Training;
@@ -115,28 +115,33 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     // kg, count 데이터 수정
     @Override
     @Transactional
-    public void updateSet(SetRequestDto requestDto) {
+    public void updateSet(SetUpdateRequestDto requestDto) {
         userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto);
     }
 
     // 세트 추가
     @Override
-    public void addSet(UserTrainingRequestDto requestDto) {
+    @Transactional
+    public void addSet(SetCreateRequestDto requestDto) {
 
         log.info("잘 들어왔나? -{}", requestDto);
 
-        User user = userRepository.getReferenceById(requestDto.getUserId());
-        Training training = trainingRepository.getReferenceById(requestDto.getTrainingId());
+        Long userId = requestDto.getUserId();
+        Long trainingId = requestDto.getTrainingId();
+        LocalDate date = requestDto.getDate();
+
+        User user = userRepository.getReferenceById(userId);
+        Training training = trainingRepository.getReferenceById(trainingId);
+
+        UserTraining lastUserTraining = userTrainingRepository.findWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
 
         UserTraining userTraining = UserTraining
                 .builder()
                 .user(user)
                 .training(training)
-                .date(requestDto.getDate())
-                .sequence(requestDto.getSequence())
-                .sets(requestDto.getSets())
-                .kg(requestDto.getKg())
-                .count(requestDto.getCount())
+                .date(date)
+                .sequence(lastUserTraining.getSequence())
+                .sets(lastUserTraining.getSets() + 1)
                 .build();
 
         userTrainingRepository.saveAndFlush(userTraining);

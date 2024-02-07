@@ -1,8 +1,7 @@
 package com.ssafy.backend.domain.training.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.backend.domain.training.dto.SetRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
+import com.ssafy.backend.domain.training.dto.SetUpdateRequestDto;
 import com.ssafy.backend.domain.training.entity.QUserTraining;
 import com.ssafy.backend.domain.training.entity.UserTraining;
 import lombok.RequiredArgsConstructor;
@@ -29,19 +28,7 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
     }
 
     @Override
-    public void deleteWithUserIdAndTrainingIdAndDate(UserTrainingRequestDto requestDto) {
-
-        jpaQueryFactory.delete(qUserTraining)
-                .where(qUserTraining.user.userId.eq(requestDto.getUserId()),
-                        qUserTraining.training.trainingId.eq(requestDto.getTrainingId()),
-                        qUserTraining.date.eq(requestDto.getDate()),
-                        qUserTraining.sequence.eq(requestDto.getSequence()),
-                        qUserTraining.sets.eq(requestDto.getSets()))
-                .execute();
-    }
-
-    @Override
-    public void updateWithUserTrainingIdAndKgAndCount(SetRequestDto requestDto) {
+    public void updateWithUserTrainingIdAndKgAndCount(SetUpdateRequestDto requestDto) {
         jpaQueryFactory.update(qUserTraining)
                 .set(qUserTraining.kg, requestDto.getKg())
                 .set(qUserTraining.count, requestDto.getCount())
@@ -58,5 +45,16 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                         qUserTraining.date.eq(date),
                         qUserTraining.sets.gt(sets))
                 .execute();
+    }
+
+    @Override
+    public UserTraining findWithUserIdAndTrainingIdAndDate(Long userId, Long trainingId, LocalDate date) {
+        return jpaQueryFactory.selectFrom(qUserTraining)
+                .where(qUserTraining.user.userId.eq(userId),
+                        qUserTraining.training.trainingId.eq(trainingId),
+                        qUserTraining.date.eq(date))
+                .orderBy(qUserTraining.sets.desc())
+                .fetchFirst();
+
     }
 }

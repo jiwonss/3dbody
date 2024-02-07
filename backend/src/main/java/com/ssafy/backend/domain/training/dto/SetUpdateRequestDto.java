@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SetRequestDto {
+public class SetUpdateRequestDto {
 
     @JsonProperty("user_training_id")
     private Long userTrainingId;
