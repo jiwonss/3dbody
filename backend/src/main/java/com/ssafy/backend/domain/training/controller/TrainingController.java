@@ -92,7 +92,7 @@ public class TrainingController {
         log.info("{}", trainings);
         log.info("userId={}, 오늘날짜: {}-{}-{}", userId, year, month, day);
         userTrainingService.saveTrainings(userId, year, month, day, trainings);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(year + "-" + month + "-" + day + ", 회원ID = " + userId + " 운동 추가 성공!", HttpStatus.OK);
     }
 
     // 운동 완료 여부 수정(세트별로)
