@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.routine.service;
 
 import com.ssafy.backend.domain.routine.dto.RoutineDto;
+import com.ssafy.backend.domain.routine.dto.RoutineSetRequestDto;
 import com.ssafy.backend.domain.routine.dto.RoutineTrainingRequestDto;
 import com.ssafy.backend.domain.routine.dto.RoutineTrainingResponseDto;
 import com.ssafy.backend.domain.routine.entity.Routine;
@@ -123,8 +124,18 @@ public class RoutineServiceImpl implements RoutineService{
     }
 
     //나만의 루틴 상세 삭제(일단 스톱)
-
+    @Override
+    @Transactional
+    public void removeRoutine(Long routineId){
+        routineTrainingListRepository.deleteAllByRoutineId(routineId);
+        routineRepository.deleteById(routineId);
+    }
     //루틴 상세 보기 편집 kg, 횟수 수정
-
+    @Override
+    @Transactional
+    public void updateSet(RoutineSetRequestDto requestDto){
+        log.info("service에서 로그 : {}", requestDto);
+        routineTrainingListRepository.updateWithRoutineTrainingListIdAndKgAndCount(requestDto.getRoutineTrainingListId(), requestDto.getKg(), requestDto.getCount());
+    }
     //루틴 운동 생성
 }
