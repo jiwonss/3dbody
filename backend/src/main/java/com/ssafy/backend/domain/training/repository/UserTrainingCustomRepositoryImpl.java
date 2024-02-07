@@ -36,19 +36,9 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                 .execute();
     }
 
+    // 해당 날짜, 회원, 운동 중에서 가장 마지막 세트를 찾아서 반환시켜주는 메서드
     @Override
-    public void updateWithUserIdAndTrainingIdAndDateAndSets(Long userId, Long trainingId, LocalDate date, int sets) {
-        jpaQueryFactory.update(qUserTraining)
-                .set(qUserTraining.sets, qUserTraining.sets.subtract(1))
-                .where(qUserTraining.user.userId.eq(userId),
-                        qUserTraining.training.trainingId.eq(trainingId),
-                        qUserTraining.date.eq(date),
-                        qUserTraining.sets.gt(sets))
-                .execute();
-    }
-
-    @Override
-    public UserTraining findWithUserIdAndTrainingIdAndDate(Long userId, Long trainingId, LocalDate date) {
+    public UserTraining findLastOneWithUserIdAndTrainingIdAndDate(Long userId, Long trainingId, LocalDate date) {
         return jpaQueryFactory.selectFrom(qUserTraining)
                 .where(qUserTraining.user.userId.eq(userId),
                         qUserTraining.training.trainingId.eq(trainingId),

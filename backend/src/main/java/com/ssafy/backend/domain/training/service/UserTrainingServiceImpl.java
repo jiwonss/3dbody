@@ -1,9 +1,6 @@
 package com.ssafy.backend.domain.training.service;
 
-import com.ssafy.backend.domain.training.dto.SetUpdateRequestDto;
-import com.ssafy.backend.domain.training.dto.SetCreateRequestDto;
-import com.ssafy.backend.domain.training.dto.SetResponseDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
+import com.ssafy.backend.domain.training.dto.*;
 import com.ssafy.backend.domain.training.entity.Training;
 import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
@@ -133,7 +130,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         User user = userRepository.getReferenceById(userId);
         Training training = trainingRepository.getReferenceById(trainingId);
 
-        UserTraining lastUserTraining = userTrainingRepository.findWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+        UserTraining lastUserTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
 
         UserTraining userTraining = UserTraining
                 .builder()
@@ -150,18 +147,14 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     // 세트 삭제
     @Override
     @Transactional
-    public void removeSet(Long userTrainingId) {
+    public void removeSet(SetDeleteRequestDto requestDto) {
 
-        UserTraining userTraining = userTrainingRepository.findById(userTrainingId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원운동ID입니다."));
+        Long userId = requestDto.getUserId();
+        Long trainingId = requestDto.getTrainingId();
+        LocalDate date = requestDto.getDate();
 
-        Long userId = userTraining.getUser().getUserId();
-        Long trainingId = userTraining.getTraining().getTrainingId();
-        LocalDate date = userTraining.getDate();
-        int sets = userTraining.getSets();
-
-        userTrainingRepository.deleteById(userTrainingId);
-        userTrainingRepository.updateWithUserIdAndTrainingIdAndDateAndSets(userId, trainingId, date, sets);
-
+        UserTraining lastUserTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+        userTrainingRepository.delete(lastUserTraining);
         userTrainingRepository.flush();
     }
 

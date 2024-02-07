@@ -12,7 +12,6 @@ public interface UserTrainingCustomRepository {
 
     void updateWithUserTrainingIdAndKgAndCount(SetUpdateRequestDto requestDto);
 
-    void updateWithUserIdAndTrainingIdAndDateAndSets(Long userId, Long trainingId, LocalDate date, int sets);
-
-    UserTraining findWithUserIdAndTrainingIdAndDate(Long userId, Long trainingId, LocalDate date);
+    // 해당 날짜, 회원, 운동 중에서 가장 마지막 세트를 찾아서 반환시켜주는 메서드
+    UserTraining findLastOneWithUserIdAndTrainingIdAndDate(Long userId, Long trainingId, LocalDate date);
 }
