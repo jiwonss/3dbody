@@ -13,9 +13,6 @@ import java.util.List;
 @Builder
 public class UserTrainingResponseDto {
 
-    @JsonProperty("user_training_id")
-    private Long userTrainingId;
-
     @JsonProperty("user_id")
     private Long userId;
 
@@ -24,13 +21,6 @@ public class UserTrainingResponseDto {
 
     private LocalDate date;
 
-    private float kg;
-
-    private int count;
-
-    @JsonProperty("is_finished")
-    private boolean isFinished;
-
     @Builder.Default
     private List<SetResponseDto> sets = new ArrayList<>();
 
@@ -38,11 +28,9 @@ public class UserTrainingResponseDto {
 
         return UserTrainingResponseDto
                 .builder()
-                .userTrainingId(userTraining.getUserTrainingId())
                 .userId(userTraining.getUser().getUserId())
                 .trainingId(userTraining.getTraining().getTrainingId())
                 .date(userTraining.getDate())
-                .isFinished(userTraining.isFinished())
                 .build();
 
     }

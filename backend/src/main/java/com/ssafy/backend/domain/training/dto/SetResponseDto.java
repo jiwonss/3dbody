@@ -16,6 +16,9 @@ public class SetResponseDto {
 
     private int count;
 
+    @JsonProperty("is_finished")
+    private boolean isFinished;
+
     public static SetResponseDto toDto(UserTraining userTraining) {
 
         return SetResponseDto
@@ -23,6 +26,7 @@ public class SetResponseDto {
                 .userTrainingId(userTraining.getUserTrainingId())
                 .kg(userTraining.getKg())
                 .count(userTraining.getCount())
+                .isFinished(userTraining.isFinished())
                 .build();
 
     }
