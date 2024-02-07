@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface RoutineTrainingListRepository extends JpaRepository<RoutineTrainingList, Long> {
-    List<RoutineTrainingList> findAllByRoutineRoutineId(Long routineId);
+    @Query("SELECT r FROM RoutineTrainingList r WHERE r.routine.routineId = :routineId")
+    List<RoutineTrainingList> findAllByroutineTrainingListRoutineId(@Param("routineId") Long routineId);
 
+    List<RoutineTrainingList> findAllByRoutineRoutineId(Long routineId);
     @Transactional
     @Modifying
     @Query("DELETE FROM RoutineTrainingList r WHERE r.routine.routineId = :routineId")
