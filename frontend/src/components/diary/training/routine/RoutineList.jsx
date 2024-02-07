@@ -9,7 +9,7 @@ const RoutineList = () => {
     <div className="flex flex-col gap-2">
       {userRoutine.map((data) => {
         return (
-          <div key={data.routineId} className="px-4 py-2 bg-gray-200 rounded-lg">
+          <div key={data.routineId} className="px-4 py-2 bg-gray-100 rounded-lg">
             <RoutineDetailBox data={data} />
           </div>
       )})}

@@ -1,7 +1,6 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
@@ -21,29 +20,36 @@ const MyRoutinePage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const navigate = useNavigate();
   const [userRoutine, setUserRoutine] = useRecoilState(userRoutineState);
-  const setModalData = useSetRecoilState(modalState);
+  const [modalData, setModalData] = useRecoilState(modalState);
 
+  // 뒤로가기 버튼
   const onBackBtnHandler = () => {
     navigate(
       `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
     );
   };
 
+  // 루틴 생성 모달
   const onRoutineCreateHandler = () => {
     setModalData({ type: "routineCreate", data: "" });
   }
 
+  // 유저 루틴 목록 가져오기
   const getUserRoutine = async () => {
     await axios
       .get(`${baseUrl}api/management/routine/${user.info.userId}`)
       .then((res) => {
-        console.log("UserRoutine : " + res.data);
+        console.log("UserRoutine : ", res.data);
         setUserRoutine(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    getUserRoutine();
+  }, [modalData]);
 
   useEffect(() => {
     getUserRoutine();

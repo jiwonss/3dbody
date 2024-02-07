@@ -45,6 +45,10 @@ const DiaryTrainingPage = () => {
     getUserTraining();
   }, [selectedDate]);
 
+  useEffect(() => {
+    getUserTraining();
+  }, []);
+
   return (
     <div className='bg-gray-100'>
       <div className="sticky top-0 bg-white">

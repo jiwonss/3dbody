@@ -9,7 +9,7 @@ import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 import Search from "../../../components/common/Search";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
 import { userState } from "../../../recoil/common/UserState";
-import { selectedRoutineState } from "../../../recoil/diary/SelectedRoutineState";
+import { selectedRoutineTrainingState } from "../../../recoil/diary/SelectedRoutineTrainingState";
 
 const TrainingChoicePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
@@ -20,12 +20,13 @@ const TrainingChoicePage = () => {
   const [category, setCategory] = useState("");
   const [selectedTrainingList, setSelectedTrainingList] = useState([]);
   const { basepage } = useParams();
-  const setSelectedRoutine = useSetRecoilState(selectedRoutineState);
+  const setSelectedRoutineTraining = useSetRecoilState(selectedRoutineTrainingState);
 
   // 운동 검색명 저장
   const onChangeSearchTraining = (e) => {
     setSearchTraining(e.target.value);
   };
+
   // 운동 검색 데이터 가져오기
   const onSubmitGetSearchTraining = async (e) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ const TrainingChoicePage = () => {
         console.log(err);
       });
   };
+
   // 운동 카테고리 별 리스트 가져오기
   const getSearchTraining = async () => {
     await axios
@@ -51,6 +53,7 @@ const TrainingChoicePage = () => {
         console.log(err);
       });
   };
+
   // 카테고리 변경
   const onClickCategory = (e) => {
     if (category === e.target.innerText) {
@@ -59,6 +62,7 @@ const TrainingChoicePage = () => {
       setCategory(e.target.innerText);
     }
   };
+
   // 체크박스로 운동 저장
   const handleCheckboxChange = (trainingId) => {
     if (selectedTrainingList.includes(trainingId)) {
@@ -67,6 +71,7 @@ const TrainingChoicePage = () => {
       setSelectedTrainingList([...selectedTrainingList, trainingId]);
     }
   };
+
   // 운동 리스트에 추가하기
   const postTrainingList = async () => {
     await axios
@@ -81,10 +86,11 @@ const TrainingChoicePage = () => {
         console.log(err);
       });
   };
-  // 루틴에 운동 리스트 저장 (로컬)
-  const saveTrainingList = () => {
-    setSelectedRoutine(selectedTrainingList)
+
+  const saveRoutineTrainingList = () => {
+    setSelectedRoutineTraining(selectedTrainingList);
   };
+
   // 페이지 로딩 시 전체 운동 리스트 가져오기
   useEffect(() => {
     getSearchTraining();
@@ -155,7 +161,7 @@ const TrainingChoicePage = () => {
                   className="w-6 ml-4"
                 />
                 <div className="flex gap-2 py-2 pl-4">
-                  <img src="" alt="img" />
+                  <img src={data.image} alt="img" className='w-8 h-8' />
                   <p>{data.name}</p>
                 </div>
               </div>
@@ -178,13 +184,13 @@ const TrainingChoicePage = () => {
               to={
                 basepage === "basic"
                   ? `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
-                  : `/diary/training/myroutine/edit/create`
+                  : `/diary/training/myroutine/edit`
               }
             >
               <Button
                 buttonName={`${"n"}개의 운동 추가하기`}
                 onClick={() => {
-                  basepage === "basic" ? postTrainingList() : saveTrainingList();
+                  basepage === "basic" ? postTrainingList() : saveRoutineTrainingList();
                 }}
               />
             </Link>

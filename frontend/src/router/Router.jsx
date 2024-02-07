@@ -16,7 +16,6 @@ import PasswordChangePage from "../pages/mypage/PasswordChangePage";
 import TrainingLoadPage from "../pages/diary/training/TrainingLoadPage";
 import TrainingChoicePage from "./../pages/diary/training/TrainingChoicePage";
 import MyRoutinePage from "./../pages/diary/training/MyRoutinePage";
-import RoutineCreatePage from "./../pages/diary/training/RoutineCreatePage";
 import RoutineEditPage from "./../pages/diary/training/RoutineEditPage";
 import ChallengeRegistrationPage from "./../pages/challenge/ChallengeRegistrationPage";
 import ChallengeUpdatePage from "./../pages/challenge/ChallengeUpdatePage";
@@ -61,11 +60,7 @@ const router = createBrowserRouter([
         Component: MyRoutinePage,
       },
       {
-        path: "/diary/training/myroutine/create",
-        Component: RoutineCreatePage,
-      },
-      {
-        path: "/diary/training/myroutine/edit/:routineId",
+        path: "/diary/training/myroutine/edit",
         Component: RoutineEditPage,
       },
       {
