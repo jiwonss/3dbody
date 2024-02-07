@@ -19,7 +19,7 @@ public interface ChallengeService {
     List<ChallengeListResponseDto> getFinishedChallengeList();
 
     // 챌린지 상세 조회
-    ChallengeDetailResponseDto getChallengeDetail(Long challengeId);
+    ChallengeDetailResponseDto getChallengeDetail(Long challengeId) throws IllegalArgumentException;
 
     // 챌린지 정보 등록
     Challenge registerChallenge(ChallengeRequestDto challengeRequestDto);
@@ -38,4 +38,7 @@ public interface ChallengeService {
 
     // 챌린지 참여 취소
     void leaveChallenge(Long challengeId, Long userId);
+
+    // 챌린지 조회수 1증가
+    void addHit(Long challengeId);
 }

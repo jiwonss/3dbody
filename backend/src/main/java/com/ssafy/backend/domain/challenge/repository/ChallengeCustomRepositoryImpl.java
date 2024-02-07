@@ -38,10 +38,20 @@ public class ChallengeCustomRepositoryImpl implements ChallengeCustomRepository 
                 .execute();
     }
 
+    // 참가자수 1감소
     @Override
     public void subEntry(Long challengeId) {
         jpaQueryFactory.update(qChallenge)
                 .set(qChallenge.entry, qChallenge.entry.subtract(1))
+                .where(qChallenge.challengeId.eq(challengeId))
+                .execute();
+    }
+
+    // 조회수 1증가
+    @Override
+    public void updateHitWithChallengeId(Long challengeId) {
+        jpaQueryFactory.update(qChallenge)
+                .set(qChallenge.hit, qChallenge.hit.add(1))
                 .where(qChallenge.challengeId.eq(challengeId))
                 .execute();
     }

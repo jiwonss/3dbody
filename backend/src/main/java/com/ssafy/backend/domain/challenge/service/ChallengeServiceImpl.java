@@ -51,9 +51,9 @@ public class ChallengeServiceImpl implements ChallengeService {
     // 챌린지 상세 조회
     @Override
     @Transactional
-    public ChallengeDetailResponseDto getChallengeDetail(Long challengeId) {
+    public ChallengeDetailResponseDto getChallengeDetail(Long challengeId) throws IllegalArgumentException {
         Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 챌린지입니다."));
-        challenge.addHit();
+        challengeRepository.flush();
         return ChallengeDetailResponseDto.toDto(challenge);
     }
 
@@ -73,7 +73,7 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .startDate(requestDto.getStartDate())
                 .endDate(requestDto.getEndDate())
                 .build();
-        return challengeRepository.save(challenge);
+        return challengeRepository.saveAndFlush(challenge);
     }
 
     // 챌린지 정보 수정
@@ -93,7 +93,7 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .startDate(requestDto.getStartDate())
                 .endDate(requestDto.getEndDate())
                 .build();
-        return challengeRepository.save(challenge);
+        return challengeRepository.saveAndFlush(challenge);
     }
 
     // 챌린지 정보 삭제
@@ -121,7 +121,7 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .challenge(Challenge.builder().challengeId(challengeId).build())
                 .build();
 
-        userChallengeRepository.save(userChallenge); // 참가 정보 DB에 저장
+        userChallengeRepository.saveAndFlush(userChallenge); // 참가 정보 DB에 저장
 
         challengeRepository.addEntry(challengeId); // 참가자수  1 증가
 
@@ -136,10 +136,16 @@ public class ChallengeServiceImpl implements ChallengeService {
         boolean check = userChallengeRepository.existsByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
 
         if (check) {
-            userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
-
             challengeRepository.subEntry(challengeId);
+            userChallengeRepository.deleteByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
         }
+    }
+
+    // 챌린지 조회수 1증가
+    @Override
+    @Transactional
+    public void addHit(Long challengeId) {
+        challengeRepository.updateHitWithChallengeId(challengeId);
     }
 
 }

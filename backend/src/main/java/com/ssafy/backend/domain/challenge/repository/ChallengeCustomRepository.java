@@ -11,6 +11,9 @@ public interface ChallengeCustomRepository {
     // 참가자수 1 증가
     void addEntry(Long challengeId);
 
-    // 참가자수 1 감ㅅ호
+    // 참가자수 1 감소
     void subEntry(Long challengeId);
+
+    // 조회수 1증가
+    void updateHitWithChallengeId(Long challengeId);
 }

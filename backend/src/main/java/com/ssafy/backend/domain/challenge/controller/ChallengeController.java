@@ -50,8 +50,13 @@ public class ChallengeController {
     @GetMapping("/detail/{challenge_id}")
     public ResponseEntity<?> getChallengeDetail(@PathVariable("challenge_id") Long challengeId) {
 
-        ChallengeDetailResponseDto dto = challengeService.getChallengeDetail(challengeId);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        try {
+            challengeService.addHit(challengeId);
+            ChallengeDetailResponseDto dto = challengeService.getChallengeDetail(challengeId);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
     }
 
     // 챌린지 정보 등록
