@@ -56,12 +56,25 @@ public class RoutineController {
         routineService.addSet(requestDto);
         return ResponseEntity.ok(Response.success());
     }
+
+    //루틴 운동 추가 (리스트로)
+    @PostMapping
+    public ResponseEntity<?> saveRoutineTrainings(@RequestParam("routine_id") Long routineId,
+                                                  @RequestBody List<Long> trainings){
+        routineService.saveRoutineTrainings(routineId, trainings);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     
     // 루틴 세트 삭제
+    @DeleteMapping("/set/{routine_training_list_id}")
+    public ResponseEntity<?> removeSet(@PathVariable("routine_training_list_id") Long routineTrainingListId){
+        routineService.removeSet(routineTrainingListId);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     //나만의 루틴 상세 삭제(일단 스톱)
 
-    //루틴 상세 보기 편집
+    //루틴 상세 보기 편집 kg, 횟수 수정
 
     //루틴 운동 생성
 }
