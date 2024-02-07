@@ -42,7 +42,6 @@ public class UserTrainingServiceImpl implements UserTrainingService {
                 .date(date)
                 .build();
 
-//        List<UserTrainingResponseDto> userTrainingResponseDtos = new ArrayList<>();
         TreeMap<Integer, UserTrainingResponseDto> userTrainingResponseDtoTreeMap = new TreeMap<>();
 
         userTrainings.forEach(u -> {
@@ -184,6 +183,55 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         // 삭제한 운동 다음에 있는 운동들 sequence 1씩 감소
         userTrainingRepository.updateWithUserIdAndDateAndSequence(userId, date, sequence);
 
+    }
+
+    @Override
+    @Transactional
+    public List<UserTrainingDataResponseDto> getAllTraining(Long userId) {
+
+        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserId(userId);
+        List<UserTrainingDataResponseDto> responseDtoList = new ArrayList<>();
+        TreeMap<LocalDate, UserTrainingDataResponseDto> dataResponseDtoTreeMap = new TreeMap<>();
+        TreeMap<LocalDate, TreeMap<Integer, UserTrainingResponseDto>> treeMap = new TreeMap<>();
+
+        userTrainings.forEach(u -> {
+            LocalDate date = u.getDate();
+            if (dataResponseDtoTreeMap.get(date) == null) {
+                UserTrainingDataResponseDto responseDto = UserTrainingDataResponseDto
+                        .builder()
+                        .date(date)
+                        .build();
+                dataResponseDtoTreeMap.put(date, responseDto);
+            }
+
+            treeMap.putIfAbsent(date, new TreeMap<>());
+
+            int index = u.getSequence();
+
+            if (treeMap.get(date).get(index) == null) {
+                UserTrainingResponseDto userTrainingResponseDto = UserTrainingResponseDto.toDto(u);
+                treeMap.get(date).put(index, userTrainingResponseDto);
+            }
+
+            SetResponseDto setResponseDto = SetResponseDto.toDto(u);
+            treeMap.get(date).get(index).getSets().add(setResponseDto);
+        });
+
+        Set<LocalDate> keySet = treeMap.keySet();
+
+        for (LocalDate key : keySet) {
+            Set<Integer> ks = treeMap.get(key).keySet();
+
+            for (Integer k : ks) {
+                dataResponseDtoTreeMap.get(key).getUserTrainingList().add(treeMap.get(key).get(k));
+            }
+
+            responseDtoList.add(dataResponseDtoTreeMap.get(key));
+        }
+
+        userTrainingRepository.flush();
+
+        return responseDtoList;
     }
 
 }

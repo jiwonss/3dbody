@@ -73,8 +73,8 @@ public class TrainingController {
     @GetMapping("/user/{user_id}")
     public ResponseEntity<?> getAllTraining(@PathVariable("user_id") Long userId) {
         try {
-
-            return new ResponseEntity<>("", HttpStatus.OK);
+            List<UserTrainingDataResponseDto> list = userTrainingService.getAllTraining(userId);
+            return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling(e);
         }

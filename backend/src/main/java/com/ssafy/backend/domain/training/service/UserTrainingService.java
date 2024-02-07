@@ -26,4 +26,7 @@ public interface UserTrainingService {
 
     // 운동 삭제
     void deleteUserTraining(UserTrainingDeleteRequestDto requestDto);
+
+    // 운동 조회
+    List<UserTrainingDataResponseDto> getAllTraining(Long userId);
 }
