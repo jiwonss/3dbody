@@ -7,6 +7,12 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 
+/**
+ * 세트 삭제 API에서 사용할 DTO
+ * userId - 회원ID
+ * trainingId - 운동ID
+ * date - 날짜
+ */
 @Getter
 @Setter
 @ToString

@@ -9,6 +9,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 운동 조회 API에서 사용할 DTO
+ * userId - 회원ID
+ * trainingId - 운동ID
+ * date - 날짜
+ * sets - 운동 세트(무게, 횟수, 완료여부)
+ */
 @Data
 @Builder
 public class UserTrainingResponseDto {

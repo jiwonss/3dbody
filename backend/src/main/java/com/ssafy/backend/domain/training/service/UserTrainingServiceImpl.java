@@ -114,7 +114,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     @Override
     @Transactional
     public void updateSet(SetUpdateRequestDto requestDto) {
-        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto);
+        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto.getUserTrainingId(), requestDto.getKg(), requestDto.getCount());
     }
 
     // 세트 추가

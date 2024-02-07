@@ -5,6 +5,13 @@ import com.ssafy.backend.domain.training.entity.UserTraining;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * 운동 조회 API에서 세트 목록에 사용할 DTO
+ * userTrainingId - 회원운동ID -> kg, count 수정시 사용하기 위해서 필요
+ * kg - 무게
+ * count - 횟수
+ * isFinished - 세트 완료 여부
+ */
 @Data
 @Builder
 public class SetResponseDto {

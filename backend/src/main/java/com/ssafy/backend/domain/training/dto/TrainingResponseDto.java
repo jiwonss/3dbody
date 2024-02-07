@@ -5,6 +5,13 @@ import com.ssafy.backend.domain.training.entity.Training;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * 운동 리스트 API에서 사용할 DTO
+ * trainingId - 운동ID
+ * name - 운동명
+ * category - 운동부위
+ * image - 운동이미지
+ */
 @Data
 @Builder
 public class TrainingResponseDto {
