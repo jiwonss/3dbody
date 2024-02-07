@@ -8,13 +8,17 @@ import com.ssafy.backend.domain.routine.entity.RoutineTrainingList;
 import com.ssafy.backend.domain.routine.repository.RoutineRepository;
 import com.ssafy.backend.domain.routine.repository.RoutineTrainingListRepository;
 import com.ssafy.backend.domain.training.entity.Training;
+import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,12 +90,41 @@ public class RoutineServiceImpl implements RoutineService{
                 .build();
         routineTrainingListRepository.saveAndFlush(routineTrainingList);
     }
+    //루틴 운동 추가 (리스트로)
+    @Override
+    @Transactional
+    public void saveRoutineTrainings(Long routineId, List<Long> trainings){
+        List<RoutineTrainingList> routineTrainingList = new ArrayList<>();
+        Routine routine = routineRepository.getReferenceById(routineId);
+
+        List<RoutineTrainingList> list = routineTrainingListRepository.findAllByRoutineRoutineId(routineId);
+        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() -1).getSequence() : 0;
+
+        for (int i = 0; i < trainings.size(); i++){
+            Training training = trainingRepository.getReferenceById(trainings.get(i));
+
+            RoutineTrainingList routineTraining = RoutineTrainingList
+                    .builder()
+                    .training(training)
+                    .routine(routine)
+                    .sequence(startIndex + i)
+                    .build();
+
+            routineTrainingList.add(routineTraining);
+        }
+        routineTrainingListRepository.saveAllAndFlush(routineTrainingList);
+    }
+
     // 루틴 세트 삭제
+    @Override
+    @Transactional
+    public void removeSet(Long routineTrainingListId){
+        routineTrainingListRepository.deleteById(routineTrainingListId);
+    }
 
-    //나만의 루틴 상세 삭제
+    //나만의 루틴 상세 삭제(일단 스톱)
 
+    //루틴 상세 보기 편집 kg, 횟수 수정
 
-    //루틴 상세 보기 편집
-
-    //루틴 생성
+    //루틴 운동 생성
 }
