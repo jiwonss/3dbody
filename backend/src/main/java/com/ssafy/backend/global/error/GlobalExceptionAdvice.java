@@ -2,6 +2,7 @@ package com.ssafy.backend.global.error;
 
 import com.ssafy.backend.global.dto.Response;
 import com.ssafy.backend.global.error.exception.ExceptionType;
+import com.ssafy.backend.global.error.exception.FileException;
 import com.ssafy.backend.global.error.exception.InbodyException;
 import com.ssafy.backend.global.error.exception.UserException;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,13 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler({InbodyException.class})
     public ResponseEntity inbodyExceptionHandler(InbodyException ex) {
+        ExceptionType exceptionType = ex.getExceptionType();
+        return ResponseEntity.status(exceptionType.getHttpStatus())
+                .body(Response.fail(exceptionType.name(), exceptionType.getErrorMessage()));
+    }
+
+    @ExceptionHandler({FileException.class})
+    public ResponseEntity fileExceptionHandler(FileException ex) {
         ExceptionType exceptionType = ex.getExceptionType();
         return ResponseEntity.status(exceptionType.getHttpStatus())
                 .body(Response.fail(exceptionType.name(), exceptionType.getErrorMessage()));
