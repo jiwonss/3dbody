@@ -433,8 +433,7 @@ export function JoiningScreen({
                       )}
                     </div>
 
-                    {!isMobile &&
-                      meetingMode === Constants.modes.CONFERENCE && (
+                    {meetingMode === Constants.modes.CONFERENCE && (
                         <div
                           className="absolute m-4 bg-gray-700 rounded cursor-pointer md:left-12 lg:left-24 xl:left-44 md:right-12 lg:right-24 xl:right-44"
                           onClick={(e) => {
