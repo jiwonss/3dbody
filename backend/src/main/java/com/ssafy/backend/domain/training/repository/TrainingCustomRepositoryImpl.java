@@ -24,6 +24,15 @@ public class TrainingCustomRepositoryImpl implements TrainingCustomRepository {
                 .fetch();
     }
 
+    // 운동 이미지 수정
+    @Override
+    public void updateWithTrainingIdAndImage(Long trainingId, String image) {
+        jpaQueryFactory.update(qTraining)
+                .set(qTraining.image, image)
+                .where(qTraining.trainingId.eq(trainingId))
+                .execute();
+    }
+
     private BooleanExpression likeKeyword(String keyword) {
         return StringUtils.hasText(keyword) ? qTraining.name.contains(keyword) : null;
     }

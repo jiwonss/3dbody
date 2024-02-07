@@ -1,9 +1,6 @@
 package com.ssafy.backend.domain.training.controller;
 
-import com.ssafy.backend.domain.training.dto.SetRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
-import com.ssafy.backend.domain.training.dto.TrainingResponseDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
+import com.ssafy.backend.domain.training.dto.*;
 import com.ssafy.backend.domain.training.service.TrainingService;
 import com.ssafy.backend.domain.training.service.UserTrainingService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -105,14 +103,14 @@ public class TrainingController {
 
     // kg, count 데이터 수정
     @PutMapping("/set")
-    public ResponseEntity<?> updateSet(@RequestBody SetRequestDto requestDto) {
+    public ResponseEntity<?> updateSet(@RequestBody SetUpdateRequestDto requestDto) {
         userTrainingService.updateSet(requestDto);
         return new ResponseEntity<>("kg, count 데이터 수정 완료!", HttpStatus.OK);
     }
 
     // 세트 추가
     @PostMapping("/set")
-    public ResponseEntity<?> addSet(@RequestBody UserTrainingRequestDto requestDto) {
+    public ResponseEntity<?> addSet(@RequestBody SetCreateRequestDto requestDto) {
         log.info("세트 추가 요청 들어오나? {}", requestDto);
         userTrainingService.addSet(requestDto);
         return new ResponseEntity<>("새트 추가 완료.", HttpStatus.OK);
@@ -120,10 +118,32 @@ public class TrainingController {
 
     // 세트 삭제
     @DeleteMapping("/set")
-    public ResponseEntity<?> removeSet(@RequestBody UserTrainingRequestDto requestDto) {
-        log.info("세트 삭제 요청 들어옴? - {}", requestDto);
+    public ResponseEntity<?> removeSet(@RequestBody SetDeleteRequestDto requestDto) {
+        log.info("세트 삭제 요청 들어옴? {}", requestDto);
         userTrainingService.removeSet(requestDto);
         return new ResponseEntity<>("세트 삭제 완료.", HttpStatus.OK);
+    }
+
+    // 운동 삭제
+    @DeleteMapping
+    public ResponseEntity<?> removeUserTraining(@RequestBody UserTrainingDeleteRequestDto requestDto) {
+        log.info("운동 삭제 api 호출 - {}", requestDto);
+        userTrainingService.deleteUserTraining(requestDto);
+        return new ResponseEntity<>("운동 삭제 완료.", HttpStatus.OK);
+    }
+
+    // 운동 이미지 수정
+    @PutMapping("/{training_id}")
+    public ResponseEntity<?> updateTraining(@PathVariable("training_id") Long trainingId,
+                                            @RequestParam(value = "file") MultipartFile file) {
+
+        trainingService.deleteFile(trainingId);
+        try {
+            trainingService.uploadFile(trainingId, file);
+            return new ResponseEntity<>("운동 수정 성공!", HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
     }
 
     private ResponseEntity<?> exceptionHandling(Exception e) {

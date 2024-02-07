@@ -1,6 +1,7 @@
 package com.ssafy.backend.domain.routine.controller;
 
 import com.ssafy.backend.domain.routine.dto.RoutineDto;
+import com.ssafy.backend.domain.routine.dto.RoutineSetRequestDto;
 import com.ssafy.backend.domain.routine.dto.RoutineTrainingRequestDto;
 import com.ssafy.backend.domain.routine.dto.RoutineTrainingResponseDto;
 import com.ssafy.backend.domain.routine.service.RoutineService;
@@ -73,8 +74,18 @@ public class RoutineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     //나만의 루틴 상세 삭제(일단 스톱)
+    @DeleteMapping("delete/{routine_id}")
+    public ResponseEntity<?> removeRoutine(@PathVariable("routine_id") Long routineId){
 
+        routineService.removeRoutine(routineId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     //루틴 상세 보기 편집 kg, 횟수 수정
+    @PutMapping("/set")
+    public ResponseEntity<?> updateSet(@RequestBody RoutineSetRequestDto requestDto){
+        routineService.updateSet(requestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //루틴 운동 생성
 }

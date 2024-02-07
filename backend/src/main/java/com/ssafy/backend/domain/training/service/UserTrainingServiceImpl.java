@@ -1,9 +1,6 @@
 package com.ssafy.backend.domain.training.service;
 
-import com.ssafy.backend.domain.training.dto.SetRequestDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingRequestDto;
-import com.ssafy.backend.domain.training.dto.SetResponseDto;
-import com.ssafy.backend.domain.training.dto.UserTrainingResponseDto;
+import com.ssafy.backend.domain.training.dto.*;
 import com.ssafy.backend.domain.training.entity.Training;
 import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
@@ -35,7 +32,8 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     @Transactional
     public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
 
-        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
+        LocalDate date = LocalDate.of(year, month, day);
+        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
 
         log.info("운동 관리 데이터 받아왔나? {}", userTrainings);
 
@@ -80,7 +78,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         User user = userRepository.getReferenceById(userId);
         LocalDate date = LocalDate.of(year, month, day);
 
-        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, year, month, day);
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
         int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
 
         for (int i = 0; i < trainings.size(); i++) {
@@ -112,24 +110,36 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         userTrainingRepository.flush();
     }
 
+    // kg, count 데이터 수정
+    @Override
+    @Transactional
+    public void updateSet(SetUpdateRequestDto requestDto) {
+        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto.getUserTrainingId(), requestDto.getKg(), requestDto.getCount());
+    }
+
     // 세트 추가
     @Override
-    public void addSet(UserTrainingRequestDto requestDto) {
+    @Transactional
+    public void addSet(SetCreateRequestDto requestDto) {
 
         log.info("잘 들어왔나? -{}", requestDto);
 
-        User user = userRepository.getReferenceById(requestDto.getUserId());
-        Training training = trainingRepository.getReferenceById(requestDto.getTrainingId());
+        Long userId = requestDto.getUserId();
+        Long trainingId = requestDto.getTrainingId();
+        LocalDate date = requestDto.getDate();
+
+        User user = userRepository.getReferenceById(userId);
+        Training training = trainingRepository.getReferenceById(trainingId);
+
+        UserTraining lastUserTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
 
         UserTraining userTraining = UserTraining
                 .builder()
                 .user(user)
                 .training(training)
-                .date(requestDto.getDate())
-                .sequence(requestDto.getSequence())
-                .sets(requestDto.getSets())
-                .kg(requestDto.getKg())
-                .count(requestDto.getCount())
+                .date(date)
+                .sequence(lastUserTraining.getSequence())
+                .sets(lastUserTraining.getSets() + 1)
                 .build();
 
         userTrainingRepository.saveAndFlush(userTraining);
@@ -138,17 +148,37 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     // 세트 삭제
     @Override
     @Transactional
-    public void removeSet(UserTrainingRequestDto requestDto) {
+    public void removeSet(SetDeleteRequestDto requestDto) {
 
-        userTrainingRepository.deleteWithUserIdAndTrainingIdAndDate(requestDto);
+        Long userId = requestDto.getUserId();
+        Long trainingId = requestDto.getTrainingId();
+        LocalDate date = requestDto.getDate();
 
+        UserTraining lastUserTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+        userTrainingRepository.delete(lastUserTraining);
+        userTrainingRepository.flush();
     }
 
-    // kg, count 데이터 수정
+    // 운동 삭제
     @Override
     @Transactional
-    public void updateSet(SetRequestDto requestDto) {
-        userTrainingRepository.updateWithUserTrainingIdAndKgAndCount(requestDto);
+    public void deleteUserTraining(UserTrainingDeleteRequestDto requestDto) {
+
+        Long userId = requestDto.getUserId();
+        Long trainingId = requestDto.getTrainingId();
+        LocalDate date = requestDto.getDate();
+
+        // 삭제할 운동의 sequence 획득
+        UserTraining userTraining = userTrainingRepository.findLastOneWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+
+        int sequence = userTraining.getSequence();
+
+        // 운동 삭제
+        userTrainingRepository.deleteWithUserIdAndTrainingIdAndDate(userId, trainingId, date);
+
+        // 삭제한 운동 다음에 있는 운동들 sequence 1씩 감소
+        userTrainingRepository.updateWithUserIdAndDateAndSequence(userId, date, sequence);
+
     }
 
 }
