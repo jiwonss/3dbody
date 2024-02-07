@@ -218,4 +218,3 @@ const ChallengeUpdatePage = () => {
 };
 
 export default ChallengeUpdatePage;
- 
