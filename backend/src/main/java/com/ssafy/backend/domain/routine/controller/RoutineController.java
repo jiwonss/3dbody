@@ -1,9 +1,6 @@
 package com.ssafy.backend.domain.routine.controller;
 
-import com.ssafy.backend.domain.routine.dto.RoutineDto;
-import com.ssafy.backend.domain.routine.dto.RoutineSetRequestDto;
-import com.ssafy.backend.domain.routine.dto.RoutineTrainingRequestDto;
-import com.ssafy.backend.domain.routine.dto.RoutineTrainingResponseDto;
+import com.ssafy.backend.domain.routine.dto.*;
 import com.ssafy.backend.domain.routine.service.RoutineService;
 import com.ssafy.backend.global.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -44,11 +41,13 @@ public class RoutineController {
         return ResponseEntity.ok(Response.success());
     }
 
-    //루틴 상세 보기
-    @GetMapping("/detail/{routine_id}")
-    public ResponseEntity<?> detailRoutine(@PathVariable("routine_id")Long routineId){
-        List<RoutineTrainingResponseDto> routineTrainingList = routineService.detailRoutine(routineId);
-        return new ResponseEntity<>(routineTrainingList, HttpStatus.OK);
+    //루틴 상세 조희
+    @GetMapping("/detail")
+    public ResponseEntity<?> detailRoutine(@RequestParam("routine_id") Long routineId){
+//        List<RoutineTrainingResponseDto> routineTrainingList = routineService.detailRoutine(routineId);
+//        return new ResponseEntity<>(routineTrainingList, HttpStatus.OK);
+        GetTrainingResponseDto list = routineService.getTrainings(routineId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     // 루틴 세트 추가
@@ -87,6 +86,8 @@ public class RoutineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //루틴 운동 생성
+    private ResponseEntity<?> exceptionHandling(Exception e) {
+        return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
 
