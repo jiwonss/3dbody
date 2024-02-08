@@ -42,29 +42,29 @@ public class UserTrainingServiceImpl implements UserTrainingService {
                 .date(date)
                 .build();
 
-        TreeMap<Integer, UserTrainingResponseDto> userTrainingResponseDtoTreeMap = new TreeMap<>();
+        TreeMap<Integer, UserTrainingDto> userTrainingDtoTreeMap = new TreeMap<>();
 
         userTrainings.forEach(u -> {
 
             int index = u.getSequence();
 
-            if (userTrainingResponseDtoTreeMap.get(index) == null) {
-                UserTrainingResponseDto userTrainingResponseDto = UserTrainingResponseDto.toDto(u);
-                userTrainingResponseDtoTreeMap.put(index, userTrainingResponseDto);
+            if (userTrainingDtoTreeMap.get(index) == null) {
+                UserTrainingDto userTrainingResponseDto = UserTrainingDto.toDto(u);
+                userTrainingDtoTreeMap.put(index, userTrainingResponseDto);
             }
 
-            SetResponseDto setResponseDto = SetResponseDto.toDto(u);
+            SetDto setResponseDto = SetDto.toDto(u);
 
-            userTrainingResponseDtoTreeMap.get(index).getSets().add(setResponseDto);
+            userTrainingDtoTreeMap.get(index).getSets().add(setResponseDto);
 
         });
 
-        log.info("TreeMap {}", userTrainingResponseDtoTreeMap);
+        log.info("TreeMap {}", userTrainingDtoTreeMap);
 
-        Set<Integer> keySet = userTrainingResponseDtoTreeMap.keySet();
+        Set<Integer> keySet = userTrainingDtoTreeMap.keySet();
 
         for (Integer key : keySet) {
-            responseDto.getUserTrainingList().add(userTrainingResponseDtoTreeMap.get(key));
+            responseDto.getUserTrainingList().add(userTrainingDtoTreeMap.get(key));
         }
 
         userTrainingRepository.flush();
@@ -100,6 +100,45 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         }
 
         userTrainingRepository.saveAllAndFlush(userTrainingList);
+    }
+
+    // 운동 추가(세트, 무게, 횟수 포함)
+    @Override
+    @Transactional
+    public void addTrainings(List<UserTrainingDto> userTrainingDtoList, LocalDate date) {
+
+        List<UserTraining> userTrainings = new ArrayList<>();
+
+        Long userId = userTrainingDtoList.get(0).getUserId();
+
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
+        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
+
+        for (int i = 0; i < userTrainingDtoList.size(); i++) {
+
+            UserTrainingDto userTrainingDto = userTrainingDtoList.get(i);
+
+            User user = userRepository.getReferenceById(userTrainingDto.getUserId());
+            Training training = trainingRepository.getReferenceById(userTrainingDto.getTrainingId());
+
+            for (int j = 0; j < userTrainingDto.getSets().size(); j++) {
+                UserTraining userTraining = UserTraining
+                        .builder()
+                        .user(user)
+                        .training(training)
+                        .sequence(startIndex + i)
+                        .sets(j)
+                        .kg(userTrainingDto.getSets().get(j).getKg())
+                        .count(userTrainingDto.getSets().get(j).getCount())
+                        .date(date)
+                        .build();
+
+                userTrainings.add(userTraining);
+            }
+        }
+
+        userTrainingRepository.saveAllAndFlush(userTrainings);
+
     }
 
     // 운동 완료 여부 수정(세트별로)
@@ -192,7 +231,7 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserId(userId);
         List<UserTrainingDataResponseDto> responseDtoList = new ArrayList<>();
         TreeMap<LocalDate, UserTrainingDataResponseDto> dataResponseDtoTreeMap = new TreeMap<>();
-        TreeMap<LocalDate, TreeMap<Integer, UserTrainingResponseDto>> treeMap = new TreeMap<>();
+        TreeMap<LocalDate, TreeMap<Integer, UserTrainingDto>> treeMap = new TreeMap<>();
 
         userTrainings.forEach(u -> {
             LocalDate date = u.getDate();
@@ -209,11 +248,11 @@ public class UserTrainingServiceImpl implements UserTrainingService {
             int index = u.getSequence();
 
             if (treeMap.get(date).get(index) == null) {
-                UserTrainingResponseDto userTrainingResponseDto = UserTrainingResponseDto.toDto(u);
+                UserTrainingDto userTrainingResponseDto = UserTrainingDto.toDto(u);
                 treeMap.get(date).put(index, userTrainingResponseDto);
             }
 
-            SetResponseDto setResponseDto = SetResponseDto.toDto(u);
+            SetDto setResponseDto = SetDto.toDto(u);
             treeMap.get(date).get(index).getSets().add(setResponseDto);
         });
 

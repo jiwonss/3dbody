@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.training.service;
 
 import com.ssafy.backend.domain.training.dto.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserTrainingService {
@@ -11,6 +12,9 @@ public interface UserTrainingService {
 
     // 운동 추가
     void saveTrainings(Long userId, int year, int month, int day, List<Long> trainings);
+
+    // 운동 추가(세트, 무게, 회수 포함)
+    void addTrainings(List<UserTrainingDto> userTrainingDtoList, LocalDate date);
 
     // 운동 완료 여부 수정(세트별로)
     void toggle(Long userTrainingId);

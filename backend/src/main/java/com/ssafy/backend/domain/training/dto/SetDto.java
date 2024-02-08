@@ -2,8 +2,7 @@ package com.ssafy.backend.domain.training.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.backend.domain.training.entity.UserTraining;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 /**
  * 운동 조회 API에서 세트 목록에 사용할 DTO
@@ -12,9 +11,12 @@ import lombok.Data;
  * count - 횟수
  * isFinished - 세트 완료 여부
  */
-@Data
+@Getter
+@NoArgsConstructor
+@ToString
+@AllArgsConstructor
 @Builder
-public class SetResponseDto {
+public class SetDto {
 
     @JsonProperty("user_training_id")
     private Long userTrainingId;
@@ -26,9 +28,9 @@ public class SetResponseDto {
     @JsonProperty("is_finished")
     private boolean isFinished;
 
-    public static SetResponseDto toDto(UserTraining userTraining) {
+    public static SetDto toDto(UserTraining userTraining) {
 
-        return SetResponseDto
+        return SetDto
                 .builder()
                 .userTrainingId(userTraining.getUserTrainingId())
                 .kg(userTraining.getKg())

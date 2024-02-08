@@ -2,8 +2,10 @@ package com.ssafy.backend.domain.training.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.backend.domain.training.entity.UserTraining;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,10 @@ import java.util.List;
  * sets - 운동 세트(무게, 횟수, 완료여부)
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class UserTrainingResponseDto {
+public class UserTrainingDto {
 
     @JsonProperty("user_id")
     private Long userId;
@@ -34,11 +38,11 @@ public class UserTrainingResponseDto {
     private String image;
 
     @Builder.Default
-    private List<SetResponseDto> sets = new ArrayList<>();
+    private List<SetDto> sets = new ArrayList<>();
 
-    public static UserTrainingResponseDto toDto(UserTraining userTraining) {
+    public static UserTrainingDto toDto(UserTraining userTraining) {
 
-        return UserTrainingResponseDto
+        return UserTrainingDto
                 .builder()
                 .userId(userTraining.getUser().getUserId())
                 .trainingId(userTraining.getTraining().getTrainingId())
