@@ -1,7 +1,7 @@
 import { Dialog, Popover } from "@headlessui/react";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import useWindowSize from "../hooks/useWindowSize";
 import ConfirmBox from "./ConfirmBox";
 
@@ -177,14 +177,14 @@ export default function SettingDialogueBox({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-2xl p-6 overflow-hidden text-center align-middle transition-all transform rounded shadow-xl bg-gray-750">
+                <Dialog.Panel className="w-full max-w-2xl p-6 overflow-hidden text-center align-middle transition-all transform bg-gray-800 rounded shadow-xl">
                   <Dialog.Title
                     as="h5"
                     className="text-lg font-medium leading-6 text-white"
                   >
-                    Settings
+                    세팅
                   </Dialog.Title>
-                  <div className="flex flex-1  flex-col overflow-hidden bg-gray-750  xl:p-[2px] lg:p-[5px] p-[2px]">
+                  <div className="flex flex-1  flex-col overflow-hidden xl:p-[2px] lg:p-[5px] p-[2px]">
                     <div className="flex items-center justify-center">
                       <div className="absolute top-2 right-2 focus-visible:border-none">
                         <button
@@ -201,14 +201,14 @@ export default function SettingDialogueBox({
                       <div className="mt-10">
                         <div>
                           {[
-                            { value: "audio", label: "Audio" },
-                            { value: "video", label: "Video" },
+                            { value: "audio", label: "오디오" },
+                            { value: "video", label: "비디오" },
                           ].map(({ value, label }, idx) =>
-                            label === "Audio" || label === "Video" ? (
+                            label === "오디오" || label === "비디오" ? (
                               <button
                                 className={`inline-flex items-center justify-center px-4 py-2 border ${
                                   setting === value
-                                    ? "bg-purple-350 border-transparent border-purple-350"
+                                    ? "bg-teal-700 border-transparent border-teal-700"
                                     : "border-gray-100"
                                 }  text-sm font-medium rounded-sm text-white bg-gray-750`}
                                 onClick={() => {
@@ -229,10 +229,10 @@ export default function SettingDialogueBox({
                         <div className="w-full">
                           <div className="container grid grid-flow-col">
                             <div className="grid grid-cols-12">
-                              <div class="col-span-7">
+                              <div className="col-span-7">
                                 <div className="flex flex-col mt-6">
                                   <p className="text-sm font-bold text-left text-white">
-                                    Microphone
+                                    마이크
                                   </p>
 
                                   <div className="w-full mt-4 text-left">
@@ -243,7 +243,7 @@ export default function SettingDialogueBox({
                                             <button className="flex items-center justify-between w-full px-2 py-3 text-white border border-gray-300 rounded">
                                               {selectedMicLabel
                                                 ? selectedMicLabel
-                                                : "Select"}
+                                                : "선택"}
                                               <ChevronDownIcon
                                                 className="w-4 h-4"
                                                 style={{
@@ -261,7 +261,7 @@ export default function SettingDialogueBox({
                                             leaveFrom="opacity-100 translate-y-0"
                                             leaveTo="opacity-0 translate-y-1"
                                           >
-                                            <Popover.Panel className="absolute z-10 w-full px-4 pb-4 mt-2 transform -translate-x-1/2 left-1/2 sm:px-0">
+                                            <Popover.Panel>
                                               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div
                                                   className={"bg-gray-800 py-1"}
@@ -350,7 +350,7 @@ export default function SettingDialogueBox({
                               <div className="col-span-7">
                                 <div className="flex flex-col mt-6">
                                   <p className="text-sm font-bold text-left text-white">
-                                    Camera
+                                    카메라
                                   </p>
 
                                   <div className="w-full mt-4 text-left">
@@ -361,7 +361,7 @@ export default function SettingDialogueBox({
                                             <button className="flex items-center justify-between w-full px-2 py-3 text-white border border-gray-300 rounded">
                                               {selectedWebcamLabel
                                                 ? selectedWebcamLabel
-                                                : "Select"}
+                                                : "선택"}
                                               <ChevronDownIcon
                                                 className="w-4 h-4"
                                                 style={{
@@ -379,7 +379,7 @@ export default function SettingDialogueBox({
                                             leaveFrom="opacity-100 translate-y-0"
                                             leaveTo="opacity-0 translate-y-1"
                                           >
-                                            <Popover.Panel className="absolute z-10 w-full px-4 pb-4 mt-2 transform -translate-x-1/2 left-1/2 sm:px-0">
+                                            <Popover.Panel>
                                               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div
                                                   className={"bg-gray-800 py-1"}
@@ -428,6 +428,7 @@ export default function SettingDialogueBox({
                                                                       }`
                                                                     : item?.label}
                                                                 </button>
+                                                                <hr />
                                                               </div>
                                                             )
                                                           );

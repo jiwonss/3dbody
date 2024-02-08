@@ -1,6 +1,6 @@
 import { useMeeting, useParticipant } from "@videosdk.live/react-sdk";
 import React, { useMemo } from "react";
-import useIsHls from "../../hooks/useIsHls";
+// import useIsHls from "../../hooks/useIsHls";
 import MicOffIcon from "../../icons/ParticipantTabPanel/MicOffIcon";
 import MicOnIcon from "../../icons/ParticipantTabPanel/MicOnIcon";
 import RaiseHand from "../../icons/ParticipantTabPanel/RaiseHand";
@@ -13,7 +13,7 @@ import { nameTructed } from "../../utils/helper";
 function ParticipantListItem({ participantId, raisedHand }) {
   const { micOn, webcamOn, displayName, isLocal, mode } =
     useParticipant(participantId);
-  const isHls = useIsHls();
+  // const isHls = useIsHls();
 
   return (
     <div className="p-2 m-2 mt-2 mb-0 bg-gray-700 rounded-lg">
@@ -41,12 +41,6 @@ function ParticipantListItem({ participantId, raisedHand }) {
         <div className="p-1 m-1">
           {webcamOn ? <VideoCamOnIcon /> : <VideoCamOffIcon />}
         </div>
-        {isHls && (
-          <ToggleModeContainer
-            participantId={participantId}
-            participantMode={mode}
-          />
-        )}
       </div>
     </div>
   );

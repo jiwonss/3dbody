@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import animationData from "../../../WebRTC/static/animations/join_meeting.json";
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 import useIsTab from "../../hooks/useIsTab";
 import useIsMobile from "../../hooks/useIsMobile";
 
@@ -30,14 +30,14 @@ const WaitingToJoinScreen = () => {
   const isTab = useIsTab();
   const isMobile = useIsMobile();
 
-  const animationDefaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  // const animationDefaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: animationData,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
   return (
     <div
@@ -47,7 +47,6 @@ const WaitingToJoinScreen = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        // backgroundColor: theme.palette.darkTheme.main,
       }}
     >
       <div className="flex flex-col">

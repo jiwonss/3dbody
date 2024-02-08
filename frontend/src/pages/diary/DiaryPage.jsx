@@ -46,7 +46,7 @@ const DiaryPage = () => {
       )
       .then((res) => {
         console.log(res)
-        setUserTraining(res.data);
+        setUserTraining(res.data.user_training_list);
       })
       .catch((err) => {
         console.log(err);

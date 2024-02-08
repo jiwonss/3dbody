@@ -16,7 +16,7 @@ const TrainingSetBox = ({ set, setIdx }) => {
   const [kg, setKg] = useState(set.kg);
   const [count, setCount] = useState(set.count);
   const [isFinished, setIsFinished] = useState(set.is_finished);
-  const [reset, setRest] = useState(true);
+  const [reset, setReset] = useState(true);
 
   const onChangeKg = (e) => {
     setKg(e.target.value);
@@ -26,27 +26,33 @@ const TrainingSetBox = ({ set, setIdx }) => {
     setCount(e.target.value);
   };
 
-  // 오늘인지 확인
-  const isToday = () => {
-    const today = new Date();
+  // 미래인지 확인
+  const isFuture = () => {
+    const today = new Date().toISOString().split("T")[0];
     return (
-      today.getFullYear() === selectedDate[0] &&
-      today.getMonth() === selectedDate[1] - 1 &&
-      today.getDate() === selectedDate[2]
+      today <
+      new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2])
+        .toISOString()
+        .split("T")[0]
     );
   };
 
   // 운동 완료 여부 체크 버튼
   const putIsFinished = async () => {
-    await axios
-      .put(`${baseUrl}api/management/training/user_training/${set.user_training_id}`)
-      .then((res) => {
-        console.log(res.data);
-        setIsFinished(!isFinished);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    isFuture()
+      ? ""
+      : await axios
+          .put(
+            `${baseUrl}api/management/training/user_training/${set.user_training_id}`
+          )
+          .then((res) => {
+            console.log(res.data);
+            setIsFinished(!isFinished);
+            setReset(!reset);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
   };
 
   // kg 단위 변경
@@ -60,7 +66,7 @@ const TrainingSetBox = ({ set, setIdx }) => {
       })
       .then((res) => {
         console.log(res.data);
-        setRest(!reset);
+        setReset(!reset);
       })
       .catch((err) => {
         console.log(err);
@@ -78,7 +84,7 @@ const TrainingSetBox = ({ set, setIdx }) => {
       })
       .then((res) => {
         console.log(res.data);
-        setRest(!reset);
+        setReset(!reset);
       })
       .catch((err) => {
         console.log(err);
@@ -92,7 +98,7 @@ const TrainingSetBox = ({ set, setIdx }) => {
         `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
       )
       .then((res) => {
-        setUserTraining(res.data);
+        setUserTraining(res.data.user_training_list);
       })
       .catch((err) => {
         console.log(err);
@@ -108,25 +114,29 @@ const TrainingSetBox = ({ set, setIdx }) => {
       <td>{setIdx + 1}</td>
       <td>
         <form onSubmit={putVolumeKg}>
-          <input className="w-16 mx-2 text-center border" value={kg} onChange={onChangeKg} />
+          <input
+            className="w-16 mx-2 text-center border"
+            value={kg}
+            onChange={onChangeKg}
+          />
         </form>
       </td>
       <td>
         <form onSubmit={putVolumeCount}>
-          <input className="w-16 mx-2 text-center border" value={count} onChange={onChangeCount} />
+          <input
+            className="w-16 mx-2 text-center border"
+            value={count}
+            onChange={onChangeCount}
+          />
         </form>
       </td>
       <td className="flex justify-center">
-        {isToday() ? (
-          <input
-            type="checkbox"
-            className="w-5 h-5 mt-1 accent-teal-600"
-            onChange={() => putIsFinished()}
-            checked={isFinished}
-          />
-        ) : (
-          <BsFillTrash3Fill className="w-6 h-6" />
-        )}
+        <input
+          type="checkbox"
+          className="w-5 h-5 mt-1 accent-teal-600"
+          onChange={() => putIsFinished()}
+          checked={isFuture() ? false : isFinished}
+        />
       </td>
     </>
   );
