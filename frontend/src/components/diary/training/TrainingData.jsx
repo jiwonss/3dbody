@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userTrainingState } from "../../../recoil/diary/UserTrainingState";
 import Button from "../../common/Button";
-import { selectedDateState } from "../../../recoil/diary/SelectedDateState"
-import TrainingDetailBox from './TrainingDetailBox';
+import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
+import TrainingDetailBox from "./TrainingDetailBox";
 
 const TrainingData = () => {
   const selectedDate = useRecoilValue(selectedDateState);
@@ -20,7 +20,12 @@ const TrainingData = () => {
 
   const totalVolume = () => {
     return userTraining.reduce((acc, cur) => {
-      return acc + cur.count * cur.kg;
+      return (
+        acc +
+        cur.sets.reduce((acc, cur) => {
+          return acc + (cur.count * cur.kg);
+        }, 0)
+      );
     }, 0);
   };
 
@@ -28,7 +33,12 @@ const TrainingData = () => {
     <>
       <div className="flex flex-col gap-2 pt-2 mx-4 mb-32">
         {/* 갤럭시 와치 연동 버튼 */}
-        <div className={`flex justify-between ${isToday() ? "" : "opacity-0"}`} onClick={() => {return console.log("클릭")}}>
+        <div
+          className={`flex justify-between ${isToday() ? "" : "opacity-0"}`}
+          onClick={() => {
+            return console.log("갤럭시 와치 데이터 연동");
+          }}
+        >
           <p className="font-semibold">✅Galaxy Watch</p>
           <Button btnCss={"w-1/5 text-white bg-teal-700 rounded"} buttonName={"전송"} />
         </div>
@@ -41,7 +51,7 @@ const TrainingData = () => {
         <div className="flex flex-col gap-2">
           {userTraining.map((data, idx) => {
             return (
-              <div key={data.user_training_id} className="px-4 py-2 bg-white rounded-lg">
+              <div key={idx} className="px-4 py-2 bg-white rounded-lg">
                 <TrainingDetailBox data={data} idx={idx} />
               </div>
             );

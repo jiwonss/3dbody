@@ -8,18 +8,18 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   ClipboardIcon,
   CheckIcon,
-  ChevronDownIcon,
+  // ChevronDownIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/solid";
-import recordingBlink from "../../static/animations/recording-blink.json";
-import liveHLS from "../../static/animations/live-hls.json";
-import useIsRecording from "../../hooks/useIsRecording";
-import RecordingIcon from "../../icons/Bottombar/RecordingIcon";
+// import recordingBlink from "../../static/animations/recording-blink.json";
+// import liveHLS from "../../static/animations/live-hls.json";
+// import useIsRecording from "../../hooks/useIsRecording";
+// import RecordingIcon from "../../icons/Bottombar/RecordingIcon";
 import MicOnIcon from "../../icons/Bottombar/MicOnIcon";
 import MicOffIcon from "../../icons/Bottombar/MicOffIcon";
 import WebcamOnIcon from "../../icons/Bottombar/WebcamOnIcon";
 import WebcamOffIcon from "../../icons/Bottombar/WebcamOffIcon";
-import ScreenShareIcon from "../../icons/Bottombar/ScreenShareIcon";
+// import ScreenShareIcon from "../../icons/Bottombar/ScreenShareIcon";
 import ChatIcon from "../../icons/Bottombar/ChatIcon";
 import ParticipantsIcon from "../../icons/Bottombar/ParticipantsIcon";
 import EndIcon from "../../icons/Bottombar/EndIcon";
@@ -29,12 +29,12 @@ import { createPopper } from "@popperjs/core";
 import useIsTab from "../../hooks/useIsTab";
 import useIsMobile from "../../hooks/useIsMobile";
 import { MobileIconButton } from "../../components/buttons/MobileIconButton";
-import PollIcon from "../../icons/Bottombar/PollIcon";
-import useIsHls from "../../hooks/useIsHls";
-import LiveIcon from "../../icons/LiveIcon";
-import ReactionIcon from "../../icons/Bottombar/ReactionIcon";
+// import PollIcon from "../../icons/Bottombar/PollIcon";
+// import useIsHls from "../../hooks/useIsHls";
+// import LiveIcon from "../../icons/LiveIcon";
+// import ReactionIcon from "../../icons/Bottombar/ReactionIcon";
 import { sideBarModes } from "../../utils/common";
-import ECommerceIcon from "../../icons/Bottombar/ECommerceIcon";
+// import ECommerceIcon from "../../icons/Bottombar/ECommerceIcon";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { useMeetingAppContext } from "../../MeetingAppContextDef";
 

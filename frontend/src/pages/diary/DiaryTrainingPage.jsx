@@ -15,12 +15,12 @@ import TrainingData from "./../../components/diary/training/TrainingData";
 import { userState } from "../../recoil/common/UserState";
 
 const DiaryTrainingPage = () => {
+  const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = useRecoilValue(toggleDiaryState);
-  const baseUrl = useRecoilValue(baseUrlState);
   const [userTraining, setUserTraining] = useRecoilState(userTrainingState);
-  const user = useRecoilValue(userState);
-
+  
   const trainingDetailData = () => {
     // 해당 날짜 운동데이터 유무
     return userTraining.length ? <TrainingData /> : <TrainingNoData />;
@@ -33,8 +33,8 @@ const DiaryTrainingPage = () => {
         `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
       )
       .then((res) => {
-        console.table(res.data);
-        setUserTraining(res.data);
+        console.log(res.data);
+        setUserTraining(res.data.user_training_list);
       })
       .catch((err) => {
         console.log(err);
@@ -44,6 +44,10 @@ const DiaryTrainingPage = () => {
   useEffect(() => {
     getUserTraining();
   }, [selectedDate]);
+
+  useEffect(() => {
+    getUserTraining();
+  }, []);
 
   return (
     <div className='bg-gray-100'>
