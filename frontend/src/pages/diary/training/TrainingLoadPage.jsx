@@ -26,7 +26,7 @@ const TrainingLoadPage = () => {
 
   // 선택한 운동 기록 추가 하기
   const postSelectedHistory = async () => {
-    resetSelectedHistoryList(); // 리셋
+    resetSelectedHistoryList(); // 선택한 운동 기록 목록 초기화
   };
 
   // 하단 버튼
