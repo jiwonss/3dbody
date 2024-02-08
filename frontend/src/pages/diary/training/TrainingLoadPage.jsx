@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import PageTitle from "./../../../components/common/PageTitle";
 import BackButton from "./../../../components/common/BackButton";
 import Description from "./../../../components/diary/training/Description";
@@ -12,6 +12,7 @@ import { baseUrlState } from "../../../recoil/common/BaseUrlState";
 import { userState } from "../../../recoil/common/UserState";
 import HistoryList from "../../../components/diary/training/history/HistoryList";
 import HistoryNoData from "../../../components/diary/training/history/HistoryNoData";
+import { selectedHistoryListState } from "../../../recoil/diary/SelectedHistoryListState";
 
 const TrainingLoadPage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
@@ -20,7 +21,15 @@ const TrainingLoadPage = () => {
   const isSelected = true; // 운동선택하면 바뀌게
   const { basepage } = useParams();
   const [userHistory, setUserHistory] = useRecoilState(userHistoryState);
+  const [selectedHistoryList, setSelectedHistoryList] = useRecoilState(selectedHistoryListState);
+  const resetSelectedHistoryList = useResetRecoilState(selectedHistoryListState);
 
+  // 선택한 운동 기록 추가 하기
+  const postSelectedHistory = async () => {
+    resetSelectedHistoryList(); // 리셋
+  };
+
+  // 하단 버튼
   const checkButton = () => {
     return (
       <div
@@ -36,7 +45,7 @@ const TrainingLoadPage = () => {
                 : `/diary/training/myroutine/edit/create`
             }
           >
-            <Button buttonName="확인" />
+            <Button buttonName="확인" onClick={postSelectedHistory}/>
           </Link>
         ) : (
           <Button buttonName="운동 기록을 선택해주세요." disabled />
@@ -69,18 +78,14 @@ const TrainingLoadPage = () => {
         <div className="absolute">
           <BackButton />
         </div>
-        <PageTitle
-          pageTitle={`${basepage === "basic" ? "불러오기" : "전체 운동 기록"}`}
-        />
+        <PageTitle pageTitle={`${basepage === "basic" ? "불러오기" : "전체 운동 기록"}`} />
 
         <div className="p-4">
           <Description size="base" subsize="sm" />
         </div>
       </div>
       {/* 운동기록 표시 */}
-      <div className="mx-4 mb-32">
-        {userHistory.length ? <HistoryList /> : <HistoryNoData />}
-      </div>
+      <div className="mx-4 mb-32">{userHistory.length ? <HistoryList /> : <HistoryNoData />}</div>
       {/* 바텀 버튼 */}
       <div className="fixed w-full bg-white bottom-[57px]">
         <div className="m-4">{checkButton()}</div>

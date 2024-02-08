@@ -112,8 +112,8 @@ const TrainingDetailBox = ({ data, idx }) => {
       <div className="flex justify-between">
         <p>
           <span className="text-lg font-semibold text-teal-700">{idx + 1}</span>{" "}
-          <span className="divide-x-2 divide-black">
-            <span className="ps-1 pe-2">{data.category}</span>
+          <span>
+            <span className="ps-1 pe-2">{data.category}</span>|
             <span className="px-2">{data.name}</span>
           </span>
         </p>
