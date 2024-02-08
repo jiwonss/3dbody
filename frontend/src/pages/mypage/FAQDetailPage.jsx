@@ -5,6 +5,7 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import BackButton from "./../../components/common/BackButton";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import PageTitle from "../../components/common/PageTitle";
 
 const FAQDetailPage = () => {
   const { postId } = useParams();
@@ -24,7 +25,10 @@ const FAQDetailPage = () => {
   }, []);
   return (
     <div>
-      <BackButton />
+      <div className="absolute">
+        <BackButton />
+      </div>
+      <PageTitle pageTitle="FAQ 상세" />
       <div>{FAQ.content}</div>
     </div>
   );

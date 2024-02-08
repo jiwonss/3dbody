@@ -6,6 +6,6 @@ import { RecoilRoot } from "recoil";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RecoilRoot>
-    <RouterProvider router={router} fallbackElement={"로딩중입니다."} />
+    <RouterProvider router={router} fallbackElement={"로딩중!!!!!"} />
   </RecoilRoot>
 );

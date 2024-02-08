@@ -2,6 +2,7 @@ import { useRecoilValue } from "recoil";
 import BackButton from "./../../components/common/BackButton";
 import { userState } from "../../recoil/common/UserState";
 import MyInfo from "../../components/mypage/MyInfo";
+import PageTitle from "../../components/common/PageTitle";
 
 const MyInfoPage = () => {
   const user = useRecoilValue(userState);
@@ -9,7 +10,10 @@ const MyInfoPage = () => {
   console.log(user)
   return (
     <div>
-      <BackButton />
+      <div className="absolute">
+        <BackButton />
+      </div>
+      <PageTitle pageTitle="회원 정보 수정" />
       <MyInfo category="이메일" data={user.info.email}/>
       <MyInfo category="이름" data={user.info.name}/>
       <MyInfo category="닉네임" data={user.info.nickname} modalname="changeNickname"/>

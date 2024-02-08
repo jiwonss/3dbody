@@ -5,7 +5,7 @@ import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
-import AWS from "aws-sdk";
+import * as AWS from "aws-sdk";
 import BackButton from "./../../components/common/BackButton";
 
 const ChallengeRegistrationPage = () => {

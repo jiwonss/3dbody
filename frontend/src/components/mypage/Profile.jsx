@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "../../recoil/common/UserState";
 import { useEffect, useRef, useState } from "react";
 import uuid from "react-uuid";
-import AWS from "aws-sdk";
+import * as AWS from "aws-sdk";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
@@ -33,6 +33,7 @@ const Profile = () => {
 
   // 이미지 업로드 시 상태 변경과 useEffect 실행 위한 상태도 변경
   const onProfileUpdate = async (event) => {
+    console.log("프로필 변경")
     if (event.target.files[0]) {
       setProfile(event.target.files[0]);
       setProfileName(`${uuid()}_${event.currentTarget.files[0].name}`);
@@ -85,7 +86,7 @@ const Profile = () => {
     } else {
       console.log(false);
     }
-  }, [isChange]);
+  }, [profile]);
 
   useEffect(() => {
     console.log(user);

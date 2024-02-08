@@ -4,6 +4,7 @@ import FAQ from "./../../components/mypage/FAQ";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import PageTitle from "../../components/common/PageTitle";
 
 const FAQPage = () => {
   const [questionList, setQuestionList] = useState(null);
@@ -25,7 +26,10 @@ const FAQPage = () => {
 
   return (
     <div>
-      <BackButton />
+      <div className="absolute">
+        <BackButton />
+      </div>
+      <PageTitle pageTitle="FAQ" />
       {questionList}
     </div>
   );

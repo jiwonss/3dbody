@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import PageTitle from "../../components/common/PageTitle";
+import BackButton from "../../components/common/BackButton";
 
 const PinChangePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
@@ -27,10 +29,7 @@ const PinChangePage = () => {
   });
   // (새 비밀번호, 확인을 적고 난 후) 새 비밀 번호 변경 시에 확인 칸에 오류 문구를 띄우기 위한 함수
   useEffect(() => {
-    if (
-      watch("newPin") !== watch("newPinCheck") &&
-      watch("newPinCheck")
-    ) {
+    if (watch("newPin") !== watch("newPinCheck") && watch("newPinCheck")) {
       setError("newPinCheck", {
         type: "password-mismatch",
         message: "비밀번호가 일치하지 않습니다",
@@ -66,55 +65,60 @@ const PinChangePage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="currentPin">현재 pin번호</label>
-      <input
-        id="currentPin"
-        placeholder="기존 비밀번호"
-        type="password"
-        maxLength={6}
-        {...register("currentPin", {
-          required: true,
-          maxLength:6
-        })}
-      />
+    <div>
+      <div className="absolute">
+        <BackButton />
+      </div>
+      <PageTitle pageTitle="PIN 변경" />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="currentPin">현재 pin번호</label>
+        <input
+          id="currentPin"
+          placeholder="기존 비밀번호"
+          type="password"
+          maxLength={6}
+          {...register("currentPin", {
+            required: true,
+            maxLength: 6,
+          })}
+        />
 
-      <label htmlFor="newPin">새 Pin번호</label>
-      <input
-        id="newPin"
-        type="password"
-        placeholder="새 비밀번호"
-        maxLength={6}
-        {...register("newPin", {
-          required: true,
-          pattern: {
-            value:
-              /^[0-9]*$/,
-            message: "숫자만 입력해주세요",
-          },
-        })}
-      />
-      {errors.newPin && <p>{errors.newPin.message}</p>}
-
-      <label htmlFor="newPinCheck">새 Pin번호 확인</label>
-      <input
-        id="newPinCheck"
-        type="password"
-        placeholder="새 비밀번호 확인"
-        maxLength={6}
-        {...register("newPinCheck", {
-          required: true,
-          validate: {
-            matchPassword: (value) => {
-              const { newPin } = getValues();
-              return newPin === value || "비밀번호가 일치하지 않습니다";
+        <label htmlFor="newPin">새 Pin번호</label>
+        <input
+          id="newPin"
+          type="password"
+          placeholder="새 비밀번호"
+          maxLength={6}
+          {...register("newPin", {
+            required: true,
+            pattern: {
+              value: /^[0-9]*$/,
+              message: "숫자만 입력해주세요",
             },
-          },
-        })}
-      />
-      {errors.newPinCheck && <p>{errors.newPinCheck.message}</p>}
-      <input type="submit" />
-    </form>
+          })}
+        />
+        {errors.newPin && <p>{errors.newPin.message}</p>}
+
+        <label htmlFor="newPinCheck">새 Pin번호 확인</label>
+        <input
+          id="newPinCheck"
+          type="password"
+          placeholder="새 비밀번호 확인"
+          maxLength={6}
+          {...register("newPinCheck", {
+            required: true,
+            validate: {
+              matchPassword: (value) => {
+                const { newPin } = getValues();
+                return newPin === value || "비밀번호가 일치하지 않습니다";
+              },
+            },
+          })}
+        />
+        {errors.newPinCheck && <p>{errors.newPinCheck.message}</p>}
+        <input type="submit" />
+      </form>
+    </div>
   );
 };
 
