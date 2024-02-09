@@ -4,7 +4,7 @@ import { CalendarDaysIcon, Cog6ToothIcon, HomeIcon, TrophyIcon } from "@heroicon
 const BottomNavbar = () => {
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0">
+      <div className="fixed bottom-0 left-0 right-0 z-10">
         <div className="flex justify-between p-4 bg-white border-t-2">
           <NavLink to="/">
             <HomeIcon className={`w-6 h-6`} />
