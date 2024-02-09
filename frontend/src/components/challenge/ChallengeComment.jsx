@@ -5,7 +5,6 @@ import { useRecoilValue } from "recoil";
 import axios from "axios";
 import { userState } from "../../recoil/common/UserState";
 import { useEffect, useState } from 'react';
-import { set } from 'react-hook-form';
 
 const ChallengeComment = ({ content, nickname, commentId, userId }) => {
   const baseUrl = useRecoilValue(baseUrlState);
@@ -25,7 +24,7 @@ const ChallengeComment = ({ content, nickname, commentId, userId }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mt-1 bg-gray-100 border-2 rounded-xl">
+      <div className="flex items-center justify-between mx-4 my-2 bg-gray-100 border-2 rounded-xl">
         <div className="flex">
           <img
             src={imgSrc}
