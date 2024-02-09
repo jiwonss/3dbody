@@ -5,8 +5,11 @@ import com.ssafy.backend.domain.routine.entity.Routine;
 import com.ssafy.backend.domain.routine.entity.RoutineTrainingList;
 import com.ssafy.backend.domain.routine.repository.RoutineRepository;
 import com.ssafy.backend.domain.routine.repository.RoutineTrainingListRepository;
+import com.ssafy.backend.domain.training.dto.UserTrainingDto;
 import com.ssafy.backend.domain.training.entity.Training;
+import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
+import com.ssafy.backend.domain.training.repository.UserTrainingRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import io.swagger.models.auth.In;
@@ -15,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +31,7 @@ public class RoutineServiceImpl implements RoutineService{
     final UserRepository userRepository;
     final RoutineTrainingListRepository routineTrainingListRepository;
     final TrainingRepository trainingRepository;
+    final UserTrainingRepository userTrainingRepository;
 
     //나만의 루틴 목록
     @Override
@@ -166,4 +171,33 @@ public class RoutineServiceImpl implements RoutineService{
         routineTrainingListRepository.updateWithRoutineTrainingListIdAndKgAndCount(requestDto.getRoutineTrainingListId(), requestDto.getKg(), requestDto.getCount());
     }
     //루틴 운동 삭제
+    @Override
+    @Transactional
+    public void removeTraining(Long routineId, Long trainingId){
+        RoutineTrainingList routineTraining = routineTrainingListRepository.findLastOneWithRoutineIdAndTrainingId(routineId, trainingId);
+
+        int sequence = routineTraining.getSequence();
+
+        //운동 삭제
+        routineTrainingListRepository.deleteWithRoutineIdAndTrainingId(routineId, trainingId);
+
+        //삭제한 운동 다음에 있는 운동들 sequence 1씩 감소
+        routineTrainingListRepository.updateWithRoutineIdAndSequence(routineId, sequence);
+    }
+
+    @Override
+    @Transactional
+    public void addTraining(List<UserTrainingDto> userTrainingDtoList, LocalDate date){
+
+        List<UserTraining> userTrainings = new ArrayList<>();
+        Long userId = userTrainingDtoList.get(0).getUserId();
+
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
+        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
+
+        for (int i = 0; i < userTrainingDtoList.size(); i++){
+
+
+        }
+    }
 }

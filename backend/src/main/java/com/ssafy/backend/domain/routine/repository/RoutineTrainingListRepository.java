@@ -26,4 +26,5 @@ public interface RoutineTrainingListRepository extends JpaRepository<RoutineTrai
     @Query("UPDATE RoutineTrainingList r SET r.kg = :kg, r.count = :count WHERE r.RoutineTrainingListId = :RoutineTrainingListId")
     void updateWithRoutineTrainingListIdAndKgAndCount(@Param("RoutineTrainingListId") Long RoutineTrainingListId, @Param("kg") float kg, @Param("count") int count);
 
+
 }
