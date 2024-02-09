@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface RoutineTrainingListRepository extends JpaRepository<RoutineTrainingList, Long> {
+public interface RoutineTrainingListRepository extends JpaRepository<RoutineTrainingList, Long>, RoutineTrainingCustomRepository {
     @Query("SELECT r FROM RoutineTrainingList r WHERE r.routine.routineId = :routineId")
     List<RoutineTrainingList> findAllByroutineTrainingListRoutineId(@Param("routineId") Long routineId);
 
@@ -25,5 +25,6 @@ public interface RoutineTrainingListRepository extends JpaRepository<RoutineTrai
     @Modifying
     @Query("UPDATE RoutineTrainingList r SET r.kg = :kg, r.count = :count WHERE r.RoutineTrainingListId = :RoutineTrainingListId")
     void updateWithRoutineTrainingListIdAndKgAndCount(@Param("RoutineTrainingListId") Long RoutineTrainingListId, @Param("kg") float kg, @Param("count") int count);
+
 
 }

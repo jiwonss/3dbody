@@ -148,7 +148,7 @@ public class UserController {
     public ResponseEntity updateWeight(@PathVariable("user_id") Long userId, @RequestBody UpdateRequestDto updateRequestDto) {
         log.info("User 몸무게 변경 - height : {}", updateRequestDto.getWeight());
 
-        userService.updateHeight(userId, updateRequestDto.getWeight());
+        userService.updateWeight(userId, updateRequestDto.getWeight());
         return ResponseEntity.ok(Response.success());
     }
 

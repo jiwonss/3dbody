@@ -30,42 +30,46 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     // 운동 조회(특정 날짜&회원)
     @Override
     @Transactional
-    public List<UserTrainingResponseDto> getTrainings(Long userId, int year, int month, int day) {
+    public UserTrainingDataResponseDto getTrainings(Long userId, int year, int month, int day) {
 
         LocalDate date = LocalDate.of(year, month, day);
         List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
 
         log.info("운동 관리 데이터 받아왔나? {}", userTrainings);
 
-        List<UserTrainingResponseDto> userTrainingResponseDtos = new ArrayList<>();
-        TreeMap<Integer, UserTrainingResponseDto> userTrainingResponseDtoTreeMap = new TreeMap<>();
+        UserTrainingDataResponseDto responseDto = UserTrainingDataResponseDto
+                .builder()
+                .date(date)
+                .build();
+
+        TreeMap<Integer, UserTrainingDto> userTrainingDtoTreeMap = new TreeMap<>();
 
         userTrainings.forEach(u -> {
 
             int index = u.getSequence();
 
-            if (userTrainingResponseDtoTreeMap.get(index) == null) {
-                UserTrainingResponseDto userTrainingResponseDto = UserTrainingResponseDto.toDto(u);
-                userTrainingResponseDtoTreeMap.put(index, userTrainingResponseDto);
+            if (userTrainingDtoTreeMap.get(index) == null) {
+                UserTrainingDto userTrainingResponseDto = UserTrainingDto.toDto(u);
+                userTrainingDtoTreeMap.put(index, userTrainingResponseDto);
             }
 
-            SetResponseDto setResponseDto = SetResponseDto.toDto(u);
+            SetDto setResponseDto = SetDto.toDto(u);
 
-            userTrainingResponseDtoTreeMap.get(index).getSets().add(setResponseDto);
+            userTrainingDtoTreeMap.get(index).getSets().add(setResponseDto);
 
         });
 
-        log.info("TreeMap {}", userTrainingResponseDtoTreeMap);
+        log.info("TreeMap {}", userTrainingDtoTreeMap);
 
-        Set<Integer> keySet = userTrainingResponseDtoTreeMap.keySet();
+        Set<Integer> keySet = userTrainingDtoTreeMap.keySet();
 
         for (Integer key : keySet) {
-            userTrainingResponseDtos.add(userTrainingResponseDtoTreeMap.get(key));
+            responseDto.getUserTrainingList().add(userTrainingDtoTreeMap.get(key));
         }
 
         userTrainingRepository.flush();
 
-        return userTrainingResponseDtos;
+        return responseDto;
     }
 
     // 운동 추가
@@ -96,6 +100,45 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         }
 
         userTrainingRepository.saveAllAndFlush(userTrainingList);
+    }
+
+    // 운동 추가(세트, 무게, 횟수 포함)
+    @Override
+    @Transactional
+    public void addTrainings(List<UserTrainingDto> userTrainingDtoList, LocalDate date) {
+
+        List<UserTraining> userTrainings = new ArrayList<>();
+
+        Long userId = userTrainingDtoList.get(0).getUserId();
+
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
+        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
+
+        for (int i = 0; i < userTrainingDtoList.size(); i++) {
+
+            UserTrainingDto userTrainingDto = userTrainingDtoList.get(i);
+
+            User user = userRepository.getReferenceById(userTrainingDto.getUserId());
+            Training training = trainingRepository.getReferenceById(userTrainingDto.getTrainingId());
+
+            for (int j = 0; j < userTrainingDto.getSets().size(); j++) {
+                UserTraining userTraining = UserTraining
+                        .builder()
+                        .user(user)
+                        .training(training)
+                        .sequence(startIndex + i)
+                        .sets(j)
+                        .kg(userTrainingDto.getSets().get(j).getKg())
+                        .count(userTrainingDto.getSets().get(j).getCount())
+                        .date(date)
+                        .build();
+
+                userTrainings.add(userTraining);
+            }
+        }
+
+        userTrainingRepository.saveAllAndFlush(userTrainings);
+
     }
 
     // 운동 완료 여부 수정(세트별로)
@@ -179,6 +222,55 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         // 삭제한 운동 다음에 있는 운동들 sequence 1씩 감소
         userTrainingRepository.updateWithUserIdAndDateAndSequence(userId, date, sequence);
 
+    }
+
+    @Override
+    @Transactional
+    public List<UserTrainingDataResponseDto> getAllTraining(Long userId) {
+
+        List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserId(userId);
+        List<UserTrainingDataResponseDto> responseDtoList = new ArrayList<>();
+        TreeMap<LocalDate, UserTrainingDataResponseDto> dataResponseDtoTreeMap = new TreeMap<>();
+        TreeMap<LocalDate, TreeMap<Integer, UserTrainingDto>> treeMap = new TreeMap<>();
+
+        userTrainings.forEach(u -> {
+            LocalDate date = u.getDate();
+            if (dataResponseDtoTreeMap.get(date) == null) {
+                UserTrainingDataResponseDto responseDto = UserTrainingDataResponseDto
+                        .builder()
+                        .date(date)
+                        .build();
+                dataResponseDtoTreeMap.put(date, responseDto);
+            }
+
+            treeMap.putIfAbsent(date, new TreeMap<>());
+
+            int index = u.getSequence();
+
+            if (treeMap.get(date).get(index) == null) {
+                UserTrainingDto userTrainingResponseDto = UserTrainingDto.toDto(u);
+                treeMap.get(date).put(index, userTrainingResponseDto);
+            }
+
+            SetDto setResponseDto = SetDto.toDto(u);
+            treeMap.get(date).get(index).getSets().add(setResponseDto);
+        });
+
+        Set<LocalDate> keySet = treeMap.keySet();
+
+        for (LocalDate key : keySet) {
+            Set<Integer> ks = treeMap.get(key).keySet();
+
+            for (Integer k : ks) {
+                dataResponseDtoTreeMap.get(key).getUserTrainingList().add(treeMap.get(key).get(k));
+            }
+
+            responseDtoList.add(dataResponseDtoTreeMap.get(key));
+        }
+
+        userTrainingRepository.flush();
+
+        return responseDtoList;
     }
 
 }

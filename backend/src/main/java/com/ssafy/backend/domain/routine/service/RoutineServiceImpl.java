@@ -1,27 +1,25 @@
 package com.ssafy.backend.domain.routine.service;
 
-import com.ssafy.backend.domain.routine.dto.RoutineDto;
-import com.ssafy.backend.domain.routine.dto.RoutineSetRequestDto;
-import com.ssafy.backend.domain.routine.dto.RoutineTrainingRequestDto;
-import com.ssafy.backend.domain.routine.dto.RoutineTrainingResponseDto;
+import com.ssafy.backend.domain.routine.dto.*;
 import com.ssafy.backend.domain.routine.entity.Routine;
 import com.ssafy.backend.domain.routine.entity.RoutineTrainingList;
 import com.ssafy.backend.domain.routine.repository.RoutineRepository;
 import com.ssafy.backend.domain.routine.repository.RoutineTrainingListRepository;
+import com.ssafy.backend.domain.training.dto.UserTrainingDto;
 import com.ssafy.backend.domain.training.entity.Training;
 import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
+import com.ssafy.backend.domain.training.repository.UserTrainingRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +31,7 @@ public class RoutineServiceImpl implements RoutineService{
     final UserRepository userRepository;
     final RoutineTrainingListRepository routineTrainingListRepository;
     final TrainingRepository trainingRepository;
+    final UserTrainingRepository userTrainingRepository;
 
     //나만의 루틴 목록
     @Override
@@ -63,15 +62,48 @@ public class RoutineServiceImpl implements RoutineService{
         routineRepository.save(routine);
     }
 
-    //루틴 상세 보기
+    //루틴 상세 조회
     @Override
     @Transactional
-    public List<RoutineTrainingResponseDto> detailRoutine(Long routineId){
-        List<RoutineTrainingList> routineEntities = routineTrainingListRepository.findAllByroutineTrainingListRoutineId(routineId);
-        List<RoutineTrainingResponseDto> routineTrainingResponseDtoList = routineEntities.stream()
-                .map(RoutineTrainingResponseDto::toDto)
-                .collect(Collectors.toList());
-        return routineTrainingResponseDtoList;
+    public GetTrainingResponseDto getTrainings(Long routineId){
+//        List<RoutineTrainingList> routineEntities = routineTrainingListRepository.findAllByroutineTrainingListRoutineId(routineId);
+//        List<RoutineTrainingResponseDto> routineTrainingResponseDtoList = routineEntities.stream()
+//                .map(RoutineTrainingResponseDto::toDto)
+//                .collect(Collectors.toList());
+//        return routineTrainingResponseDtoList;
+
+        List<RoutineTrainingList> routineTrainings = routineTrainingListRepository.findAllWithRoutineId(routineId);
+
+        GetTrainingResponseDto responseDto = GetTrainingResponseDto
+                .builder()
+                .routineId(routineId)
+                .build();
+
+        TreeMap<Integer, RoutineTrainingResponseDto> routineTrainingResponseDtoTreeMap = new TreeMap<>();
+
+        routineTrainings.forEach(u -> {
+
+            int index = u.getSequence();
+
+            if(routineTrainingResponseDtoTreeMap.get(index) == null){
+                RoutineTrainingResponseDto routineTrainingResponseDto = RoutineTrainingResponseDto.toDto(u);
+                routineTrainingResponseDtoTreeMap.put(index,routineTrainingResponseDto);
+
+            }
+            RoutineSetResponseDto routineSetResponseDto = RoutineSetResponseDto.toDto(u);
+
+            routineTrainingResponseDtoTreeMap.get(index).getSets().add(routineSetResponseDto);
+        });
+
+        Set<Integer> keySet = routineTrainingResponseDtoTreeMap.keySet();
+
+        for (Integer key : keySet){
+            responseDto.getRoutineTrainingList().add(routineTrainingResponseDtoTreeMap.get(key));
+        }
+
+        routineTrainingListRepository.flush();
+
+        return responseDto;
     }
 
     // 루틴 세트 추가
@@ -139,4 +171,33 @@ public class RoutineServiceImpl implements RoutineService{
         routineTrainingListRepository.updateWithRoutineTrainingListIdAndKgAndCount(requestDto.getRoutineTrainingListId(), requestDto.getKg(), requestDto.getCount());
     }
     //루틴 운동 삭제
+    @Override
+    @Transactional
+    public void removeTraining(Long routineId, Long trainingId){
+        RoutineTrainingList routineTraining = routineTrainingListRepository.findLastOneWithRoutineIdAndTrainingId(routineId, trainingId);
+
+        int sequence = routineTraining.getSequence();
+
+        //운동 삭제
+        routineTrainingListRepository.deleteWithRoutineIdAndTrainingId(routineId, trainingId);
+
+        //삭제한 운동 다음에 있는 운동들 sequence 1씩 감소
+        routineTrainingListRepository.updateWithRoutineIdAndSequence(routineId, sequence);
+    }
+
+    @Override
+    @Transactional
+    public void addTraining(List<UserTrainingDto> userTrainingDtoList, LocalDate date){
+
+        List<UserTraining> userTrainings = new ArrayList<>();
+        Long userId = userTrainingDtoList.get(0).getUserId();
+
+        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
+        int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
+
+        for (int i = 0; i < userTrainingDtoList.size(); i++){
+
+
+        }
+    }
 }

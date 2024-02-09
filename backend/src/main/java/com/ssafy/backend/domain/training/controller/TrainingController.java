@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -69,6 +70,17 @@ public class TrainingController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 운동 조회(회원)
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<?> getAllTraining(@PathVariable("user_id") Long userId) {
+        try {
+            List<UserTrainingDataResponseDto> list = userTrainingService.getAllTraining(userId);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     // 운동 조회(특정 날짜&회원)
     @GetMapping
     public ResponseEntity<?> getTrainings(@RequestParam("user_id") Long userId,
@@ -76,7 +88,7 @@ public class TrainingController {
                                           @RequestParam("month") int month,
                                           @RequestParam("day") int day) {
         log.info("운동 조회 들어왔나?");
-        List<UserTrainingResponseDto> list = userTrainingService.getTrainings(userId, year, month, day);
+        UserTrainingDataResponseDto list = userTrainingService.getTrainings(userId, year, month, day);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -92,6 +104,24 @@ public class TrainingController {
         log.info("userId={}, 오늘날짜: {}-{}-{}", userId, year, month, day);
         userTrainingService.saveTrainings(userId, year, month, day, trainings);
         return new ResponseEntity<>(year + "-" + month + "-" + day + ", 회원ID = " + userId + " 운동 추가 성공!", HttpStatus.OK);
+    }
+
+    // 운동 추가(세트, 무게, 횟수 포함)
+    @PostMapping("/add")
+    public ResponseEntity<?> addTrainings(@RequestParam("year") int year,
+                                          @RequestParam("month") int month,
+                                          @RequestParam("day") int day,
+                                          @RequestBody List<UserTrainingDto> userTrainingDtoList) {
+        try {
+            log.info("{}-{}-{}", year, month, day);
+            log.info("운동 추가 api - {}", userTrainingDtoList);
+
+            userTrainingService.addTrainings(userTrainingDtoList, LocalDate.of(year, month, day));
+
+            return new ResponseEntity<>("운동 추가 성공!", HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
     }
 
     // 운동 완료 여부 수정(세트별로)

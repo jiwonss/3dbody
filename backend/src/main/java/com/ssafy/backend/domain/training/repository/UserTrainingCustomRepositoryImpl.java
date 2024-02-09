@@ -67,4 +67,13 @@ public class UserTrainingCustomRepositoryImpl implements UserTrainingCustomRepos
                         qUserTraining.sequence.gt(sequence))
                 .execute();
     }
+
+    // 회원 ID 기반 운동 정보 조회(운동 조회)
+    @Override
+    public List<UserTraining> findAllWithUserId(Long userId) {
+        return jpaQueryFactory.selectFrom(qUserTraining)
+                .where(qUserTraining.user.userId.eq(userId))
+                .orderBy(qUserTraining.date.asc(), qUserTraining.sequence.asc(), qUserTraining.sets.asc())
+                .fetch();
+    }
 }
