@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 const ChallengeUpdatePage = () => {
   const { challengeId } = useParams();
   const location = useLocation();
-  const challenge = location.state.value
+  const challenge = location.state.value;
 
   const [challengeTitle, setChallengeTitle] = useState(`${challenge.title}`);
   const [challengeSummary, setChallengeSummary] = useState(
@@ -115,6 +115,7 @@ const ChallengeUpdatePage = () => {
     const promise = upload.promise();
     promise.then(() => {
       console.log("성공");
+      alert("등록되었습니다.");
     });
   };
 
@@ -139,6 +140,7 @@ const ChallengeUpdatePage = () => {
     const promise = upload.promise();
     promise.then(() => {
       console.log("성공");
+      alert("등록되었습니다.");
     });
   };
 
