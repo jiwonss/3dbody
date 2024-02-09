@@ -29,7 +29,13 @@ public enum ExceptionType {
 
     INVALID_INBODY(HttpStatus.BAD_REQUEST, "존재하지 않는 인바디 정보입니다."),
 
-    INVALID_FILE(HttpStatus.BAD_REQUEST, "존재하지 않는 파일입니다.");
+    INVALID_FILE(HttpStatus.BAD_REQUEST, "존재하지 않는 파일입니다."),
+    DUPLICATED_FILE(HttpStatus.BAD_REQUEST, "이미 존재하는 파일입니다."),
+    NOT_FOUND_ASSET_ID(HttpStatus.BAD_REQUEST, "ASSET_ID를 입력해주세요."),
+    NOT_FOUND_AVATAR_URL(HttpStatus.BAD_REQUEST, "AVATAR_URL을 입력해주세요."),
+    FAIL_CREATE_FILE(HttpStatus.BAD_REQUEST, "파일 생성을 실패하였습니다."),
+    FAIL_WRITE_FILE(HttpStatus.BAD_REQUEST, "파일 작성을 실패하였습니다."),
+    FAIL_RESPONSE(HttpStatus.BAD_REQUEST, "RESPONSE가 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;
