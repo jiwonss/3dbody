@@ -31,7 +31,7 @@ public class Challenge {
     @Column(nullable = false)
     private String summary; // 한줄설명, VARCHAR(100), NOT NULL
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content; // 상세정보, TEXT, NOT NULL
 
     private String thumbnail; // 썸네일, VARCHAR(255)
