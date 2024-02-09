@@ -9,11 +9,11 @@ import { SidebarConatiner } from "../components/sidebar/SidebarContainer";
 import { PresenterView } from "../components/PresenterView";
 import { nameTructed, trimSnackBarText } from "../utils/helper";
 import { ILSBottomBar } from "./components/ILSBottomBar";
-import { TopBar } from "./components/TopBar";
+// import { TopBar } from "./components/TopBar";
 import useIsTab from "../hooks/useIsTab";
-import PollsListner from "./components/pollContainer/PollListner";
-import HLSContainer from "./components/hlsViewContainer/HLSContainer";
-import FlyingEmojisOverlay from "./components/FlyingEmojisOverlay";
+// import PollsListner from "./components/pollContainer/PollListner";
+// import HLSContainer from "./components/hlsViewContainer/HLSContainer";
+// import FlyingEmojisOverlay from "./components/FlyingEmojisOverlay";
 import MemorizedILSParticipantView from "./components/ILSParticipantView";
 import WaitingToJoinScreen from "../components/screens/WaitingToJoinScreen";
 import ConfirmBox from "../components/ConfirmBox";
@@ -316,8 +316,8 @@ export function ILSContainer({
 
   return (
     <div className="fixed inset-0">
-      <div ref={containerRef} className="flex flex-col h-full bg-gray-800">
-        <FlyingEmojisOverlay />
+      <div ref={containerRef} className="flex flex-col h-full bg-gray-200">
+        {/* <FlyingEmojisOverlay /> */}
         {typeof localParticipantAllowedJoin === "boolean" ? (
           localParticipantAllowedJoin ? (
             <>
@@ -325,7 +325,7 @@ export function ILSContainer({
                 setMeetingMode={setMeetingMode}
                 meetingMode={meetingMode}
               />
-              <PollsListner />
+              {/* <PollsListner /> */}
 
               {meetingMode === Constants.modes.CONFERENCE &&
                 (isMobile || isTab ? (
@@ -338,11 +338,11 @@ export function ILSContainer({
                       height: topBarHeight,
                     }}
                   >
-                    <TopBar topBarHeight={topBarHeight} />
+                    {/* <TopBar topBarHeight={topBarHeight} /> */}
                   </div>
                 ))}
 
-              <div className={` flex flex-1 flex-row bg-gray-800 `}>
+              <div className={` flex flex-1 flex-row bg-gray-200`}>
                 {meetingMode === Constants.modes.CONFERENCE ? (
                   <div className={`flex flex-1 `}>
                     {isPresenting ? (
@@ -358,18 +358,18 @@ export function ILSContainer({
                       />
                     )}
                   </div>
-                ) : (
-                  <HLSContainer
-                    {...{
-                      width:
-                        containerWidth -
-                        (isTab || isMobile
-                          ? 0
-                          : typeof sideBarMode === "string"
-                          ? sideBarContainerWidth
-                          : 0),
-                    }}
-                  />
+                ) : (null
+                  // <HLSContainer
+                  //   {...{
+                  //     width:
+                  //       containerWidth -
+                  //       (isTab || isMobile
+                  //         ? 0
+                  //         : typeof sideBarMode === "string"
+                  //         ? sideBarContainerWidth
+                  //         : 0),
+                  //   }}
+                  // />
                 )}
                 <SidebarConatiner
                   height={

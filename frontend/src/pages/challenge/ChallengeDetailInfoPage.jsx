@@ -2,7 +2,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CalendarIcon, UsersIcon, FlagIcon } from "@heroicons/react/24/solid";
-import Button from "./../../components/common/Button";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
@@ -59,63 +58,64 @@ const ChallengeDetailInfo = () => {
       });
   };
 
-  const onChallengeDeleteHandler = async (event) => {
-    event.preventDefault();
-    await axios.delete(`${baseUrl}api/challenge/${challengeId}`).then(() => {
-      window.location.replace("/challenge");
-    });
-  };
-
   useEffect(() => {
     getChallenge();
     getParticipateChallenge();
-  }, []);
+  }, [challenge]);
 
   return (
     <div>
       <div>
-        <div className="flex">
-          <CalendarIcon className="w-4 h-4" />
-          <p>
-            {startDate} ~ {endDate}
-          </p>
+        <div className="mt-2 mb-2 ml-4">
+          <div className="flex items-center mb-1">
+            <CalendarIcon className="w-5 h-5 mr-2 text-teal-700" />
+            <p className="text-lg">
+              {startDate} ~ {endDate}
+            </p>
+          </div>
+          <div className="flex items-center mb-1">
+            <UsersIcon className="w-5 h-5 mr-2 text-teal-700" />
+            <p className="text-lg">{challenge.entry}명 참여</p>
+          </div>
+          <div className="flex items-center">
+            <FlagIcon className="w-5 h-5 mr-2 text-teal-700" />
+            <p className="text-lg truncate">{challenge.summary}</p>
+          </div>
         </div>
-        <div className="flex">
-          <UsersIcon className="w-4 h-4" />
-          <p>{challenge.entry}명 참여</p>
-        </div>
-        <div className="flex">
-          <FlagIcon className="h-4 W-4" />
-          <p>{challenge.summary}</p>
+        <div className="flex justify-center">
+          {isParticipate ? (
+            <button
+              onClick={onParticipateCancelHandler}
+              className="w-10/12 p-2 mt-3 mb-4 text-center text-teal-700 bg-white border-2 border-teal-700 rounded-full"
+            >
+              참여중
+            </button>
+          ) : (
+            <button
+              onClick={onParticipateHandler}
+              className="w-10/12 p-2 mt-3 mb-4 text-center text-white bg-teal-700 border-2 border-teal-700 rounded-full"
+            >
+              참여하기
+            </button>
+          )}
         </div>
         <hr />
-        {isParticipate ? (
-          <Button buttonName={"참여 중"} onClick={onParticipateCancelHandler} />
-        ) : (
-          <Button buttonName={"참여하기"} onClick={onParticipateHandler} />
-        )}
-        <hr />
-        {challenge.content}
-        <div>
-          {user.info.role === "ROLE_ADMIN" ? (
-            <Button
-              buttonName={"삭제하기"}
-              onClick={onChallengeDeleteHandler}
-            />
-          ) : null}
-          <Link
-            to={`/challenge/${challengeId}/update`}
-            state={{ value: challenge }}
-            className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
-          >
-            <Button buttonName={"수정하기"} />
-          </Link>
+        <div className="m-4">
+          <p className="text-2xl">상세정보</p>
+          {challenge.content}
         </div>
       </div>
       <div>
-        <Link to="/challenge/ongoing">
-          <button>참여하기</button>
-        </Link>
+        <div className="flex justify-center">
+          {isParticipate ? (
+            <Link
+              to="/challenge/ongoing"
+              className="w-10/12 p-2 mt-3 mb-4 text-center text-white bg-teal-700 border-2 border-teal-700 rounded-full"
+            >
+              챌린지 시작하기
+            </Link>
+          ) : null}
+        </div>
       </div>
     </div>
   );

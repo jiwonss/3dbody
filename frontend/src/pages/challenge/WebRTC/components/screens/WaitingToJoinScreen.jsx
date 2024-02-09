@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import animationData from "../../../WebRTC/static/animations/join_meeting.json";
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 import useIsTab from "../../hooks/useIsTab";
 import useIsMobile from "../../hooks/useIsMobile";
 
 const WaitingToJoinScreen = () => {
   const waitingMessages = [
-    { index: 0, text: "Creating a room for you..." },
-    { index: 1, text: "Almost there..." },
+    { index: 0, text: "방을 만들고 있습니다..." },
+    { index: 1, text: "입장 중입니다..." },
   ];
   const [message, setMessage] = useState(waitingMessages[0]);
 
@@ -30,24 +30,23 @@ const WaitingToJoinScreen = () => {
   const isTab = useIsTab();
   const isMobile = useIsMobile();
 
-  const animationDefaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  // const animationDefaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: animationData,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
   return (
     <div
-      className="bg-gray-800"
+      className="bg-gray-200"
       style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        // backgroundColor: theme.palette.darkTheme.main,
       }}
     >
       <div className="flex flex-col">
@@ -57,7 +56,8 @@ const WaitingToJoinScreen = () => {
             width: isTab ? 200 : isMobile ? 200 : 250,
           }}
         >
-          <Lottie
+          로딩 스피너 넣기
+          {/* <Lottie
             loop={animationDefaultOptions.loop}
             autoplay={animationDefaultOptions.autoplay}
             animationData={animationDefaultOptions.animationData}
@@ -66,9 +66,9 @@ const WaitingToJoinScreen = () => {
                 animationDefaultOptions.rendererSettings.preserveAspectRatio,
             }}
             style={{ height: "100%", width: "100%" }}
-          />
+          /> */}
         </div>
-        <h1 className="mt-1 text-xl font-bold text-center text-white">
+        <h1 className="mt-1 text-xl font-bold text-center text-gray-700">
           {message.text}
         </h1>
       </div>

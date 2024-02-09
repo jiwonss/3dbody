@@ -11,6 +11,7 @@ import WebcamOffIcon from "../../icons/WebcamOffIcon";
 import WebcamOnIcon from "../../icons/Bottombar/WebcamOnIcon";
 import MicOffIcon from "../../icons/MicOffIcon";
 import MicOnIcon from "../../icons/Bottombar/MicOnIcon";
+import BackButton from './../../../../../components/common/BackButton';
 
 export function JoiningScreen({
   participantName,
@@ -324,7 +325,7 @@ export function JoiningScreen({
             onMouseLeave={closeTooltip}
             onClick={onClick}
             className={`rounded-full min-w-auto w-11 h-11 flex items-center justify-center ${
-              onState ? "bg-white" : "bg-red-650 text-white"
+              onState ? "bg-white" : "bg-red-600 text-white"
             }`}
             disabled={meetingMode === Constants.modes.VIEWER}
           >
@@ -342,13 +343,6 @@ export function JoiningScreen({
           } overflow-hidden flex flex-col items-center justify-center pb-1.5`}
           ref={tooltipRef}
         >
-          <div className={"rounded-md p-1.5 bg-black "}>
-            <p className="text-base text-white ">
-              {onState
-                ? `Turn off ${mic ? "mic" : "webcam"}`
-                : `Turn on ${mic ? "mic" : "webcam"}`}
-            </p>
-          </div>
         </div>
       </>
     );
@@ -356,7 +350,10 @@ export function JoiningScreen({
 
   return (
     <div className="fixed inset-0">
-      <div className="flex flex-col flex-1 h-screen overflow-y-auto bg-gray-800">
+      <div className="absolute">
+        <BackButton />
+      </div>
+      <div className="flex flex-col flex-1 h-screen overflow-y-auto bg-gray-200">
         <div className="flex flex-1 flex-col md:flex-row items-center justify-center md:m-[72px] m-16">
           <div className="container grid grid-flow-row md:grid-flow-col ">
             <div className="grid grid-cols-12">
@@ -378,19 +375,19 @@ export function JoiningScreen({
                         }
                       />
 
-                      {!isMobile ? (
+                      {
                         <>
                           <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center">
                             {!webcamOn ? (
                               <p className="text-xl text-white xl:text-lg 2xl:text-xl">
                                 {meetingMode === Constants.modes.VIEWER
-                                  ? "You are not permitted to use your microphone and camera."
-                                  : "The camera is off"}
+                                  ? "카메라와 마이크가 허용되지 않았습니다."
+                                  : "카메라가 꺼져있습니다."}
                               </p>
                             ) : null}
                           </div>
                         </>
-                      ) : null}
+                      }
 
                       {settingDialogueOpen ? (
                         <SettingDialogueBox
@@ -432,27 +429,27 @@ export function JoiningScreen({
                         </div>
                       )}
                     </div>
-
-                    {!isMobile &&
-                      meetingMode === Constants.modes.CONFERENCE && (
-                        <div
-                          className="absolute m-4 bg-gray-700 rounded cursor-pointer md:left-12 lg:left-24 xl:left-44 md:right-12 lg:right-24 xl:right-44"
-                          onClick={(e) => {
-                            handleClickOpen();
-                          }}
-                        >
-                          <div className="flex flex-row items-center justify-center m-1">
-                            <button className="text-white">
-                              <CheckCircleIcon className="w-5 h-5" />
-                            </button>
-                            <p className="ml-1 text-base text-white">
-                              Check your audio and video
-                            </p>
-                          </div>
-                        </div>
-                      )}
                   </div>
                 </div>
+              </div>
+              <div className="col-start-1 col-end-13">
+                {meetingMode === Constants.modes.CONFERENCE && (
+                  <div
+                    className="bg-gray-700 rounded cursor-pointer md:left-12 lg:left-24 xl:left-44 md:right-12 lg:right-24 xl:right-44"
+                    onClick={(e) => {
+                      handleClickOpen();
+                    }}
+                  >
+                    <div className="flex flex-row items-center justify-center p-1 m-1">
+                      <button className="text-white">
+                        <CheckCircleIcon className="w-5 h-5" />
+                      </button>
+                      <p className="ml-1 text-sm text-white">
+                        카메라와 마이크를 확인하세요
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="col-span-12 md:col-span-5 2xl:col-span-6 md:relative">
                 <div className="flex flex-col items-center justify-center flex-1 mt-3 xl:m-16 lg:m-6 md:mt-9 lg:mt-14 xl:mt-20 md:absolute md:left-0 md:right-0 md:top-0 md:bottom-0">

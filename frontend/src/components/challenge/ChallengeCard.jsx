@@ -1,4 +1,3 @@
-import "./ChallengeCard.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -7,17 +6,36 @@ const ChallengeCard = ({
   challengeTitle,
   challengeSummary,
   challengeThumbnail,
+  challengeStartDate,
+  challengeEndDate,
 }) => {
+  let subStartDate = "" + challengeStartDate;
+  let subEndDate = "" + challengeEndDate;
+  // const startDate = subStartDate.slice(0, 10);
+  // const endDate = subEndDate.slice(0, 10);
+
+
   return (
-    <div>
+    <div className="justify-self-center">
       <Link to={`/challenge/${challengeId}`}>
         <div className="card">
-          <div className="content">
-            <div>
-              <img className="thumbnail" src={challengeThumbnail} alt="..." />
+          <div className="flex flex-wrap justify-center">
+            <div className="w-32 h-32 mt-3">
+              <img
+                className="w-full h-full rounded-lg"
+                src={challengeThumbnail}
+                alt="썸네일"
+              />
             </div>
-            <div className="title">{challengeTitle}</div>
-            <div className="description">{challengeSummary}</div>
+            <div className="w-32 mt-1">
+              <div className="text-sm font-semibold text-left">{challengeTitle}</div>
+              <p className="text-xs text-left text-gray-400 truncate">
+                {challengeSummary}
+              </p>
+              {/* <div className="text-xs text-left text-gray-500 text-nowrap">
+                기간 : {startDate}~{endDate}
+              </div> */}
+            </div>
           </div>
         </div>
       </Link>
@@ -30,6 +48,8 @@ ChallengeCard.propTypes = {
   challengeTitle: PropTypes.string,
   challengeSummary: PropTypes.string,
   challengeThumbnail: PropTypes.string,
+  challengeStartDate: PropTypes.string,
+  challengeEndDate: PropTypes.string,
 };
 
 export default ChallengeCard;

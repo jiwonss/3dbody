@@ -6,8 +6,6 @@ import PageTitle from "../../components/common/PageTitle";
 
 const MyInfoPage = () => {
   const user = useRecoilValue(userState);
-  
-  console.log(user)
   return (
     <div>
       <div className="absolute">
@@ -18,8 +16,8 @@ const MyInfoPage = () => {
       <MyInfo category="이름" data={user.info.name}/>
       <MyInfo category="닉네임" data={user.info.nickname} modalname="changeNickname"/>
       <MyInfo category="성별" data={user.info.gender==="MALE" ? "남자" : "여자"} modalname="changeGender"/>
-      <MyInfo category="신장" data={user.info.height}/>
-      <MyInfo category="체중" data={user.info.weight}/>
+      <MyInfo category="신장" data={user.info.height} modalname="changeHeight"/>
+      <MyInfo category="체중" data={user.info.weight} modalname="changeWeight"/>
       <MyInfo category="생년월일" data={user.info.birth_date}/>
     </div>
   );

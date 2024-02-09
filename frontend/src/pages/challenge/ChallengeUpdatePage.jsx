@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/common/UserState";
@@ -12,10 +12,8 @@ import { useParams } from "react-router-dom";
 
 const ChallengeUpdatePage = () => {
   const { challengeId } = useParams();
-  // const [challenge, setChallenge] = useState({});
-  // console.log(challenge.start_date)
   const location = useLocation();
-  const challenge = location.state.value
+  const challenge = location.state.value;
 
   const [challengeTitle, setChallengeTitle] = useState(`${challenge.title}`);
   const [challengeSummary, setChallengeSummary] = useState(
@@ -46,13 +44,6 @@ const ChallengeUpdatePage = () => {
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
   });
 
-  // const getChallenge = async () => {
-  //   const res = (
-  //     await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)
-  //   ).data;
-  //   setChallenge(res);
-  // };
-  // console.log(challenge)
   const onChallengeThumnailHandler = (event) => {
     setThumbnail(event.currentTarget.files[0]);
     setThumbnailName(`${uuid()}_${event.currentTarget.files[0].name}`); //uuid => 난수 설정
@@ -124,6 +115,7 @@ const ChallengeUpdatePage = () => {
     const promise = upload.promise();
     promise.then(() => {
       console.log("성공");
+      alert("등록되었습니다.");
     });
   };
 
@@ -148,12 +140,9 @@ const ChallengeUpdatePage = () => {
     const promise = upload.promise();
     promise.then(() => {
       console.log("성공");
+      alert("등록되었습니다.");
     });
   };
-
-  // useEffect(() => {
-  //   getChallenge();
-  // }, []);
 
   return (
     <div>

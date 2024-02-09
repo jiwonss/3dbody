@@ -1,5 +1,3 @@
-import * as React from "react";
-
 const RaiseHandIcon = (props) => (
   <svg
     width={24}
