@@ -86,8 +86,18 @@ public class RoutineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //운동 삭제
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> removeTraining(@RequestParam("routine_id") Long routineId, @RequestParam("training_id") Long trainingId){
+        routineService.removeTraining(routineId, trainingId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    //운동 불러와서 루틴에 그대로 저장하기
+
 }
 
