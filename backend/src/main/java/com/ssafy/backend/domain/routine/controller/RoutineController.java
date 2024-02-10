@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,7 +53,7 @@ public class RoutineController {
 
     // 루틴 세트 추가
     @PostMapping("/set")
-    public ResponseEntity<?> addSet(@RequestBody RoutineTrainingRequestDto requestDto){
+    public ResponseEntity<?> addSet(@RequestBody SetCreateRoutineRequestDto requestDto){
         routineService.addSet(requestDto);
         return ResponseEntity.ok(Response.success());
     }

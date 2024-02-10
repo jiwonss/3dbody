@@ -7,18 +7,15 @@ import com.ssafy.backend.domain.routine.repository.RoutineRepository;
 import com.ssafy.backend.domain.routine.repository.RoutineTrainingListRepository;
 import com.ssafy.backend.domain.training.dto.UserTrainingDto;
 import com.ssafy.backend.domain.training.entity.Training;
-import com.ssafy.backend.domain.training.entity.UserTraining;
 import com.ssafy.backend.domain.training.repository.TrainingRepository;
 import com.ssafy.backend.domain.training.repository.UserTrainingRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -108,19 +105,25 @@ public class RoutineServiceImpl implements RoutineService{
 
     // 루틴 세트 추가
     @Override
-    public void addSet(RoutineTrainingRequestDto requestDto){
+    @Transactional
+    public void addSet(SetCreateRoutineRequestDto requestDto){
 
-        Routine routine = routineRepository.getReferenceById(requestDto.getRoutineId());
-        Training training = trainingRepository.getReferenceById(requestDto.getTrainingId());
+        Long routineId = requestDto.getRoutineId();
+        Long trainingId = requestDto.getTrainingId();
+
+        Routine routine = routineRepository.getReferenceById(routineId);
+        Training training = trainingRepository.getReferenceById(trainingId);
+
+        RoutineTrainingList lastroutineTraining = routineTrainingListRepository.findLastOneWithRoutineIdAndTrainingId(routineId, trainingId);
 
         RoutineTrainingList routineTrainingList = RoutineTrainingList
                 .builder()
                 .routine(routine)
                 .training(training)
-                .sequence(requestDto.getSequence())
-                .kg(requestDto.getKg())
-                .count(requestDto.getCount())
-                .sets(requestDto.getSets())
+                .sequence(lastroutineTraining.getSequence())
+                .count(lastroutineTraining.getCount())
+                .kg(lastroutineTraining.getKg())
+                .sets(lastroutineTraining.getSets() + 1)
                 .build();
         routineTrainingListRepository.saveAndFlush(routineTrainingList);
     }
