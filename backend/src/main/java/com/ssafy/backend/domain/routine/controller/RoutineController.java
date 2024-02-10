@@ -2,11 +2,13 @@ package com.ssafy.backend.domain.routine.controller;
 
 import com.ssafy.backend.domain.routine.dto.*;
 import com.ssafy.backend.domain.routine.service.RoutineService;
+import com.ssafy.backend.domain.training.dto.UserTrainingDto;
 import com.ssafy.backend.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -93,11 +95,22 @@ public class RoutineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //운동 불러와서 루틴에 그대로 저장하기
+    @PostMapping("/add")
+    public ResponseEntity<?> addTraining(@RequestParam("routine_id") Long routineId,
+                                 @RequestBody List<UserTrainingDto> userTrainingDtoList) {
+        try{
+
+            routineService.addTraining(userTrainingDtoList, routineId);
+            return new ResponseEntity<>("운동 추가", HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
     private ResponseEntity<?> exceptionHandling(Exception e) {
         return new ResponseEntity<>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    //운동 불러와서 루틴에 그대로 저장하기
 
 }
 

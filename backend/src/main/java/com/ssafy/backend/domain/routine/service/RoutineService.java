@@ -19,5 +19,5 @@ public interface RoutineService {
     public void removeRoutine(Long routineId);
     public void updateSet(RoutineSetRequestDto requestDto);
     public void removeTraining(Long routineId, Long TrainingId);
-    public void addTraining(List<UserTrainingDto> userTrainingDtoList, LocalDate date); //운동불러와서 루틴에 저장하기
+    public void addTraining(List<UserTrainingDto> userTrainingDtoList, Long routineId); //운동불러와서 루틴에 저장하기
 }
