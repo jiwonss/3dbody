@@ -187,17 +187,34 @@ public class RoutineServiceImpl implements RoutineService{
 
     @Override
     @Transactional
-    public void addTraining(List<UserTrainingDto> userTrainingDtoList, LocalDate date){
+    public void addTraining(List<UserTrainingDto> userTrainingDtoList, Long routineId){
 
-        List<UserTraining> userTrainings = new ArrayList<>();
-        Long userId = userTrainingDtoList.get(0).getUserId();
+        List<RoutineTrainingList> routineTrainingLists = new ArrayList<>();
 
-        List<UserTraining> list = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
+        List<RoutineTrainingList> list = routineTrainingListRepository.findAllByRoutineRoutineId(routineId);
+
         int startIndex = !list.isEmpty() ? 1 + list.get(list.size() - 1).getSequence() : 0;
 
         for (int i = 0; i < userTrainingDtoList.size(); i++){
 
+            UserTrainingDto userTrainingDto = userTrainingDtoList.get(i);
 
+            Training training = trainingRepository.getReferenceById(userTrainingDto.getTrainingId());
+            Routine routine = routineRepository.getReferenceById(routineId);
+            for (int j = 0; j < userTrainingDto.getSets().size(); j++) {
+                RoutineTrainingList routineTrainingList = RoutineTrainingList
+                        .builder()
+                        .routine(routine)
+                        .training(training)
+                        .sequence(startIndex + i)
+                        .sets(j)
+                        .kg(userTrainingDto.getSets().get(j).getKg())
+                        .count(userTrainingDto.getSets().get(j).getCount())
+                        .build();
+                
+                routineTrainingLists.add(routineTrainingList);
+            }
         }
+        routineTrainingListRepository.saveAllAndFlush(routineTrainingLists);
     }
 }
