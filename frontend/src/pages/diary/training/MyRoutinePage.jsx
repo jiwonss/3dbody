@@ -32,7 +32,7 @@ const MyRoutinePage = () => {
   // 루틴 생성 모달
   const onRoutineCreateHandler = () => {
     setModalData({ type: "routineCreate", data: "" });
-  }
+  };
 
   // 유저 루틴 목록 가져오기
   const getUserRoutine = async () => {
@@ -50,10 +50,6 @@ const MyRoutinePage = () => {
   useEffect(() => {
     getUserRoutine();
   }, [modalData]);
-
-  useEffect(() => {
-    getUserRoutine();
-  }, []);
 
   return (
     <>

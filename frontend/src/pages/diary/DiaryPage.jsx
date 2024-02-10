@@ -45,7 +45,6 @@ const DiaryPage = () => {
         `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
       )
       .then((res) => {
-        console.log(res)
         setUserTraining(res.data.user_training_list);
       })
       .catch((err) => {

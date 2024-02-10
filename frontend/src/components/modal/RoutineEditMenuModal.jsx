@@ -39,7 +39,7 @@ const RoutineEditMenuModal = ({ onClose }) => {
   return (
     <Modal
       className={
-        "fixed bottom-0 bg-white rounded-md border-t border-t-black overflow-auto inset-x-0"
+        "fixed bottom-0 bg-white rounded-2xl border-t border-t-black overflow-auto inset-x-0"
       }
       isOpen={modalData.type === "routineEditMenu"}
       ariaHideApp={false}
@@ -73,7 +73,7 @@ const RoutineEditMenuModal = ({ onClose }) => {
         </div>
         <hr />
 
-        <div className="flex gap-2 text-red-500" onClick={onClickDelete}>
+        <div className="flex gap-2 text-red-500" onClick={() => onClickDelete() }>
           <BsFillTrash3Fill className="w-5 h-5" />
           <p>삭제</p>
         </div>

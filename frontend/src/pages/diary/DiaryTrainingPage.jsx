@@ -21,11 +21,6 @@ const DiaryTrainingPage = () => {
   const isSelected = useRecoilValue(toggleDiaryState);
   const [userTraining, setUserTraining] = useRecoilState(userTrainingState);
   
-  const trainingDetailData = () => {
-    // 해당 날짜 운동데이터 유무
-    return userTraining.length ? <TrainingData /> : <TrainingNoData />;
-  };
-
   // 운동 데이터 가져오기
   const getUserTraining = async () => {
     await axios
@@ -45,10 +40,6 @@ const DiaryTrainingPage = () => {
     getUserTraining();
   }, [selectedDate]);
 
-  useEffect(() => {
-    getUserTraining();
-  }, []);
-
   return (
     <div className='bg-gray-100'>
       <div className="sticky top-0 bg-white">
@@ -58,7 +49,7 @@ const DiaryTrainingPage = () => {
         {isSelected === "left" ? <CalendarWeek /> : <Graph />}
         <hr className="mt-4" />
       </div>
-      {trainingDetailData()}
+      {userTraining.length ? <TrainingData /> : <TrainingNoData />}
     </div>
   );
 };
