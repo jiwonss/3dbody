@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import Description from "../Description";
 import { selectedRoutineState } from "../../../../recoil/diary/SelectedRoutineState";
 import { selectedRoutineInfoState } from "../../../../recoil/diary/SelectedRoutineInfoState";
@@ -18,14 +18,21 @@ const RoutineDetailBox = ({ data }) => {
   const getRoutineDetail = async () => {
     setSelectedRoutineInfo(data);
     await axios
-      .get(`${baseUrl}api/management/routine/detail/${data.routineId}`)
+      .get(
+        `${baseUrl}api/management/routine/detail?routine_id=${data.routineId}`
+      )
       .then((res) => {
-        console.log("루틴 디테일", res);
+        console.log("루틴 디테일", res.data);
         setSelectedRoutine(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // 루틴 상세 모달
+  const onRoutineDetailHandler = () => {
+    setModalData({ type: "routineDetail", data: "" });
   };
 
   // 루틴 편집 메뉴 모달
@@ -35,10 +42,13 @@ const RoutineDetailBox = ({ data }) => {
 
   return (
     <div className="flex justify-between" onClick={getRoutineDetail}>
-      <div>
-        <Description Title={data.title} subTitle={"루틴에 등록된 카테고리 목록"} />
+      <div onClick={onRoutineDetailHandler}>
+        <Description Title={data.title} subTitle={"운동 목록 보기"} />
       </div>
-      <EllipsisVerticalIcon className="w-6 h-6 my-auto" onClick={onRoutineDetailMenuHandler} />
+      <EllipsisVerticalIcon
+        className="w-6 h-6 my-auto"
+        onClick={onRoutineDetailMenuHandler}
+      />
     </div>
   );
 };

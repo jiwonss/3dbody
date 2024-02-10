@@ -6,6 +6,7 @@ import SelfInputFoodModal from "../../components/modal/SelfInputFoodModal";
 import SignUpModal from "../../components/modal/SignUpModal";
 import RoutineCreateModal from "../../components/modal/RoutineCreateModal";
 import RoutineEditMenuModal from "../../components/modal/RoutineEditMenuModal";
+import RoutineDetailModal from "../../components/modal/RoutineDetailModal";
 
 const ModalManager = () => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -27,6 +28,8 @@ const ModalManager = () => {
       return <RoutineCreateModal onClose={closeModal} data={modalData.data} />;
     case "routineEditMenu":
       return <RoutineEditMenuModal onClose={closeModal} data={modalData.data} />;
+    case "routineDetail":
+      return <RoutineDetailModal onClose={closeModal} data={modalData.data} />;
     default:
       return <></>;
   }

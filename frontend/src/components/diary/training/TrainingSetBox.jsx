@@ -1,7 +1,6 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { BsFillTrash3Fill } from "react-icons/bs";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
@@ -28,31 +27,33 @@ const TrainingSetBox = ({ set, setIdx }) => {
 
   // 미래인지 확인
   const isFuture = () => {
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date();
+    today.setHours(today.getHours() + 9);
+
     return (
-      today <
-      new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2])
-        .toISOString()
-        .split("T")[0]
+      today.toJSON() <
+      new Date(
+        selectedDate[0],
+        selectedDate[1] - 1,
+        selectedDate[2],
+        9
+      ).toJSON()
     );
   };
 
   // 운동 완료 여부 체크 버튼
   const putIsFinished = async () => {
-    isFuture()
-      ? ""
-      : await axios
-          .put(
-            `${baseUrl}api/management/training/user_training/${set.user_training_id}`
-          )
-          .then((res) => {
-            console.log(res.data);
-            setIsFinished(!isFinished);
-            setReset(!reset);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+    await axios
+      .put(
+        `${baseUrl}api/management/training/user_training/${set.user_training_id}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setIsFinished(!isFinished);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // kg 단위 변경
@@ -107,7 +108,7 @@ const TrainingSetBox = ({ set, setIdx }) => {
 
   useEffect(() => {
     getUserTraining();
-  }, [reset]);
+  }, [reset, isFinished]);
 
   return (
     <>
@@ -135,7 +136,8 @@ const TrainingSetBox = ({ set, setIdx }) => {
           type="checkbox"
           className="w-5 h-5 mt-1 accent-teal-600"
           onChange={() => putIsFinished()}
-          checked={isFuture() ? false : isFinished}
+          checked={isFinished}
+          disabled={isFuture()}
         />
       </td>
     </>

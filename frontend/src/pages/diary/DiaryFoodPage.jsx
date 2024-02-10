@@ -14,15 +14,11 @@ import FoodData from "../../components/diary/food/FoodData";
 import { userState } from "../../recoil/common/UserState";
 
 const DiaryTrainingPage = () => {
+  const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = useRecoilValue(toggleDiaryState);
-  const baseUrl = useRecoilValue(baseUrlState);
   const setUserFood = useSetRecoilState(userFoodState);
-  const user = useRecoilValue(userState);
-
-  const foodDetailData = () => {
-    return <FoodData />;
-  };
 
   const getUserFood = async () => {
     // 식단 데이터 가져오기
@@ -52,7 +48,7 @@ const DiaryTrainingPage = () => {
         <hr className="my-4" />
       </div>
 
-      {foodDetailData()}
+      <FoodData />
     </>
   );
 };

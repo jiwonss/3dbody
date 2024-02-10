@@ -13,6 +13,7 @@ import { userState } from "../../../recoil/common/UserState";
 import HistoryList from "../../../components/diary/training/history/HistoryList";
 import HistoryNoData from "../../../components/diary/training/history/HistoryNoData";
 import { selectedHistoryListState } from "../../../recoil/diary/SelectedHistoryListState";
+import { selectedRoutineState } from "../../../recoil/diary/SelectedRoutineState";
 
 const TrainingLoadPage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
@@ -20,13 +21,41 @@ const TrainingLoadPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = true; // 운동선택하면 바뀌게
   const { basepage } = useParams();
-  const [userHistory, setUserHistory] = useRecoilState(userHistoryState);
-  const [selectedHistoryList, setSelectedHistoryList] = useRecoilState(selectedHistoryListState);
-  const resetSelectedHistoryList = useResetRecoilState(selectedHistoryListState);
+  const [userHistory, setUserHistory] = useRecoilState(userHistoryState); // 유저 운동 기록
+  const selectedHistoryList = useRecoilValue(selectedHistoryListState);  // 운동 기록에서 선택한 운동 목록
+  const resetSelectedHistoryList = useResetRecoilState(selectedHistoryListState); // 초기화
+  const selectedRoutine = useRecoilValue(selectedRoutineState)
 
   // 선택한 운동 기록 추가 하기
   const postSelectedHistory = async () => {
-    resetSelectedHistoryList(); // 선택한 운동 기록 목록 초기화
+    await axios
+      .post(
+        `${baseUrl}api/management/training/add?year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`,
+        selectedHistoryList
+      )
+      .then((res) => {
+        console.log(res.data)
+        resetSelectedHistoryList();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 선태한 운동 기록 루틴에 추가 하기
+  const postSelectedHistoryByRoutine = async () => {
+    await axios
+      .post(
+        `${baseUrl}api/management/routine/add?routine_id=${selectedRoutine.routineId}`,
+        selectedHistoryList
+      )
+      .then((res) => {
+        console.log(res.data)
+        resetSelectedHistoryList();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // 하단 버튼
@@ -42,10 +71,10 @@ const TrainingLoadPage = () => {
             to={
               basepage === "basic"
                 ? `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
-                : `/diary/training/myroutine/edit/create`
+                : `/diary/training/myroutine/edit`
             }
           >
-            <Button buttonName="확인" onClick={postSelectedHistory}/>
+            <Button buttonName="확인" onClick={() => basepage === "basic" ? postSelectedHistory() : postSelectedHistoryByRoutine()}/>
           </Link>
         ) : (
           <Button buttonName="운동 기록을 선택해주세요." disabled />
