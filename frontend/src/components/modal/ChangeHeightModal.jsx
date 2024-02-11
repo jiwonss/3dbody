@@ -39,16 +39,24 @@ const ChangeHeightModal = ({ onClose, data }) => {
 
   return (
     <Modal
-      className={"fixed bottom-0 w-full bg-white"}
+      className={"fixed transform -translate-y-1/2 top-1/2 inset-x-12"}
       isOpen={modalData.type === "changeHeight"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register("height")} defaultValue={data} />
-        <input type="button" onClick={onClose} value="취소" />
-        <input type="submit" value="확인" />
-      </form>
+      <div className="p-4 bg-white border-2 border-gray-400 rounded-xl">
+        <p className="mb-4 font-semibold text-center">신장</p>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+          <div className="flex justify-center gap-4">
+            <input type="text" {...register("height")} defaultValue={data} className="w-1/3 p-1 text-center border border-gray-400 rounded-md"/>
+            <p>cm</p>
+          </div>
+          <div className="flex gap-2 m-2">
+            <input type="button" onClick={onClose} value="취소" className="p-1 border border-teal-700 rounded-md"/>
+            <input type="submit" value="확인" className="p-1 text-white bg-teal-700 rounded-md"/>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 };

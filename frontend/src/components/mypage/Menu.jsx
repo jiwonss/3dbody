@@ -7,7 +7,7 @@ const Menu = ({ menus }) => {
     <div>
       {menus.map((menu) => {
         return (
-          <div className="flex m-2" key={menu.menutitle}>
+          <div className="flex gap-2 m-2" key={menu.menutitle}>
             {menu.menuicon}
             <p>{menu.menutitle}</p>
             <Link to={menu.menuurl}>

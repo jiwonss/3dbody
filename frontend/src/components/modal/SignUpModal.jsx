@@ -70,7 +70,7 @@ const SignUpModal = ({ onClose }) => {
 
   return (
     <Modal
-      className={"fixed bottom-0 overflow-auto inset-x-12 bottom-20"}
+      className={"fixed transform -translate-y-1/2 top-1/2 overflow-auto inset-x-12"}
       isOpen={modalData.type === "signup"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}

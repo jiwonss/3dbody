@@ -47,27 +47,30 @@ const ChangeNicknameModal = ({ onClose, data }) => {
 
   return (
     <Modal
-      className={"fixed bottom-0 w-full bg-white"}
+      className={"fixed transform -translate-y-1/2 top-1/2 inset-x-12"}
       isOpen={modalData.type === "changeNickname"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <h1>닉네임 변경</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex m-2">
-          <input
-            placeholder="닉네임을 변경해주세요"
-            {...register("nickname")}
-            type="text"
-            defaultValue={data}
-          />
-          <input type="button" onClick={checkNickname} value={"중복검사"} />
-        </div>
-        <div className="flex m-2">
-          <input type="button" onClick={onClose} value={"취소"} />
-          <input type="submit" value="확인" />
-        </div>
-      </form>
+      <div className="p-4 bg-white border-2 border-gray-400 rounded-xl">
+        <h1 className="mb-4 font-semibold text-center">닉네임 변경</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+          <div className="flex gap-2 m-2">
+            <input
+              placeholder="닉네임을 변경해주세요"
+              {...register("nickname")}
+              type="text"
+              defaultValue={data}
+              className="p-2 text-sm text-center border border-gray-400 rounded-md"
+            />
+            <input type="button" onClick={checkNickname} value={"중복검사"} className="w-1/3 p-1 bg-gray-400 rounded-md"/>
+          </div>
+          <div className="flex gap-2 m-2">
+            <input type="button" onClick={onClose} value={"취소"} className="p-1 border border-teal-700 rounded-md"/>
+            <input type="submit" value="확인" className="p-1 text-white bg-teal-700 rounded-md"/>
+          </div>
+        </form> 
+      </div>
     </Modal>
   );
 };

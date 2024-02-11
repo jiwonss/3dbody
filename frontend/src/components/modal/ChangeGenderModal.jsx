@@ -18,22 +18,28 @@ const ChangeGenderModal = ({ onClose, data }) => {
   };
   return (
     <Modal
-      className={"absolute p-5  bg-red-200 overflow-auto inset"}
+      className={"fixed transform  -translate-y-1/2 top-1/2 inset-x-12"}
       isOpen={modalData.type === "changeGender"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <h1>성별을 알려주세요</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <select {...register("gender")}>
-          <option value="now" selected>
-            {data}
-          </option>
-          <option value="another">{data === "남자" ? "여자" : "남자"}</option>
-        </select>
-        <button onClick={onClose}>취소</button>
-        <input type="submit" value={"확인"} />
-      </form>
+      <div className="p-4 bg-white border-2 border-gray-400 rounded-xl">
+        <h1 className="mb-4 font-semibold text-center">성별을 알려주세요</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4 text-center">
+            <select {...register("gender")} className="p-2 text-center border border-gray-400 rounded-md">
+              <option value="now" selected>
+                {data}
+              </option>
+              <option value="another">{data === "남자" ? "여자" : "남자"}</option>
+            </select> 
+          </div>
+          <div className="flex gap-2 m-2">
+            <input type="button" onClick={onClose} value={"취소"} className="p-1 border border-teal-700 rounded-md"/>
+            <input type="submit" value={"확인"} className="p-1 text-white bg-teal-700 rounded-md"/>    
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 };

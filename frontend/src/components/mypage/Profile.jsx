@@ -112,15 +112,15 @@ const Profile = () => {
           }}
         />
       </div>
-      <div className="flex justify-center m-2">
-        <h3>{user.info.nickname}님</h3>
+      <div className="flex justify-center gap-2 m-2">
+        <h3><span className="font-semibold">{user.info.nickname}</span>님</h3>
         <Link to="/mypage/myinfo">
           <PencilSquareIcon className="w-6 h-6" />
         </Link>
       </div>
       <div className="flex justify-center m-2">
         <Button
-          buttonStyle={"small"}
+          btnCss={"px-2 border-2 rounded-md"}
           buttonName={"로그아웃"}
           onClick={logout}
         />

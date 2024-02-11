@@ -3,7 +3,7 @@ import Profile from "./../../components/mypage/Profile";
 
 const MyPage = () => {
   return (
-    <div>
+    <div className="m-4">
       <Profile />
       <Menus />
     </div>

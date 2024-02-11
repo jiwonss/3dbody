@@ -55,8 +55,8 @@ const Menus = () => {
     <>
       {categorylist.map((menulist) => {
         return (
-          <div key={menulist.category}>
-            <div className="m-2">{menulist.category}</div>
+          <div key={menulist.category} className="my-8">
+            <div className="m-2 font-semibold">{menulist.category}</div>
             <Menu menus={menulist.list} />
           </div>
         );
