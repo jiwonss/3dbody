@@ -5,6 +5,7 @@ const MyPage = () => {
   return (
     <div className="m-4">
       <Profile />
+      <hr className="mt-4 border"/>
       <Menus />
     </div>
   );

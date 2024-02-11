@@ -30,7 +30,10 @@ const FAQPage = () => {
         <BackButton />
       </div>
       <PageTitle pageTitle="FAQ" />
-      {questionList}
+
+      <div className="flex flex-col gap-2 m-4">
+        {questionList}
+      </div>
     </div>
   );
 };

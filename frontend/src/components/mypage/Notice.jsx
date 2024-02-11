@@ -4,7 +4,7 @@ import { PropTypes } from "prop-types";
 const Notice = ({ notice }) => {
   const createdAt  = notice.createdAt.substring(0, 10)
   return (
-    <div className="flex">
+    <div className="flex p-2 text-white bg-teal-700 border rounded-xl">
       <p className='basis-1/3'>{ createdAt }</p>
       <p className='basis-2/3'>{ notice.title }</p>
     </div>

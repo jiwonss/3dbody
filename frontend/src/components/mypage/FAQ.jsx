@@ -6,7 +6,7 @@ const FAQ = ({ question }) => {
   console.log(question)
   return (
     <div className="flex justify-center">
-      <div className="flex justify-center content-center w-9/12 rounded-full bg-[#2E6F68] text-white border-2">
+      <div className="flex content-center justify-center w-9/12 text-white bg-teal-700 border rounded-xl">
         <Link className="m-2" to={`/mypage/FAQ/${question.postId}`}>
           {question.title}
         </Link>

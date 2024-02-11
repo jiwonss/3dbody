@@ -28,7 +28,7 @@ const MyInfo = ({ category, data, modalname }) => {
 
 MyInfo.propTypes = {
   category: PropTypes.string,
-  data: PropTypes.string,
+  data: PropTypes.any,
   modalname: PropTypes.string,
 };
 

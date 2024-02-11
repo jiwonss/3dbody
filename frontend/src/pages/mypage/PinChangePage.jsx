@@ -70,54 +70,61 @@ const PinChangePage = () => {
         <BackButton />
       </div>
       <PageTitle pageTitle="PIN 변경" />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="currentPin">현재 pin번호</label>
-        <input
-          id="currentPin"
-          placeholder="기존 비밀번호"
-          type="password"
-          maxLength={6}
-          {...register("currentPin", {
-            required: true,
-            maxLength: 6,
-          })}
-        />
+      
+      <div className="m-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <label htmlFor="currentPin">현재 PIN번호</label>
+          <input
+            className="p-2 border-2 rounded-md"
+            id="currentPin"
+            placeholder="기존 PIN번호"
+            type="password"
+            maxLength={6}
+            {...register("currentPin", {
+              required: true,
+              maxLength: 6,
+            })}
+          />
 
-        <label htmlFor="newPin">새 Pin번호</label>
-        <input
-          id="newPin"
-          type="password"
-          placeholder="새 비밀번호"
-          maxLength={6}
-          {...register("newPin", {
-            required: true,
-            pattern: {
-              value: /^[0-9]*$/,
-              message: "숫자만 입력해주세요",
-            },
-          })}
-        />
-        {errors.newPin && <p>{errors.newPin.message}</p>}
-
-        <label htmlFor="newPinCheck">새 Pin번호 확인</label>
-        <input
-          id="newPinCheck"
-          type="password"
-          placeholder="새 비밀번호 확인"
-          maxLength={6}
-          {...register("newPinCheck", {
-            required: true,
-            validate: {
-              matchPassword: (value) => {
-                const { newPin } = getValues();
-                return newPin === value || "비밀번호가 일치하지 않습니다";
+          <label htmlFor="newPin">새 PIN번호</label>
+          <input
+            className="p-2 border-2 rounded-md"
+            id="newPin"
+            type="password"
+            placeholder="새 PIN번호"
+            maxLength={6}
+            {...register("newPin", {
+              required: true,
+              pattern: {
+                value: /^[0-9]*$/,
+                message: "숫자만 입력해주세요",
               },
-            },
-          })}
-        />
-        {errors.newPinCheck && <p>{errors.newPinCheck.message}</p>}
-        <input type="submit" />
-      </form>
+            })}
+          />
+          {errors.newPin && <p>{errors.newPin.message}</p>}
+
+          <label htmlFor="newPinCheck">새 PIN번호 확인</label>
+          <input
+            className="p-2 border-2 rounded-md"
+            id="newPinCheck"
+            type="password"
+            placeholder="새 PIN번호 확인"
+            maxLength={6}
+            {...register("newPinCheck", {
+              required: true,
+              validate: {
+                matchPassword: (value) => {
+                  const { newPin } = getValues();
+                  return newPin === value || "비밀번호가 일치하지 않습니다";
+                },
+              },
+            })}
+          />
+          {errors.newPinCheck && <p>{errors.newPinCheck.message}</p>}
+          
+          <input type="submit" className="p-2 text-white bg-teal-700 border rounded-md"/>
+        </form>
+      </div>
     </div>
   );
 };

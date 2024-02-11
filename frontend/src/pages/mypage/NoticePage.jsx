@@ -30,7 +30,10 @@ const NoticePage = () => {
         <BackButton />
       </div>
       <PageTitle pageTitle="공지사항" />
-      {noticeList}
+
+      <div className="flex flex-col gap-2 m-4">
+        {noticeList}
+      </div>
     </div>
   );
 };

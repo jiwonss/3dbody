@@ -17,7 +17,7 @@
     "@popperjs/core": "^2.11.8",
     "@videosdk.live/react-sdk": "^0.1.83",
     "@windmill/react-ui": "^0.6.0",
-    "aws-sdk": "^2.1548.0",
+    "aws-sdk": "^2.1555.0",
     "axios": "^1.6.7",
     "firebase": "^10.7.2",
     "hls.js": "^1.5.3",

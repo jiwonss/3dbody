@@ -120,7 +120,7 @@ const Profile = () => {
       </div>
       <div className="flex justify-center m-2">
         <Button
-          btnCss={"px-2 border-2 rounded-md"}
+          btnCss={"px-2 py-1 border rounded-md border-teal-700"}
           buttonName={"로그아웃"}
           onClick={logout}
         />
