@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "../../recoil/common/UserState";
 import { useEffect, useRef, useState } from "react";
 import uuid from "react-uuid";
-import * as AWS from "aws-sdk";
+import * as AWS from "@aws-sdk/client-s3";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
@@ -25,10 +25,12 @@ const Profile = () => {
     window.location.reload("/");
   };
 
-  AWS.config.update({
+  const awsUpdate = new AWS.S3Client({
     region: region,
-    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+    credentials: {
+      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+   },
   });
 
   // 이미지 업로드 시 상태 변경과 useEffect 실행 위한 상태도 변경
@@ -54,16 +56,14 @@ const Profile = () => {
       } else if (profileName.includes("gif")) {
         extension = "image/gif";
       }
-      const upload = new AWS.S3.ManagedUpload({
-        params: {
-          Bucket: bucket,
-          Key: profileName,
-          Body: profile,
-          ContentType: extension,
-        },
-      });
-      const promise = upload.promise();
-      promise.then(() => {
+      const params = {
+        Bucket: bucket,
+        Key: profileName,
+        Body: profile,
+        ContentType: extension,
+       };
+
+       awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
         axios({
           method: "patch",
           url: `${baseUrl}api/users/${user.info.userId}/profile-image`,
