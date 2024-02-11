@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "../../recoil/common/UserState";
 import { useEffect, useRef, useState } from "react";
 import uuid from "react-uuid";
-import * as AWS from "aws-sdk";
+import * as AWS from "@aws-sdk/client-cognito-identity-provider";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
@@ -25,7 +25,7 @@ const Profile = () => {
     window.location.reload("/");
   };
 
-  AWS.config.update({
+  const awsUpdate = new AWS.CognitoIdentityProvider({
     region: region,
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
@@ -54,7 +54,7 @@ const Profile = () => {
       } else if (profileName.includes("gif")) {
         extension = "image/gif";
       }
-      const upload = new AWS.S3.ManagedUpload({
+      const upload = new awsUpdate.S3.ManagedUpload({
         params: {
           Bucket: bucket,
           Key: profileName,

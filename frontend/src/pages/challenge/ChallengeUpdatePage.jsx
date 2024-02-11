@@ -5,7 +5,7 @@ import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
-import * as AWS from "aws-sdk";
+import * as AWS from "@aws-sdk/client-cognito-identity-provider";
 import BackButton from "./../../components/common/BackButton";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -38,7 +38,7 @@ const ChallengeUpdatePage = () => {
   const [image, setImage] = useState({}); // 이미지 파일
   const [imageName, setImageName] = useState(""); // 이미지 이름
 
-  AWS.config.update({
+  const awsUpdate = new AWS.CognitoIdentityProvider({
     region: region,
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
@@ -104,7 +104,7 @@ const ChallengeUpdatePage = () => {
     } else if (thumbnailName.includes("gif")) {
       extension = "image/gif";
     }
-    const upload = new AWS.S3.ManagedUpload({
+    const upload = new awsUpdate.S3.ManagedUpload({
       params: {
         Bucket: bucket,
         Key: thumbnailName,
@@ -129,7 +129,7 @@ const ChallengeUpdatePage = () => {
     } else if (imageName.includes("gif")) {
       extension = "image/gif";
     }
-    const upload = new AWS.S3.ManagedUpload({
+    const upload = new awsUpdate.S3.ManagedUpload({
       params: {
         Bucket: bucket,
         Key: imageName,
