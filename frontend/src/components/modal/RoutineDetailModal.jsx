@@ -2,7 +2,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import { PropTypes } from "prop-types";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { modalState } from "../../recoil/modal/ModalState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
@@ -17,10 +17,22 @@ const RoutineDetailModal = ({ onClose }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
   const selectedRoutine = useRecoilValue(selectedRoutineState);
   const selectedRoutineInfo = useRecoilValue(selectedRoutineInfoState);
+  const navigate = useNavigate()
 
   const postRoutineBySelectedDate = async (e) => {
     e.preventDefault();
-    console.log("선택날짜 루틴 등록");
+    await axios
+      .get(
+        `${baseUrl}api/management/routine/addTrainings?user_id=${user.info.userId}&routine_id=${selectedRoutine.routineId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
+      )
+      .then((res) => {
+        console.log("루틴 -> 오늘 운동에 등록");
+        setModalData({ type: null, data: null });
+        navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
