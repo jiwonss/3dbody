@@ -12,6 +12,7 @@ import lombok.*;
  * isFinished - 세트 완료 여부
  */
 @Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
