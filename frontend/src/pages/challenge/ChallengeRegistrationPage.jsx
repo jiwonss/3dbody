@@ -206,11 +206,11 @@ const ChallengeRegistrationPage = () => {
           <div className="mx-4">
             {/* <label>상세 설명</label> */}
             <textarea
-              cols="51"
-              rows="5"
+              // cols="51"
+              // rows="5"
               value={challengeContent}
               onChange={onChallengeContentHandler}
-              className="border-2 rounded-md"
+              className="w-full h-48 border-2 rounded-md"
               placeholder="내용을 입력하세요."
             ></textarea>
           </div>
