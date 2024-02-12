@@ -210,7 +210,7 @@ const ChallengeRegistrationPage = () => {
               // rows="5"
               value={challengeContent}
               onChange={onChallengeContentHandler}
-              className="w-full h-48 p-2 border-2 rounded-md"
+              className="w-full h-40 p-2 border-2 rounded-md"
               placeholder="내용을 입력하세요."
             ></textarea>
           </div>
