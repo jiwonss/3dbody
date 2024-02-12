@@ -42,7 +42,7 @@ const DiaryTrainingPage = () => {
 
   return (
     <div className='bg-[#C9DECF]/30'>
-      <div className="sticky top-0 bg-white">
+      <div className="sticky top-0 z-20 bg-white">
         <PageTitle pageTitle={"다이어리"} />
 
         <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />

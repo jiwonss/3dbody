@@ -108,6 +108,7 @@ const TrainingChoicePage = () => {
           onSubmit={onSubmitGetSearchTraining}
           onChange={onChangeSearchTraining}
           placeholder={`찾으시는 운동을 검색해보세요.`}
+          onBlur={onSubmitGetSearchTraining}
         />
         {/* 검색 카테고리 버튼 */}
         <div className="flex justify-between px-4 pb-4">

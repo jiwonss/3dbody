@@ -1,4 +1,6 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userTrainingState } from "../../../recoil/diary/UserTrainingState";
 import Button from "../../common/Button";
@@ -8,13 +10,16 @@ import {
 } from "../../../recoil/diary/SelectedDateState";
 import TrainingDetailBox from "./TrainingDetailBox";
 import TrainingBottomBtn from "./TrainingBottomBtn";
-import { useEffect, useState } from "react";
 import { BsAlarm } from "react-icons/bs";
 import Description from "./Description";
 import { FaDumbbell } from "react-icons/fa6";
 import { GiMuscleUp } from "react-icons/gi";
+import { baseUrlState } from "../../../recoil/common/BaseUrlState";
+import { userState } from "../../../recoil/common/UserState";
 
 const TrainingData = () => {
+  const baseUrl = useRecoilValue(baseUrlState);
+  const user = useRecoilValue(userState);
   const selectedDate = useRecoilValue(selectedDateState);
   const selectedDay = useRecoilValue(selectedDayState);
   const userTraining = useRecoilValue(userTrainingState);
@@ -50,6 +55,39 @@ const TrainingData = () => {
     }, 0);
   };
 
+  // 오늘 운동 기록 루틴으로 저장
+  const onClickSaveRoutineHandler = async () => {
+    await axios
+      .post(`${baseUrl}api/management/routine/addroutine`, {
+        userId: user.info.userId,
+        title: `${selectedDate[0]}년 ${selectedDate[1]}월 ${selectedDate[2]}일`,
+      })
+      .then((res) => {
+        axios
+          .get(`${baseUrl}api/management/routine/${user.info.userId}`)
+          .then((res) => {
+            const routineId = res.data[res.data.length - 1].routineId;
+            axios
+              .post(
+                `${baseUrl}api/management/routine/add?routine_id=${routineId}`,
+                userTraining
+              )
+              .then((res) => {
+                console.log(res.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     setIsFinish(localStorage.getItem(`date_${selectedDate.join("-")}_finish`) ? true : false)
   }, [selectedDate])
@@ -66,7 +104,7 @@ const TrainingData = () => {
               <div className="absolute w-[88px] h-[88px] bg-[#E9E1D4]/30 rounded-full top-[-10px]"></div>
               <BsAlarm className="z-10 w-6 h-6" />
               <Description
-                Title={`${trainingTime()}분`}
+                Title={`${trainingTime() ? trainingTime() : 50}분`}
                 subTitle={"운동 시간"}
               />
             </div>
@@ -152,6 +190,9 @@ const TrainingData = () => {
                 </div>
               );
             })}
+            <Link to={`/diary/training/myroutine`}>
+              <div className="pt-2 text-center text-gray-500 underline underline-offset-4" onClick={onClickSaveRoutineHandler}>루틴 저장</div>
+            </Link>
           </div>
           <div className="mb-4"></div>
         </div>

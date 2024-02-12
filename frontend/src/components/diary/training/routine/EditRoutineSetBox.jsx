@@ -81,7 +81,7 @@ const EditRoutineSetBox = ({ set, setIdx }) => {
     <>
       <td>{setIdx + 1}</td>
       <td>
-        <form onSubmit={putVolumeKg}>
+        <form onSubmit={putVolumeKg} onBlur={putVolumeKg}>
           <input
             className="w-16 mx-2 text-center border"
             value={kg}
@@ -90,7 +90,7 @@ const EditRoutineSetBox = ({ set, setIdx }) => {
         </form>
       </td>
       <td>
-        <form onSubmit={putVolumeCount}>
+        <form onSubmit={putVolumeCount} onBlur={putVolumeCount}>
           <input
             className="w-16 mx-2 text-center border"
             value={count}

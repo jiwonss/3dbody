@@ -46,8 +46,8 @@ const RoutineDetailModal = ({ onClose }) => {
     >
       <div className="flex flex-col gap-2 m-4">
         {/* 루틴 제목, 편집 창 */}
-        <div className="grid grid-cols-3 mb-4">
-          <p className="col-start-2 font-semibold text-center">
+        <div className="grid grid-cols-5 mb-4">
+          <p className="col-start-2 col-end-5 font-semibold text-center">
             {selectedRoutineInfo.title}
           </p>
           <div className="flex flex-row-reverse">

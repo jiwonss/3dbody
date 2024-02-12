@@ -103,7 +103,7 @@ const FoodDetailBox = ({ data, category }) => {
           개수
         </button>
       </div>
-      <form onSubmit={unit === "left" ? patchServingSize : patchCount}>
+      <form onSubmit={unit === "left" ? patchServingSize : patchCount} onBlur={unit === "left" ? patchServingSize : patchCount}>
         <input
           type="text"
           value={value}

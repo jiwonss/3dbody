@@ -66,7 +66,7 @@ const TrainingSummary = () => {
             <div className="flex flex-col items-center">
               <BsAlarm className="w-6 h-6" />
               <Description
-                Title={`${trainingTime()}분`}
+                Title={`${trainingTime() ? trainingTime() : 50}분`}
                 subTitle={"운동 시간"}
               />
             </div>

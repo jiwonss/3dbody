@@ -91,6 +91,7 @@ const FoodAddFage = () => {
         onSubmit={getSearchFood}
         onChange={onChangeSearchFood}
         placeholder={`찾으시는 음식을 검색해보세요.`}
+        onBlur={getSearchFood}
       />
       {/* 검색 결과 목록 */}
       <div className="m-4">
