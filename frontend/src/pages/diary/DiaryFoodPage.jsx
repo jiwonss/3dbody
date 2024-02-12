@@ -39,17 +39,17 @@ const DiaryTrainingPage = () => {
   }, [selectedDate]);
 
   return (
-    <>
+    <div className='bg-[#C9DECF]/30 pb-2'>
       {/* sticky 부분과 겹치는 내용(foodDetailData 스크롤 했을 경우) 안보이게 하게 위해 배경 설정함 */}
       <div className="sticky top-0 bg-white">
         <PageTitle pageTitle={"다이어리"} />
         <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
         {isSelected === "left" ? <CalendarWeek /> : <Graph />}
-        <hr className="my-4" />
+        <hr className="mt-4" />
       </div>
 
       <FoodData />
-    </>
+    </div>
   );
 };
 

@@ -1,16 +1,11 @@
-import axios from "axios";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 import Button from "../../common/Button";
-import { baseUrlState } from "../../../recoil/common/BaseUrlState";
-import { userState } from "../../../recoil/common/UserState";
 
 const TrainingBottomBtn = () => {
-  const baseUrl = useRecoilValue(baseUrlState);
-  const user = useRecoilValue(userState);
-  const selectedDate = useRecoilValue(selectedDateState);
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const [isStart, setIsStart] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0); // 경과 시간 (밀리초 단위)
   const [min, setMin] = useState(0); // 분
@@ -54,15 +49,18 @@ const TrainingBottomBtn = () => {
     const elapsedMinutes = Math.floor(elapsedTime / 60000);
 
     // 로컬 스토리지에 현재 선택된 날짜를 키로하여 경과한 분을 저장
-    localStorage.setItem(`date_${selectedDate.join("-")}`, elapsedMinutes);
+    localStorage.setItem(`date_${selectedDate.join("-")}`, elapsedMinutes === 0 ? 50 : elapsedMinutes);
     localStorage.setItem(`date_${selectedDate.join("-")}_finish`, true);
+    setSelectedDate([selectedDate[0], selectedDate[1], selectedDate[2]])
     setIsStart(!isStart);
-    setIsFinish(true);
+    setIsFinish(!isFinish);
   };
 
   const onClickEditHandler = () => {
     console.log("localstorage - finish 삭제")
     localStorage.removeItem(`date_${selectedDate.join("-")}_finish`);
+    setSelectedDate([selectedDate[0], selectedDate[1], selectedDate[2]])
+    setIsFinish(false);
   };
 
   useEffect(() => {
@@ -96,12 +94,13 @@ const TrainingBottomBtn = () => {
       {!isToday() && !isFuture() && (
         <div className="flex gap-4 m-4">
           <div className="p-2 text-center border border-teal-700 rounded-md basis-1/2">
-            <Button buttonName="전체 체크" />
+            <Button onClick={onClickEditHandler} buttonName="운동 편집" />
           </div>
           <div className="p-2 text-center text-white bg-teal-700 rounded-md basis-1/2">
             <Button
               btnCss="text-sm"
               buttonName={`${selectedDate[1]}월 ${selectedDate[2]}일의 운동 완료`}
+              onClick={onClickEndHandler}
             />
           </div>
         </div>
@@ -133,9 +132,9 @@ const TrainingBottomBtn = () => {
               <Button onClick={onClickStartHandler} buttonName="운동 시작" />
             )}
             {isFinish === false && isStart === true && (
-              <Link to={`/diary`}>
+              // <Link to={`/diary`}>
+              // </Link>
                 <Button onClick={onClickEndHandler} buttonName="운동 완료" />
-              </Link>
             )}
             {isFinish === true && <Button buttonName="루틴 저장" />}
           </div>

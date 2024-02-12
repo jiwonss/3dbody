@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ChevronLeftIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
@@ -21,6 +21,7 @@ const FoodCategoryPage = () => {
   );
   const navigate = useNavigate();
   const { category } = useParams();
+  const [showKcal, setShowKcal] = useState(false);
 
   // 날짜별 칼탄단지 총합 --------------------------------------------------------------------
   const totalcalorie = userCategoryFood
@@ -93,7 +94,7 @@ const FoodCategoryPage = () => {
   }, []);
 
   return (
-    <>
+    <div className={`bg-[#C9DECF]/30 pb-2 ${userCategoryFood.length > 5 ? "" : "h-screen"}`}>
       <div className="sticky top-0 bg-white">
         <div className="absolute my-4">
           <ChevronLeftIcon
@@ -104,9 +105,9 @@ const FoodCategoryPage = () => {
         <PageTitle pageTitle={category} />
         <div className="p-4">
           {/* 카테고리 - 음식 성분 총합 */}
-          <div className="flex flex-col border-2">
+          <div className="flex flex-col bg-[#C9DECF]/30 border rounded-xl">
             <div className="flex gap-2 mx-2 my-2 justify-evenly">
-              <div className="flex flex-col items-center p-1 border-2 basis-2/5">
+              <div className="flex flex-col items-center p-1 bg-white border-white basis-2/5 rounded-xl">
                 <Description
                   Title={totalcalorie + " kcal"}
                   subTitle={"칼로리"}
@@ -114,7 +115,7 @@ const FoodCategoryPage = () => {
                   subsize={"sm"}
                 />
               </div>
-              <div className="flex flex-col items-center p-1 border-2 basis-2/5">
+              <div className="flex flex-col items-center p-1 bg-white border-white basis-2/5 rounded-xl">
                 <Description
                   Title={totalcarbohydrate + " g"}
                   subTitle={"탄수화물"}
@@ -124,7 +125,7 @@ const FoodCategoryPage = () => {
               </div>
             </div>
             <div className="flex gap-2 mx-2 mb-2 justify-evenly">
-              <div className="flex flex-col items-center p-1 border-2 basis-2/5">
+              <div className="flex flex-col items-center p-1 bg-white border-white basis-2/5 rounded-xl">
                 <Description
                   Title={totalprotein + " g"}
                   subTitle={"단백질"}
@@ -132,7 +133,7 @@ const FoodCategoryPage = () => {
                   subsize={"sm"}
                 />
               </div>
-              <div className="flex flex-col items-center p-1 border-2 basis-2/5">
+              <div className="flex flex-col items-center p-1 bg-white border-white basis-2/5 rounded-xl">
                 <Description
                   Title={totallipid + " g"}
                   subTitle={"지방"}
@@ -143,18 +144,23 @@ const FoodCategoryPage = () => {
             </div>
           </div>
         </div>
+        <hr className="mb-4 border border-gray-300"/>
       </div>
-      <div className="mx-4">
+      <div className={`mx-4 ${userCategoryFood.length > 5 ? "mb-16" : "h-1/2"}`}>
+        {/* 음식 등록 없는 경우 */}
+        <div className={`flex justify-center p-4 mb-2 bg-white border border-white rounded-xl ${userCategoryFood.length ? "hidden" : ""}`}>
+          <p className="italic">등록된 식단이 없습니다.</p>
+        </div>
         {/* 카테고리 - 음식 리스트 */}
         {userCategoryFood.map((data) => {
           return (
             <div
-              className="flex mb-2 border-2 border-gray-400 rounded-md"
+              className="flex mb-2 bg-white border border-white rounded-xl"
               key={data.userFoodId}
             >
               {/* 음식 정보 */}
               <div className="flex flex-col justify-center pb-1 pl-4 basis-full">
-                <p className="text-base">{data.food.name}</p>
+                <p><span className="text-base hover:font-semibold" onClick={() => {setShowKcal(!showKcal);}}>{data.food.name}</span><span className={`${showKcal ? "" : "hidden"}`}> : {data.food.calorie.toFixed(1)}kcal</span></p>
                 <p style={{ fontSize: "12px" }}>
                   탄 {(data.food.carbohydrate * (data.servingSize / data.food.servingSize) * data.foodCount).toFixed(1)}g 단{" "}
                   {(data.food.protein * (data.servingSize / data.food.servingSize) * data.foodCount).toFixed(1)}g 지{" "}
@@ -175,13 +181,13 @@ const FoodCategoryPage = () => {
           );
         })}
         {/* 음식 추가 버튼 */}
-        <div className="flex justify-center p-4 mb-16 border-2 border-gray-400 rounded-md">
+        <div className={`flex justify-center p-4 bg-white border border-white rounded-xl`}>
           <Link to={`/diary/food/${category}/add`}>
             <PlusCircleIcon className="w-6 h-6 text-gray-700" />
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

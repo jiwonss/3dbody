@@ -102,7 +102,8 @@ const RoutineEditPage = () => {
         <hr className="mt-4" />
       </div>
 
-      <div className="flex flex-col gap-2 pt-4 mx-4 mb-32">
+      <div className="flex flex-col gap-2 pt-4 pb-32 mx-4">
+        <div className="absolute inset-x-0 bg-gray-100 h-2/3 -z-10"></div>
         {/* 해당루틴 운동 리스트 */}
         <div className="flex flex-col gap-2">
           {selectedRoutine.routine_training_list.map((data, idx) => {

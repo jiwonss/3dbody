@@ -30,8 +30,8 @@ const Rest = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-48">
-      <img src="" alt="img" />
+    <div className="flex flex-col items-center gap-2 pt-16">
+      <img src="/diary/rest.jpg" alt="img" className='w-1/2 border rounded-full animate-bounce'/>
       <p>오늘은 운동 쉬는 날!</p>
       <p onClick={onClickHandler} className="text-gray-500 underline ">
         휴식 취소

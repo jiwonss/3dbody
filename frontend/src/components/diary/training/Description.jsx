@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 const Description = ({ Title, size, subTitle, subsize, font }) => {
   return (
     <>
-      <p className={`text-${size} font-${font}`}>{Title}</p>
-      <p className={`text-${subsize} text-gray-500`}>{subTitle}</p>
+      <p className={`text-${size} font-${font} z-10`}>{Title}</p>
+      <p className={`text-${subsize} text-gray-500 z-10`}>{subTitle}</p>
     </>
   )
 };

@@ -170,13 +170,13 @@ const SelfInputFoodModal = ({ onClose }) => {
 
   return (
     <Modal
-      className={"fixed bottom-0 bg-gray-200 overflow-auto inset-x-0"}
+      className={"fixed bottom-0 bg-white rounded-2xl border-t border-t-black overflow-auto inset-x-0"}
       isOpen={modalData.type === "selfInputFood"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
       <div className="flex flex-col gap-2 m-4">
-        <p className="font-semibold">음식 직접입력</p>
+        <p className="pb-2 font-semibold">음식 직접입력</p>
         {foodNameDiv()}
         {servingSizeDiv()}
         {calorieDiv()}
@@ -186,7 +186,7 @@ const SelfInputFoodModal = ({ onClose }) => {
         <div className="flex gap-2 mt-2">
           <button
             onClick={onClose}
-            className="py-1 text-teal-700 bg-white border border-teal-700 rounded-md basis-1/2"
+            className="py-1 bg-white border border-teal-700 rounded-md basis-1/2"
           >
             취소
           </button>

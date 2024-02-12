@@ -38,19 +38,19 @@ const RoutineCreateModal = ({ onClose }) => {
 
   return (
     <Modal
-      className={"fixed bottom-0 bg-gray-200 overflow-auto inset-x-0"}
+      className={"fixed transform -translate-y-1/2 top-1/2 inset-x-8"}
       isOpen={modalData.type === "routineCreate"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <form className="flex flex-col gap-4 m-4" onSubmit={onSubmitHandler}>
-        <p className="font-semibold">새로운 루틴 만들기</p>
+      <form className="flex flex-col gap-4 p-4 bg-white border-2 border-gray-400 rounded-xl" onSubmit={onSubmitHandler}>
+        <p className="mx-auto font-semibold">새로운 루틴 만들기</p>
         <div className="flex flex-col gap-2">
           <p>나만의 루틴을 만들어보세요!</p>
           <Input value={routineName} onChange={onChangeRoutineName} placeholder={"루틴 이름을 입력하세요"} />
         </div>
         <div className="flex gap-2">
-          <input type="button" onClick={onClose} value={"취소"} className="text-teal-700 bg-white border border-teal-700 rounded-md" />
+          <input type="button" onClick={onClose} value={"취소"} className="bg-white border border-teal-700 rounded-md" />
           <input type="submit" value={"루틴 생성"} className="p-2 text-white bg-teal-700 rounded-md" />
         </div>
       </form>

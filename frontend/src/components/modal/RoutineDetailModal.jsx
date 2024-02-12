@@ -52,7 +52,7 @@ const RoutineDetailModal = ({ onClose }) => {
           </p>
           <div className="flex flex-row-reverse">
             <Link to="/diary/training/myroutine/edit">
-              <p onClick={onClose} className="text-gray-400">
+              <p onClick={onClose} className="text-gray-500">
                 편집
               </p>
             </Link>
@@ -74,7 +74,7 @@ const RoutineDetailModal = ({ onClose }) => {
                       </span>{" "}
                       {data.name}
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-gray-500">
                       {data.category} | {data.sets.length}세트 |{" "}
                       {data.sets.reduce((acc, cur) => {
                         return acc + cur.count * cur.kg;

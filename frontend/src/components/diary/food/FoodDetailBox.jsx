@@ -108,7 +108,7 @@ const FoodDetailBox = ({ data, category }) => {
           type="text"
           value={value}
           onChange={onChangeUnit}
-          className="p-1 my-1 text-center border-2"
+          className="p-1 my-1 text-center border-2 rounded-md"
         />
       </form>
     </div>

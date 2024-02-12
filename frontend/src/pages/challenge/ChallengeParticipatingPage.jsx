@@ -54,7 +54,7 @@ const ChallengeParticipating = () => {
           to="/challenge/registration"
           className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
         >
-          <div className="card">
+          <div className="card -z-10">
             <PlusIcon className="w-6 h-6" />
           </div>
         </Link>

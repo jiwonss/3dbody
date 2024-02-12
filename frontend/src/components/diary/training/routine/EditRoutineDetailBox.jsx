@@ -102,7 +102,11 @@ const EditRoutineDetailBox = ({ data, idx }) => {
         </div>
       </div>
       <hr className="my-2" />
-      <p className="my-1 text-sm">총 볼륨 {trainingVolume()}kg</p>
+      <div className="flex justify-between mx-2 my-1 text-sm font-semibold">
+        <p>총 볼륨 </p>
+        <p>{trainingVolume()}kg</p>
+      </div>
+      <hr className="my-2"/>
 
       <table className="w-full">
         <thead>

@@ -43,7 +43,7 @@ const ChallengeUpdatePage = () => {
     credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-   },
+    },
   });
 
   const onChallengeThumnailHandler = (event) => {
@@ -111,7 +111,7 @@ const ChallengeUpdatePage = () => {
       Key: profileName,
       Body: profile,
       ContentType: extension,
-     };
+    };
 
     awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
       console.log("성공");

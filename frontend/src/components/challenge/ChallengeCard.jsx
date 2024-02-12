@@ -18,7 +18,7 @@ const ChallengeCard = ({
   return (
     <div className="justify-self-center">
       <Link to={`/challenge/${challengeId}`}>
-        <div className="card">
+        <div className="card -z-10">
           <div className="flex flex-wrap justify-center">
             <div className="w-32 h-32 mt-3">
               <img

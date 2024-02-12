@@ -8,7 +8,7 @@ import {
 } from "../../../recoil/diary/SelectedDateState";
 import TrainingDetailBox from "./TrainingDetailBox";
 import TrainingBottomBtn from "./TrainingBottomBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsAlarm } from "react-icons/bs";
 import Description from "./Description";
 import { FaDumbbell } from "react-icons/fa6";
@@ -18,10 +18,10 @@ const TrainingData = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const selectedDay = useRecoilValue(selectedDayState);
   const userTraining = useRecoilValue(userTrainingState);
-  const isFinish = useState(
+  const [isFinish, setIsFinish] = useState(
     localStorage.getItem(`date_${selectedDate.join("-")}_finish`) ? true : false
   );
-
+  
   const isToday = () => {
     const today = new Date();
     return (
@@ -50,30 +50,37 @@ const TrainingData = () => {
     }, 0);
   };
 
+  useEffect(() => {
+    setIsFinish(localStorage.getItem(`date_${selectedDate.join("-")}_finish`) ? true : false)
+  }, [selectedDate])
+
   return (
     <>
-      {isFinish[0] && (
-        <div className="flex flex-col gap-2 pt-2 mx-4 mb-32">
+      {isFinish && (
+        <div className={`flex flex-col gap-2 pt-2 mx-4 mb-32 ${userTraining.length === 1 ? "pb-32" : ""}`}>
           <p className="font-semibold">
             {selectedDate[1]}월 {selectedDate[2]}일 {selectedDay} - 운동
           </p>
           <div className="grid grid-cols-3 py-4 bg-white border-white divide-x-4 rounded-xl">
-            <div className="flex flex-col items-center">
-              <BsAlarm className="w-6 h-6" />
+            <div className="relative flex flex-col items-center">
+              <div className="absolute w-[88px] h-[88px] bg-[#E9E1D4]/30 rounded-full top-[-10px]"></div>
+              <BsAlarm className="z-10 w-6 h-6" />
               <Description
                 Title={`${trainingTime()}분`}
                 subTitle={"운동 시간"}
               />
             </div>
-            <div className="flex flex-col items-center">
-              <FaDumbbell className="w-6 h-6" />
+            <div className="relative flex flex-col items-center">
+              <div className="absolute w-[88px] h-[88px] bg-[#F5DDAD]/30 rounded-full top-[-10px]"></div>
+              <FaDumbbell className="z-10 w-6 h-6" />
               <Description
                 Title={`${trainingCount()}개`}
                 subTitle={"운동 개수"}
               />
             </div>
-            <div className="flex flex-col items-center">
-              <GiMuscleUp className="w-6 h-6" />
+            <div className="relative flex flex-col items-center">
+            <div className="absolute w-[88px] h-[88px] bg-[#F1BCAE]/30 rounded-full top-[-10px]"></div>
+              <GiMuscleUp className="z-10 w-6 h-6" />
               <Description
                 Title={`${totalVolume()}kg`}
                 subTitle={"전체 볼륨"}
@@ -96,7 +103,7 @@ const TrainingData = () => {
                     </p>
                   </div>
                   <hr className="my-2" />
-                  <div className="flex justify-between my-1 text-sm font-semibold">
+                  <div className="flex justify-between mx-2 my-1 text-sm font-semibold">
                     <p>총 볼륨 </p>
                     <p>
                       {data.sets.reduce((acc, cur) => {
@@ -149,8 +156,8 @@ const TrainingData = () => {
           <div className="mb-4"></div>
         </div>
       )}
-      {!isFinish[0] && (
-        <div className="flex flex-col gap-2 pt-2 mx-4 mb-32">
+      {!isFinish && (
+        <div className={`flex flex-col gap-2 pt-2 mx-4 mb-32 ${userTraining.length === 1 ? "pb-28" : ""}`}>
           {/* 갤럭시 와치 연동 버튼 */}
           <div
             className={`flex justify-between ${isToday() ? "" : "opacity-0"}`}

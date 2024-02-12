@@ -110,38 +110,38 @@ const TrainingChoicePage = () => {
           placeholder={`찾으시는 운동을 검색해보세요.`}
         />
         {/* 검색 카테고리 버튼 */}
-        <div className="flex justify-between p-4">
+        <div className="flex justify-between px-4 pb-4">
           <Button
-            btnCss={`basis-1/6 border rounded-xl ${
-              category === "하체" ? "bg-gray-700 text-white" : ""
+            btnCss={`basis-1/6 border-2 rounded-xl ${
+              category === "하체" ? "bg-teal-700 text-white" : ""
             }`}
             buttonName={"하체"}
             onClick={onClickCategory}
           />
           <Button
-            btnCss={`basis-1/6 border rounded-xl ${
-              category === "가슴" ? "bg-gray-700 text-white" : ""
+            btnCss={`basis-1/6 border-2 rounded-xl ${
+              category === "가슴" ? "bg-teal-700 text-white" : ""
             }`}
             buttonName={"가슴"}
             onClick={onClickCategory}
           />
           <Button
-            btnCss={`basis-1/6 border rounded-xl ${
-              category === "등" ? "bg-gray-700 text-white" : ""
+            btnCss={`basis-1/6 border-2 rounded-xl ${
+              category === "등" ? "bg-teal-700 text-white" : ""
             }`}
             buttonName={"등"}
             onClick={onClickCategory}
           />
           <Button
-            btnCss={`basis-1/6 border rounded-xl ${
-              category === "어깨" ? "bg-gray-700 text-white" : ""
+            btnCss={`basis-1/6 border-2 rounded-xl ${
+              category === "어깨" ? "bg-teal-700 text-white" : ""
             }`}
             buttonName={"어깨"}
             onClick={onClickCategory}
           />
           <Button
-            btnCss={`basis-1/6 border rounded-xl ${
-              category === "팔" ? "bg-gray-700 text-white" : ""
+            btnCss={`basis-1/6 border-2 rounded-xl ${
+              category === "팔" ? "bg-teal-700 text-white" : ""
             }`}
             buttonName={"팔"}
             onClick={onClickCategory}

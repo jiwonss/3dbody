@@ -8,7 +8,7 @@ import { selectedRoutineInfoState } from "../../../../recoil/diary/SelectedRouti
 import { modalState } from "../../../../recoil/modal/ModalState";
 import { baseUrlState } from "../../../../recoil/common/BaseUrlState";
 
-const RoutineDetailBox = ({ data }) => {
+const RoutineDetailBox = ({ data, idx }) => {
   const baseUrl = useRecoilValue(baseUrlState);
   const setModalData = useSetRecoilState(modalState);
   const setSelectedRoutine = useSetRecoilState(selectedRoutineState);
@@ -43,7 +43,7 @@ const RoutineDetailBox = ({ data }) => {
   return (
     <div className="flex justify-between" onClick={getRoutineDetail}>
       <div onClick={onRoutineDetailHandler}>
-        <Description Title={data.title} subTitle={"운동 목록 보기"} />
+        <Description Title={data.title} subTitle={`${idx+1}번 운동 목록`} />
       </div>
       <EllipsisVerticalIcon
         className="w-6 h-6 my-auto"
@@ -55,6 +55,7 @@ const RoutineDetailBox = ({ data }) => {
 
 RoutineDetailBox.propTypes = {
   data: PropTypes.object,
+  idx: PropTypes.number,
 };
 
 export default RoutineDetailBox;

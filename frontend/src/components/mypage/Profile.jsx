@@ -30,12 +30,12 @@ const Profile = () => {
     credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-   },
+    },
   });
 
   // 이미지 업로드 시 상태 변경과 useEffect 실행 위한 상태도 변경
   const onProfileUpdate = async (event) => {
-    console.log("프로필 변경")
+    console.log("프로필 변경");
     if (event.target.files[0]) {
       setProfile(event.target.files[0]);
       setProfileName(`${uuid()}_${event.currentTarget.files[0].name}`);
@@ -61,9 +61,9 @@ const Profile = () => {
         Key: profileName,
         Body: profile,
         ContentType: extension,
-       };
+      };
 
-       awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
+      awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
         axios({
           method: "patch",
           url: `${baseUrl}api/users/${user.info.userId}/profile-image`,
@@ -113,7 +113,9 @@ const Profile = () => {
         />
       </div>
       <div className="flex justify-center gap-2 m-2">
-        <h3><span className="font-semibold">{user.info.nickname}</span>님</h3>
+        <h3>
+          <span className="font-semibold">{user.info.nickname}</span>님
+        </h3>
         <Link to="/mypage/myinfo">
           <PencilSquareIcon className="w-6 h-6" />
         </Link>

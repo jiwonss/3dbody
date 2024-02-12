@@ -32,7 +32,7 @@ const DiaryPage = () => {
         {userTraining.length ? (
           <TrainingSummary />
         ) : (
-          <Button btnCss="w-full border-2 p-2 text-lg rounded-md" buttonName="운동 계확하기" />
+          <Button btnCss="p-2 w-full text-white text-lg border bg-teal-700 rounded-lg" buttonName="운동 계확하기" />
         )}
       </Link>
     );
@@ -59,7 +59,7 @@ const DiaryPage = () => {
         {userFood.length ? (
           <FoodSummary />
         ) : (
-          <Button btnCss="w-full border-2 p-2 text-lg rounded-md" buttonName="식단 관리하기" />
+          <Button btnCss="p-2 w-full text-white text-lg border bg-teal-700 rounded-lg" buttonName="식단 관리하기" />
         )}
       </Link>
     );

@@ -36,14 +36,14 @@ const Plan = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-2 mx-4">
-      <div>
+    <div className="flex flex-col gap-4 m-4">
+      <div className="p-4 bg-white border-white rounded-xl">
         <Description
           Title={`${selectedDate[1]}월 ${selectedDate[2]}일 ${selectedDay}`}
           subTitle={"운동을 직접 계획해보세요!"}
         />
         <div className="w-full">
-          <div className="flex justify-center gap-4 my-4">
+          <div className="flex justify-center gap-4 mt-4 mb-2">
             <div className="p-1 text-center border border-teal-700 rounded-md basis-1/2">
               <Link to={`/diary/training/load/basic`}>
                 <Button buttonName="불러오기" />
@@ -55,13 +55,12 @@ const Plan = () => {
               </Link>
             </div>
           </div>
-
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative p-4 bg-white border-white rounded-xl">
         <Link to={`/diary/training/myroutine`}>
-          <div className="absolute right-0">
+          <div className="absolute right-2">
             <NextButton />
           </div>
           <Description Title={"나만의 루틴"} subTitle={"루틴을 선택해주세요."} />

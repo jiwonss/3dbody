@@ -10,7 +10,7 @@ const Challenge = () => {
 
   return (
     <div className="">
-      <div className="sticky top-0 z-10 bg-white">
+      <div className="sticky top-0 bg-white">
         <PageTitle pageTitle={"챌린지"} />
         <ToggleTap
           leftTitle={"참여 가능"}

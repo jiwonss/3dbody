@@ -5,8 +5,8 @@ import NextButton from "../../common/NextButton";
 
 const FoodByCategory = ({ category, data }) => {
   return (
-    <Link to={`/diary/food/${category}`}>
-      <div className="flex justify-between p-4 border rounded-xl">
+    <Link to={`/diary/food/${category.substring(3)}`}>
+      <div className="flex justify-between p-4 bg-white border-white rounded-xl">
         <div>
           <Description
             Title={category}

@@ -21,6 +21,7 @@ const FoodAddFage = () => {
   const [searchFoodList, setSearchFoodList] = useState([]);
   const [selectedFoodList, setSelectedFoodList] = useState([]);
   const [modalData, setModalData] = useRecoilState(modalState);
+  const [showKcal, setShowKcal] = useState(false);
   
   // 백 요청에 보낼 시간 계산
   const selectedTime = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]) // 선택한 시간
@@ -95,14 +96,14 @@ const FoodAddFage = () => {
       <div className="m-4">
         {searchFoodList.map((data) => {
           return (
-            <div className="flex mb-2 border-2" key={data.foodId}>
+            <div className="flex mb-2 border rounded-md" key={data.foodId}>
               <input
                 type="checkbox"
                 onChange={() => handleCheckboxChange(data.foodId)}
                 className="w-6 ml-4 accent-teal-600"
               />
               <div className="flex flex-col py-1 pl-4 basis-3/5">
-                <p>{data.name}</p>
+              <p><span className="text-base" onClick={() => {setShowKcal(!showKcal);}}>{data.name}</span><span className={`${showKcal ? "" : "hidden"}`}> : {data.calorie.toFixed(1)}kcal</span></p>
                 <p style={{ fontSize: "12px" }}>
                   탄 {data.carbohydrate.toFixed(1)}g 단{" "}
                   {data.protein.toFixed(1)}g 지 {data.lipid.toFixed(1)}g
@@ -115,7 +116,7 @@ const FoodAddFage = () => {
                     console.log(e.target.value);
                   }}
                   value={data.servingSize + " g"}
-                  className="m-2 text-center border-2 basis-3/5"
+                  className="m-2 text-center border-2 rounded-md basis-3/5"
                   disabled
                 />
               </div>
@@ -128,12 +129,12 @@ const FoodAddFage = () => {
         <div className="m-4">
           <div className="flex gap-4">
             <Button
-              btnCss={"basis-1/2 border-2 text-center p-2"}
+              btnCss={"basis-1/2 text-center border border-teal-700 rounded-md p-2"}
               buttonName={"직접 입력하기"}
               onClick={onClickModal}
             />
             <Button
-              btnCss={"basis-1/2 border-2 text-center p-2 "}
+              btnCss={"basis-1/2 text-center text-white bg-teal-700 rounded-md p-2 "}
               buttonName={"추가하기"}
               onClick={() => postFood(selectedFoodList)}
             />

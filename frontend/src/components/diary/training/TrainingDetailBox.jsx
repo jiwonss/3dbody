@@ -33,7 +33,7 @@ const TrainingDetailBox = ({ data, idx }) => {
   const KoreaNow = new Date(selectedTime.getTime() + KoreaTimeDiff)
     .toISOString()
     .split("T")[0]; // 시간 부분 빼기
-  
+
   // 운동 삭제 버튼
   const deleteTraining = async () => {
     await axios
@@ -52,7 +52,7 @@ const TrainingDetailBox = ({ data, idx }) => {
         console.log(err);
       });
   };
-  
+
   // 세트 삭제 버튼
   const deleteSet = async () => {
     await axios
@@ -117,12 +117,16 @@ const TrainingDetailBox = ({ data, idx }) => {
             <span className="px-2">{data.name}</span>
           </span>
         </p>
-        <div className="flex items-center" onClick={() => deleteTraining()}>
+        <div className="flex items-center me-2" onClick={() => deleteTraining()}>
           <BsFillTrash3Fill className="w-5 h-5" />
         </div>
       </div>
       <hr className="my-2" />
-      <p className="my-1 text-sm">총 볼륨 {trainingVolume()}kg</p>
+      <div className="flex justify-between mx-2 my-1 text-sm font-semibold">
+        <p>총 볼륨 </p>
+        <p>{trainingVolume()}kg</p>
+      </div>
+      <hr className="my-2"/>
 
       <table className="w-full">
         <thead>

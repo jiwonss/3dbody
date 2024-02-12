@@ -41,7 +41,7 @@ const DiaryTrainingPage = () => {
   }, [selectedDate]);
 
   return (
-    <div className='bg-gray-100'>
+    <div className='bg-[#C9DECF]/30'>
       <div className="sticky top-0 bg-white">
         <PageTitle pageTitle={"다이어리"} />
 

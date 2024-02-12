@@ -6,10 +6,10 @@ const HistoryList = () => {
   const userHistory = useRecoilValue(userHistoryState);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 pb-4">
       {userHistory.map((data, idx) => {
         return (
-          <div key={idx} className="px-4 py-2 bg-gray-100 rounded-lg">
+          <div key={idx} className="px-4 py-2 bg-gray-200 rounded-lg">
             <HistoryDetailBox data={data} />
           </div>
         );

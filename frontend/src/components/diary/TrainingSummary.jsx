@@ -54,7 +54,7 @@ const TrainingSummary = () => {
 
   return (
     <>
-      <div className="relative px-4 pt-2 pb-4 border-4 rounded-xl">
+      <div className="relative px-4 pt-2 pb-4 border border-teal-700 rounded-lg">
         <div className="absolute right-2">
           <NextButton />
         </div>
