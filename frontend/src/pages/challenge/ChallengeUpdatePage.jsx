@@ -150,14 +150,14 @@ const ChallengeUpdatePage = () => {
       <div className="absolute flex justify-between w-full">
         <BackButton />
       </div>
-      <PageTitle pageTitle="챌린지 수정" />
+      <PageTitle pageTitle="챌린지 등록" />
       <div className="bg-gray-100">
         <div className="pt-4">
           <form
             onSubmit={onChallengeThumnailSubmitHandler}
             className="flex items-center mx-4 mt-2 text-center"
           >
-            <label className="relative w-full overflow-hidden text-left bg-white border rounded-md">
+            <label className="relative w-full p-2 overflow-hidden text-left bg-white border rounded-md">
               {thumbnail.name ? (
                 <span className="text-black">{thumbnail.name}</span>
               ) : (
@@ -171,7 +171,7 @@ const ChallengeUpdatePage = () => {
             </label>
             <button
               type="submit"
-              className="text-white bg-teal-700 border rounded-lg w-14"
+              className="h-10 text-white bg-teal-700 border rounded-lg w-14"
             >
               등록
             </button>
@@ -180,7 +180,7 @@ const ChallengeUpdatePage = () => {
             onSubmit={onChallengeImageSubmitHandler}
             className="flex items-center mx-4 mt-1 text-center"
           >
-            <label className="relative w-full overflow-hidden text-left bg-white border rounded-md">
+            <label className="relative w-full p-2 overflow-hidden text-left bg-white border rounded-md">
               {image.name ? (
                 <span className="text-black">{image.name}</span>
               ) : (
@@ -194,7 +194,7 @@ const ChallengeUpdatePage = () => {
             </label>
             <button
               type="submit"
-              className="text-white bg-teal-700 border rounded-lg w-14"
+              className="h-10 text-white bg-teal-700 border rounded-lg w-14"
             >
               등록
             </button>
@@ -207,7 +207,7 @@ const ChallengeUpdatePage = () => {
               type="text"
               value={challengeTitle}
               onChange={onChallengeTitleHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
               placeholder="제목"
             />
           </div>
@@ -217,7 +217,7 @@ const ChallengeUpdatePage = () => {
               type="text"
               value={challengeSummary}
               onChange={onChallengeSummaryHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
               placeholder="한줄 설명"
             />
           </div>
@@ -228,7 +228,7 @@ const ChallengeUpdatePage = () => {
               // rows="5"
               value={challengeContent}
               onChange={onChallengeContentHandler}
-              className="w-full h-48 border-2 rounded-md"
+              className="w-full h-48 p-2 border-2 rounded-md"
               placeholder="내용을 입력하세요."
             ></textarea>
           </div>
@@ -239,7 +239,7 @@ const ChallengeUpdatePage = () => {
               type="datetime-local"
               value={challengeStartDate}
               onChange={onChallengeStartDateHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
             />
           </div>
           <div className="mx-4 my-2">
@@ -248,12 +248,12 @@ const ChallengeUpdatePage = () => {
               type="datetime-local"
               value={challengeEndDate}
               onChange={onChallengeEndDateHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
             />
           </div>
           <div className="flex justify-center">
             <button className="w-10/12 p-2 mt-3 mb-4 text-center text-white bg-teal-700 border-2 border-teal-700 rounded-full">
-              수정하기
+              등록하기
             </button>
           </div>
         </form>

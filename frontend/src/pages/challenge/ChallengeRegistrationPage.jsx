@@ -139,7 +139,7 @@ const ChallengeRegistrationPage = () => {
             onSubmit={onChallengeThumnailSubmitHandler}
             className="flex items-center mx-4 mt-2 text-center"
           >
-            <label className="relative w-full overflow-hidden text-left bg-white border rounded-md">
+            <label className="relative w-full p-2 overflow-hidden text-left bg-white border rounded-md">
               {thumbnail.name ? (
                 <span className="text-black">{thumbnail.name}</span>
               ) : (
@@ -153,7 +153,7 @@ const ChallengeRegistrationPage = () => {
             </label>
             <button
               type="submit"
-              className="text-white bg-teal-700 border rounded-lg w-14"
+              className="h-10 text-white bg-teal-700 border rounded-lg w-14"
             >
               등록
             </button>
@@ -162,7 +162,7 @@ const ChallengeRegistrationPage = () => {
             onSubmit={onChallengeImageSubmitHandler}
             className="flex items-center mx-4 mt-1 text-center"
           >
-            <label className="relative w-full overflow-hidden text-left bg-white border rounded-md">
+            <label className="relative w-full p-2 overflow-hidden text-left bg-white border rounded-md">
               {image.name ? (
                 <span className="text-black">{image.name}</span>
               ) : (
@@ -176,7 +176,7 @@ const ChallengeRegistrationPage = () => {
             </label>
             <button
               type="submit"
-              className="text-white bg-teal-700 border rounded-lg w-14"
+              className="h-10 text-white bg-teal-700 border rounded-lg w-14"
             >
               등록
             </button>
@@ -189,7 +189,7 @@ const ChallengeRegistrationPage = () => {
               type="text"
               value={challengeTitle}
               onChange={onChallengeTitleHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
               placeholder="제목"
             />
           </div>
@@ -199,7 +199,7 @@ const ChallengeRegistrationPage = () => {
               type="text"
               value={challengeSummary}
               onChange={onChallengeSummaryHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
               placeholder="한줄 설명"
             />
           </div>
@@ -210,7 +210,7 @@ const ChallengeRegistrationPage = () => {
               // rows="5"
               value={challengeContent}
               onChange={onChallengeContentHandler}
-              className="w-full h-48 border-2 rounded-md"
+              className="w-full h-48 p-2 border-2 rounded-md"
               placeholder="내용을 입력하세요."
             ></textarea>
           </div>
@@ -221,7 +221,7 @@ const ChallengeRegistrationPage = () => {
               type="datetime-local"
               value={challengeStartDate}
               onChange={onChallengeStartDateHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
             />
           </div>
           <div className="mx-4 my-2">
@@ -230,7 +230,7 @@ const ChallengeRegistrationPage = () => {
               type="datetime-local"
               value={challengeEndDate}
               onChange={onChallengeEndDateHandler}
-              className="border-2 rounded-md"
+              className="p-2 border-2 rounded-md"
             />
           </div>
           <div className="flex justify-center">
