@@ -57,18 +57,28 @@ const ChallengeDetailComment = () => {
 
   return (
     <div>
-      {commentList.length ? <div>{comments}</div> : <div className="mt-10 text-center text-gray-500">등록된 댓글이 없습니다.</div>}
+      {commentList.length ? (
+        <div>{comments}</div>
+      ) : (
+        <div className="mt-10 text-center text-gray-500">
+          등록된 댓글이 없습니다.
+        </div>
+      )}
       <br />
-        <form onSubmit={onSubmitHandler} className="fixed flex m-4 bottom-16">
+      <div className="fixed w-screen p-4 bottom-11">
+        <form onSubmit={onSubmitHandler} className="flex">
           <input
             className="border rounded-lg border-slate-950"
             type="text"
             value={content}
-          onChange={onContentHandler}
-          placeholder="댓글을 입력해주세요."
+            onChange={onContentHandler}
+            placeholder="댓글을 입력해주세요."
           />
-          <button className="w-20 h-10 text-white bg-teal-700 border rounded-lg">입력</button>
+          <button className="w-20 h-10 text-white bg-teal-700 border rounded-lg">
+            입력
+          </button>
         </form>
+      </div>
     </div>
   );
 };

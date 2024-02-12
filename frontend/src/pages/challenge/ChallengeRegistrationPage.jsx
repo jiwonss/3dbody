@@ -3,10 +3,10 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
-import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
 import * as AWS from "@aws-sdk/client-s3";
 import BackButton from "./../../components/common/BackButton";
+import PageTitle from "./../../components/common/PageTitle";
 
 const ChallengeRegistrationPage = () => {
   const [challengeTitle, setChallengeTitle] = useState("");
@@ -129,75 +129,117 @@ const ChallengeRegistrationPage = () => {
 
   return (
     <div>
-      <BackButton />
-      <form onSubmit={onChallengeThumnailSubmitHandler}>
-        <label>썸네일</label>
-        <input
-          type="file"
-          className="border-2"
-          onChange={onChallengeThumnailHandler}
-        />
-        <button type="submit">등록</button>
-      </form>
-      <form onSubmit={onChallengeImageSubmitHandler}>
-        <label>전체 포스터</label>
-        <input
-          type="file"
-          className="border-2"
-          onChange={onChallengeImageHandler}
-        />
-        <button type="submit">등록</button>
-      </form>
-      <form onSubmit={onSubmitHandler}>
-        <div>
-          <label>제목</label>
-          <input
-            type="text"
-            value={challengeTitle}
-            onChange={onChallengeTitleHandler}
-            className="border-2"
-          />
+      <div className="absolute flex justify-between w-full">
+        <BackButton />
+      </div>
+      <PageTitle pageTitle="챌린지 등록" />
+      <div className="bg-gray-100">
+        <div className="pt-4">
+          <form
+            onSubmit={onChallengeThumnailSubmitHandler}
+            className="flex items-center mx-4 mt-2 text-center"
+          >
+            <label className="relative w-full overflow-hidden text-left bg-white border rounded-md">
+              {thumbnail.name ? (
+                <span className="text-black">{thumbnail.name}</span>
+              ) : (
+                <span className="text-gray-400">썸네일을 선택해주세요.</span>
+              )}
+              <input
+                type="file"
+                className="hidden"
+                onChange={onChallengeThumnailHandler}
+              />
+            </label>
+            <button
+              type="submit"
+              className="text-white bg-teal-700 border rounded-lg w-14"
+            >
+              등록
+            </button>
+          </form>
+          <form
+            onSubmit={onChallengeImageSubmitHandler}
+            className="flex items-center mx-4 mt-1 text-center"
+          >
+            <label className="relative w-full overflow-hidden text-left bg-white border rounded-md">
+              {image.name ? (
+                <span className="text-black">{image.name}</span>
+              ) : (
+                <span className="text-gray-400">포스터를 선택해주세요.</span>
+              )}
+              <input
+                type="file"
+                className="hidden"
+                onChange={onChallengeImageHandler}
+              />
+            </label>
+            <button
+              type="submit"
+              className="text-white bg-teal-700 border rounded-lg w-14"
+            >
+              등록
+            </button>
+          </form>
         </div>
-        <div>
-          <label>한줄 설명</label>
-          <input
-            type="text"
-            value={challengeSummary}
-            onChange={onChallengeSummaryHandler}
-            className="border-2"
-          />
-        </div>
-        <div>
-          <label>상세 설명</label>
-          <textarea
-            cols="30"
-            rows="5"
-            value={challengeContent}
-            onChange={onChallengeContentHandler}
-            className="border-2"
-          ></textarea>
-        </div>
-        <br />
-        <div>
-          <label>시작일</label>
-          <input
-            type="datetime-local"
-            value={challengeStartDate}
-            onChange={onChallengeStartDateHandler}
-            className="border-2"
-          />
-        </div>
-        <div>
-          <label>종료일</label>
-          <input
-            type="datetime-local"
-            value={challengeEndDate}
-            onChange={onChallengeEndDateHandler}
-            className="border-2"
-          />
-        </div>
-        <Button type={"submit"} buttonName={"등록하기"} />
-      </form>
+        <form onSubmit={onSubmitHandler}>
+          <div className="pt-4 mx-4">
+            {/* <label>제목</label> */}
+            <input
+              type="text"
+              value={challengeTitle}
+              onChange={onChallengeTitleHandler}
+              className="border-2 rounded-md"
+              placeholder="제목"
+            />
+          </div>
+          <div className="mx-4 my-2">
+            {/* <label>한줄 설명</label> */}
+            <input
+              type="text"
+              value={challengeSummary}
+              onChange={onChallengeSummaryHandler}
+              className="border-2 rounded-md"
+              placeholder="한줄 설명"
+            />
+          </div>
+          <div className="mx-4">
+            {/* <label>상세 설명</label> */}
+            <textarea
+              cols="51"
+              rows="5"
+              value={challengeContent}
+              onChange={onChallengeContentHandler}
+              className="border-2 rounded-md"
+              placeholder="내용을 입력하세요."
+            ></textarea>
+          </div>
+          <br />
+          <div className="mx-4 my-2">
+            <label>시작일</label>
+            <input
+              type="datetime-local"
+              value={challengeStartDate}
+              onChange={onChallengeStartDateHandler}
+              className="border-2 rounded-md"
+            />
+          </div>
+          <div className="mx-4 my-2">
+            <label>종료일</label>
+            <input
+              type="datetime-local"
+              value={challengeEndDate}
+              onChange={onChallengeEndDateHandler}
+              className="border-2 rounded-md"
+            />
+          </div>
+          <div className="flex justify-center">
+            <button className="w-10/12 p-2 mt-3 mb-4 text-center text-white bg-teal-700 border-2 border-teal-700 rounded-full">
+              등록하기
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
