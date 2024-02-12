@@ -116,6 +116,7 @@ const SignUpModal = ({ onClose }) => {
           <input
             id="password"
             type="password"
+            autoComplete="on"
             {...register("password", {
               required: true,
               pattern: {
@@ -134,6 +135,7 @@ const SignUpModal = ({ onClose }) => {
           <input
             id="passwordCheck"
             type="password"
+            autoComplete="on"
             {...register("passwordCheck", {
               required: true,
               validate: {

@@ -79,6 +79,7 @@ const PinChangePage = () => {
             id="currentPin"
             placeholder="기존 PIN번호"
             type="password"
+            autoComplete="on"
             maxLength={6}
             {...register("currentPin", {
               required: true,
@@ -91,6 +92,7 @@ const PinChangePage = () => {
             className="p-2 border-2 rounded-md"
             id="newPin"
             type="password"
+            autoComplete="on"
             placeholder="새 PIN번호"
             maxLength={6}
             {...register("newPin", {
@@ -108,6 +110,7 @@ const PinChangePage = () => {
             className="p-2 border-2 rounded-md"
             id="newPinCheck"
             type="password"
+            autoComplete="on"
             placeholder="새 PIN번호 확인"
             maxLength={6}
             {...register("newPinCheck", {

@@ -83,6 +83,7 @@ const PasswordChangePage = () => {
             id="currentPassword"
             placeholder="기존 비밀번호"
             type="password"
+            autoComplete="on"
             {...register("currentPassword", {
               required: true,
             })}
@@ -93,6 +94,7 @@ const PasswordChangePage = () => {
             className="p-2 border-2 rounded-md"
             id="newPassword"
             type="password"
+            autoComplete="on"
             placeholder="새 비밀번호"
             {...register("newPassword", {
               required: true,
@@ -110,6 +112,7 @@ const PasswordChangePage = () => {
             className="p-2 border-2 rounded-md"
             id="newPasswordCheck"
             type="password"
+            autoComplete="on"
             placeholder="새 비밀번호 확인"
             {...register("newPasswordCheck", {
               required: true,
