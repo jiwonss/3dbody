@@ -3,7 +3,6 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
-import Button from "./../../components/common/Button";
 import uuid from "react-uuid";
 import * as AWS from "@aws-sdk/client-s3";
 import BackButton from "./../../components/common/BackButton";
@@ -228,7 +227,7 @@ const ChallengeUpdatePage = () => {
               // rows="5"
               value={challengeContent}
               onChange={onChallengeContentHandler}
-              className="w-full h-48 p-2 border-2 rounded-md"
+              className="w-full h-40 p-2 border-2 rounded-md"
               placeholder="내용을 입력하세요."
             ></textarea>
           </div>
