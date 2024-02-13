@@ -32,7 +32,7 @@ const DiaryPage = () => {
         {userTraining.length ? (
           <TrainingSummary />
         ) : (
-          <Button btnCss="p-2 w-full text-white text-lg border bg-teal-700 rounded-lg" buttonName="운동 계확하기" />
+          <Button btnCss="p-2 w-full text-white text-lg border bg-teal-700 rounded-lg" buttonName="운동 계획하기" />
         )}
       </Link>
     );

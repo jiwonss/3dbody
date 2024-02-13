@@ -12,12 +12,13 @@ import {
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { useEffect, useState } from "react";
+import { selectedInbodyState } from '../../recoil/common/InbodyState';
 
 const ThreeD = () => {
   const [token, setToken] = useRecoilState(modelTokenState);
   const [user, setUser] = useRecoilState(userState);
   const baseUrl = useRecoilValue(baseUrlState);
-  const [height, setHeight] = useState(0)
+  const selectedInbody = useRecoilValue(selectedInbodyState);
   let asset_id = "";
 
   const download = () => {
