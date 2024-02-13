@@ -3,11 +3,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { modelTokenState } from "../../recoil/common/ModelTokenState";
 import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import { selectedInbodyState } from '../../recoil/common/InbodyState';
 
 const ThreeD = () => {
   const [token, setToken] = useRecoilState(modelTokenState);
   const [user, setUser] = useRecoilState(userState);
   const baseUrl = useRecoilValue(baseUrlState);
+  const selectedInbody = useRecoilValue(selectedInbodyState);
   let asset_id = "";
   
   const download = () =>{
@@ -90,7 +92,7 @@ const ThreeD = () => {
     <div>
       <button className="m-8 border-4 bg-slate-400" onClick={() => get3dToken()}>토큰 받기</button>
       <button className="m-8 border-4 bg-slate-400" onClick={() => createModel()}>모델 생성</button>
-      <button className="m-8 border-4 bg-slate-400" onClick={()=> download()}>다운로드</button>
+      <button className="m-8 border-4 bg-slate-400" onClick={() => download()}>다운로드</button>
     </div>
   );
 };
