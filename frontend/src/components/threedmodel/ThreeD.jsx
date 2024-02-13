@@ -3,28 +3,39 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { modelTokenState } from "../../recoil/common/ModelTokenState";
 import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
+import {
+  ContactShadows,
+  Environment,
+  Lightformer,
+  OrbitControls,
+} from "@react-three/drei";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { useEffect, useState } from "react";
 
 const ThreeD = () => {
   const [token, setToken] = useRecoilState(modelTokenState);
   const [user, setUser] = useRecoilState(userState);
   const baseUrl = useRecoilValue(baseUrlState);
+  const [height, setHeight] = useState(0)
   let asset_id = "";
-  
-  const download = () =>{
+
+  const download = () => {
     axios({
       method: "post",
       url: "/avatars/373334c8-66e3-4f72-90f6-24f86b1224d2/export",
-      headers:{
-        Authorization: "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJuSnVpYzVwbXk1T1hGSjVmY1RIQTdUNVktRHZVbVVOR2xxVHBqS0hDVnU4In0.eyJleHAiOjE3MDczODkxOTgsImlhdCI6MTcwNzM1MzE5OCwianRpIjoiZGFjZjI1NzAtNWZkZC00MzU3LTg0NWQtOGMwYTY0ZGFjYjEwIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLm1lc2hjYXBhZGUuY29tL3JlYWxtcy9tZXNoY2FwYWRlLW1lIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijc1NDFiNTczLWVkODAtNGI4Mi1iZTlkLTFlY2VkYjZlZjFmMiIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1lc2hjYXBhZGUtbWUiLCJzZXNzaW9uX3N0YXRlIjoiMTg4MjJkNzItNGRjMy00NGJhLTk1ZGYtNDkxZjE5MTcwYTcxIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL21lc2hjYXBhZGUuY29tIiwiaHR0cHM6Ly9tZS5tZXNoY2FwYWRlLmNvbSIsImh0dHBzOi8vbWVzaGNhcGFkZS5tZSJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJkZWZhdWx0LXJvbGVzLWdjbWMiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiIxODgyMmQ3Mi00ZGMzLTQ0YmEtOTVkZi00OTFmMTkxNzBhNzEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJzZW9uZ2d3b24ga2FuZyIsInByZWZlcnJlZF91c2VybmFtZSI6InJrZHRqZHJuanMxMUBuYXZlci5jb20iLCJnaXZlbl9uYW1lIjoic2Vvbmdnd29uIiwiZmFtaWx5X25hbWUiOiJrYW5nIiwiZW1haWwiOiJya2R0amRybmpzMTFAbmF2ZXIuY29tIn0.SkR8KDuwAJcy8Da6LEHJsHNTeocdgJRvualcoZsYfl15A8Lp7JWOyO2OLC-BfXgEUhCOgOlnz9o8nciqPJMbVvKHsa-7z6qYYXPJxis_bfc6izUi3t7BNJ7LWvzA4tWsB90m51HzlyWFVtgKdy-ZuC4T96utjiJ3iKwPKDALyMW7E6HtyIniO29anriSg0badbyYTVTZaj_Evme_9gUZ2kndd_-SYLOqYqYTqwli9l_RfAr1oMnR-hPCyzHT9kdZoJozqWxo3qxj3RKUquvq-IB4viroqMj-9DV5Gym6ht338bHvNHQF3ZLwyUYMZbSjuWPgjd--6MSQs64OXGRq6w"
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJuSnVpYzVwbXk1T1hGSjVmY1RIQTdUNVktRHZVbVVOR2xxVHBqS0hDVnU4In0.eyJleHAiOjE3MDczODkxOTgsImlhdCI6MTcwNzM1MzE5OCwianRpIjoiZGFjZjI1NzAtNWZkZC00MzU3LTg0NWQtOGMwYTY0ZGFjYjEwIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLm1lc2hjYXBhZGUuY29tL3JlYWxtcy9tZXNoY2FwYWRlLW1lIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijc1NDFiNTczLWVkODAtNGI4Mi1iZTlkLTFlY2VkYjZlZjFmMiIsInR5cCI6IkJlYXJlciIsImF6cCI6Im1lc2hjYXBhZGUtbWUiLCJzZXNzaW9uX3N0YXRlIjoiMTg4MjJkNzItNGRjMy00NGJhLTk1ZGYtNDkxZjE5MTcwYTcxIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL21lc2hjYXBhZGUuY29tIiwiaHR0cHM6Ly9tZS5tZXNoY2FwYWRlLmNvbSIsImh0dHBzOi8vbWVzaGNhcGFkZS5tZSJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJkZWZhdWx0LXJvbGVzLWdjbWMiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiIxODgyMmQ3Mi00ZGMzLTQ0YmEtOTVkZi00OTFmMTkxNzBhNzEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJzZW9uZ2d3b24ga2FuZyIsInByZWZlcnJlZF91c2VybmFtZSI6InJrZHRqZHJuanMxMUBuYXZlci5jb20iLCJnaXZlbl9uYW1lIjoic2Vvbmdnd29uIiwiZmFtaWx5X25hbWUiOiJrYW5nIiwiZW1haWwiOiJya2R0amRybmpzMTFAbmF2ZXIuY29tIn0.SkR8KDuwAJcy8Da6LEHJsHNTeocdgJRvualcoZsYfl15A8Lp7JWOyO2OLC-BfXgEUhCOgOlnz9o8nciqPJMbVvKHsa-7z6qYYXPJxis_bfc6izUi3t7BNJ7LWvzA4tWsB90m51HzlyWFVtgKdy-ZuC4T96utjiJ3iKwPKDALyMW7E6HtyIniO29anriSg0badbyYTVTZaj_Evme_9gUZ2kndd_-SYLOqYqYTqwli9l_RfAr1oMnR-hPCyzHT9kdZoJozqWxo3qxj3RKUquvq-IB4viroqMj-9DV5Gym6ht338bHvNHQF3ZLwyUYMZbSjuWPgjd--6MSQs64OXGRq6w",
       },
-      data:{
+      data: {
         pose: "a",
-        format: "obj"
-      }
-    }).then((res)=>{
-      console.log(res)
-    })
-  }
+        format: "obj",
+      },
+    }).then((res) => {
+      console.log(res);
+    });
+  };
 
   const get3dToken = () => {
     axios({
@@ -86,11 +97,58 @@ const ThreeD = () => {
       });
     });
   };
+  const model = useLoader(
+    OBJLoader,
+    "/34658fa9-5476-4efb-bf77-10593ebb80d5.obj"
+  );
+  console.log(model)
+  // useEffect(()=>{
+  //   let minY = Infinity, maxY = -Infinity
+  //   if (model.children[0].isMesh){
+  //     const geomBbox = model.children[0].geometry.boundingBox
+  //     if (minY > geomBbox.min.y) minY = geomBbox.min.y
+  //     if (maxY > geomBbox.min.y) maxY = geomBbox.max.y
+  //   }
+
+  //   const h = maxY - minY
+  //   setHeight(h)
+  //   console.log(h)
+  // }, [model]
+  // )
   return (
     <div>
-      <button className="m-8 border-4 bg-slate-400" onClick={() => get3dToken()}>토큰 받기</button>
-      <button className="m-8 border-4 bg-slate-400" onClick={() => createModel()}>모델 생성</button>
-      <button className="m-8 border-4 bg-slate-400" onClick={()=> download()}>다운로드</button>
+      <button
+        className="m-8 border-4 bg-slate-400"
+        onClick={() => get3dToken()}
+      >
+        토큰 받기
+      </button>
+      <button
+        className="m-8 border-4 bg-slate-400"
+        onClick={() => createModel()}
+      >
+        모델 생성
+      </button>
+      <button className="m-8 border-4 bg-slate-400" onClick={() => download()}>
+        다운로드
+      </button>
+      <Canvas style={{ width: "100vw", height: "80vw" }}>
+        <OrbitControls />
+        <directionalLight />
+        <hemisphereLight color="white" groundColor="red" intensity={0.75} />
+        <spotLight position={[50, 50, 10]} angle={0.15} penumbra={1} />
+        <ContactShadows scale={20} position={[0, -1, 0]} blur={2} far={100} />
+        <Environment preset="city">
+          <Lightformer
+            intensity={8}
+            position={[10, 5, 0]}
+            scale={[10, 50, 1]}
+            onUpdate={(self) => self.lookAt(0, 0, 0)}
+          />
+        </Environment>
+        <primitive scale={5}
+        object={model}/>
+      </Canvas>
     </div>
   );
 };

@@ -17,6 +17,8 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@popperjs/core": "^2.11.8",
+    "@react-three/drei": "^9.97.5",
+    "@react-three/fiber": "^8.15.16",
     "@videosdk.live/react-sdk": "^0.1.83",
     "@windmill/react-ui": "^0.6.0",
     "axios": "^1.6.7",
@@ -37,7 +39,8 @@
     "react-uuid": "^2.0.0",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "three": "^0.161.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
