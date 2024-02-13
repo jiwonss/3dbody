@@ -27,15 +27,12 @@ const LoginPage = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(event);
     await axios
       .post(`${baseUrl}api/auth/login`, {
         email: email,
         password: password,
       })
       .then((res) => {
-        console.log(res.data);
-        console.log("성공");
         localStorage.clear();
         localStorage.setItem("isLogin", true);
         setUser({

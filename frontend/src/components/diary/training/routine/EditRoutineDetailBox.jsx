@@ -75,7 +75,6 @@ const EditRoutineDetailBox = ({ data, idx }) => {
         `${baseUrl}api/management/routine/detail?routine_id=${selectedRoutineInfo.routineId}`
       )
       .then((res) => {
-        console.log("루틴 업데이트", res);
         setSelectedRoutine(res.data);
       })
       .catch((err) => {

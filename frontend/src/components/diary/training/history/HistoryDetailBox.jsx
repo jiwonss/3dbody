@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { ChevronUpDownIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Description from "../Description";
 import { selectedHistoryListState } from "../../../../recoil/diary/SelectedHistoryListState";
 
@@ -41,7 +41,7 @@ const HistoryDetailBox = ({ data }) => {
             subTitle={categories.join(" ")}
           />
         </div>
-        <ChevronDownIcon className="w-6 h-6 my-auto" />
+        {toggle ? <ChevronUpIcon className="w-6 h-6 my-auto" /> : <ChevronDownIcon className="w-6 h-6 my-auto" />}
       </div>
       {/* toggle - 운동 목록 */}
       <div className={`${toggle ? "" : "hidden"} flex flex-col gap-2 pt-2`}>

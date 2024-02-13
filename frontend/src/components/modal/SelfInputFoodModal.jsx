@@ -42,7 +42,7 @@ const SelfInputFoodModal = ({ onClose }) => {
         date: KoreaNow,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("음식 직접 추가하기 성공");
       })
       .catch((err) => {
         console.log(err);

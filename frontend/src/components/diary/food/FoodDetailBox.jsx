@@ -53,7 +53,6 @@ const FoodDetailBox = ({ data, category }) => {
         servingSize: parseInt(value, 10), // 정수변환 (100g -> 100)
       })
       .then((res) => {
-        console.log(data.food.name + "데이터 수정");
         getUserFoodCategory();
       })
       .catch((err) => {
@@ -69,7 +68,6 @@ const FoodDetailBox = ({ data, category }) => {
         foodCount: value.replace(/개/g, ""), // 문자대체 (2개 -> 2)
       })
       .then((res) => {
-        console.log(data.food.name + "데이터 수정");
         getUserFoodCategory();
       })
       .catch((err) => {

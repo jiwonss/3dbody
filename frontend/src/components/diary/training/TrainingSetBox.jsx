@@ -48,7 +48,6 @@ const TrainingSetBox = ({ set, setIdx }) => {
         `${baseUrl}api/management/training/user_training/${set.user_training_id}`
       )
       .then((res) => {
-        console.log(res.data);
         setIsFinished(!isFinished);
       })
       .catch((err) => {
@@ -66,7 +65,6 @@ const TrainingSetBox = ({ set, setIdx }) => {
         count: set.count,
       })
       .then((res) => {
-        console.log(res.data);
         setReset(!reset);
       })
       .catch((err) => {
@@ -84,7 +82,6 @@ const TrainingSetBox = ({ set, setIdx }) => {
         count: count,
       })
       .then((res) => {
-        console.log(res.data);
         setReset(!reset);
       })
       .catch((err) => {

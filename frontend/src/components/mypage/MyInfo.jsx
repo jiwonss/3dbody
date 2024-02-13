@@ -15,7 +15,6 @@ const MyInfo = ({ category, data, modalname }) => {
               type: modalname,
               data: event.currentTarget.innerText,
             });
-            console.log(modalData)
           }}
         >
           {data}

@@ -1,12 +1,12 @@
-import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import Button from "../common/Button";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userState } from "../../recoil/common/UserState";
 import { useEffect, useRef, useState } from "react";
 import uuid from "react-uuid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import * as AWS from "@aws-sdk/client-s3";
-import axios from "axios";
+import Button from "../common/Button";
+import { userState } from "../../recoil/common/UserState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 
 const Profile = () => {
@@ -83,14 +83,8 @@ const Profile = () => {
           }
         });
       });
-    } else {
-      console.log(false);
     }
   }, [profile]);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <div className="flex flex-col justify-center">

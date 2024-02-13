@@ -57,23 +57,25 @@ const TrainingData = () => {
 
   // 오늘 운동 기록 루틴으로 저장
   const onClickSaveRoutineHandler = async () => {
+    // 선택 날짜로 빈 루틴 생성
     await axios
       .post(`${baseUrl}api/management/routine/addroutine`, {
         userId: user.info.userId,
         title: `${selectedDate[0]}년 ${selectedDate[1]}월 ${selectedDate[2]}일`,
       })
       .then((res) => {
+        // 유저 루틴 목록 조회
         axios
           .get(`${baseUrl}api/management/routine/${user.info.userId}`)
           .then((res) => {
             const routineId = res.data[res.data.length - 1].routineId;
+            // 빈 루틴에 운동 등록
             axios
               .post(
                 `${baseUrl}api/management/routine/add?routine_id=${routineId}`,
                 userTraining
               )
               .then((res) => {
-                console.log(res.data);
               })
               .catch((err) => {
                 console.log(err);

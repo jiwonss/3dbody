@@ -2,7 +2,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect } from "react";
-
 import PageTitle from "./../../components/common/PageTitle";
 import CalendarMonth from "./../../components/diary/CalendarMonth";
 import Button from "./../../components/common/Button";
@@ -79,7 +78,7 @@ const DiaryPage = () => {
       });
   };
 
-  // 날짜 바뀌면 해당 날짜 유저 식단 정보 불러오기
+  // 해당 날짜 운동, 식단 정보 불러오기
   useEffect(() => {
     getUserTraining();
     getUserFood();

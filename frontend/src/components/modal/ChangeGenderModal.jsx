@@ -13,9 +13,6 @@ const ChangeGenderModal = ({ onClose, data }) => {
     mode: "onSubmit",
   });
 
-  const onSubmit = () => {
-    console.log("앙");
-  };
   return (
     <Modal
       className={"fixed transform  -translate-y-1/2 top-1/2 inset-x-12"}
@@ -25,10 +22,10 @@ const ChangeGenderModal = ({ onClose, data }) => {
     >
       <div className="p-4 bg-white border-2 border-gray-400 rounded-xl">
         <h1 className="mb-4 font-semibold text-center">성별을 알려주세요</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4 text-center">
             <select {...register("gender")} className="p-2 text-center border border-gray-400 rounded-md">
-              <option value="now" selected>
+              <option value="now">
                 {data}
               </option>
               <option value="another">{data === "남자" ? "여자" : "남자"}</option>

@@ -4,7 +4,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-
 import PageTitle from "./../../../components/common/PageTitle";
 import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 import { userRoutineState } from "../../../recoil/diary/UserRoutineState";
@@ -39,7 +38,6 @@ const MyRoutinePage = () => {
     await axios
       .get(`${baseUrl}api/management/routine/${user.info.userId}`)
       .then((res) => {
-        console.log("UserRoutine : ", res.data);
         setUserRoutine(res.data);
       })
       .catch((err) => {

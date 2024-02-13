@@ -35,7 +35,6 @@ const HomePage = () => {
       headers: { Authorization: `Bearer ${user.token}` },
     })
       .then((res) => {
-        console.log("인바디 목록 조회", res.data);
         setInbodyList(res.data.data_body);
 
         // 마지막 인바디 id

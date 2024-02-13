@@ -18,7 +18,7 @@ const Rest = () => {
           `${baseUrl}api/management/training/rest?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
         )
         .then((res) => {
-          console.log(res.data);
+          console.log("휴식 해제 성공");
           setIsRest(false);
         })
         .catch((err) => {
