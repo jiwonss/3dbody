@@ -34,7 +34,6 @@ const SignUpModal = ({ onClose }) => {
         birth_date: data.birth_date,
       },
     }).then((res) => {
-      console.log(res);
     });
   };
 
@@ -44,7 +43,6 @@ const SignUpModal = ({ onClose }) => {
       method: "get",
       url: `${baseUrl}api/auth?email=${email}`,
     }).then((res) => {
-      console.log(res);
       if (res.data.data_header.success_code) {
         alert("이미 가입한 이메일입니다.");
       } else {

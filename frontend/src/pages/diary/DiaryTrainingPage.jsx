@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect } from "react";
-
 import PageTitle from "./../../components/common/PageTitle";
 import ToggleTap from "./../../components/common/ToggleTap";
 import CalendarWeek from "./../../components/diary/CalendarWeek";
@@ -28,7 +27,6 @@ const DiaryTrainingPage = () => {
         `${baseUrl}api/management/training?user_id=${user.info.userId}&year=${selectedDate[0]}&month=${selectedDate[1]}&day=${selectedDate[2]}`
       )
       .then((res) => {
-        console.log(res.data);
         setUserTraining(res.data.user_training_list);
       })
       .catch((err) => {

@@ -22,7 +22,6 @@ const RoutineDetailBox = ({ data, idx }) => {
         `${baseUrl}api/management/routine/detail?routine_id=${data.routineId}`
       )
       .then((res) => {
-        console.log("루틴 디테일", res.data);
         setSelectedRoutine(res.data);
       })
       .catch((err) => {

@@ -45,7 +45,6 @@ const TrainingDetailBox = ({ data, idx }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setReset(!reset);
       })
       .catch((err) => {
@@ -64,7 +63,6 @@ const TrainingDetailBox = ({ data, idx }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setReset(!reset);
       })
       .catch((err) => {
@@ -81,7 +79,6 @@ const TrainingDetailBox = ({ data, idx }) => {
         date: KoreaNow,
       })
       .then((res) => {
-        console.log(res.data);
         setReset(!reset);
       })
       .catch((err) => {

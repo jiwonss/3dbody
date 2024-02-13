@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import BackButton from "./../../../components/common/BackButton";
@@ -34,7 +34,6 @@ const TrainingChoicePage = () => {
     await axios
       .get(`${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`)
       .then((res) => {
-        console.table(res.data);
         setSearchTrainingList(res.data);
       })
       .catch((err) => {
@@ -47,7 +46,6 @@ const TrainingChoicePage = () => {
     await axios
       .get(`${baseUrl}api/management/training/list?category=${category}&keyword=${searchTraining}`)
       .then((res) => {
-        console.table(res.data);
         setSearchTrainingList(res.data);
       })
       .catch((err) => {
@@ -81,14 +79,14 @@ const TrainingChoicePage = () => {
         selectedTrainingList
       )
       .then((res) => {
-        console.log(res.data);
         navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  
+  // 루틴 페이지 이동을 위해 운동 체크 목록 저장
   const saveRoutineTrainingList = () => {
     setSelectedRoutineTraining(selectedTrainingList);
     navigate(`/diary/training/myroutine/edit`);

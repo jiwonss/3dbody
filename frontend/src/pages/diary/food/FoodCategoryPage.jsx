@@ -67,7 +67,6 @@ const FoodCategoryPage = () => {
         }&category=${category.substring(0, 2)}`
       )
       .then((res) => {
-        console.log(res.data);
         setUserCategoryFood(res.data);
       })
       .catch((err) => {
@@ -80,7 +79,6 @@ const FoodCategoryPage = () => {
     await axios
       .delete(`${baseUrl}api/management/food/delete/${foodId}`)
       .then((res) => {
-        console.log(foodId + "번 음식 삭제 성공");
         getUserFoodCategory();
       })
       .catch((err) => {

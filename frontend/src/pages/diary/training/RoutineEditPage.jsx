@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -8,7 +9,6 @@ import { selectedRoutineState } from "../../../recoil/diary/SelectedRoutineState
 import Input from "../../../components/common/Input";
 import { baseUrlState } from "../../../recoil/common/BaseUrlState";
 import { selectedRoutineTrainingState } from "../../../recoil/diary/SelectedRoutineTrainingState";
-import axios from "axios";
 import { selectedRoutineInfoState } from "../../../recoil/diary/SelectedRoutineInfoState";
 import EditRoutineDetailBox from "../../../components/diary/training/routine/EditRoutineDetailBox";
 
@@ -47,7 +47,6 @@ const RoutineEditPage = () => {
         `${baseUrl}api/management/routine/update/${selectedRoutineInfo.routineId}?title=${title}`
       )
       .then((res) => {
-        console.log("루틴명 변경" + title);
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +62,6 @@ const RoutineEditPage = () => {
           selectedRoutineTraining
         )
         .then((res) => {
-          console.log("루틴 운동 추가");
           setSelectedRoutineTraining([]);
         })
         .catch((err) => {

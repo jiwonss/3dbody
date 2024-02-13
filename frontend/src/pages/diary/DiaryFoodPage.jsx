@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
-
 import PageTitle from "./../../components/common/PageTitle";
 import ToggleTap from "./../../components/common/ToggleTap";
 import CalendarWeek from "./../../components/diary/CalendarWeek";
@@ -40,7 +39,7 @@ const DiaryTrainingPage = () => {
 
   return (
     <div className='bg-[#C9DECF]/30 pb-2'>
-      {/* sticky 부분과 겹치는 내용(foodDetailData 스크롤 했을 경우) 안보이게 하게 위해 배경 설정함 */}
+      {/* sticky 부분과 겹치는 내용(foodDetailData 스크롤 했을 경우) 안보이게 하기 위해 배경 설정함 */}
       <div className="sticky top-0 bg-white">
         <PageTitle pageTitle={"다이어리"} />
         <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />

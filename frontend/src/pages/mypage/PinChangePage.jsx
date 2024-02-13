@@ -42,7 +42,6 @@ const PinChangePage = () => {
 
   // 제출할 경우 api 요청 보낼 함수
   const onSubmit = (data) => {
-    console.log(data);
     axios({
       method: "patch",
       url: `${baseUrl}api/users/${user.info.userId}/password`,
@@ -60,7 +59,6 @@ const PinChangePage = () => {
         alert("비밀번호 변경 실패 재입력!!");
         reset();
       }
-      console.log(res);
     });
   };
 

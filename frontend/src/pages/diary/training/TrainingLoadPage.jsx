@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import PageTitle from "./../../../components/common/PageTitle";
@@ -23,7 +23,9 @@ const TrainingLoadPage = () => {
   const { basepage } = useParams();
   const [userHistory, setUserHistory] = useRecoilState(userHistoryState); // 유저 운동 기록
   const selectedHistoryList = useRecoilValue(selectedHistoryListState); // 운동 기록에서 선택한 운동 목록
-  const resetSelectedHistoryList = useResetRecoilState(selectedHistoryListState); // 초기화
+  const resetSelectedHistoryList = useResetRecoilState(
+    selectedHistoryListState
+  ); // 초기화
   const selectedRoutine = useRecoilValue(selectedRoutineState);
   const navigate = useNavigate();
 
@@ -35,9 +37,10 @@ const TrainingLoadPage = () => {
         selectedHistoryList
       )
       .then((res) => {
-        console.log(res.data);
         resetSelectedHistoryList();
-        navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`);
+        navigate(
+          `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +55,6 @@ const TrainingLoadPage = () => {
         selectedHistoryList
       )
       .then((res) => {
-        console.log(res.data);
         resetSelectedHistoryList();
         navigate(`/diary/training/myroutine/edit`);
       })
@@ -73,7 +75,9 @@ const TrainingLoadPage = () => {
           <Button
             buttonName="확인"
             onClick={() =>
-              basepage === "basic" ? postSelectedHistory() : postSelectedHistoryByRoutine()
+              basepage === "basic"
+                ? postSelectedHistory()
+                : postSelectedHistoryByRoutine()
             }
           />
         ) : (
@@ -88,7 +92,6 @@ const TrainingLoadPage = () => {
     await axios
       .get(`${baseUrl}api/management/training/user/${user.info.userId}`)
       .then((res) => {
-        console.table("운동기록 : ", res.data);
         setUserHistory(res.data.reverse());
       })
       .catch((err) => {
@@ -107,14 +110,18 @@ const TrainingLoadPage = () => {
         <div className="absolute">
           <BackButton />
         </div>
-        <PageTitle pageTitle={`${basepage === "basic" ? "불러오기" : "전체 운동 기록"}`} />
+        <PageTitle
+          pageTitle={`${basepage === "basic" ? "불러오기" : "전체 운동 기록"}`}
+        />
 
         <div className="p-4">
           <Description size="base" subsize="sm" />
         </div>
       </div>
       {/* 운동기록 표시 */}
-      <div className="mx-4 mb-32">{userHistory.length ? <HistoryList /> : <HistoryNoData />}</div>
+      <div className="mx-4 mb-32">
+        {userHistory.length ? <HistoryList /> : <HistoryNoData />}
+      </div>
       {/* 바텀 버튼 */}
       <div className="fixed w-full bg-white bottom-[57px]">
         <div className="m-4">{checkButton()}</div>

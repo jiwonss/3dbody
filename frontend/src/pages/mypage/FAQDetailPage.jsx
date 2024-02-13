@@ -16,7 +16,6 @@ const FAQDetailPage = () => {
       method: "get",
       url: `${baseUrl}api/faq/posts/${postId}`,
     }).then((res) => {
-      console.log(res);
       setFAQ(res.data);
     });
   };
