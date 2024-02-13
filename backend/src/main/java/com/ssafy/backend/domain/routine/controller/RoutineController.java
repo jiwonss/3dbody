@@ -137,6 +137,7 @@ public class RoutineController {
                 UserTrainingDto userTrainingDto = new UserTrainingDto(); // Create a new instance
 
                 // Set values for UserTrainingDto
+                //저장
                 userTrainingDto.setUserId(userId);
                 userTrainingDto.setTrainingId(list.getRoutineTrainingList().get(i).getTrainingId());
                 userTrainingDto.setName(list.getRoutineTrainingList().get(i).getName());
