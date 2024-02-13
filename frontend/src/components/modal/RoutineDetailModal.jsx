@@ -17,7 +17,7 @@ const RoutineDetailModal = ({ onClose }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
   const selectedRoutine = useRecoilValue(selectedRoutineState);
   const selectedRoutineInfo = useRecoilValue(selectedRoutineInfoState);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const postRoutineBySelectedDate = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ const RoutineDetailModal = ({ onClose }) => {
       .then((res) => {
         console.log("루틴 -> 오늘 운동에 등록");
         setModalData({ type: null, data: null });
-        navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`)
+        navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`);
       })
       .catch((err) => {
         console.log(err);
@@ -38,13 +38,13 @@ const RoutineDetailModal = ({ onClose }) => {
   return (
     <Modal
       className={
-        "fixed bottom-0 bg-white rounded-2xl border-t border-t-black overflow-auto inset-x-0"
+        "fixed bottom-0 bg-white rounded-2xl border-t border-t-black overflow-auto inset-x-0 max-h-[600px]"
       }
       isOpen={modalData.type === "routineDetail"}
       ariaHideApp={false}
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
-      <div className="flex flex-col gap-2 m-4">
+      <div className="flex flex-col gap-2 m-4 bottom-16">
         {/* 루틴 제목, 편집 창 */}
         <div className="grid grid-cols-5 mb-4">
           <p className="col-start-2 col-end-5 font-semibold text-center">
@@ -59,7 +59,7 @@ const RoutineDetailModal = ({ onClose }) => {
           </div>
         </div>
         {/* 루틴 운동 목록 */}
-        <div>
+        <div className='mb-16'>
           {selectedRoutine.routine_training_list?.map((data, idx) => {
             return (
               <div key={idx} className="flex flex-col gap-2 my-4">
@@ -69,9 +69,7 @@ const RoutineDetailModal = ({ onClose }) => {
                   </div>
                   <div className="flex flex-col gap-2 pl-4">
                     <p>
-                      <span className="text-lg font-semibold text-teal-700">
-                        {idx + 1}
-                      </span>{" "}
+                      <span className="text-lg font-semibold text-teal-700">{idx + 1}</span>{" "}
                       {data.name}
                     </p>
                     <p className="text-sm text-gray-500">
@@ -88,16 +86,15 @@ const RoutineDetailModal = ({ onClose }) => {
             );
           })}
         </div>
-        {/* 하단 버튼 */}
-        <form
-          onSubmit={postRoutineBySelectedDate}
-          className="p-2 bg-teal-700 border rounded-md"
-        >
-          <button type="submit" className="w-full text-white">
+      </div>
+      {/* 하단 버튼 */}
+      <form onSubmit={postRoutineBySelectedDate} className="fixed bottom-0 w-full bg-white">
+        <div className='p-2 m-4 text-center text-white bg-teal-700 border rounded-md'>
+          <button type="submit" className="">
             운동 시작하기
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </Modal>
   );
 };

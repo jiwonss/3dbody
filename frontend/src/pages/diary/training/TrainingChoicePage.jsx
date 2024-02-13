@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import BackButton from "./../../../components/common/BackButton";
@@ -21,6 +21,7 @@ const TrainingChoicePage = () => {
   const [selectedTrainingList, setSelectedTrainingList] = useState([]); // 선택한 운동 목록
   const { basepage } = useParams();
   const setSelectedRoutineTraining = useSetRecoilState(selectedRoutineTrainingState); // 선택한 운동 목록 (루틴 저장용)
+  const navigate = useNavigate();
 
   // 운동 검색명 저장
   const onChangeSearchTraining = (e) => {
@@ -81,6 +82,7 @@ const TrainingChoicePage = () => {
       )
       .then((res) => {
         console.log(res.data);
+        navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`);
       })
       .catch((err) => {
         console.log(err);
@@ -89,6 +91,7 @@ const TrainingChoicePage = () => {
 
   const saveRoutineTrainingList = () => {
     setSelectedRoutineTraining(selectedTrainingList);
+    navigate(`/diary/training/myroutine/edit`);
   };
 
   // 페이지 로딩 시 전체 운동 리스트 가져오기
@@ -162,7 +165,7 @@ const TrainingChoicePage = () => {
                   className="w-6 ml-4 accent-teal-600"
                 />
                 <div className="flex gap-2 py-2 pl-4">
-                  <img src={data.image} alt="img" className='w-8 h-8' />
+                  <img src={data.image} alt="img" className="w-8 h-8" />
                   <p>{data.name}</p>
                 </div>
               </div>
@@ -181,20 +184,12 @@ const TrainingChoicePage = () => {
           {!selectedTrainingList.length ? (
             <Button buttonName="운동을 선택하세요" disabled />
           ) : (
-            <Link
-              to={
-                basepage === "basic"
-                  ? `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
-                  : `/diary/training/myroutine/edit`
-              }
-            >
-              <Button
-                buttonName={`${selectedTrainingList.length}개의 운동 추가하기`}
-                onClick={() => {
-                  basepage === "basic" ? postTrainingList() : saveRoutineTrainingList();
-                }}
-              />
-            </Link>
+            <Button
+              buttonName={`${selectedTrainingList.length}개의 운동 추가하기`}
+              onClick={() => {
+                basepage === "basic" ? postTrainingList() : saveRoutineTrainingList();
+              }}
+            />
           )}
         </div>
       </div>
