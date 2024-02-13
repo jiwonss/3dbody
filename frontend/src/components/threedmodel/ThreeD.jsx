@@ -6,18 +6,19 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import {
   ContactShadows,
   Environment,
-  Lightformer,
+  // Lightformer,
   OrbitControls,
+  // PerspectiveCamera,
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ThreeD = () => {
   const [token, setToken] = useRecoilState(modelTokenState);
   const [user, setUser] = useRecoilState(userState);
   const baseUrl = useRecoilValue(baseUrlState);
-  const [height, setHeight] = useState(0)
+  const [height, setHeight] = useState(0);
   let asset_id = "";
 
   const download = () => {
@@ -97,27 +98,11 @@ const ThreeD = () => {
       });
     });
   };
-  const model = useLoader(
-    OBJLoader,
-    "/34658fa9-5476-4efb-bf77-10593ebb80d5.obj"
-  );
-  console.log(model)
-  // useEffect(()=>{
-  //   let minY = Infinity, maxY = -Infinity
-  //   if (model.children[0].isMesh){
-  //     const geomBbox = model.children[0].geometry.boundingBox
-  //     if (minY > geomBbox.min.y) minY = geomBbox.min.y
-  //     if (maxY > geomBbox.min.y) maxY = geomBbox.max.y
-  //   }
+  const model = useLoader(OBJLoader, "/3D/175_70_normal.obj");
 
-  //   const h = maxY - minY
-  //   setHeight(h)
-  //   console.log(h)
-  // }, [model]
-  // )
   return (
     <div>
-      <button
+      {/* <button
         className="m-8 border-4 bg-slate-400"
         onClick={() => get3dToken()}
       >
@@ -131,23 +116,25 @@ const ThreeD = () => {
       </button>
       <button className="m-8 border-4 bg-slate-400" onClick={() => download()}>
         다운로드
-      </button>
-      <Canvas style={{ width: "100vw", height: "80vw" }}>
-        <OrbitControls />
+      </button> */}
+      <Canvas
+        style={{
+          width: "100vw",
+          height: "80vh",
+          // backgroundImage: "/3D/격자무늬.jpg",
+          backgroundColor: "#E5E7EB",
+          // zIndex: "-1"
+        }}
+        // shadows
+        camera={{ position: [0, 0, 8], fov: 50 }}
+      >
+        {/* <axesHelper args={[200, 200, 200]} /> */}
+        <OrbitControls autoRotate autoRotateSpeed={7} />
         <directionalLight />
-        <hemisphereLight color="white" groundColor="red" intensity={0.75} />
+        <hemisphereLight color="white" groundColor="brown" intensity={0.75} />
         <spotLight position={[50, 50, 10]} angle={0.15} penumbra={1} />
-        <ContactShadows scale={20} position={[0, -1, 0]} blur={2} far={100} />
-        <Environment preset="city">
-          <Lightformer
-            intensity={8}
-            position={[10, 5, 0]}
-            scale={[10, 50, 1]}
-            onUpdate={(self) => self.lookAt(0, 0, 0)}
-          />
-        </Environment>
-        <primitive scale={5}
-        object={model}/>
+        <ContactShadows scale={20} position={[0, -2.7, 0]} blur={2} far={100} />
+        <primitive scale={3.2} object={model} position={[-0.045, -2.7, 1.5]} />
       </Canvas>
     </div>
   );

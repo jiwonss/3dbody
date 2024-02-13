@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import animationData from "../../../WebRTC/static/animations/join_meeting.json";
-// import Lottie from "lottie-react";
 import useIsTab from "../../hooks/useIsTab";
 import useIsMobile from "../../hooks/useIsMobile";
 
@@ -30,15 +28,6 @@ const WaitingToJoinScreen = () => {
   const isTab = useIsTab();
   const isMobile = useIsMobile();
 
-  // const animationDefaultOptions = {
-  //   loop: true,
-  //   autoplay: true,
-  //   animationData: animationData,
-  //   rendererSettings: {
-  //     preserveAspectRatio: "xMidYMid slice",
-  //   },
-  // };
-
   return (
     <div
       className="bg-gray-200"
@@ -56,7 +45,7 @@ const WaitingToJoinScreen = () => {
             width: isTab ? 200 : isMobile ? 200 : 250,
           }}
         >
-          <img src="/common/3dbody움직이는.gif" alt="..."/>
+          <img src="/common/로딩스피너.gif" alt="..." />
         </div>
         <h1 className="mt-1 text-xl font-bold text-center text-gray-700">
           {message.text}
