@@ -39,7 +39,7 @@ const HomePage = () => {
       headers: { Authorization: `Bearer ${user.token}` },
     })
       .then((res) => {
-        console.log("인바디 목록 조회", res.data.data_body);
+        console.log("인바디 목록 조회", res.data);
         setInbodyList(res.data.data_body);
 
         // 마지막 인바디 id
@@ -53,7 +53,6 @@ const HomePage = () => {
         })
           .then((res) => {
             setSelectedInbody(res.data.data_body);
-            setModalData({ type: null, data: null });
           })
           .catch((err) => {
             console.log(err);
