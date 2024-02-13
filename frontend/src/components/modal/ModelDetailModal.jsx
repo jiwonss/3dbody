@@ -79,6 +79,7 @@ const ModelDetailModal = ({ onClose, data }) => {
                 console.log("인바디 정보 recoil 저장");
                 setSelectedInbody(res.data.data_body);
                 setModalData({ type: null, data: null });
+                window.location.reload("/")
               })
               .catch((err) => {
                 console.log(err);
