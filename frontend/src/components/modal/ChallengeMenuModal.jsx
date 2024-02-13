@@ -34,28 +34,35 @@ const ChallengeMenuModal = ({ onClose, data }) => {
           className="flex items-center justify-center w-full"
           onClick={() => setModalData({ type: null, data: null })}
         >
-          <Link
-            to={`/challenge/${challengeId}/update`}
-            state={{ value: data }}
-            className={
-              user.info.role === "ROLE_ADMIN"
-                ? "text-white bg-teal-700 border-2 rounded-md w-10/12 h-10 items-center flex justify-center"
-                : "hidden "
-            }
-          >
-            수정하기
-          </Link>
-        </div>
-        {user.info.role === "ROLE_ADMIN" ? (
-          <div className="flex items-center justify-center w-full">
-            <button
-              onClick={onChallengeDeleteHandler}
-              className="w-10/12 h-10 text-white border-2 rounded-md bg-rose-600"
+          {user.info.role === "ROLE_ADMIN" ? (
+            <div
+              className="flex flex-wrap items-center justify-center w-full gap-6"
+              onClick={() => setModalData({ type: null, data: null })}
             >
-              삭제하기
-            </button>
-          </div>
-        ) : null}
+              <div className="flex items-center justify-center w-full">
+                <Link
+                  to={`/challenge/${challengeId}/update`}
+                  state={{ value: data }}
+                  className="flex items-center justify-center w-10/12 h-10 text-white bg-teal-700 border-2 rounded-md"
+                >
+                  수정하기
+                </Link>
+              </div>
+              <div className="flex items-center justify-center w-full">
+                <button
+                  onClick={onChallengeDeleteHandler}
+                  className="w-10/12 h-10 text-white border-2 rounded-md bg-rose-600"
+                >
+                  삭제하기
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <p>권한이 없습니다.</p>
+            </div>
+          )}
+        </div>
       </div>
     </Modal>
   );

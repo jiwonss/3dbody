@@ -13,16 +13,16 @@ const ChallengeCard = ({
       <Link to={`/challenge/${challengeId}`}>
         <div className="card -z-10">
           <div className="flex flex-wrap justify-center">
-            <div className="mt-3 h-44 w-44">
+            <div className="w-40 mt-3 h-52">
               <img
                 className="w-full h-full border-2 rounded-lg"
                 src={challengeThumbnail}
                 alt="썸네일"
               />
             </div>
-            <div className="mt-1 w-44">
-              <div className="text-sm font-semibold text-left truncate">{challengeTitle}</div>
-              <p className="text-xs text-left text-gray-400 truncate">
+            <div className="w-40 mt-1">
+              <div className="text-lg font-semibold text-left truncate">{challengeTitle}</div>
+              <p className="text-base text-left text-gray-400 truncate">
                 {challengeSummary}
               </p>
             </div>

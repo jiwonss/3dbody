@@ -147,7 +147,7 @@ const ChallengeUpdatePage = () => {
       <div className="absolute flex justify-between w-full">
         <BackButton />
       </div>
-      <PageTitle pageTitle="챌린지 등록" />
+      <PageTitle pageTitle="챌린지 수정" />
       <div className="bg-gray-100">
         <div className="pt-4">
           <form

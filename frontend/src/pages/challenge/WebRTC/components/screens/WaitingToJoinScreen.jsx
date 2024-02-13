@@ -56,17 +56,7 @@ const WaitingToJoinScreen = () => {
             width: isTab ? 200 : isMobile ? 200 : 250,
           }}
         >
-          로딩 스피너 넣기
-          {/* <Lottie
-            loop={animationDefaultOptions.loop}
-            autoplay={animationDefaultOptions.autoplay}
-            animationData={animationDefaultOptions.animationData}
-            rendererSettings={{
-              preserveAspectRatio:
-                animationDefaultOptions.rendererSettings.preserveAspectRatio,
-            }}
-            style={{ height: "100%", width: "100%" }}
-          /> */}
+          <img src="/common/3dbody움직이는.gif" alt="..."/>
         </div>
         <h1 className="mt-1 text-xl font-bold text-center text-gray-700">
           {message.text}

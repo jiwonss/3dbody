@@ -41,23 +41,28 @@ const ChallengeParticipating = () => {
   });
 
   return (
-    <div className="grid grid-cols-2 mb-16">
-      {challenges.length ? (
-        challenges
-      ) : user.info.role === "ROLE_ADMIN" ? null : (
-        <div className="col-start-1 col-end-3 text-center">
-          참여중인 챌린지가 없습니다.
-        </div>
-      )}
-      <div className="justify-self-center">
-        <Link
-          to="/challenge/registration"
-          className={user.info.role === "ROLE_ADMIN" ? null : "hidden"}
-        >
-          <div className="card -z-10">
-            <PlusIcon className="w-6 h-6" />
+    <div>
+      <div className="grid grid-cols-2 mb-16">
+        {challenges.length ? (
+          challenges
+        ) : user.info.role === "ROLE_ADMIN" ? null : (
+          <div className="col-start-1 col-end-3 text-center">
+            참여중인 챌린지가 없습니다.
           </div>
-        </Link>
+        )}
+      </div>
+      <div
+        className={
+          user.info.role === "ROLE_ADMIN"
+            ? "fixed flex justify-center items-center bottom-20 right-6 w-16 h-16 border-2 rounded-full bg-teal-700"
+            : "hidden"
+        }
+      >
+        <div>
+          <Link to="/challenge/registration">
+            <PlusIcon className="w-8 h-8 text-white" />
+          </Link>
+        </div>
       </div>
     </div>
   );
