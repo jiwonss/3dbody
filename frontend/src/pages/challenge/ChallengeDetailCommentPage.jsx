@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import axios from "axios";
-import Button from "./../../components/common/Button";
 import { userState } from "../../recoil/common/UserState";
 
 const ChallengeDetailComment = () => {
@@ -34,6 +33,7 @@ const ChallengeDetailComment = () => {
         nickname={comment.nickname}
         commentId={comment.comment_id}
         userId={comment.user_id}
+        profileImage={comment.profile_image}
       />
     );
   });
@@ -68,7 +68,7 @@ const ChallengeDetailComment = () => {
       <div className="fixed w-screen p-4 bottom-11">
         <form onSubmit={onSubmitHandler} className="flex">
           <input
-            className="border rounded-lg border-slate-950"
+            className="pl-2 border rounded-lg border-slate-950"
             type="text"
             value={content}
             onChange={onContentHandler}

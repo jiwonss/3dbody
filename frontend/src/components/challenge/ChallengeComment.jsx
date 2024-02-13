@@ -1,38 +1,36 @@
 import PropTypes from "prop-types";
-import { TrashIcon, PencilIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 import { userState } from "../../recoil/common/UserState";
-import { useEffect, useState } from 'react';
 
-const ChallengeComment = ({ content, nickname, commentId, userId }) => {
+const ChallengeComment = ({
+  content,
+  nickname,
+  commentId,
+  userId,
+  profileImage,
+}) => {
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
-  const [imgSrc, setImgSrc] = useState("")
-  
+
   const onDeleteHandler = async (event) => {
     event.preventDefault();
     await axios.delete(`${baseUrl}api/comment/${commentId}`);
   };
-
-  useEffect(() => {
-    if (user.info.profile_img) {
-      setImgSrc(user.info.profile_img)
-    }
-  }, [imgSrc])
 
   return (
     <div>
       <div className="flex items-center justify-between mx-4 my-2 bg-gray-100 border-2 rounded-xl">
         <div className="flex">
           <img
-            src={imgSrc}
+            src={
+              profileImage
+                ? profileImage
+                : "/challenge/기본이미지.jpg"
+            }
             alt="..."
-            onError={(event) => {
-              console.log(event);
-              event.target.src = "/challenge/기본이미지.jpg";
-            }}
             className="w-10 h-10 m-1 rounded-full"
           />
           <div>
@@ -60,6 +58,7 @@ ChallengeComment.propTypes = {
   content: PropTypes.string,
   commentId: PropTypes.number,
   userId: PropTypes.number,
+  profileImage: PropTypes.string,
 };
 
 export default ChallengeComment;

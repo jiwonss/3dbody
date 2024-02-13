@@ -105,7 +105,11 @@ const Profile = () => {
         />
         <img
           className="w-1/4 m-2 border rounded-full object-fit:corver"
-          src={user.info.profile_image}
+          src={
+            user.info.profile_image
+              ? user.info.profile_image
+              : "/challenge/기본이미지.jpg"
+          }
           alt="기본 이미지"
           onClick={() => {
             fileInput.current.click();
