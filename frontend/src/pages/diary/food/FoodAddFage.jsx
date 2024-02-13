@@ -10,7 +10,7 @@ import Search from "../../../components/common/Search";
 import Button from "../../../components/common/Button";
 import { userState } from "../../../recoil/common/UserState";
 import { modalState } from "../../../recoil/modal/ModalState";
-import { selectedDateState } from '../../../recoil/diary/SelectedDateState';
+import { selectedDateState } from "../../../recoil/diary/SelectedDateState";
 
 const FoodAddFage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
@@ -22,12 +22,12 @@ const FoodAddFage = () => {
   const [selectedFoodList, setSelectedFoodList] = useState([]);
   const [modalData, setModalData] = useRecoilState(modalState);
   const [showKcal, setShowKcal] = useState(false);
-  
+
   // 백 요청에 보낼 시간 계산
-  const selectedTime = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]) // 선택한 시간
-  const KoreaTimeDiff = 9 * 60 * 60 * 1000 // 한국 시간은 GMT 시간보다 9시간 앞서 있다.
-  const KoreaNow = new Date(selectedTime.getTime() + KoreaTimeDiff) // 백에서 -9시간 되므로 +9시간 값을 보내준다
-  
+  const selectedTime = new Date(selectedDate[0], selectedDate[1] - 1, selectedDate[2]); // 선택한 시간
+  const KoreaTimeDiff = 9 * 60 * 60 * 1000; // 한국 시간은 GMT 시간보다 9시간 앞서 있다.
+  const KoreaNow = new Date(selectedTime.getTime() + KoreaTimeDiff); // 백에서 -9시간 되므로 +9시간 값을 보내준다
+
   const onChangeSearchFood = (e) => {
     setSearchFood(e.target.value);
   };
@@ -82,10 +82,12 @@ const FoodAddFage = () => {
 
   return (
     <>
-      <div className="absolute">
-        <BackButton />
+      <div className="sticky top-0 bg-white">
+        <div className="absolute">
+          <BackButton />
+        </div>
+        <PageTitle pageTitle="음식 추가하기" />
       </div>
-      <PageTitle pageTitle="음식 추가하기" />
       {/* 검색 창 */}
       <Search
         onSubmit={getSearchFood}
@@ -94,7 +96,7 @@ const FoodAddFage = () => {
         onBlur={getSearchFood}
       />
       {/* 검색 결과 목록 */}
-      <div className="m-4">
+      <div className="m-4 mb-48">
         {searchFoodList.map((data) => {
           return (
             <div className="flex mb-2 border rounded-md" key={data.foodId}>
@@ -104,10 +106,23 @@ const FoodAddFage = () => {
                 className="w-6 ml-4 accent-teal-600"
               />
               <div className="flex flex-col py-1 pl-4 basis-3/5">
-              <p><span className="text-base" onClick={() => {setShowKcal(!showKcal);}}>{data.name}</span><span className={`${showKcal ? "" : "hidden"}`}> : {data.calorie.toFixed(1)}kcal</span></p>
+                <p>
+                  <span
+                    className="text-base"
+                    onClick={() => {
+                      setShowKcal(!showKcal);
+                    }}
+                  >
+                    {data.name}
+                  </span>
+                  <span className={`${showKcal ? "" : "hidden"}`}>
+                    {" "}
+                    : {data.calorie.toFixed(1)}kcal
+                  </span>
+                </p>
                 <p style={{ fontSize: "12px" }}>
-                  탄 {data.carbohydrate.toFixed(1)}g 단{" "}
-                  {data.protein.toFixed(1)}g 지 {data.lipid.toFixed(1)}g
+                  탄 {data.carbohydrate.toFixed(1)}g 단 {data.protein.toFixed(1)}g 지{" "}
+                  {data.lipid.toFixed(1)}g
                 </p>
               </div>
               <div className="flex basis-2/5">
@@ -126,7 +141,7 @@ const FoodAddFage = () => {
         })}
       </div>
       {/* 버튼 */}
-      <div className="fixed w-full bottom-16">
+      <div className="fixed w-full bg-white bottom-16">
         <div className="m-4">
           <div className="flex gap-4">
             <Button

@@ -91,8 +91,8 @@ const ChallengeRegistrationPage = () => {
     }
     const params = {
       Bucket: bucket,
-      Key: profileName,
-      Body: profile,
+      Key: thumbnailName,
+      Body: thumbnail,
       ContentType: extension,
     };
 

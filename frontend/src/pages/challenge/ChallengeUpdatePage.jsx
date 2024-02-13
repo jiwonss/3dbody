@@ -109,8 +109,8 @@ const ChallengeUpdatePage = () => {
     }
     const params = {
       Bucket: bucket,
-      Key: profileName,
-      Body: profile,
+      Key: thumbnailName,
+      Body: thumbnail,
       ContentType: extension,
     };
 
@@ -130,16 +130,14 @@ const ChallengeUpdatePage = () => {
     } else if (imageName.includes("gif")) {
       extension = "image/gif";
     }
-    const upload = new awsUpdate.S3.ManagedUpload({
-      params: {
-        Bucket: bucket,
-        Key: imageName,
-        Body: image,
-        ContentType: extension,
-      },
-    });
-    const promise = upload.promise();
-    promise.then(() => {
+    const params = {
+      Bucket: bucket,
+      Key: imageName,
+      Body: image,
+      ContentType: extension,
+    };
+
+    awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
       console.log("성공");
       alert("등록되었습니다.");
     });

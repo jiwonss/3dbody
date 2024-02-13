@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import PageTitle from "./../../../components/common/PageTitle";
@@ -22,9 +22,10 @@ const TrainingLoadPage = () => {
   const isSelected = true; // 운동선택하면 바뀌게
   const { basepage } = useParams();
   const [userHistory, setUserHistory] = useRecoilState(userHistoryState); // 유저 운동 기록
-  const selectedHistoryList = useRecoilValue(selectedHistoryListState);  // 운동 기록에서 선택한 운동 목록
+  const selectedHistoryList = useRecoilValue(selectedHistoryListState); // 운동 기록에서 선택한 운동 목록
   const resetSelectedHistoryList = useResetRecoilState(selectedHistoryListState); // 초기화
-  const selectedRoutine = useRecoilValue(selectedRoutineState)
+  const selectedRoutine = useRecoilValue(selectedRoutineState);
+  const navigate = useNavigate();
 
   // 선택한 운동 기록 추가 하기
   const postSelectedHistory = async () => {
@@ -34,8 +35,9 @@ const TrainingLoadPage = () => {
         selectedHistoryList
       )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         resetSelectedHistoryList();
+        navigate(`/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`);
       })
       .catch((err) => {
         console.log(err);
@@ -50,8 +52,9 @@ const TrainingLoadPage = () => {
         selectedHistoryList
       )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         resetSelectedHistoryList();
+        navigate(`/diary/training/myroutine/edit`);
       })
       .catch((err) => {
         console.log(err);
@@ -67,15 +70,12 @@ const TrainingLoadPage = () => {
         }`}
       >
         {isSelected ? (
-          <Link
-            to={
-              basepage === "basic"
-                ? `/diary/training/${selectedDate[0]}/${selectedDate[1]}/${selectedDate[2]}`
-                : `/diary/training/myroutine/edit`
+          <Button
+            buttonName="확인"
+            onClick={() =>
+              basepage === "basic" ? postSelectedHistory() : postSelectedHistoryByRoutine()
             }
-          >
-            <Button buttonName="확인" onClick={() => basepage === "basic" ? postSelectedHistory() : postSelectedHistoryByRoutine()}/>
-          </Link>
+          />
         ) : (
           <Button buttonName="운동 기록을 선택해주세요." disabled />
         )}

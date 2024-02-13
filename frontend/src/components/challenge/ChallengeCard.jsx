@@ -28,7 +28,7 @@ const ChallengeCard = ({
               />
             </div>
             <div className="w-32 mt-1">
-              <div className="text-sm font-semibold text-left">{challengeTitle}</div>
+              <div className="text-sm font-semibold text-left truncate">{challengeTitle}</div>
               <p className="text-xs text-left text-gray-400 truncate">
                 {challengeSummary}
               </p>
