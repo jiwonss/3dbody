@@ -25,6 +25,7 @@ const HomePage = () => {
   const [selectedInbody, setSelectedInbody] =
     useRecoilState(selectedInbodyState);
   const loading = useRecoilValue(loadingState);
+  const toggleModel = useRecoilValue(toggleModelState);
 
   // 인바디 상세 정보 모달
   const onModelDetailHandler = () => {
@@ -88,7 +89,7 @@ const HomePage = () => {
             <div className="p-2 m-4 text-center text-white bg-teal-700 rounded-md">
               <Button
                 btnCss="w-full"
-                buttonName="상세 정보 보기"
+                buttonName={toggleModel === "left" ? "상세 정보 보기" : "데이터 입력"}
                 onClick={onModelDetailHandler}
               />
             </div>

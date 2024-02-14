@@ -7,6 +7,7 @@ import { inbodyListState, selectedInbodyState } from "../../recoil/common/Inbody
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
+import { useEffect } from 'react';
 
 const ModelHistoryModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -48,6 +49,12 @@ const ModelHistoryModal = ({ onClose, data }) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    if (!inbodyList.length) {
+      setSelectedInbody([])
+    }
+  }, [inbodyList])
 
   return (
     <Modal

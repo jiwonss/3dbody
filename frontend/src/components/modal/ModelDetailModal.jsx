@@ -10,6 +10,7 @@ import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
 import { selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
 import { loadingState } from "../../recoil/common/LoadingState";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 
 const ModelDetailModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -20,16 +21,28 @@ const ModelDetailModal = ({ onClose, data }) => {
   const setTargetInbody = useSetRecoilState(targetInbodyState);
   const setLoading = useSetRecoilState(loadingState);
 
-  const [height, setHeight] = useState(selectedInbody.length ? selectedInbody.height : 0 + " cm");
-  const [weight, setWeight] = useState(selectedInbody.length ? selectedInbody.weight : 0 + " kg");
-  const [muscle, setMuscle] = useState(selectedInbody.length ? selectedInbody.muscle : 0 + " kg"); // 골격근량
+  const [height, setHeight] = useState(
+    selectedInbody?.inbody_id ? selectedInbody.height + " cm" : 0 + " cm"
+  );
+  const [weight, setWeight] = useState(
+    selectedInbody?.inbody_id ? selectedInbody.weight + " kg" : 0 + " kg"
+  );
+  const [muscle, setMuscle] = useState(
+    selectedInbody?.inbody_id ? selectedInbody.muscle + " kg" : 0 + " kg"
+  ); // 골격근량
   const [fatMass, setFatMass] = useState(
-    selectedInbody.length ? selectedInbody.fat_mass : 0 + " kg"
+    selectedInbody?.inbody_id ? selectedInbody.fat_mass + " kg" : 0 + " kg"
   ); // 체지방량
-  const [fatPer, setFatPer] = useState(selectedInbody.length ? selectedInbody.fat_per : 0 + " %"); // 체지방율
-  const [tbw, setTbw] = useState(selectedInbody.length ? selectedInbody.tbw : 0 + " kg"); // 체수분량
-  const [bmi, setBmi] = useState(selectedInbody.length ? selectedInbody.bmi : 0); // BMI
-  const [bmr, setBmr] = useState(selectedInbody.length ? selectedInbody.bmr : 0 + " kcal"); // 기초대사량
+  const [fatPer, setFatPer] = useState(
+    selectedInbody?.inbody_id ? selectedInbody.fat_per + " %" : 0 + " %"
+  ); // 체지방율
+  const [tbw, setTbw] = useState(
+    selectedInbody?.inbody_id ? selectedInbody.tbw + " kg" : 0 + " kg"
+  ); // 체수분량
+  const [bmi, setBmi] = useState(selectedInbody?.inbody_id ? selectedInbody.bmi : 0); // BMI
+  const [bmr, setBmr] = useState(
+    selectedInbody?.inbody_id ? selectedInbody.bmr + " kg" : 0 + " kcal"
+  ); // 기초대사량
 
   // 인바디 정보 onChangeHandler
   const onChangeHeight = (e) => {
@@ -106,7 +119,7 @@ const ModelDetailModal = ({ onClose, data }) => {
               .then((res) => {
                 setSelectedInbody(res.data.data_body);
                 setModalData({ type: null, data: null });
-                window.location.reload("/")
+                window.location.reload("/");
               })
               .catch((err) => {
                 console.log(err);
@@ -126,13 +139,17 @@ const ModelDetailModal = ({ onClose, data }) => {
     setModalData({ type: null, data: null });
     setTimeout(() => {
       alert("목표 모델을 불러왔습니다.");
-      setTargetInbody({ height: parseFloat(height, 10), weight: parseFloat(weight, 10) });
+      setTargetInbody({ weight: parseFloat(weight, 10), muscle: parseFloat(muscle, 10), fat_per: parseFloat(fatPer, 10) });
       setLoading(false);
     }, 3000);
   };
 
   const onModelHistoryHandler = () => {
     setModalData({ type: "modelHistory", data: "" });
+  };
+
+  const onClickAlert = () => {
+    alert("목표 모델 생성을 위해 체중, 골격근량, 체지방율을 입력해주세요.");
   };
 
   return (
@@ -147,20 +164,54 @@ const ModelDetailModal = ({ onClose, data }) => {
           <div className="ml-2 text-2xl font-semibold text-teal-700 underline underline-offset-4">
             인바디 정보
           </div>
-          <div className="text-sm font-semibold text-gray-500">
-            <button onClick={onModelHistoryHandler} className="p-1 border-4 rounded-full">
-              히스토리
-            </button>
-          </div>
+          {toggleModel === "left" ? (
+            <div className="text-sm font-semibold text-gray-500">
+              <button onClick={onModelHistoryHandler} className="p-1 border-4 rounded-full">
+                히스토리
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <ExclamationTriangleIcon
+                onClick={onClickAlert}
+                className="w-6 h-6 mr-2 text-rose-500"
+              />
+            </div>
+          )}
         </div>
-        <ModelDetail name="키" value={height} onChange={onChangeHeight} />
+        <ModelDetail
+          name="키"
+          value={height}
+          onChange={onChangeHeight}
+          disabled={toggleModel === "right"}
+        />
         <ModelDetail name="체중" value={weight} onChange={onChangeWeight} />
         <ModelDetail name="골격근량" value={muscle} onChange={onChangeMuscle} />
-        <ModelDetail name="체지방량" value={fatMass} onChange={onChangeFatMass} />
         <ModelDetail name="체지방률" value={fatPer} onChange={onChangeFatPer} />
-        <ModelDetail name="체수분" value={tbw} onChange={onChangeTbw} />
-        <ModelDetail name="BMI" value={String(bmi)} onChange={onChangeBmi} />
-        <ModelDetail name="기초대사량" value={bmr} onChange={onChangeBmr} />
+        <ModelDetail
+          name="체지방량"
+          value={fatMass}
+          onChange={onChangeFatMass}
+          disabled={toggleModel === "right"}
+        />
+        <ModelDetail
+          name="체수분"
+          value={tbw}
+          onChange={onChangeTbw}
+          disabled={toggleModel === "right"}
+        />
+        <ModelDetail
+          name="BMI"
+          value={String(bmi)}
+          onChange={onChangeBmi}
+          disabled={toggleModel === "right"}
+        />
+        <ModelDetail
+          name="기초대사량"
+          value={bmr}
+          onChange={onChangeBmr}
+          disabled={toggleModel === "right"}
+        />
         <div className="flex gap-2 pt-4 pb-2">
           <input
             type="button"
