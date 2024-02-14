@@ -30,7 +30,6 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     public List<ChallengeListResponseDto> getProceedingChallengeList() {
         LocalDateTime now = LocalDateTime.now();
-        log.info("ChallengeService - getProceedingChallengeList 호출, 현재 시간 : {}", now);
         return challengeRepository.findAllByEndDateIsAfter(now);
     }
 
@@ -44,7 +43,6 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     public List<ChallengeListResponseDto> getFinishedChallengeList() {
         LocalDateTime now = LocalDateTime.now();
-        log.info("ChallengeService - getFinishedChallengeList 호출, 현재 시간 : {}", now);
         return challengeRepository.findAllByEndDateIsBefore(now);
     }
 
@@ -62,7 +60,6 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Transactional
     public Challenge registerChallenge(ChallengeRequestDto requestDto) {
         User user = userRepository.getReferenceById(requestDto.getUserId());
-        log.info("챌린지 정보 등록 - getReferenceById 결과 : {}", user);
         Challenge challenge = Challenge.builder()
                 .user(user)
                 .title(requestDto.getTitle())
@@ -80,7 +77,6 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     @Transactional
     public Challenge updateChallenge(Long challengeId, ChallengeRequestDto requestDto) {
-        log.info("챌린지 정보 수정 - serviceImpl");
         User user = userRepository.getReferenceById(requestDto.getUserId());
         Challenge challenge = Challenge.builder()
                 .challengeId(challengeId)
@@ -114,7 +110,6 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     @Transactional
     public void applyChallenge(Long challengeId, Long userId) {
-
         UserChallenge userChallenge = UserChallenge
                 .builder()
                 .user(User.builder().userId(userId).build())
@@ -122,17 +117,13 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .build();
 
         userChallengeRepository.saveAndFlush(userChallenge); // 참가 정보 DB에 저장
-
         challengeRepository.addEntry(challengeId); // 참가자수  1 증가
-
     }
 
     // 챌린지 참여 취소
     @Override
     @Transactional
     public void leaveChallenge(Long challengeId, Long userId) {
-
-        log.info("챌린지 참여 취소 비즈니스 로직 들어왔나?");
         boolean check = userChallengeRepository.existsByChallenge_ChallengeIdAndUser_UserId(challengeId, userId);
 
         if (check) {
