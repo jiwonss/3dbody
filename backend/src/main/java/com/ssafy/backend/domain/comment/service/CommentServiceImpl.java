@@ -32,12 +32,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public Comment writeComment(Long challengeId, CommentRequestDto requestDto) {
 
-        log.info("챌린지 댓글 등록 비즈니스 로직 수행 - 요청 파라미터 : {}", requestDto);
-
         User user = userRepository.getReferenceById(requestDto.getUserId());
-        log.info("유저 정보 {}", user);
         Challenge challenge = challengeRepository.getReferenceById(challengeId);
-        log.info("챌린지 정보 {}", challenge);
 
         Comment comment = Comment
                 .builder()
@@ -48,14 +44,10 @@ public class CommentServiceImpl implements CommentService {
 
         if (requestDto.getParentId() != null) {
             Comment parent = commentRepository.getReferenceById(requestDto.getParentId());
-            log.info("부모댓글 정보 {}", parent);
             comment.updateParent(parent);
         }
 
-        log.info("챌린지 댓글 등록 비즈니스 로직 수행 결과 - 댓글 데이터 정보 : {}", comment);
-
         return commentRepository.save(comment);
-
     }
 
     // 챌린지 댓글 목록
@@ -79,7 +71,6 @@ public class CommentServiceImpl implements CommentService {
             }
         });
 
-
         return commentResponseDtoList;
     }
 
@@ -88,11 +79,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void updateComment(Long commentId, CommentRequestDto requestDto) {
 
-        log.info("챌린지 댓글 수정 비즈니스 로직 수행 - 요청 파라미터 : {}", requestDto);
-
         Comment comment = commentRepository.getReferenceById(commentId);
         comment.updateContent(requestDto.getContent());
-
     }
 
     // 챌린지 댓글 삭제
@@ -108,7 +96,6 @@ public class CommentServiceImpl implements CommentService {
         } else { // 자식이 있으면 상태만 변경
             comment.changeIsDeleted(true);
         }
-
     }
 
     private Comment getDeletableAncestorComment(Comment comment) {
