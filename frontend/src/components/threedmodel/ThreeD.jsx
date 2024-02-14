@@ -16,6 +16,7 @@ import { selectedInbodyState } from "../../recoil/common/InbodyState";
 import { useEffect, useRef, useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { modalState } from "../../recoil/modal/ModalState";
+import { pinNumberState } from '../../recoil/common/PinNumberState';
 
 const ThreeD = () => {
   const [token, setToken] = useRecoilState(modelTokenState);
@@ -23,6 +24,7 @@ const ThreeD = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const selectedInbody = useRecoilValue(selectedInbodyState);
   let asset_id = "";
+  const pinNumber = useRecoilValue(pinNumberState)
 
   const download = () => {
     axios({
@@ -128,9 +130,9 @@ const ThreeD = () => {
       <Canvas
         style={{
           width: "100vw",
-          height: "80vh",
+          height: "75vh",
           backgroundColor: "#E5E7EB",
-          filter: "blur(20px)",
+          filter: pinNumber ? null : "blur(20px)",
           // zIndex: "-1",
         }}
         // shadows
@@ -145,7 +147,7 @@ const ThreeD = () => {
         <primitive scale={3.2} object={model} position={[0, -2.7, 0]} />
       </Canvas>
       <div
-        className="absolute flex items-center justify-center h-16 bg-white border-2 rounded-full just"
+        className={pinNumber ? "hidden" : "absolute flex items-center justify-center h-16 bg-white border-2 rounded-full just"}
         onClick={onPinNumberHandler}
       >
         <LockClosedIcon className="w-16 h-12" />

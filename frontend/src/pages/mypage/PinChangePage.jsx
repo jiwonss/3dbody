@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
 import PageTitle from "../../components/common/PageTitle";
@@ -9,7 +9,7 @@ import BackButton from "../../components/common/BackButton";
 
 const PinChangePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
-  const user = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState(userState);
   const {
     watch,
     getValues,
@@ -45,19 +45,24 @@ const PinChangePage = () => {
     console.log(data);
     axios({
       method: "patch",
-      url: `${baseUrl}api/users/${user.info.userId}/password`,
+      url: `${baseUrl}api/users/${user.info.userId}/pin`,
       headers: { Authorization: `Bearer ${user.token}` },
       data: {
-        currentPin: data.currentPin,
-        newPin: data.newPin,
-        newPinCheck: data.newPinCheck,
+        current_pin: data.currentPin,
+        new_pin: data.newPin,
+        new_pin_check: data.newPinCheck,
       },
     }).then((res) => {
-      if (res.data.dataHeader.successCode === 0) {
-        localStorage.clear();
+      console.log(res);
+      if (res.data.data_header.success_code === 0) {
+        alert("PIN 번호가 변경되었습니다.");
+        setUser({
+          token: user.token,
+          info: { ...user.info, pin: data.newPin },
+        });
         window.location.reload("/");
       } else {
-        alert("비밀번호 변경 실패 재입력!!");
+        alert(res.data.data_header.result_message);
         reset();
       }
       console.log(res);
@@ -70,7 +75,7 @@ const PinChangePage = () => {
         <BackButton />
       </div>
       <PageTitle pageTitle="PIN 변경" />
-      
+
       <div className="m-4">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <label htmlFor="currentPin">현재 PIN번호</label>
@@ -124,8 +129,11 @@ const PinChangePage = () => {
             })}
           />
           {errors.newPinCheck && <p>{errors.newPinCheck.message}</p>}
-          
-          <input type="submit" className="p-2 text-white bg-teal-700 border rounded-md"/>
+
+          <input
+            type="submit"
+            className="p-2 text-white bg-teal-700 border rounded-md"
+          />
         </form>
       </div>
     </div>
