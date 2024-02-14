@@ -5,11 +5,14 @@ import { toggleModelState } from "../../recoil/common/ToggleState";
 import Button from "./../../components/common/Button";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState } from "../../recoil/modal/ModalState";
-import { inbodyListState, selectedInbodyState } from "../../recoil/common/InbodyState";
+import {
+  inbodyListState,
+  selectedInbodyState,
+} from "../../recoil/common/InbodyState";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
-import { useEffect } from "react";
+import { useEffect, startTransition } from "react";
 import InBodyNodata from "../../components/threedmodel/InBodyNodata";
 import { loadingState } from "../../recoil/common/LoadingState";
 import LoadingSpinner from "./../../components/threedmodel/LoadingSpinner";
@@ -19,7 +22,8 @@ const HomePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const [inbodyList, setInbodyList] = useRecoilState(inbodyListState);
-  const [selectedInbody, setSelectedInbody] = useRecoilState(selectedInbodyState);
+  const [selectedInbody, setSelectedInbody] =
+    useRecoilState(selectedInbodyState);
   const loading = useRecoilValue(loadingState);
 
   // 인바디 상세 정보 모달
@@ -38,7 +42,8 @@ const HomePage = () => {
         setInbodyList(res.data.data_body);
 
         // 마지막 인바디 id
-        const inbodyId = res.data.data_body[res.data.data_body.length - 1].inbody_id;
+        const inbodyId =
+          res.data.data_body[res.data.data_body.length - 1].inbody_id;
         // 인바디 조회
         axios({
           method: "get",
@@ -67,14 +72,22 @@ const HomePage = () => {
       {!loading && (
         <>
           <PageTitle pageTitle={"쓰리디바디 로고"} />
-          <ToggleTap leftTitle={"현재"} rightTitle={"목표"} state={toggleModelState} />
+          <ToggleTap
+            leftTitle={"현재"}
+            rightTitle={"목표"}
+            state={toggleModelState}
+          />
           {/* 모델 컴포넌트 */}
           {inbodyList.length ? <ThreeD /> : <InBodyNodata />}
 
           {/* 하단 버튼 */}
           <div className="fixed w-full bg-white bottom-[57px]">
             <div className="p-2 m-4 text-center text-white bg-teal-700 rounded-md">
-              <Button btnCss="w-full" buttonName="상세 정보 보기" onClick={onModelDetailHandler} />
+              <Button
+                btnCss="w-full"
+                buttonName="상세 정보 보기"
+                onClick={onModelDetailHandler}
+              />
             </div>
           </div>
         </>

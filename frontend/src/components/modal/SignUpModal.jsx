@@ -33,7 +33,9 @@ const SignUpModal = ({ onClose }) => {
         gender: data.gender,
         birth_date: data.birth_date,
       },
-    }).then((res) => {
+    }).then(() => {
+      alert("회원가입이 완료되었습니다.")
+      setModalData({ type: null, data: null })
     });
   };
 

@@ -109,6 +109,7 @@ const ModelDetailModal = ({ onClose, data }) => {
               .then((res) => {
                 setSelectedInbody(res.data.data_body);
                 setModalData({ type: null, data: null });
+                window.location.reload("/")
               })
               .catch((err) => {
                 console.log(err);

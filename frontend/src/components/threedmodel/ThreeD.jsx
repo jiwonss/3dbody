@@ -12,8 +12,11 @@ import {
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import { selectedInbodyState } from '../../recoil/common/InbodyState';
+import { selectedInbodyState } from "../../recoil/common/InbodyState";
 import { useEffect, useRef, useState } from "react";
+import { LockClosedIcon } from "@heroicons/react/24/solid";
+import { modalState } from "../../recoil/modal/ModalState";
+import { pinNumberState } from '../../recoil/common/PinNumberState';
 
 const ThreeD = () => {
   const [token, setToken] = useRecoilState(modelTokenState);
@@ -21,6 +24,7 @@ const ThreeD = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const selectedInbody = useRecoilValue(selectedInbodyState);
   let asset_id = "";
+  const pinNumber = useRecoilValue(pinNumberState)
 
   const download = () => {
     axios({
@@ -99,10 +103,15 @@ const ThreeD = () => {
       });
     });
   };
-  const model = useLoader(OBJLoader, "/3D/175_70_normal.obj");
+  const model = useLoader(OBJLoader, "/3D/male_173_88.obj");
+
+  const [modalData, setModalData] = useRecoilState(modalState);
+  const onPinNumberHandler = () => {
+    setModalData({ type: "pinNumber", data: "" });
+  };
 
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {/* <button
         className="m-8 border-4 bg-slate-400"
         onClick={() => get3dToken()}
@@ -121,10 +130,10 @@ const ThreeD = () => {
       <Canvas
         style={{
           width: "100vw",
-          height: "80vh",
-          // backgroundImage: "/3D/격자무늬.jpg",
+          height: "75vh",
           backgroundColor: "#E5E7EB",
-          // zIndex: "-1"
+          filter: pinNumber ? null : "blur(20px)",
+          // zIndex: "-1",
         }}
         // shadows
         camera={{ position: [0, 0, 8], fov: 50 }}
@@ -135,8 +144,14 @@ const ThreeD = () => {
         <hemisphereLight color="white" groundColor="brown" intensity={0.75} />
         <spotLight position={[50, 50, 10]} angle={0.15} penumbra={1} />
         <ContactShadows scale={20} position={[0, -2.7, 0]} blur={2} far={100} />
-        <primitive scale={3.2} object={model} position={[-0.045, -2.7, 1.5]} />
+        <primitive scale={3.2} object={model} position={[0, -2.7, 0]} />
       </Canvas>
+      <div
+        className={pinNumber ? "hidden" : "absolute flex items-center justify-center h-16 bg-white border-2 rounded-full just"}
+        onClick={onPinNumberHandler}
+      >
+        <LockClosedIcon className="w-16 h-12" />
+      </div>
     </div>
   );
 };
