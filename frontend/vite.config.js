@@ -18,6 +18,7 @@ export default defineConfig({
         theme_color: "#ffffff",
         display_override: ["minimal-ui"],
         display: "standalone",
+        start_url: "/",
         icons: [
           {
             src: "pwa-64x64.png",
