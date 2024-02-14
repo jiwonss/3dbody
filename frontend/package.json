@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "proxy": "http://localhost:8082",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/3DBODYLogo.png"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.png"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.511.0",

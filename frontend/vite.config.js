@@ -13,8 +13,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "3D Body",
-        short_name: "3D Body",
+        name: "3D BODY",
+        short_name: "3D BODY",
         theme_color: "#ffffff",
         display: 'standalone',
         icons: [

@@ -44,9 +44,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen gap-32">
-      <div className="font-mono text-3xl text-teal-700">
-        3D Body
+    <div className="flex flex-col items-center justify-center w-full h-screen gap-24">
+      <div className="flex justify-center font-mono text-3xl text-teal-700">
+        <img src="/fullLogo.png" alt="" className='w-3/5'/>
       </div>
       <form className="flex flex-col gap-4 p-4 border border-teal-700 rounded-md" onSubmit={onSubmitHandler}>
         <label className="font-mono">Email</label>

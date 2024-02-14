@@ -71,7 +71,10 @@ const HomePage = () => {
       {loading && <LoadingSpinner />}
       {!loading && (
         <>
-          <PageTitle pageTitle={"쓰리디바디 로고"} />
+          <div className='flex justify-center'>
+            <img src="/fullLogo.png" alt="" className='h-14'/>
+          </div>
+          <hr />
           <ToggleTap
             leftTitle={"현재"}
             rightTitle={"목표"}
