@@ -69,7 +69,7 @@ public class UserController {
         log.info("User 닉네임 중복 확인 - nickname : {}", nickname);
 
         if (userService.duplicateCheckNickname(nickname)) {
-            return ResponseEntity.ok(Response.fail("", "중복된 닉네임이 존재합니다."));
+            return ResponseEntity.ok(Response.fail(HttpStatus.BAD_REQUEST.name(), "중복된 닉네임이 존재합니다."));
         }
         return ResponseEntity.ok(Response.success());
     }

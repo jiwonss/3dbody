@@ -18,6 +18,7 @@ public class UserResponseDto {
     private String gender;
     private float height;
     private float weight;
+    private String pin;
     private String role;
 
     @JsonProperty("birth_date")
@@ -35,6 +36,7 @@ public class UserResponseDto {
                 .gender(user.getGender().name())
                 .height(user.getHeight())
                 .weight(user.getWeight())
+                .pin(user.getPin())
                 .role(user.getRole().name())
                 .birthDate(user.getBirthDate())
                 .profileImage(user.getProfileImage())
