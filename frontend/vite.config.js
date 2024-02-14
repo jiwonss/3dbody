@@ -16,7 +16,8 @@ export default defineConfig({
         name: "3D BODY",
         short_name: "3D BODY",
         theme_color: "#ffffff",
-        display: 'standalone',
+        display_override: ["minimal-ui"],
+        display: "standalone",
         icons: [
           {
             src: "pwa-64x64.png",
@@ -48,16 +49,16 @@ export default defineConfig({
     proxy: {
       "/realms": {
         target: "https://auth.meshcapade.com", //타겟이 되는 api url를 입력합니다.
-        changeOrigin: true, 
+        changeOrigin: true,
         secure: false,
         ws: true,
       },
-      "/avatars":{
+      "/avatars": {
         target: "https://api.meshcapade.com/api/v1", //타겟이 되는 api url를 입력합니다.
         changeOrigin: true,
         secure: false,
         ws: true,
-      }
+      },
     },
   },
 });
