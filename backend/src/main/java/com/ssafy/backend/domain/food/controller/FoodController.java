@@ -22,8 +22,6 @@ public class FoodController {
 
     private final FoodService foodService;
 
-//    @GetMapping("list/{user_id}/?year={year}&month={month}&day={day}")
-
     //음식 검색
     @GetMapping("/search")
     public ResponseEntity<?> searchFoodList(@RequestParam("keyword") String keyword) {
@@ -37,14 +35,6 @@ public class FoodController {
         foodService.addFoodList(foodListRequestDto);
         return ResponseEntity.ok(Response.success());
     }
-
-    //음식 추가 리스트
-    //카테고리랑, userId, foodId
-//    @GetMapping("/add/{user_id}")
-//    public ResponseEntity<?> saveUserFoodList(@PathVariable("user_id") Long userId, @RequestParam("food_id") Long foodId, @RequestParam("category") String category){
-//        foodService.saveUserFoodList(userId, foodId, category);
-//        return ResponseEntity.ok(Response.success());
-//    }
 
     //user 식단 추가
     @PostMapping("/list/add")
@@ -63,7 +53,7 @@ public class FoodController {
         return new ResponseEntity<>(userFoodList, HttpStatus.OK);
     }
 
-//    //카테고리(아침, 점심, 저녁, 기타)별 상세 조회
+    //카테고리(아침, 점심, 저녁, 기타)별 상세 조회
     @GetMapping("/list/category/{user_id}")
     public ResponseEntity<?> findByListCategory(@PathVariable("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day, @RequestParam("category") String category){
         List<UserFoodListDto> userFoodListCategory = foodService.findByListCategory(userId, year, month, day, category);
@@ -73,9 +63,7 @@ public class FoodController {
     //음식 갯수(foodCount) or 제공량(servingSize) 업데이트
     @PutMapping("/update/{user_food_id}")
     public ResponseEntity<?> updateUserFood(@PathVariable("user_food_id") Long userFoodId, @RequestBody UserFoodRequestDto userFoodRequestDto) {
-        // userFoodId를 사용하여 업데이트할 UserFood를 찾아오는 로직이 필요
-        log.info("확인");
-        // 찾아온 UserFood 업데이트
+
         foodService.updateUserFood(userFoodRequestDto, userFoodId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -83,7 +71,7 @@ public class FoodController {
     //음식 삭제
     @DeleteMapping("/delete/{user_food_id}")
     public ResponseEntity<?> deleteById(@PathVariable("user_food_id") Long userFoodId){
-        log.info("와?");
+
         foodService.deleteById(userFoodId);
         return ResponseEntity.ok(Response.success());
     }

@@ -18,12 +18,12 @@ import java.util.List;
 public class NoticeController {
 
     private final PostService postService;
-
+    //작성
     @PostMapping("/notice/posts/{userId}")
     public ResponseEntity save(@RequestBody PostDto requestDto, @PathVariable("userId") Long userId){
         return ResponseEntity.ok(postService.save(requestDto, userId));
     }
-
+    //조회
     @GetMapping("/notice/posts/{postId}")
     public ResponseEntity read(@PathVariable("postId") Long postId){
         log.info("상세확인");

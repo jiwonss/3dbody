@@ -15,17 +15,17 @@ import java.util.List;
 public class FaqController {
 
     private final PostService postService;
-
+    //작성
     @PostMapping("/faq/posts/{userId}")
     public ResponseEntity save(@RequestBody PostDto requestDto, @PathVariable("userId") Long userId){
         return ResponseEntity.ok(postService.save(requestDto, userId));
     }
-
+    //조회
     @GetMapping("/faq/posts/{postId}")
     public ResponseEntity read(@PathVariable("postId") Long postId){
         return ResponseEntity.ok(postService.findById(postId));
     }
-
+    //목록
     @GetMapping("/faq/posts/list")
     public ResponseEntity<?> getAllNoticePosts() {
         List<PostListDto> noticeList = postService.findAllByFaq();

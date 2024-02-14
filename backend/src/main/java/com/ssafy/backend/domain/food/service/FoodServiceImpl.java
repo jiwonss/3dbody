@@ -29,9 +29,7 @@ public class FoodServiceImpl implements FoodService{
     //식단 관리 페이지
     @Override
     public List<UserFoodListDto> findByUserIdAndDate(Long userId, int year, int month, int day){
-        log.info("service들어와?");
         List<UserFood> userFoodEntities = userFoodRepository.findByUserIdAndDate(userId, year, month, day);
-        log.info("service return 잘 받아? {}", userFoodEntities);
         List<UserFoodListDto> userFoodList = userFoodEntities.stream()
                 .map(UserFoodListDto::toDto)
                 .toList();
@@ -70,7 +68,6 @@ public class FoodServiceImpl implements FoodService{
             if(servingSize != 0){
                 userFood.setServingSize(servingSize);
             }
-            // 엔터티를 저장
             userFoodRepository.save(userFood);
         }
     }

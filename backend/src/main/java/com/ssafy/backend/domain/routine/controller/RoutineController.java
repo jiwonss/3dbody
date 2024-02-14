@@ -35,7 +35,6 @@ public class RoutineController {
     //나만의 루틴 추가
     @PostMapping("/addroutine")
     public ResponseEntity<?> addRoutine(@RequestBody RoutineDto routineDto) {
-        log.info("controller들어와?");
         routineService.saveRoutine(routineDto);
         return ResponseEntity.ok(Response.success());
     }
@@ -43,7 +42,6 @@ public class RoutineController {
     //나만의 루틴 이름 편집
     @PatchMapping("/update/{routine_id}")
     public ResponseEntity<?> updateRoutine(@PathVariable("routine_id") Long routineId, @RequestParam("title") String title) {
-        log.info("수정 들어와?");
         routineService.updateRoutine(routineId, title);
         return ResponseEntity.ok(Response.success());
     }
@@ -51,8 +49,6 @@ public class RoutineController {
     //루틴 상세 조희
     @GetMapping("/detail")
     public ResponseEntity<?> detailRoutine(@RequestParam("routine_id") Long routineId) {
-//        List<RoutineTrainingResponseDto> routineTrainingList = routineService.detailRoutine(routineId);
-//        return new ResponseEntity<>(routineTrainingList, HttpStatus.OK);
         GetTrainingResponseDto list = routineService.getTrainings(routineId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -134,9 +130,7 @@ public class RoutineController {
             int size = list.getRoutineTrainingList().size();
 
             for (int i = 0; i < size; i++) {
-                UserTrainingDto userTrainingDto = new UserTrainingDto(); // Create a new instance
-
-                // Set values for UserTrainingDto
+                UserTrainingDto userTrainingDto = new UserTrainingDto();
                 //저장
                 userTrainingDto.setUserId(userId);
                 userTrainingDto.setTrainingId(list.getRoutineTrainingList().get(i).getTrainingId());

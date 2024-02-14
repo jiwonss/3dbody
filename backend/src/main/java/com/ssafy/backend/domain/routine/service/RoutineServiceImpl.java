@@ -63,11 +63,6 @@ public class RoutineServiceImpl implements RoutineService{
     @Override
     @Transactional
     public GetTrainingResponseDto getTrainings(Long routineId){
-//        List<RoutineTrainingList> routineEntities = routineTrainingListRepository.findAllByroutineTrainingListRoutineId(routineId);
-//        List<RoutineTrainingResponseDto> routineTrainingResponseDtoList = routineEntities.stream()
-//                .map(RoutineTrainingResponseDto::toDto)
-//                .collect(Collectors.toList());
-//        return routineTrainingResponseDtoList;
 
         List<RoutineTrainingList> routineTrainings = routineTrainingListRepository.findAllWithRoutineId(routineId);
 
@@ -127,6 +122,7 @@ public class RoutineServiceImpl implements RoutineService{
                 .build();
         routineTrainingListRepository.saveAndFlush(routineTrainingList);
     }
+
     //루틴 운동 추가 (리스트로)
     @Override
     @Transactional
