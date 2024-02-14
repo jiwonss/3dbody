@@ -111,7 +111,7 @@ const ThreeD = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="absolute flex items-center justify-center -z-10">
       {/* <button
         className="m-8 border-4 bg-slate-400"
         onClick={() => get3dToken()}

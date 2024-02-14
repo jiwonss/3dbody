@@ -8,10 +8,7 @@ import { toggleModelState } from "../../recoil/common/ToggleState";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
-import {
-  selectedInbodyState,
-  targetInbodyState,
-} from "../../recoil/common/InbodyState";
+import { selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
 import { loadingState } from "../../recoil/common/LoadingState";
 
 const ModelDetailModal = ({ onClose, data }) => {
@@ -19,20 +16,21 @@ const ModelDetailModal = ({ onClose, data }) => {
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const toggleModel = useRecoilValue(toggleModelState);
-  const [selectedInbody, setSelectedInbody] =
-    useRecoilState(selectedInbodyState);
+  const [selectedInbody, setSelectedInbody] = useRecoilState(selectedInbodyState);
   const setTargetInbody = useSetRecoilState(targetInbodyState);
   const setLoading = useSetRecoilState(loadingState);
 
-  const [height, setHeight] = useState(selectedInbody.height + " cm");
-  const [weight, setWeight] = useState(selectedInbody.weight + " kg");
-  const [muscle, setMuscle] = useState(selectedInbody.muscle + " kg"); // 골격근량
-  const [fatMass, setFatMass] = useState(selectedInbody.fat_mass + " kg"); // 체지방량
-  const [fatPer, setFatPer] = useState(selectedInbody.fat_per + " %"); // 체지방율
-  const [tbw, setTbw] = useState(selectedInbody.tbw + " kg"); // 체수분량
-  const [bmi, setBmi] = useState(selectedInbody.bmi); // BMI
-  const [bmr, setBmr] = useState(selectedInbody.bmr + " kcal"); // 기초대사량
-  
+  const [height, setHeight] = useState(selectedInbody.length ? selectedInbody.height : 0 + " cm");
+  const [weight, setWeight] = useState(selectedInbody.length ? selectedInbody.weight : 0 + " kg");
+  const [muscle, setMuscle] = useState(selectedInbody.length ? selectedInbody.muscle : 0 + " kg"); // 골격근량
+  const [fatMass, setFatMass] = useState(
+    selectedInbody.length ? selectedInbody.fat_mass : 0 + " kg"
+  ); // 체지방량
+  const [fatPer, setFatPer] = useState(selectedInbody.length ? selectedInbody.fat_per : 0 + " %"); // 체지방율
+  const [tbw, setTbw] = useState(selectedInbody.length ? selectedInbody.tbw : 0 + " kg"); // 체수분량
+  const [bmi, setBmi] = useState(selectedInbody.length ? selectedInbody.bmi : 0); // BMI
+  const [bmr, setBmr] = useState(selectedInbody.length ? selectedInbody.bmr : 0 + " kcal"); // 기초대사량
+
   // 인바디 정보 onChangeHandler
   const onChangeHeight = (e) => {
     setHeight(e.target.value);
@@ -98,8 +96,7 @@ const ModelDetailModal = ({ onClose, data }) => {
         })
           .then((res) => {
             // 방금 등록한 인바디 id
-            const inbodyId =
-              res.data.data_body[res.data.data_body.length - 1].inbody_id;
+            const inbodyId = res.data.data_body[res.data.data_body.length - 1].inbody_id;
             // 인바디 조회
             axios({
               method: "get",
@@ -134,6 +131,10 @@ const ModelDetailModal = ({ onClose, data }) => {
     }, 3000);
   };
 
+  const onModelHistoryHandler = () => {
+    setModalData({ type: "modelHistory", data: "" });
+  };
+
   return (
     <Modal
       className={"fixed transform -translate-y-1/2 top-1/2 inset-x-8"}
@@ -142,8 +143,15 @@ const ModelDetailModal = ({ onClose, data }) => {
       onRequestClose={() => setModalData({ type: null, data: null })}
     >
       <div className="flex flex-col gap-2 p-4 bg-white border-2 border-teal-700 rounded-xl">
-        <div className="pt-2 pb-4 text-xl font-semibold text-center text-teal-700 underline underline-offset-4">
-          인바디 정보
+        <div className="flex justify-between pt-2 pb-4 text-center">
+          <div className="ml-2 text-2xl font-semibold text-teal-700 underline underline-offset-4">
+            인바디 정보
+          </div>
+          <div className="text-sm font-semibold text-gray-500">
+            <button onClick={onModelHistoryHandler} className="p-1 border-4 rounded-full">
+              히스토리
+            </button>
+          </div>
         </div>
         <ModelDetail name="키" value={height} onChange={onChangeHeight} />
         <ModelDetail name="체중" value={weight} onChange={onChangeWeight} />

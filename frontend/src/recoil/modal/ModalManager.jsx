@@ -12,6 +12,7 @@ import ChangeWeightModal from "../../components/modal/ChangeWeightModal";
 import RoutineDetailModal from "../../components/modal/RoutineDetailModal";
 import ModelDetailModal from '../../components/modal/ModelDetailModal';
 import PinNumberModal from '../../components/modal/PinNumberModal';
+import ModelHistoryModal from '../../components/modal/ModelHistoryModal';
 
 const ModalManager = () => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -47,6 +48,8 @@ const ModalManager = () => {
       return <ModelDetailModal onClose={closeModal} data={modalData.data} />;
     case "pinNumber":
       return <PinNumberModal onClose={closeModal} data={modalData.data} />
+    case "modelHistory":
+      return <ModelHistoryModal onClose={closeModal} data={modalData.data} />;
     default:
       return <></>;
   }
