@@ -16,6 +16,7 @@ export default defineConfig({
         name: "3D Body",
         short_name: "3D Body",
         theme_color: "#ffffff",
+        display: 'standalone',
         icons: [
           {
             src: "pwa-64x64.png",
