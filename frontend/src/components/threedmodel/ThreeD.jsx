@@ -102,7 +102,7 @@ const ThreeD = () => {
   const model = useLoader(OBJLoader, "/3D/175_70_normal.obj");
 
   return (
-    <div>
+    <div className='absolute -z-10'>
       {/* <button
         className="m-8 border-4 bg-slate-400"
         onClick={() => get3dToken()}
