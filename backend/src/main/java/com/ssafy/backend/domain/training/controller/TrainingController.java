@@ -53,7 +53,6 @@ public class TrainingController {
                                         @RequestParam("month") int month,
                                         @RequestParam("day") int day) {
         try {
-            log.info("운동 휴식해제 들어오나?");
             trainingService.removeRest(userId, year, month, day);
             return new ResponseEntity<>("휴식 해제 성공!", HttpStatus.OK);
         } catch (Exception e) {
@@ -65,7 +64,6 @@ public class TrainingController {
     @GetMapping("/list")
     public ResponseEntity<?> searchTraining(@RequestParam("category") String category,
                                             @RequestParam("keyword") String keyword) {
-        log.info("운동 리스트 api 들어오나?");
         List<TrainingResponseDto> list = trainingService.searchTraining(category, keyword);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -87,7 +85,6 @@ public class TrainingController {
                                           @RequestParam("year") int year,
                                           @RequestParam("month") int month,
                                           @RequestParam("day") int day) {
-        log.info("운동 조회 들어왔나?");
         UserTrainingDataResponseDto list = userTrainingService.getTrainings(userId, year, month, day);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -99,9 +96,6 @@ public class TrainingController {
                                            @RequestParam("month") int month,
                                            @RequestParam("day") int day,
                                            @RequestBody List<Long> trainings) {
-        log.info("운동 추가 들어왔나?");
-        log.info("{}", trainings);
-        log.info("userId={}, 오늘날짜: {}-{}-{}", userId, year, month, day);
         userTrainingService.saveTrainings(userId, year, month, day, trainings);
         return new ResponseEntity<>(year + "-" + month + "-" + day + ", 회원ID = " + userId + " 운동 추가 성공!", HttpStatus.OK);
     }
@@ -113,11 +107,7 @@ public class TrainingController {
                                           @RequestParam("day") int day,
                                           @RequestBody List<UserTrainingDto> userTrainingDtoList) {
         try {
-            log.info("{}-{}-{}", year, month, day);
-            log.info("운동 추가 api - {}", userTrainingDtoList);
-
             userTrainingService.addTrainings(userTrainingDtoList, LocalDate.of(year, month, day));
-
             return new ResponseEntity<>("운동 추가 성공!", HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling(e);
@@ -141,7 +131,6 @@ public class TrainingController {
     // 세트 추가
     @PostMapping("/set")
     public ResponseEntity<?> addSet(@RequestBody SetCreateRequestDto requestDto) {
-        log.info("세트 추가 요청 들어오나? {}", requestDto);
         userTrainingService.addSet(requestDto);
         return new ResponseEntity<>("새트 추가 완료.", HttpStatus.OK);
     }
@@ -149,7 +138,6 @@ public class TrainingController {
     // 세트 삭제
     @DeleteMapping("/set")
     public ResponseEntity<?> removeSet(@RequestBody SetDeleteRequestDto requestDto) {
-        log.info("세트 삭제 요청 들어옴? {}", requestDto);
         userTrainingService.removeSet(requestDto);
         return new ResponseEntity<>("세트 삭제 완료.", HttpStatus.OK);
     }
@@ -157,7 +145,6 @@ public class TrainingController {
     // 운동 삭제
     @DeleteMapping
     public ResponseEntity<?> removeUserTraining(@RequestBody UserTrainingDeleteRequestDto requestDto) {
-        log.info("운동 삭제 api 호출 - {}", requestDto);
         userTrainingService.deleteUserTraining(requestDto);
         return new ResponseEntity<>("운동 삭제 완료.", HttpStatus.OK);
     }
@@ -166,7 +153,6 @@ public class TrainingController {
     @PutMapping("/{training_id}")
     public ResponseEntity<?> updateTraining(@PathVariable("training_id") Long trainingId,
                                             @RequestParam(value = "file") MultipartFile file) {
-
         trainingService.deleteFile(trainingId);
         try {
             trainingService.uploadFile(trainingId, file);

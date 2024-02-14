@@ -35,8 +35,6 @@ public class UserTrainingServiceImpl implements UserTrainingService {
         LocalDate date = LocalDate.of(year, month, day);
         List<UserTraining> userTrainings = userTrainingRepository.findAllWithUserIdAndDate(userId, date);
 
-        log.info("운동 관리 데이터 받아왔나? {}", userTrainings);
-
         UserTrainingDataResponseDto responseDto = UserTrainingDataResponseDto
                 .builder()
                 .date(date)
@@ -59,8 +57,6 @@ public class UserTrainingServiceImpl implements UserTrainingService {
 
         });
 
-        log.info("TreeMap {}", userTrainingDtoTreeMap);
-
         Set<Integer> keySet = userTrainingDtoTreeMap.keySet();
 
         for (Integer key : keySet) {
@@ -77,7 +73,6 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     @Transactional
     public void saveTrainings(Long userId, int year, int month, int day, List<Long> trainings) {
 
-        log.info("요청 잘 들어오나?");
         List<UserTraining> userTrainingList = new ArrayList<>();
         User user = userRepository.getReferenceById(userId);
         LocalDate date = LocalDate.of(year, month, day);
@@ -164,8 +159,6 @@ public class UserTrainingServiceImpl implements UserTrainingService {
     @Override
     @Transactional
     public void addSet(SetCreateRequestDto requestDto) {
-
-        log.info("잘 들어왔나? -{}", requestDto);
 
         Long userId = requestDto.getUserId();
         Long trainingId = requestDto.getTrainingId();

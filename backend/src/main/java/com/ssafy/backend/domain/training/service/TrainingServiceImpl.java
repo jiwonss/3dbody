@@ -91,15 +91,12 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     @Transactional
     public void uploadFile(Long trainingId, MultipartFile multipartFile) throws IOException {
-        log.info("운동이미지 파일 추가 비즈니스 로직");
         String fileName = UUID.randomUUID().toString() + "_" + multipartFile.getOriginalFilename();
         File uploadFile = convert(fileName, multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile 형식을 File 형식으로 변환하는데 실패했습니다."));
         trainingRepository.updateWithTrainingIdAndImage(trainingId, "https://do9nz79ez57wg.cloudfront.net/" + fileName);
         s3.putObject(new PutObjectRequest(bucket, fileName, uploadFile));
-        log.info("저장파일명: {}", fileName);
         boolean flag = uploadFile.delete();
-        log.info("파일 삭제 성공 여부 {}", flag);
     }
 
     private Optional<File> convert(String fileName, MultipartFile file) throws IOException {
