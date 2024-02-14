@@ -23,40 +23,30 @@ public class InbodyController {
 
     @PostMapping("/{user_id}")
     public ResponseEntity registInbody(@PathVariable("user_id") Long userId, @RequestBody InbodyRequestDto inbodyRequestDto) {
-        log.info("Inbody 등록 - inbodyRequestDto : {}", inbodyRequestDto);
-
         inbodyService.registInbody(userId, inbodyRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
     @PatchMapping("/{user_id}/{inbody_id}")
     public ResponseEntity updateInbody(@PathVariable("user_id") Long userId, @PathVariable("inbody_id") Long inbodyId, @RequestBody InbodyRequestDto inbodyRequestDto) {
-        log.info("Inbody 수정 - inbodyRequestDto : {}", inbodyRequestDto);
-
         inbodyService.updateInbody(userId, inbodyId, inbodyRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
     @GetMapping("/{user_id}/{inbody_id}")
     public ResponseEntity getInbodyItem(@PathVariable("user_id") Long userId, @PathVariable("inbody_id") Long inbodyId) {
-        log.info("Inbody 조회 - inbodyId : {}", inbodyId);
-
         InbodyResponseDto inbodyResponseDto = inbodyService.getInbodyItem(inbodyId);
         return ResponseEntity.ok(Response.success(inbodyResponseDto));
     }
 
     @GetMapping("/{user_id}")
     public ResponseEntity getInbodyList(@PathVariable("user_id") Long userId) {
-        log.info("Inbody 리스트 - userId : {}", userId);
-
         List<InbodyResponseDto> result = inbodyService.getInbodyList(userId);
         return ResponseEntity.ok(Response.success(result));
     }
 
     @DeleteMapping("/{user_id}/{inbody_id}")
     public ResponseEntity deleteInbody(@PathVariable("user_id") Long userId, @PathVariable("inbody_id") Long inbodyId) {
-        log.info("Inbody 삭제 - inbodyId : {}", inbodyId);
-
         inbodyService.deleteInbody(userId, inbodyId);
         return ResponseEntity.ok(Response.success());
     }
