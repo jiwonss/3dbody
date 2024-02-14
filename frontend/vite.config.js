@@ -16,8 +16,6 @@ export default defineConfig({
         name: "3D BODY",
         short_name: "3D BODY",
         theme_color: "#ffffff",
-        display_override: ["minimal-ui"],
-        display: "standalone",
         start_url: "/",
         icons: [
           {
