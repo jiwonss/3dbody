@@ -12,7 +12,8 @@ import {
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import { selectedInbodyState } from "../../recoil/common/InbodyState";
+import { selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
+import { toggleModelState } from "../../recoil/common/ToggleState";
 import { useEffect, useRef, useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { modalState } from "../../recoil/modal/ModalState";
@@ -23,10 +24,22 @@ const ThreeD = () => {
   const [user, setUser] = useRecoilState(userState);
   const baseUrl = useRecoilValue(baseUrlState);
   const selectedInbody = useRecoilValue(selectedInbodyState);
+  const targetInbody = useRecoilValue(targetInbodyState)
+  const toggleModel = useRecoilValue(toggleModelState)
   const pinNumber = useRecoilValue(pinNumberState);
   const [modalData, setModalData] = useRecoilState(modalState);
+  const [modelName, setModelName] = useState("") // 모델 파일 불러올 이름
 
-  const model = useLoader(OBJLoader, "/3D/male_173_88.obj");
+  useEffect(() => {
+    if (toggleModel === "left") {
+      setModelName(`/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`)
+    } else {
+      setModelName(`/3D/${targetInbody.weight}_${targetInbody.muscle}_.obj`)
+    }
+  })
+  
+
+  const model = useLoader(OBJLoader, modelName);
 
   const onPinNumberHandler = () => {
     setModalData({ type: "pinNumber", data: "" });
