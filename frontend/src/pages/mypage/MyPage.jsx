@@ -3,10 +3,12 @@ import Profile from "./../../components/mypage/Profile";
 
 const MyPage = () => {
   return (
-    <div className="m-4">
-      <Profile />
-      <hr className="mt-4 border"/>
-      <Menus />
+    <div className="h-screen bg-gray-100">
+      <div>
+        <Profile />
+        <hr className="bg-gray-500" />
+        <Menus />
+      </div>
     </div>
   );
 };

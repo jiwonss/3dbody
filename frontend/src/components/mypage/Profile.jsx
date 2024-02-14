@@ -88,7 +88,7 @@ const Profile = () => {
   }, [profile]);
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center p-4 pb-6 bg-white">
       <div className="flex justify-center">
         <input
           type="file"

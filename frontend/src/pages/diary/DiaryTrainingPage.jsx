@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import PageTitle from "./../../components/common/PageTitle";
 import ToggleTap from "./../../components/common/ToggleTap";
 import CalendarWeek from "./../../components/diary/CalendarWeek";
-import Graph from "../../components/diary/Graph";
+import Graph from "../../components/diary/graph/Graph";
 import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userTrainingState } from "../../recoil/diary/UserTrainingState";
@@ -19,7 +19,7 @@ const DiaryTrainingPage = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const isSelected = useRecoilValue(toggleDiaryState);
   const [userTraining, setUserTraining] = useRecoilState(userTrainingState);
-  
+
   // 운동 데이터 가져오기
   const getUserTraining = async () => {
     await axios
@@ -39,15 +39,21 @@ const DiaryTrainingPage = () => {
   }, [selectedDate]);
 
   return (
-    <div className='bg-[#C9DECF]/30'>
+    <div className="bg-[#C9DECF]/30">
       <div className="sticky top-0 z-20 bg-white">
         <PageTitle pageTitle={"다이어리"} />
 
-        <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
+        <ToggleTap
+          leftTitle={"캘린더"}
+          rightTitle={"그래프"}
+          state={toggleDiaryState}
+        />
         {isSelected === "left" ? <CalendarWeek /> : <Graph />}
-        <hr className="mt-4" />
+        <hr className={`mt-4 ${isSelected === "right" ? "hidden" : ""}`} />
       </div>
-      {userTraining.length ? <TrainingData /> : <TrainingNoData />}
+      <div className={`${isSelected === "right" ? "hidden" : ""}`}>
+        {userTraining.length ? <TrainingData /> : <TrainingNoData />}
+      </div>
     </div>
   );
 };

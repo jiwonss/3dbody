@@ -41,7 +41,7 @@ const ModelDetailModal = ({ onClose, data }) => {
   ); // 체수분량
   const [bmi, setBmi] = useState(selectedInbody?.inbody_id ? selectedInbody.bmi : 0); // BMI
   const [bmr, setBmr] = useState(
-    selectedInbody?.inbody_id ? selectedInbody.bmr + " kg" : 0 + " kcal"
+    selectedInbody?.inbody_id ? selectedInbody.bmr + " kcal" : 0 + " kcal"
   ); // 기초대사량
 
   // 인바디 정보 onChangeHandler

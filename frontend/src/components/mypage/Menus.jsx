@@ -52,16 +52,16 @@ const Menus = () => {
   ];
   return (
     // 카테고리 별로 하위 컴포넌트로 menulist 전달
-    <>
+    <div className="flex flex-col divide-y-2 divide-gray-300">
       {categorylist.map((menulist) => {
         return (
-          <div key={menulist.category} className="my-8">
+          <div key={menulist.category} className="px-4 py-6">
             <div className="m-2 font-semibold">{menulist.category}</div>
             <Menu menus={menulist.list} />
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

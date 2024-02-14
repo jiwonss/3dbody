@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import PageTitle from "./../../components/common/PageTitle";
 import ToggleTap from "./../../components/common/ToggleTap";
 import CalendarWeek from "./../../components/diary/CalendarWeek";
-import Graph from "../../components/diary/Graph";
+import Graph from "../../components/diary/graph/Graph";
 import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userFoodState } from "../../recoil/diary/UserFoodState";
@@ -38,16 +38,21 @@ const DiaryTrainingPage = () => {
   }, [selectedDate]);
 
   return (
-    <div className='bg-[#C9DECF]/30 pb-2'>
+    <div className="bg-[#C9DECF]/30 pb-2">
       {/* sticky 부분과 겹치는 내용(foodDetailData 스크롤 했을 경우) 안보이게 하기 위해 배경 설정함 */}
       <div className="sticky top-0 bg-white">
         <PageTitle pageTitle={"다이어리"} />
-        <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
+        <ToggleTap
+          leftTitle={"캘린더"}
+          rightTitle={"그래프"}
+          state={toggleDiaryState}
+        />
         {isSelected === "left" ? <CalendarWeek /> : <Graph />}
-        <hr className="mt-4" />
+        <hr className={`mt-4 ${isSelected === "right" ? "hidden" : ""}`} />
       </div>
-
-      <FoodData />
+      <div className={`${isSelected === "right" ? "hidden" : ""}`}>
+        <FoodData />
+      </div>
     </div>
   );
 };

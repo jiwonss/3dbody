@@ -6,7 +6,7 @@ import PageTitle from "./../../components/common/PageTitle";
 import CalendarMonth from "./../../components/diary/CalendarMonth";
 import Button from "./../../components/common/Button";
 import ToggleTap from "./../../components/common/ToggleTap";
-import Graph from "./../../components/diary/Graph";
+import Graph from "./../../components/diary/graph/Graph";
 import { selectedDateState } from "../../recoil/diary/SelectedDateState";
 import { toggleDiaryState } from "../../recoil/common/ToggleState";
 import { userTrainingState } from "../../recoil/diary/UserTrainingState";
@@ -91,9 +91,9 @@ const DiaryPage = () => {
       <ToggleTap leftTitle={"캘린더"} rightTitle={"그래프"} state={toggleDiaryState} />
       
       {isSelected === "left" ? <CalendarMonth /> : <Graph />}
-      <hr className="my-4" />
+      <hr className={`my-4 ${isSelected === "right" ? "hidden" : ""}`} />
 
-      <div className="flex flex-col gap-4 m-4">
+      <div className={`flex flex-col gap-4 m-4 ${isSelected === "right" ? "hidden" : ""}`}>
         {trainingData()}
         {foodData()}
       </div>
