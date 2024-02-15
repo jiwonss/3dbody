@@ -14,7 +14,10 @@ const InBodyNodata = () => {
       <div className="flex flex-col items-center gap-4">
         <p className="text-lg">
           아래의{" "}
-          <span onClick={onModelDetailHandler} className="font-semibold text-teal-700">
+          <span
+            onClick={onModelDetailHandler}
+            className="font-semibold text-teal-700"
+          >
             상세 정보 보기
           </span>
           를 클릭 후

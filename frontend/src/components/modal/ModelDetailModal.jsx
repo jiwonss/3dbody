@@ -8,16 +8,18 @@ import { toggleModelState } from "../../recoil/common/ToggleState";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
-import { selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
+import { inbodyListState, selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
 import { loadingState } from "../../recoil/common/LoadingState";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { isValidMuscleState, muscleRoundState } from "../../recoil/common/MuscleRoundState";
+import Swal from "sweetalert2"
 
 const ModelDetailModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const toggleModel = useRecoilValue(toggleModelState);
+  const setInbodyList = useSetRecoilState(inbodyListState)
   const [selectedInbody, setSelectedInbody] = useRecoilState(selectedInbodyState);
   const [targetInbody, setTargetInbody] = useRecoilState(targetInbodyState);
   const setLoading = useSetRecoilState(loadingState);
@@ -51,7 +53,15 @@ const ModelDetailModal = ({ onClose, data }) => {
   ); // 골격근량
 
   const [fatMass, setFatMass] = useState(
-    selectedInbody?.inbody_id ? selectedInbody.fat_mass + " kg" : 0 + " kg"
+    toggleModel === "left"
+      ? selectedInbody?.inbody_id
+        ? selectedInbody.fat_mass + " kg"
+        : 0 + " kg"
+      : targetInbody?.fat_mass
+      ? targetInbody.fat_mass + " kg"
+      : selectedInbody?.inbody_id
+      ? selectedInbody.fat_mass + " kg"
+      : 0 + " kg"
   ); // 체지방량
 
   const [fatPer, setFatPer] = useState(
@@ -136,7 +146,6 @@ const ModelDetailModal = ({ onClose, data }) => {
       },
     })
       .then((res) => {
-        alert("인바디 등록 성공");
         // 인바디 목록 조회
         axios({
           method: "get",
@@ -144,6 +153,7 @@ const ModelDetailModal = ({ onClose, data }) => {
           headers: { Authorization: `Bearer ${user.token}` },
         })
           .then((res) => {
+            setInbodyList(res.data.data_body)
             // 방금 등록한 인바디 id
             const inbodyId = res.data.data_body[res.data.data_body.length - 1].inbody_id;
             // 인바디 조회
@@ -154,8 +164,11 @@ const ModelDetailModal = ({ onClose, data }) => {
             })
               .then((res) => {
                 setSelectedInbody(res.data.data_body);
+                setLoading(true);
                 setModalData({ type: null, data: null });
-                window.location.reload("/");
+                setTimeout(() => {
+                  setLoading(false);
+                }, 2000);
               })
               .catch((err) => {
                 console.log(err);
@@ -187,7 +200,12 @@ const ModelDetailModal = ({ onClose, data }) => {
     let wt = Math.round(parseFloat(weight, 10) / 10) * 10;
 
     if (!isValid(wt)?.includes(getMuscle(parseFloat(muscle, 10)))) {
-      alert("정확한 데이터를 입력해 주시길 바랍니다.");
+      Swal.fire({
+        text: "정확한 데이터를 입력해 주시길 바랍니다.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 3000,
+      });
       setLoading(false);
     } else {
       setModalData({ type: null, data: null });
@@ -195,6 +213,7 @@ const ModelDetailModal = ({ onClose, data }) => {
         setTargetInbody({
           weight: parseFloat(weight, 10),
           muscle: parseFloat(muscle, 10),
+          fat_mass: parseFloat(fatMass, 10)
         });
         setLoading(false);
       }, 3000);
@@ -206,7 +225,13 @@ const ModelDetailModal = ({ onClose, data }) => {
   };
 
   const onClickAlert = () => {
-    alert("목표 모델 생성을 위해 체중, 골격근량, 체지방량을 입력해주세요.");
+    Swal.fire({
+      title: "주의사항",
+      text: "체중, 골격근량, 체지방율을 입력해주세요.",
+      icon: "error",
+      showConfirmButton: false,
+      timer: 3000,
+    });
   };
 
   return (

@@ -6,7 +6,8 @@ import { PropTypes } from "prop-types";
 import axios from "axios";
 import { userState } from "../../recoil/common/UserState";
 import { useState } from "react";
-import { pinNumberState } from '../../recoil/common/PinNumberState';
+import { pinNumberState } from "../../recoil/common/PinNumberState";
+import Swal from "sweetalert2";
 
 const PinNumberModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -15,7 +16,7 @@ const PinNumberModal = ({ onClose, data }) => {
   const [newPinNumber, setNewPinNumber] = useState("");
   const [newPinNumberCheck, setNewPinNumberCheck] = useState("");
   const [pinNumber, setPinNumber] = useState("");
-  const setPin = useSetRecoilState(pinNumberState)
+  const setPin = useSetRecoilState(pinNumberState);
 
   // PIN 번호 생성 핸들러
   const onNewPinNumberHandler = (event) => {
@@ -29,7 +30,12 @@ const PinNumberModal = ({ onClose, data }) => {
   const onCreatePinNumberHandler = (event) => {
     event.preventDefault();
     if (newPinNumber !== newPinNumberCheck) {
-      alert("PIN 번호가 일치하지 않습니다.");
+      Swal.fire({
+        text: "PIN 번호가 일치하지 않습니다.",
+        icon: "error",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } else {
       axios({
         method: "post",
@@ -41,8 +47,12 @@ const PinNumberModal = ({ onClose, data }) => {
           token: user.token,
           info: { ...user.info, pin: newPinNumber },
         });
-        alert("PIN 번호가 등록 되었습니다.");
-        setModalData({ type: null, data: null });
+        Swal.fire({
+          text: "PIN 번호가 등록되었습니다.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       });
     }
   };
@@ -61,9 +71,14 @@ const PinNumberModal = ({ onClose, data }) => {
     }).then((res) => {
       // console.log(res.data.data_header.success_code);
       if (res.data.data_header.success_code === 1) {
-        alert("PIN 번호가 일치하지 않습니다.");
+        Swal.fire({
+          text: "PIN 번호가 일치하지 않습니다.",
+          icon: "error",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       } else {
-        setPin(true)
+        setPin(true);
         setModalData({ type: null, data: null });
       }
     });
