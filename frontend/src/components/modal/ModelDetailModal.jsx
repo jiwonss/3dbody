@@ -57,12 +57,12 @@ const ModelDetailModal = ({ onClose, data }) => {
   const [fatPer, setFatPer] = useState(
     toggleModel === "left"
       ? selectedInbody?.inbody_id
-        ? (selectedInbody.fat_per / selectedInbody.weight) * 100 + " %"
+        ? Math.round((selectedInbody.fat_mass / selectedInbody.weight) * 100) + " %"
         : 0 + " %"
-      : targetInbody?.fat_per
-      ? (targetInbody.fat_per / targetInbody.weight) * 100 + " %"
+      : targetInbody?.fat_mass
+      ? Math.round((targetInbody.fat_mass / targetInbody.weight) * 100) + " %"
       : selectedInbody?.inbody_id
-      ? (selectedInbody.fat_per / selectedInbody.weight) * 100 + " %"
+      ? Math.round((selectedInbody.fat_mass / selectedInbody.weight) * 100) + " %"
       : 0 + " %"
   ); // 체지방율
 
