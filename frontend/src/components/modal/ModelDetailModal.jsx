@@ -219,33 +219,38 @@ const ModelDetailModal = ({ onClose, data }) => {
           value={height}
           onChange={onChangeHeight}
           disabled={toggleModel === "right"}
+          css={`bg-teal-700`}
         />
-        <ModelDetail name="체중" value={weight} onChange={onChangeWeight} />
-        <ModelDetail name="골격근량" value={muscle} onChange={onChangeMuscle} />
-        <ModelDetail name="체지방률" value={fatPer} onChange={onChangeFatPer} />
+        <ModelDetail name="체중" value={weight} onChange={onChangeWeight} css={`${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}`} />
+        <ModelDetail name="골격근량" value={muscle} onChange={onChangeMuscle} css={`${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}`} />
+        <ModelDetail name="체지방율" value={fatPer} onChange={onChangeFatPer} css={`${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}`} />
         <ModelDetail
           name="체지방량"
           value={fatMass}
           onChange={onChangeFatMass}
           disabled={toggleModel === "right"}
+          css={`bg-teal-700`}
         />
         <ModelDetail
           name="체수분"
           value={tbw}
           onChange={onChangeTbw}
           disabled={toggleModel === "right"}
+          css={`bg-teal-700`}
         />
         <ModelDetail
           name="BMI"
           value={String(bmi)}
           onChange={onChangeBmi}
           disabled={toggleModel === "right"}
+          css={`bg-teal-700`}
         />
         <ModelDetail
           name="기초대사량"
           value={bmr}
           onChange={onChangeBmr}
           disabled={toggleModel === "right"}
+          css={`bg-teal-700`}
         />
         <div className="flex gap-2 pt-4 pb-2">
           <input

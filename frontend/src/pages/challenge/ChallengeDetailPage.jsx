@@ -33,9 +33,7 @@ const ChallengeDetail = () => {
 
   // challenge 가져오기
   const getChallenge = async () => {
-    const res = (
-      await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)
-    ).data;
+    const res = (await axios.get(`${baseUrl}api/challenge/detail/${challengeId}`)).data;
     setChallenge(res);
   };
 
@@ -53,7 +51,9 @@ const ChallengeDetail = () => {
           </button>
         </div>
         <PageTitle pageTitle={challenge.title} />
-        <img src={challenge.image} alt="..." className="w-full h-40" />
+        <div className='w-full'>
+          <img src={challenge.image} alt="..." className="h-40 mx-auto" />
+        </div>
         <hr />
         <div className="flex h-10">
           <div
@@ -66,9 +66,7 @@ const ChallengeDetail = () => {
           </div>
           <div
             className={`${
-              isSelected === "comment"
-                ? "font-bold border-b-teal-700"
-                : "text-gray-600"
+              isSelected === "comment" ? "font-bold border-b-teal-700" : "text-gray-600"
             } text-xl ml-1 flex items-center border-2 border-white`}
             onClick={() => onClickCommentSelected()}
           >
@@ -77,11 +75,7 @@ const ChallengeDetail = () => {
         </div>
       </div>
       <hr />
-      {isSelected === "info" ? (
-        <ChallengeDetailInfo />
-      ) : (
-        <ChallengeDetailComment />
-      )}
+      {isSelected === "info" ? <ChallengeDetailInfo /> : <ChallengeDetailComment />}
     </div>
   );
 };

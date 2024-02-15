@@ -60,8 +60,8 @@ const ThreeD = () => {
         <hemisphereLight color="white" groundColor="brown" intensity={0.75} />
         <spotLight position={[50, 50, 10]} angle={0.15} penumbra={1} />
         <ContactShadows scale={20} position={[0, -2.7, 0]} blur={2} far={100} />
-        <primitive scale={3.2} object={model} position={[0, -2.7, 0]} />
-      </Canvas>
+        <primitive scale={3} object={model} position={[0, -2.7, 0]} />
+      </Canvas> 
       <div
         className={
           pinNumber
