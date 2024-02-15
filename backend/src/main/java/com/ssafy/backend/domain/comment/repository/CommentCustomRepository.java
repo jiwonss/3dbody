@@ -11,4 +11,7 @@ public interface CommentCustomRepository {
     List<Comment> findByChallengeId(Long challengeId);
 
     Optional<Comment> findCommentByIdWithParent(Long commentId);
+
+    // 챌린지 댓글 삭제
+    void deleteAllByChallengeId(Long challengeId);
 }

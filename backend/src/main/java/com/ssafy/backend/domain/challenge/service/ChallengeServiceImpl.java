@@ -7,6 +7,7 @@ import com.ssafy.backend.domain.challenge.entity.Challenge;
 import com.ssafy.backend.domain.challenge.entity.UserChallenge;
 import com.ssafy.backend.domain.challenge.repository.ChallengeRepository;
 import com.ssafy.backend.domain.challenge.repository.UserChallengeRepository;
+import com.ssafy.backend.domain.comment.repository.CommentRepository;
 import com.ssafy.backend.domain.user.entity.User;
 import com.ssafy.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final UserChallengeRepository userChallengeRepository;
+    private final CommentRepository commentRepository;
 
     // 참여가능 챌린지 목록
     @Override
@@ -96,6 +98,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     @Transactional
     public void deleteChallenge(Long challengeId) {
+        commentRepository.deleteAllByChallengeId(challengeId);
         userChallengeRepository.deleteAllByChallenge_ChallengeId(challengeId);
         challengeRepository.deleteById(challengeId);
     }

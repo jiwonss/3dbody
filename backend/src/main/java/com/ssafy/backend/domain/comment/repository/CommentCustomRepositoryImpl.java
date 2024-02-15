@@ -37,4 +37,12 @@ public class CommentCustomRepositoryImpl implements CommentCustomRepository {
 
         return Optional.ofNullable(comment);
     }
+
+    // 챌린지 댓글 삭제
+    @Override
+    public void deleteAllByChallengeId(Long challengeId) {
+        jpaQueryFactory.delete(qComment)
+                .where(qComment.challenge.challengeId.eq(challengeId))
+                .execute();
+    }
 }
