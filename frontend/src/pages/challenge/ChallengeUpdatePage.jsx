@@ -114,7 +114,7 @@ const ChallengeUpdatePage = () => {
     };
 
     awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
-      console.log("성공");
+      // console.log("성공");
       alert("등록되었습니다.");
     });
   };
@@ -137,7 +137,7 @@ const ChallengeUpdatePage = () => {
     };
 
     awsUpdate.send(new AWS.PutObjectCommand(params)).then(() => {
-      console.log("성공");
+      // console.log("성공");
       alert("등록되었습니다.");
     });
   };

@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { modalState } from "../../recoil/modal/ModalState";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import Modal from "react-modal";
@@ -15,7 +15,7 @@ const PinNumberModal = ({ onClose, data }) => {
   const [newPinNumber, setNewPinNumber] = useState("");
   const [newPinNumberCheck, setNewPinNumberCheck] = useState("");
   const [pinNumber, setPinNumber] = useState("");
-  const [pin, setPin] = useRecoilState(pinNumberState)
+  const setPin = useSetRecoilState(pinNumberState)
 
   // PIN 번호 생성 핸들러
   const onNewPinNumberHandler = (event) => {
@@ -25,7 +25,7 @@ const PinNumberModal = ({ onClose, data }) => {
   const onNewPinNumberCheckHandler = (event) => {
     setNewPinNumberCheck(event.currentTarget.value);
   };
-
+  // PIN 번호 생성 요청
   const onCreatePinNumberHandler = (event) => {
     event.preventDefault();
     if (newPinNumber !== newPinNumberCheck) {

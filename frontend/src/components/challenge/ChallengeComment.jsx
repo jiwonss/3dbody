@@ -43,9 +43,6 @@ const ChallengeComment = ({
             <div onClick={onDeleteHandler}>
               <TrashIcon className="w-5 h-5 mr-2" />
             </div>
-            {/* <div>
-              <PencilIcon className="h-7 w-7" />
-            </div> */}
           </div>
         ) : null}
       </div>
