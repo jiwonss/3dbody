@@ -12,6 +12,7 @@ import WebcamOnIcon from "../../icons/Bottombar/WebcamOnIcon";
 import MicOffIcon from "../../icons/MicOffIcon";
 import MicOnIcon from "../../icons/Bottombar/MicOnIcon";
 import BackButton from './../../../../../components/common/BackButton';
+import Swal from "sweetalert2";
 
 export function JoiningScreen({
   participantName,
@@ -477,7 +478,13 @@ export function JoiningScreen({
                         }
                         onClickStartMeeting();
                         // setParticipantName("");
-                      } else alert("Invalid Meeting Id");
+                      } else {
+                        Swal.fire({
+                          title: "올바른 입장 코드를 입력해주세요.",
+                          icon: "error",
+                          showConfirmButton: true,
+                        })
+                      }
                     }}
                     _handleOnCreateMeeting={async () => {
                       const token = await getToken();

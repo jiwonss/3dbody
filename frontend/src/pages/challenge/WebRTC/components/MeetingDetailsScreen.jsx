@@ -61,7 +61,7 @@ export function MeetingDetailsScreen({
             className="w-full px-4 py-3 text-center text-black rounded-md"
           />
           {studioCodeError && (
-            <p className="text-xs text-red-600">
+            <p className="mx-auto mt-2 text-xs text-red-600">
               올바른 코드 번호를 입력해 주세요
             </p>
           )}

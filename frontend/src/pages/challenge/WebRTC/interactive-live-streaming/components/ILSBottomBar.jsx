@@ -1,9 +1,4 @@
-import {
-  Constants,
-  createCameraVideoTrack,
-  useMeeting,
-  usePubSub,
-} from "@videosdk.live/react-sdk";
+import { Constants, createCameraVideoTrack, useMeeting, usePubSub } from "@videosdk.live/react-sdk";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   ClipboardIcon,
@@ -37,6 +32,7 @@ import { sideBarModes } from "../../utils/common";
 // import ECommerceIcon from "../../icons/Bottombar/ECommerceIcon";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { useMeetingAppContext } from "../../MeetingAppContextDef";
+import Swal from "sweetalert2";
 
 export function ILSBottomBar({
   bottomBarHeight,
@@ -63,11 +59,7 @@ export function ILSBottomBar({
         buttonText={"손들기"}
       />
     ) : (
-      <OutlinedButton
-        onClick={RaiseHand}
-        tooltip={"Raise Hand"}
-        Icon={RaiseHandIcon}
-      />
+      <OutlinedButton onClick={RaiseHand} tooltip={"Raise Hand"} Icon={RaiseHandIcon} />
     );
   };
 
@@ -129,10 +121,14 @@ export function ILSBottomBar({
         Icon={EndIcon}
         bgColor="bg-red-600"
         onClick={() => {
-          if (confirm("종료하시겠습니까?")) {
+          Swal.fire({
+            title: "종료하시겠습니까?",
+            icon: "warning",
+            showConfirmButton: true,
+          }).then(() => {
             leave();
             setIsMeetingLeft(true);
-          }
+          });
         }}
       />
     );
@@ -146,18 +142,14 @@ export function ILSBottomBar({
         Icon={ChatIcon}
         isFocused={sideBarMode === sideBarModes.CHAT}
         onClick={() => {
-          setSideBarMode((s) =>
-            s === sideBarModes.CHAT ? null : sideBarModes.CHAT
-          );
+          setSideBarMode((s) => (s === sideBarModes.CHAT ? null : sideBarModes.CHAT));
         }}
       />
     ) : (
       <OutlinedButton
         Icon={ChatIcon}
         onClick={() => {
-          setSideBarMode((s) =>
-            s === sideBarModes.CHAT ? null : sideBarModes.CHAT
-          );
+          setSideBarMode((s) => (s === sideBarModes.CHAT ? null : sideBarModes.CHAT));
         }}
         isFocused={sideBarMode === "CHAT"}
         tooltip="View Chat"
@@ -260,10 +252,7 @@ export function ILSBottomBar({
   ];
 
   return isMobile || isTab ? (
-    <div
-      className="flex items-center justify-center"
-      style={{ height: bottomBarHeight }}
-    >
+    <div className="flex items-center justify-center" style={{ height: bottomBarHeight }}>
       <LeaveBTN />
       {meetingMode === Constants.modes.CONFERENCE && (
         <>
@@ -274,12 +263,7 @@ export function ILSBottomBar({
       <OutlinedButton Icon={EllipsisHorizontalIcon} onClick={handleClickFAB} />
 
       <Transition appear show={Boolean(open)} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative"
-          style={{ zIndex: 9999 }}
-          onClose={handleCloseFAB}
-        >
+        <Dialog as="div" className="relative" style={{ zIndex: 9999 }} onClose={handleCloseFAB}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -321,16 +305,9 @@ export function ILSBottomBar({
                             ) : icon === BottomBarButtonTypes.CHAT ? (
                               <ChatBTN isMobile={isMobile} isTab={isTab} />
                             ) : icon === BottomBarButtonTypes.PARTICIPANTS ? (
-                              <ParticipantsBTN
-                                isMobile={isMobile}
-                                isTab={isTab}
-                              />
-                            ) : icon ===
-                              BottomBarButtonTypes.MEETING_ID_COPY ? (
-                              <MeetingIdCopyBTN
-                                isMobile={isMobile}
-                                isTab={isTab}
-                              />
+                              <ParticipantsBTN isMobile={isMobile} isTab={isTab} />
+                            ) : icon === BottomBarButtonTypes.MEETING_ID_COPY ? (
+                              <MeetingIdCopyBTN isMobile={isMobile} isTab={isTab} />
                             ) : null}
                           </div>
                         );

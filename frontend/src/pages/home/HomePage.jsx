@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
-import { useEffect, startTransition } from "react";
+import { useEffect } from "react";
 import InBodyNodata from "../../components/threedmodel/InBodyNodata";
 import { loadingState } from "../../recoil/common/LoadingState";
 import LoadingSpinner from "./../../components/threedmodel/LoadingSpinner";

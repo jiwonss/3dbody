@@ -8,18 +8,22 @@ import { toggleModelState } from "../../recoil/common/ToggleState";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
-import { inbodyListState, selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
+import {
+  inbodyListState,
+  selectedInbodyState,
+  targetInbodyState,
+} from "../../recoil/common/InbodyState";
 import { loadingState } from "../../recoil/common/LoadingState";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { isValidMuscleState, muscleRoundState } from "../../recoil/common/MuscleRoundState";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 
 const ModelDetailModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const toggleModel = useRecoilValue(toggleModelState);
-  const setInbodyList = useSetRecoilState(inbodyListState)
+  const setInbodyList = useSetRecoilState(inbodyListState);
   const [selectedInbody, setSelectedInbody] = useRecoilState(selectedInbodyState);
   const [targetInbody, setTargetInbody] = useRecoilState(targetInbodyState);
   const setLoading = useSetRecoilState(loadingState);
@@ -127,60 +131,71 @@ const ModelDetailModal = ({ onClose, data }) => {
   // 인바디 등록하기
   const postInbody = (e) => {
     e.preventDefault();
-    axios({
-      method: "post",
-      url: `${baseUrl}api/inbody/${user.info.userId}`,
-      headers: { Authorization: `Bearer ${user.token}` },
-      data: {
-        height: parseFloat(height, 10),
-        weight: parseFloat(weight, 10),
-        bmr: parseInt(bmr, 10),
-        muscle: parseFloat(muscle, 10),
-        tbw: parseFloat(tbw, 10),
-        whr: 0.0,
-        bmi: parseFloat(bmi, 10),
-        score: 0,
-        date: new Date(),
-        fat_mass: parseFloat(fatMass, 10),
-        fat_per: parseFloat(fatPer, 10),
-      },
-    })
-      .then((res) => {
-        // 인바디 목록 조회
-        axios({
-          method: "get",
-          url: `${baseUrl}api/inbody/${user.info.userId}`,
-          headers: { Authorization: `Bearer ${user.token}` },
-        })
-          .then((res) => {
-            setInbodyList(res.data.data_body)
-            // 방금 등록한 인바디 id
-            const inbodyId = res.data.data_body[res.data.data_body.length - 1].inbody_id;
-            // 인바디 조회
-            axios({
-              method: "get",
-              url: `${baseUrl}api/inbody/${user.info.userId}/${inbodyId}`,
-              headers: { Authorization: `Bearer ${user.token}` },
-            })
-              .then((res) => {
-                setSelectedInbody(res.data.data_body);
-                setLoading(true);
-                setModalData({ type: null, data: null });
-                setTimeout(() => {
-                  setLoading(false);
-                }, 2000);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+    let wt = Math.round(parseFloat(weight, 10) / 10) * 10;
+
+    if (!isValid(wt)?.includes(getMuscle(parseFloat(muscle, 10)))) {
+      Swal.fire({
+        text: "정확한 데이터를 입력해 주시길 바랍니다.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 3000,
       });
+    } else {
+      axios({
+        method: "post",
+        url: `${baseUrl}api/inbody/${user.info.userId}`,
+        headers: { Authorization: `Bearer ${user.token}` },
+        data: {
+          height: parseFloat(height, 10),
+          weight: parseFloat(weight, 10),
+          bmr: parseInt(bmr, 10),
+          muscle: parseFloat(muscle, 10),
+          tbw: parseFloat(tbw, 10),
+          whr: 0.0,
+          bmi: parseFloat(bmi, 10),
+          score: 0,
+          date: new Date(),
+          fat_mass: parseFloat(fatMass, 10),
+          fat_per: parseFloat(fatPer, 10),
+        },
+      })
+        .then((res) => {
+          // 인바디 목록 조회
+          axios({
+            method: "get",
+            url: `${baseUrl}api/inbody/${user.info.userId}`,
+            headers: { Authorization: `Bearer ${user.token}` },
+          })
+            .then((res) => {
+              setInbodyList(res.data.data_body);
+              // 방금 등록한 인바디 id
+              const inbodyId = res.data.data_body[res.data.data_body.length - 1].inbody_id;
+              // 인바디 조회
+              axios({
+                method: "get",
+                url: `${baseUrl}api/inbody/${user.info.userId}/${inbodyId}`,
+                headers: { Authorization: `Bearer ${user.token}` },
+              })
+                .then((res) => {
+                  setSelectedInbody(res.data.data_body);
+                  setLoading(true);
+                  setModalData({ type: null, data: null });
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 2000);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const muscleRound = useRecoilValue(muscleRoundState); // 골격근량 반올림 파일
@@ -213,7 +228,7 @@ const ModelDetailModal = ({ onClose, data }) => {
         setTargetInbody({
           weight: parseFloat(weight, 10),
           muscle: parseFloat(muscle, 10),
-          fat_mass: parseFloat(fatMass, 10)
+          fat_mass: parseFloat(fatMass, 10),
         });
         setLoading(false);
       }, 3000);
@@ -227,7 +242,7 @@ const ModelDetailModal = ({ onClose, data }) => {
   const onClickAlert = () => {
     Swal.fire({
       title: "주의사항",
-      text: "체중, 골격근량, 체지방율을 입력해주세요.",
+      text: "체중, 골격근량, 체지방량을 입력해주세요.",
       icon: "error",
       showConfirmButton: false,
       timer: 3000,
