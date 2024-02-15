@@ -50,7 +50,7 @@ const ModelDetailModal = ({ onClose, data }) => {
       : selectedInbody?.inbody_id
       ? selectedInbody.muscle + " kg"
       : 0 + " kg"
-  ); // 골격근량
+  ); // 골격근량!
 
   const [fatMass, setFatMass] = useState(
     toggleModel === "left"
