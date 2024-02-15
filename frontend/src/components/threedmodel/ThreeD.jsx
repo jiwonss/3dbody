@@ -12,7 +12,10 @@ import {
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
-import { selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
+import {
+  selectedInbodyState,
+  targetInbodyState,
+} from "../../recoil/common/InbodyState";
 import { toggleModelState } from "../../recoil/common/ToggleState";
 import { useEffect, useRef, useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
@@ -24,20 +27,29 @@ const ThreeD = () => {
   const [user, setUser] = useRecoilState(userState);
   const baseUrl = useRecoilValue(baseUrlState);
   const selectedInbody = useRecoilValue(selectedInbodyState);
-  const targetInbody = useRecoilValue(targetInbodyState)
-  const toggleModel = useRecoilValue(toggleModelState)
+  const targetInbody = useRecoilValue(targetInbodyState);
+  const toggleModel = useRecoilValue(toggleModelState);
   const pinNumber = useRecoilValue(pinNumberState);
   const [modalData, setModalData] = useRecoilState(modalState);
-  const [modelName, setModelName] = useState("") // 모델 파일 불러올 이름
+  const [modelName, setModelName] = useState(
+    `/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`
+  ); // 모델 파일 불러올 이름
 
   useEffect(() => {
     if (toggleModel === "left") {
-      setModelName(`/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`)
+      setModelName(
+        `/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`
+      );
     } else {
-      setModelName(`/3D/${targetInbody.weight}_${targetInbody.muscle}_.obj`)
+      if (targetInbody?.weight) {
+        setModelName(`/3D/${targetInbody.weight}_${targetInbody.muscle}_.obj`);
+      } else {
+        setModelName(
+          `/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`
+        );
+      }
     }
-  })
-  
+  }, [selectedInbody, targetInbody, toggleModel]);
 
   const model = useLoader(OBJLoader, modelName);
 
