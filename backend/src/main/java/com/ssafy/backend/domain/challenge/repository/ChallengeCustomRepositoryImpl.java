@@ -26,6 +26,7 @@ public class ChallengeCustomRepositoryImpl implements ChallengeCustomRepository 
                 .innerJoin(qUserChallenge)
                 .on(qChallenge.challengeId.eq(qUserChallenge.challenge.challengeId))
                 .where(qUserChallenge.user.userId.eq(userId))
+                .orderBy(qChallenge.endDate.asc())
                 .fetch().stream().map(ChallengeListResponseDto::toDto).collect(Collectors.toList());
     }
 
