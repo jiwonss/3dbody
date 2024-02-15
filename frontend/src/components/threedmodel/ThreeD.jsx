@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { modalState } from "../../recoil/modal/ModalState";
 import { pinNumberState } from "../../recoil/common/PinNumberState";
+import { userState } from "../../recoil/common/UserState";
+import { isValidMuscleState, muscleRoundState } from "../../recoil/common/MuscleRoundState";
 
 const ThreeD = () => {
   const selectedInbody = useRecoilValue(selectedInbodyState);
@@ -21,19 +23,52 @@ const ThreeD = () => {
   const toggleModel = useRecoilValue(toggleModelState);
   const pinNumber = useRecoilValue(pinNumberState);
   const setModalData = useSetRecoilState(modalState);
+  const user = useRecoilValue(userState);
   const [modelName, setModelName] = useState(""); // 모델 파일 불러올 이름
+  const muscleRound = useRecoilValue(muscleRoundState); // 골격근량 반올림 파일
+  const isValidMuscle = useRecoilValue(isValidMuscleState);
+
+  const getMuscle = (muscle) => {
+    return muscleRound[muscle];
+  };
+
+  const isValid = (muscle) => {
+    return isValidMuscle[muscle];
+  };
 
   useEffect(() => {
     if (toggleModel === "left") {
-      setModelName(`/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`);
+      setModelName(
+        `/3D/${user.info.gender}_${Math.round(selectedInbody.weight / 10) * 10}_${getMuscle(
+          selectedInbody.muscle
+        )}_.obj`
+      );
     } else {
       if (targetInbody?.weight) {
-        setModelName(`/3D/${targetInbody.weight}_${targetInbody.muscle}_.obj`);
+        setModelName(
+          `/3D/${user.info.gender}_${Math.round(targetInbody.weight / 10) * 10}_${getMuscle(
+            targetInbody.muscle
+          )}_.obj`
+        );
       } else {
-        setModelName(`/3D/${selectedInbody.weight}_${selectedInbody.muscle}_.obj`);
+        setModelName(
+          `/3D/${user.info.gender}_${Math.round(selectedInbody.weight / 10) * 10}_${getMuscle(
+            selectedInbody.muscle
+          )}_.obj`
+        );
       }
     }
   }, [selectedInbody, targetInbody, toggleModel]);
+
+  // useEffect(() => {
+  //   let muscle = Math.round(targetInbody.weight / 10) * 10;
+  //   if (
+  //     toggleModel === "right" &&
+  //     !isValid(muscle)?.includes(getMuscle(targetInbody.muscle) === false)
+  //   ) {
+  //     alert("정확한 데이터를 입력해 주시길 바랍니다.");
+  //   }
+  // }, [targetInbody]);
 
   const model = useLoader(OBJLoader, modelName);
 
@@ -61,7 +96,7 @@ const ThreeD = () => {
         <spotLight position={[50, 50, 10]} angle={0.15} penumbra={1} />
         <ContactShadows scale={20} position={[0, -2.7, 0]} blur={2} far={100} />
         <primitive scale={3} object={model} position={[0, -2.7, 0]} />
-      </Canvas> 
+      </Canvas>
       <div
         className={
           pinNumber

@@ -11,6 +11,7 @@ import { userState } from "../../recoil/common/UserState";
 import { selectedInbodyState, targetInbodyState } from "../../recoil/common/InbodyState";
 import { loadingState } from "../../recoil/common/LoadingState";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { isValidMuscleState, muscleRoundState } from "../../recoil/common/MuscleRoundState";
 
 const ModelDetailModal = ({ onClose, data }) => {
   const [modalData, setModalData] = useRecoilState(modalState);
@@ -165,18 +166,36 @@ const ModelDetailModal = ({ onClose, data }) => {
       });
   };
 
+  const muscleRound = useRecoilValue(muscleRoundState); // 골격근량 반올림 파일
+  const isValidMuscle = useRecoilValue(isValidMuscleState);
+
+  const getMuscle = (muscle) => {
+    return muscleRound[muscle];
+  };
+
+  const isValid = (muscle) => {
+    return isValidMuscle[muscle];
+  };
+
   const postTargetInbody = () => {
     setLoading(true);
-    setModalData({ type: null, data: null });
-    setTimeout(() => {
-      alert("목표 모델을 불러왔습니다.");
-      setTargetInbody({
-        weight: parseFloat(weight, 10),
-        muscle: parseFloat(muscle, 10),
-        fat_per: parseFloat(fatPer, 10),
-      });
+
+    let wt = Math.round(parseFloat(weight, 10) / 10) * 10;
+
+    if (!isValid(wt)?.includes(getMuscle(parseFloat(muscle, 10)))) {
+      alert("정확한 데이터를 입력해 주시길 바랍니다.");
       setLoading(false);
-    }, 3000);
+    } else {
+      setModalData({ type: null, data: null });
+      setTimeout(() => {
+        setTargetInbody({
+          weight: parseFloat(weight, 10),
+          muscle: parseFloat(muscle, 10),
+          fat_per: parseFloat(fatPer, 10),
+        });
+        setLoading(false);
+      }, 3000);
+    }
   };
 
   const onModelHistoryHandler = () => {
@@ -221,9 +240,30 @@ const ModelDetailModal = ({ onClose, data }) => {
           disabled={toggleModel === "right"}
           css={`bg-teal-700`}
         />
-        <ModelDetail name="체중" value={weight} onChange={onChangeWeight} css={`${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}`} />
-        <ModelDetail name="골격근량" value={muscle} onChange={onChangeMuscle} css={`${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}`} />
-        <ModelDetail name="체지방율" value={fatPer} onChange={onChangeFatPer} css={`${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}`} />
+        <ModelDetail
+          name="체중"
+          value={weight}
+          onChange={onChangeWeight}
+          css={`
+            ${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}
+          `}
+        />
+        <ModelDetail
+          name="골격근량"
+          value={muscle}
+          onChange={onChangeMuscle}
+          css={`
+            ${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}
+          `}
+        />
+        <ModelDetail
+          name="체지방율"
+          value={fatPer}
+          onChange={onChangeFatPer}
+          css={`
+            ${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}
+          `}
+        />
         <ModelDetail
           name="체지방량"
           value={fatMass}

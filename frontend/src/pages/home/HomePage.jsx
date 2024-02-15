@@ -5,10 +5,7 @@ import { toggleModelState } from "../../recoil/common/ToggleState";
 import Button from "./../../components/common/Button";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState } from "../../recoil/modal/ModalState";
-import {
-  inbodyListState,
-  selectedInbodyState,
-} from "../../recoil/common/InbodyState";
+import { inbodyListState, selectedInbodyState } from "../../recoil/common/InbodyState";
 import axios from "axios";
 import { baseUrlState } from "../../recoil/common/BaseUrlState";
 import { userState } from "../../recoil/common/UserState";
@@ -22,8 +19,7 @@ const HomePage = () => {
   const baseUrl = useRecoilValue(baseUrlState);
   const user = useRecoilValue(userState);
   const [inbodyList, setInbodyList] = useRecoilState(inbodyListState);
-  const [selectedInbody, setSelectedInbody] =
-    useRecoilState(selectedInbodyState);
+  const [selectedInbody, setSelectedInbody] = useRecoilState(selectedInbodyState);
   const loading = useRecoilValue(loadingState);
   const toggleModel = useRecoilValue(toggleModelState);
 
@@ -43,8 +39,7 @@ const HomePage = () => {
         setInbodyList(res.data.data_body);
 
         // 마지막 인바디 id
-        const inbodyId =
-          res.data.data_body[res.data.data_body.length - 1].inbody_id;
+        const inbodyId = res.data.data_body[res.data.data_body.length - 1].inbody_id;
         // 인바디 조회
         axios({
           method: "get",
@@ -64,7 +59,9 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    getInbodyList();
+    if (toggleModel === "left") {
+      getInbodyList();
+    }
   }, []);
 
   return (
@@ -72,15 +69,11 @@ const HomePage = () => {
       {loading && <LoadingSpinner />}
       {!loading && (
         <>
-          <div className='flex justify-center'>
-            <img src="/fullLogo.png" alt="" className='h-14'/>
+          <div className="flex justify-center">
+            <img src="/fullLogo.png" alt="" className="h-14" />
           </div>
           <hr />
-          <ToggleTap
-            leftTitle={"현재"}
-            rightTitle={"목표"}
-            state={toggleModelState}
-          />
+          <ToggleTap leftTitle={"현재"} rightTitle={"목표"} state={toggleModelState} />
           {/* 모델 컴포넌트 */}
           {inbodyList.length ? <ThreeD /> : <InBodyNodata />}
 
