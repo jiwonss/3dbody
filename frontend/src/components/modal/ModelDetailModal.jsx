@@ -18,28 +18,59 @@ const ModelDetailModal = ({ onClose, data }) => {
   const user = useRecoilValue(userState);
   const toggleModel = useRecoilValue(toggleModelState);
   const [selectedInbody, setSelectedInbody] = useRecoilState(selectedInbodyState);
-  const setTargetInbody = useSetRecoilState(targetInbodyState);
+  const [targetInbody, setTargetInbody] = useRecoilState(targetInbodyState);
   const setLoading = useSetRecoilState(loadingState);
 
   const [height, setHeight] = useState(
     selectedInbody?.inbody_id ? selectedInbody.height + " cm" : 0 + " cm"
   );
+
   const [weight, setWeight] = useState(
-    selectedInbody?.inbody_id ? selectedInbody.weight + " kg" : 0 + " kg"
+    toggleModel === "left"
+      ? selectedInbody?.inbody_id
+        ? selectedInbody.weight + " kg"
+        : 0 + " kg"
+      : targetInbody?.weight
+      ? targetInbody.weight + " kg"
+      : selectedInbody?.inbody_id
+      ? selectedInbody.weight + " kg"
+      : 0 + " kg"
   );
+
   const [muscle, setMuscle] = useState(
-    selectedInbody?.inbody_id ? selectedInbody.muscle + " kg" : 0 + " kg"
+    toggleModel === "left"
+      ? selectedInbody?.inbody_id
+        ? selectedInbody.muscle + " kg"
+        : 0 + " kg"
+      : targetInbody?.muscle
+      ? targetInbody.muscle + " kg"
+      : selectedInbody?.inbody_id
+      ? selectedInbody.muscle + " kg"
+      : 0 + " kg"
   ); // 골격근량
+
   const [fatMass, setFatMass] = useState(
     selectedInbody?.inbody_id ? selectedInbody.fat_mass + " kg" : 0 + " kg"
   ); // 체지방량
+
   const [fatPer, setFatPer] = useState(
-    selectedInbody?.inbody_id ? selectedInbody.fat_per + " %" : 0 + " %"
+    toggleModel === "left"
+      ? selectedInbody?.inbody_id
+        ? selectedInbody.fat_per + " %"
+        : 0 + " %"
+      : targetInbody?.fat_per
+      ? targetInbody.fat_per + " %"
+      : selectedInbody?.inbody_id
+      ? selectedInbody.fat_per + " %"
+      : 0 + " %"
   ); // 체지방율
+
   const [tbw, setTbw] = useState(
     selectedInbody?.inbody_id ? selectedInbody.tbw + " kg" : 0 + " kg"
   ); // 체수분량
+
   const [bmi, setBmi] = useState(selectedInbody?.inbody_id ? selectedInbody.bmi : 0); // BMI
+
   const [bmr, setBmr] = useState(
     selectedInbody?.inbody_id ? selectedInbody.bmr + " kcal" : 0 + " kcal"
   ); // 기초대사량
@@ -134,12 +165,16 @@ const ModelDetailModal = ({ onClose, data }) => {
       });
   };
 
-  const targetInbody = () => {
+  const postTargetInbody = () => {
     setLoading(true);
     setModalData({ type: null, data: null });
     setTimeout(() => {
       alert("목표 모델을 불러왔습니다.");
-      setTargetInbody({ weight: parseFloat(weight, 10), muscle: parseFloat(muscle, 10), fat_per: parseFloat(fatPer, 10) });
+      setTargetInbody({
+        weight: parseFloat(weight, 10),
+        muscle: parseFloat(muscle, 10),
+        fat_per: parseFloat(fatPer, 10),
+      });
       setLoading(false);
     }, 3000);
   };
@@ -222,7 +257,7 @@ const ModelDetailModal = ({ onClose, data }) => {
           <input
             type="button"
             value={toggleModel === "left" ? "등록하기" : "예측하기"}
-            onClick={toggleModel === "left" ? postInbody : targetInbody}
+            onClick={toggleModel === "left" ? postInbody : postTargetInbody}
             className="p-1 text-white bg-teal-700 border rounded-xl"
           />
         </div>
