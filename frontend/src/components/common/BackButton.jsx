@@ -12,7 +12,7 @@ const BackButton = () => {
     <>
       <button>
         <ChevronLeftIcon
-          className="w-6 h-6 my-4 text-blue-500"
+          className="w-6 h-6 my-4 ml-2"
           onClick={onClickBtn}
         />
       </button>

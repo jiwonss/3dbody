@@ -47,7 +47,7 @@ const ChallengeDetail = () => {
         <div className="absolute flex justify-between w-full">
           <BackButton />
           <button onClick={onChallengeMenuHandler}>
-            <EllipsisVerticalIcon className="w-6 h-6" />
+            <EllipsisVerticalIcon className="w-6 h-6 mr-2" />
           </button>
         </div>
         <PageTitle pageTitle={challenge.title} />

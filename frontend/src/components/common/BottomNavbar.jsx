@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CalendarDaysIcon, Cog6ToothIcon, HomeIcon, TrophyIcon } from "@heroicons/react/24/outline";
 
 const BottomNavbar = () => {
-  const [selectedIcon, setSelectedIcon] = useState("home")
+  const [selectedIcon, setSelectedIcon] = useState("")
 
   return (
     <>

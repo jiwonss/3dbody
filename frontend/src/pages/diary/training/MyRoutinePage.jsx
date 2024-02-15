@@ -53,7 +53,7 @@ const MyRoutinePage = () => {
     <>
       <div className="absolute my-4">
         <ChevronLeftIcon
-          className="w-6 h-6 text-blue-500"
+          className="w-6 h-6 ml-2"
           onClick={onBackBtnHandler}
         />
       </div>

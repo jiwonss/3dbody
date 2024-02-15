@@ -57,12 +57,12 @@ const ModelDetailModal = ({ onClose, data }) => {
   const [fatPer, setFatPer] = useState(
     toggleModel === "left"
       ? selectedInbody?.inbody_id
-        ? selectedInbody.fat_per + " %"
+        ? (selectedInbody.fat_per / selectedInbody.weight) * 100 + " %"
         : 0 + " %"
       : targetInbody?.fat_per
-      ? targetInbody.fat_per + " %"
+      ? (targetInbody.fat_per / targetInbody.weight) * 100 + " %"
       : selectedInbody?.inbody_id
-      ? selectedInbody.fat_per + " %"
+      ? (selectedInbody.fat_per / selectedInbody.weight) * 100 + " %"
       : 0 + " %"
   ); // 체지방율
 
@@ -83,6 +83,11 @@ const ModelDetailModal = ({ onClose, data }) => {
 
   const onChangeWeight = (e) => {
     setWeight(e.target.value);
+    if (parseFloat(e.target.value, 10)) {
+      setFatPer(
+        Math.round((parseFloat(fatMass, 10) / parseFloat(e.target.value, 10)) * 100) + " %"
+      );
+    }
   };
 
   const onChangeMuscle = (e) => {
@@ -91,10 +96,9 @@ const ModelDetailModal = ({ onClose, data }) => {
 
   const onChangeFatMass = (e) => {
     setFatMass(e.target.value);
-  };
-
-  const onChangeFatPer = (e) => {
-    setFatPer(e.target.value);
+    if (parseFloat(e.target.value, 10)) {
+      setFatPer(Math.round((parseFloat(e.target.value, 10) / parseFloat(weight, 10)) * 100) + " %");
+    }
   };
 
   const onChangeTbw = (e) => {
@@ -191,7 +195,6 @@ const ModelDetailModal = ({ onClose, data }) => {
         setTargetInbody({
           weight: parseFloat(weight, 10),
           muscle: parseFloat(muscle, 10),
-          fat_per: parseFloat(fatPer, 10),
         });
         setLoading(false);
       }, 3000);
@@ -203,7 +206,7 @@ const ModelDetailModal = ({ onClose, data }) => {
   };
 
   const onClickAlert = () => {
-    alert("목표 모델 생성을 위해 체중, 골격근량, 체지방율을 입력해주세요.");
+    alert("목표 모델 생성을 위해 체중, 골격근량, 체지방량을 입력해주세요.");
   };
 
   return (
@@ -257,20 +260,14 @@ const ModelDetailModal = ({ onClose, data }) => {
           `}
         />
         <ModelDetail
-          name="체지방율"
-          value={fatPer}
-          onChange={onChangeFatPer}
+          name="체지방량"
+          value={fatMass}
+          onChange={onChangeFatMass}
           css={`
             ${toggleModel === "right" ? "bg-red-300" : "bg-teal-700"}
           `}
         />
-        <ModelDetail
-          name="체지방량"
-          value={fatMass}
-          onChange={onChangeFatMass}
-          disabled={toggleModel === "right"}
-          css={`bg-teal-700`}
-        />
+        <ModelDetail name="체지방율" value={fatPer} disabled={true} css={`bg-teal-700`} />
         <ModelDetail
           name="체수분"
           value={tbw}

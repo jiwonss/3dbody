@@ -45,8 +45,8 @@ const ChallengeParticipating = () => {
       <div className="grid grid-cols-2 mb-16">
         {challenges.length ? (
           challenges
-        ) : user.info.role === "ROLE_ADMIN" ? null : (
-          <div className="col-start-1 col-end-3 text-center">
+        ) : (
+          <div className="col-start-1 col-end-3 mt-4 text-center">
             참여중인 챌린지가 없습니다.
           </div>
         )}

@@ -37,7 +37,7 @@ const HistoryDetailBox = ({ data }) => {
       <div className="flex justify-between" onClick={() => setToggle(!toggle)}>
         <div>
           <Description
-            Title={`${dayOfHistory.getMonth()}월 ${dayOfHistory.getDate()}일 (${dayOfWeek})`}
+            Title={`${dayOfHistory.getMonth() + 1}월 ${dayOfHistory.getDate()}일 (${dayOfWeek})`}
             subTitle={categories.join(" ")}
           />
         </div>

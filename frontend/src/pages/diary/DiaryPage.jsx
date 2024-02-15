@@ -93,7 +93,7 @@ const DiaryPage = () => {
       {isSelected === "left" ? <CalendarMonth /> : <Graph />}
       <hr className={`my-4 ${isSelected === "right" ? "hidden" : ""}`} />
 
-      <div className={`flex flex-col gap-4 m-4 ${isSelected === "right" ? "hidden" : ""}`}>
+      <div className={`absolute -z-10 flex flex-col gap-4 mb-16 inset-x-4 ${isSelected === "right" ? "hidden" : ""}`}>
         {trainingData()}
         {foodData()}
       </div>
