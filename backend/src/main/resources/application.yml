@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://c204.cjw2k0eykv8p.ap-northeast-2.rds.amazonaws.com:3306/backend?serverTimezone=Asia/Seoul
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      repositories:
+        enabled: false
+
+
+jwt:
+  secret: ${JWT_SECRET}
+  expired-min:
+    access: 240   # access token 만료제한시간 60분 (1시간)
+    refresh: 10080  # refresh token 만료제한시간 10080분 (7일)
+
+logging:
+  level:
+    com:
+      ssafy: debug
+    root: info
+
+
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET}
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ${S3_ACCESS_KEY}
+      secretKey: ${S3_SECRET_KEY}
